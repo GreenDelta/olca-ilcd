@@ -20,8 +20,8 @@ public class ContentAmount {
 
 	/**
 	 * For specifying a range of values: the upper value of the range. For
-	 * specifying a value lower than x (e.g. "<42"), only specify the upper
-	 * value as x.
+	 * specifying a value lower than x (e.g. {@code "<42"}), only specify the
+	 * upper value as x.
 	 */
 	public Double upperValue;
 

@@ -247,10 +247,6 @@ public class ObjectFactory {
 		return new Location();
 	}
 
-	/**
-	 * Create an instance of {@link Review.Scope.Method }
-	 *
-	 */
 	public Review.Method createReviewScopeMethod() {
 		return new Review.Method();
 	}

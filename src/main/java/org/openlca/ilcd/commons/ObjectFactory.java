@@ -240,11 +240,6 @@ public class ObjectFactory {
 				Compliance.class, null, value);
 	}
 
-	/**
-	 * Create an instance of {@link JAXBElement }{@code <}{@link Label
-	 * }{@code >}
-	 *
-	 */
 	@XmlElementDecl(namespace = "http://lca.jrc.it/ILCD/Common", name = "name")
 	public JAXBElement<LangString> createName(LangString value) {
 		return new JAXBElement<>(_Name_QNAME, LangString.class, null, value);
@@ -327,11 +322,6 @@ public class ObjectFactory {
 				XMLGregorianCalendar.class, null, value);
 	}
 
-	/**
-	 * Create an instance of {@link JAXBElement }{@code <}{@link Label
-	 * }{@code >}
-	 *
-	 */
 	@XmlElementDecl(namespace = "http://lca.jrc.it/ILCD/Common", name = "shortName")
 	public JAXBElement<LangString> createShortName(LangString value) {
 		return new JAXBElement<>(_ShortName_QNAME, LangString.class, null, value);
