@@ -1,18 +1,15 @@
 package org.openlca.ilcd.io;
 
-import java.io.ByteArrayInputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-
+import jakarta.ws.rs.client.Client;
+import jakarta.ws.rs.client.ClientBuilder;
 import jakarta.ws.rs.client.Entity;
 import jakarta.ws.rs.client.Invocation;
 import jakarta.ws.rs.client.WebTarget;
+import jakarta.ws.rs.core.Cookie;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+import jakarta.ws.rs.core.Response.Status;
+import jakarta.ws.rs.core.Response.Status.Family;
 import org.glassfish.jersey.media.multipart.FormDataBodyPart;
 import org.glassfish.jersey.media.multipart.FormDataMultiPart;
 import org.glassfish.jersey.media.multipart.MultiPartFeature;
@@ -24,14 +21,17 @@ import org.openlca.ilcd.descriptors.Descriptor;
 import org.openlca.ilcd.descriptors.DescriptorList;
 import org.openlca.ilcd.lists.CategorySystem;
 import org.openlca.ilcd.sources.Source;
+import org.openlca.ilcd.util.Strings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import jakarta.ws.rs.client.Client;
-import jakarta.ws.rs.client.ClientBuilder;
-import jakarta.ws.rs.core.Cookie;
-import jakarta.ws.rs.core.Response.Status;
-import jakarta.ws.rs.core.Response.Status.Family;
+import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 
 /**
@@ -40,45 +40,52 @@ import jakarta.ws.rs.core.Response.Status.Family;
 public class SodaClient implements DataStore {
 
 	private final Logger log = LoggerFactory.getLogger(this.getClass());
-	private final SodaConnection con;
+	private final String url;
+	private final Client client;
+	private String dataStockId;
+
 	private final List<Cookie> cookies = new ArrayList<>();
 	private final XmlBinder binder = new XmlBinder();
 
-	private Client client;
-	private boolean isConnected = false;
-
-	public SodaClient(SodaConnection con) {
-		this.con = con;
-	}
-
-	public void connect() {
-		log.info("Create ILCD network connection {}", con);
-		client = ClientBuilder.newClient()
+	private SodaClient(String url) {
+		this.url = url;
+		this.client = ClientBuilder.newClient()
 			.register(MultiPartFeature.class);
-		authenticate();
-		isConnected = true;
 	}
 
-	private void authenticate() {
-		if (con.user == null || con.user.trim().isEmpty()
-			|| con.password == null || con.password.trim().isEmpty()) {
-			log.info("no user or password -> anonymous access");
-			return;
+	public static SodaClient of(String url) {
+		return new SodaClient(url);
+	}
+
+	public static SodaClient of(SodaConnection con) {
+		var client = SodaClient.of(con.url);
+		if (Strings.notEmpty(con.user) && Strings.notEmpty(con.password)) {
+			client.login(con.user, con.password);
 		}
-		log.info("Authenticate user: {}", con.user);
-		var response = client.target(con.url)
+		client.withDataStock(con.dataStockId);
+		return client;
+	}
+
+	public SodaClient login(String user, String password) {
+		log.info("Authenticate user: {}", user);
+		var response = client.target(url)
 			.path("authenticate")
 			.path("login")
-			.queryParam("userName", con.user)
-			.queryParam("password", con.password)
+			.queryParam("userName", user)
+			.queryParam("password", password)
 			.request()
 			.get();
 		eval(response);
 		response.getCookies().forEach((key, value) -> cookies.add(value.toCookie()));
+		return this;
+	}
+
+	public SodaClient withDataStock(String dataStockId) {
+		this.dataStockId = dataStockId;
+		return this;
 	}
 
 	public AuthInfo getAuthInfo() {
-		checkConnection();
 		log.trace("Get authentication information.");
 		var r = resource("authenticate", "status");
 		var response = cookies(r).get();
@@ -87,21 +94,18 @@ public class SodaClient implements DataStore {
 	}
 
 	public DataStockList getDataStockList() {
-		checkConnection();
 		log.trace("get data stock list: /datastocks");
 		var r = resource("datastocks");
 		return cookies(r).get(DataStockList.class);
 	}
 
 	public CategorySystemList getCategorySystemList() {
-		checkConnection();
 		log.trace("get category system list: /categorySystems");
 		var r = resource("categorySystems");
 		return cookies(r).get(CategorySystemList.class);
 	}
 
 	public CategorySystem getCategorySystem(String name) {
-		checkConnection();
 		log.trace("get category system list: /categorySystems/{}", name);
 		var r = resource("categorySystems", name);
 		return cookies(r).get(CategorySystem.class);
@@ -109,7 +113,6 @@ public class SodaClient implements DataStore {
 
 	@Override
 	public <T extends IDataSet> T get(Class<T> type, String id) {
-		checkConnection();
 		var r = resource(Dir.get(type), id).queryParam("format", "xml");
 		log.info("Get resource: {}", r.getUri());
 		var response = cookies(r).get();
@@ -124,15 +127,14 @@ public class SodaClient implements DataStore {
 
 	@Override
 	public void put(IDataSet ds) {
-		checkConnection();
 		var r = resource(Dir.get(ds.getClass()));
 		log.info("Publish resource: {}/{}", r.getUri(), ds.getUUID());
 		try {
 			byte[] bytes = binder.toByteArray(ds);
 			var builder = cookies(r).accept(MediaType.APPLICATION_XML);
-			if (con.dataStockId != null) {
-				log.trace("post to data stock {}", con.dataStockId);
-				builder = builder.header("stock", con.dataStockId);
+			if (Strings.notEmpty(dataStockId)) {
+				log.trace("post to data stock {}", dataStockId);
+				builder = builder.header("stock", dataStockId);
 			}
 			var response = builder.post(Entity.xml(bytes));
 			eval(response);
@@ -144,13 +146,12 @@ public class SodaClient implements DataStore {
 
 	@Override
 	public void put(Source source, File[] files) {
-		checkConnection();
 		log.info("Publish source with files {}", source);
 		try {
 			var formData = new FormDataMultiPart();
-			if (con.dataStockId != null) {
-				log.trace("post to data stock {}", con.dataStockId);
-				formData.field("stock", con.dataStockId);
+			if (Strings.notEmpty(dataStockId)) {
+				log.trace("post to data stock {}", dataStockId);
+				formData.field("stock", dataStockId);
 			}
 
 			// add the XML as `file` parameter
@@ -190,7 +191,6 @@ public class SodaClient implements DataStore {
 
 	@Override
 	public InputStream getExternalDocument(String sourceId, String fileName) {
-		checkConnection();
 		var r = resource("sources", sourceId, fileName);
 		log.info("Get external document {} for source {}", fileName, sourceId);
 		var response = cookies(r)
@@ -214,7 +214,6 @@ public class SodaClient implements DataStore {
 
 	@Override
 	public <T extends IDataSet> boolean contains(Class<T> type, String id) {
-		checkConnection();
 		var r = resource(Dir.get(type), id)
 			.queryParam("format", "xml");
 		log.trace("Contains resource {} ?", r.getUri());
@@ -229,7 +228,6 @@ public class SodaClient implements DataStore {
 	public boolean contains(Ref ref) {
 		if (ref == null || ref.type == null || ref.uuid == null)
 			return false;
-		checkConnection();
 		var r = resource(Dir.get(ref.getDataSetClass()), ref.uuid)
 			.queryParam("format", "xml");
 		if (ref.version != null)
@@ -240,11 +238,10 @@ public class SodaClient implements DataStore {
 
 	public DescriptorList search(Class<?> type, String name) {
 		try {
-			checkConnection();
 			String term = name == null ? "" : name.trim();
-			var r = con.dataStockId == null
+			var r = Strings.nullOrEmpty(dataStockId)
 				? resource(Dir.get(type))
-				: resource("datastocks", con.dataStockId, Dir.get(type));
+				: resource("datastocks", dataStockId, Dir.get(type));
 			r = r.queryParam("search", "true")
 				.queryParam("name", term);
 			log.trace("Search resources: {}", r.getUri());
@@ -257,10 +254,9 @@ public class SodaClient implements DataStore {
 	public List<Descriptor> getDescriptors(Class<?> type) {
 		log.debug("get descriptors for {}", type);
 		try {
-			checkConnection();
-			var r = con.dataStockId == null
+			var r = Strings.nullOrEmpty(dataStockId)
 				? resource(Dir.get(type))
-				: resource("datastocks", con.dataStockId, Dir.get(type));
+				: resource("datastocks", dataStockId, Dir.get(type));
 			r = r.queryParam("pageSize", "1000");
 			List<Descriptor> list = new ArrayList<>();
 			int total;
@@ -283,7 +279,7 @@ public class SodaClient implements DataStore {
 	}
 
 	private WebTarget resource(String... path) {
-		var target = client.target(con.url);
+		var target = client.target(url);
 		for (String p : path) {
 			target = target.path(p);
 		}
@@ -296,12 +292,6 @@ public class SodaClient implements DataStore {
 			builder.cookie(c);
 		}
 		return builder;
-	}
-
-	private void checkConnection() {
-		if (!isConnected) {
-			connect();
-		}
 	}
 
 	private void eval(Response resp) {

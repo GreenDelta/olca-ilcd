@@ -11,7 +11,7 @@ import org.openlca.ilcd.commons.LangString;
 import org.openlca.ilcd.commons.Other;
 import org.openlca.ilcd.commons.Ref;
 import org.openlca.ilcd.epd.conversion.RefExtension;
-import org.openlca.ilcd.epd.util.Strings;
+import org.openlca.ilcd.util.Strings;
 import org.openlca.ilcd.processes.Exchange;
 import org.openlca.ilcd.processes.LCIAResult;
 

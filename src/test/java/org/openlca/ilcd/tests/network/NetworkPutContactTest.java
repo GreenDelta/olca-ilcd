@@ -26,7 +26,7 @@ public class NetworkPutContactTest {
 	}
 
 	@Test
-	public void testPutContact() throws Exception {
+	public void testPutContact() {
 		Assume.assumeTrue(TestServer.isAvailable());
 		String id = UUID.randomUUID().toString();
 		Contact contact = new Contact();

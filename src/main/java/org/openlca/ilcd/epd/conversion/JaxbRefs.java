@@ -9,7 +9,7 @@ import jakarta.xml.bind.Unmarshaller;
 import jakarta.xml.bind.annotation.XmlRootElement;
 import org.openlca.ilcd.commons.Other;
 import org.openlca.ilcd.commons.Ref;
-import org.openlca.ilcd.epd.util.Strings;
+import org.openlca.ilcd.util.Strings;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.Element;
 

@@ -1,4 +1,4 @@
-package org.openlca.ilcd.epd.util;
+package org.openlca.ilcd.util;
 
 import java.io.BufferedReader;
 import java.io.IOException;

@@ -1,6 +1,7 @@
 package org.openlca.ilcd.io;
 
 import java.util.Objects;
+import java.util.UUID;
 
 /**
  * Connection data of an Soda4LCA service.
@@ -25,13 +26,20 @@ public class SodaConnection {
 	 */
 	public String dataStockName;
 
+	public static SodaConnection of(String url) {
+		var con = new SodaConnection();
+		con.url = url;
+		con.uuid = UUID.randomUUID().toString();
+		return con;
+	}
+
 	@Override
 	public String toString() {
 		String s = url;
-		if (dataStockName != null && dataStockName.length() > 0) {
+		if (dataStockName != null && !dataStockName.isEmpty()) {
 			s += ";" + dataStockName;
 		}
-		return user != null && user.length() > 0
+		return user != null && !user.isEmpty()
 			? user + "@" + s
 			: "anonymous@" + s;
 	}
@@ -47,9 +55,8 @@ public class SodaConnection {
 			return false;
 		if (obj == this)
 			return true;
-		if (!(obj instanceof SodaConnection))
+		if (!(obj instanceof SodaConnection other))
 			return false;
-		var other = (SodaConnection) obj;
 		return Objects.equals(this.id(), other.id());
 	}
 

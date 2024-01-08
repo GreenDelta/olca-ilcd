@@ -15,7 +15,7 @@ import org.openlca.ilcd.epd.model.Scenario;
 import org.openlca.ilcd.epd.model.SubType;
 import org.openlca.ilcd.epd.model.content.ContentDeclaration;
 import org.openlca.ilcd.epd.model.qmeta.QMetaData;
-import org.openlca.ilcd.epd.util.Strings;
+import org.openlca.ilcd.util.Strings;
 import org.openlca.ilcd.processes.Method;
 import org.openlca.ilcd.processes.Process;
 import org.openlca.ilcd.util.Processes;

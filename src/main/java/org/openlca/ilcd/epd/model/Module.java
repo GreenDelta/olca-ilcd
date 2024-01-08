@@ -2,7 +2,7 @@ package org.openlca.ilcd.epd.model;
 
 import java.util.Objects;
 
-import org.openlca.ilcd.epd.util.Strings;
+import org.openlca.ilcd.util.Strings;
 
 public class Module implements Comparable<Module> {
 

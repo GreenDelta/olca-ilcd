@@ -1,11 +1,11 @@
 package org.openlca.ilcd.tests.network;
 
-import java.net.HttpURLConnection;
-import java.net.URL;
-
 import org.openlca.ilcd.io.SodaClient;
 import org.openlca.ilcd.io.SodaConnection;
 import org.slf4j.LoggerFactory;
+
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 class TestServer {
 
@@ -14,6 +14,7 @@ class TestServer {
 	static final String PASSWORD = "default";
 
 	private static boolean available;
+
 	static {
 		var log = LoggerFactory.getLogger(TestServer.class);
 		var url = ENDPOINT + "/authenticate/status";
@@ -49,8 +50,6 @@ class TestServer {
 		con.url = ENDPOINT;
 		con.user = USER;
 		con.password = PASSWORD;
-		var client = new SodaClient(con);
-		client.connect();
-		return client;
+		return SodaClient.of(con);
 	}
 }

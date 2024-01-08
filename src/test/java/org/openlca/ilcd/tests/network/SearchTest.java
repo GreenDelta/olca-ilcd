@@ -32,14 +32,12 @@ import org.slf4j.LoggerFactory;
 @Ignore
 public class SearchTest {
 
-	private Logger log = LoggerFactory.getLogger(this.getClass());
+	private final Logger log = LoggerFactory.getLogger(this.getClass());
 	private SodaClient client;
 
 	@Before
 	public void setUp() throws Exception {
-		SodaConnection con = new SodaConnection();
-		con.url = "http://eplca.jrc.ec.europa.eu/ELCD3/resource";
-		client = new SodaClient(con);
+		client = SodaClient.of("http://eplca.jrc.ec.europa.eu/ELCD3/resource");
 	}
 
 	@After

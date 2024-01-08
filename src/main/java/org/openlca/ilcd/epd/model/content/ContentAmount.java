@@ -1,7 +1,7 @@
 package org.openlca.ilcd.epd.model.content;
 
 import org.openlca.ilcd.epd.conversion.Vocab;
-import org.openlca.ilcd.epd.util.Strings;
+import org.openlca.ilcd.util.Strings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.Element;

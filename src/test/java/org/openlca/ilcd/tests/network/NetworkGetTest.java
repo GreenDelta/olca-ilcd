@@ -1,16 +1,7 @@
 package org.openlca.ilcd.tests.network;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-
-import java.io.IOException;
-import java.util.UUID;
-
 import org.junit.Assume;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.openlca.ilcd.commons.IDataSet;
 import org.openlca.ilcd.contacts.Contact;
@@ -21,6 +12,10 @@ import org.openlca.ilcd.io.SodaConnection;
 import org.openlca.ilcd.processes.Process;
 import org.openlca.ilcd.sources.Source;
 import org.openlca.ilcd.units.UnitGroup;
+
+import java.util.UUID;
+
+import static org.junit.Assert.*;
 
 public class NetworkGetTest {
 
@@ -44,11 +39,11 @@ public class NetworkGetTest {
 	@Test(expected = Exception.class)
 	public void testCreateWithWrongPassword() {
 		Assume.assumeTrue(TestServer.isAvailable());
-		SodaConnection con = new SodaConnection();
+		var con = new SodaConnection();
 		con.url = TestServer.ENDPOINT;
 		con.user = "user";
 		con.password = "invalid";
-		SodaClient client = new SodaClient(con);
+		var client = SodaClient.of(con);
 		client.close();
 	}
 
