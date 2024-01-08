@@ -16,7 +16,7 @@ import jakarta.xml.bind.annotation.XmlType;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "ModellingAndValidationType", propOrder = {
-		"method",
+		"inventoryMethod",
 		"representativeness",
 		"completeness",
 		"validation",

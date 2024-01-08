@@ -24,12 +24,12 @@ import java.util.Map;
 @XmlType(name = "LCIMethodAndAllocationType", propOrder = {
 	"processType",
 	"principle",
-	"principleComment",
+	"principleDeviations",
 	"approaches",
-	"approachComment",
+	"approachDeviations",
 	"constants",
-	"constantsComment",
-	"methodSources",
+	"constantsDeviations",
+	"sources",
 	"other"})
 public class InventoryMethod implements Serializable {
 
