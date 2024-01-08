@@ -62,7 +62,7 @@ public class SodaClient implements DataStore {
 		if (Strings.notEmpty(con.user) && Strings.notEmpty(con.password)) {
 			client.login(con.user, con.password);
 		}
-		client.withDataStock(con.dataStockId);
+		client.useDataStock(con.dataStockId);
 		return client;
 	}
 
@@ -80,7 +80,7 @@ public class SodaClient implements DataStore {
 		return this;
 	}
 
-	public SodaClient withDataStock(String dataStockId) {
+	public SodaClient useDataStock(String dataStockId) {
 		this.dataStockId = dataStockId;
 		return this;
 	}
@@ -232,8 +232,9 @@ public class SodaClient implements DataStore {
 			.queryParam("format", "xml");
 		if (ref.version != null)
 			r = r.queryParam("version", ref.version);
-		var response = cookies(r).head();
-		return response.getStatus() == Status.OK.getStatusCode();
+		try (var response = cookies(r).head()) {
+			return response.getStatus() == Status.OK.getStatusCode();
+		}
 	}
 
 	public DescriptorList search(Class<?> type, String name) {
@@ -278,6 +279,30 @@ public class SodaClient implements DataStore {
 		}
 	}
 
+	public InputStream exportDataStock(String idOrName) {
+		if (Strings.nullOrEmpty(idOrName))
+			throw new IllegalArgumentException("no ID or name of data-stock provided");
+
+		// find the data-stock
+		String id = null;
+		for (var stock : getDataStockList().dataStocks) {
+			if (Strings.nullOrEqual(stock.uuid, idOrName)
+				|| Strings.nullOrEqual(stock.shortName, idOrName)) {
+				id = stock.uuid;
+				break;
+			}
+		}
+		if (id == null) {
+			throw new IllegalArgumentException(
+				"data-stock " + idOrName + " does not exist on server");
+		}
+
+		var r = resource("datastocks", id, "export");
+		var response = cookies(r).get();
+		eval(response);
+		return response.readEntity(InputStream.class);
+	}
+
 	private WebTarget resource(String... path) {
 		var target = client.target(url);
 		for (String p : path) {
@@ -297,12 +322,11 @@ public class SodaClient implements DataStore {
 	private void eval(Response resp) {
 		if (resp == null)
 			throw new IllegalArgumentException("Client response is NULL.");
-		Status status = Status.fromStatusCode(resp.getStatus());
-		Family family = status.getFamily();
+		var status = Status.fromStatusCode(resp.getStatus());
+		var family = status.getFamily();
 		if (family == Family.CLIENT_ERROR || family == Family.SERVER_ERROR) {
-			String message = status.getReasonPhrase()
-				+ ": " + fetchMessage(resp);
-			throw new RuntimeException(message);
+			throw new RuntimeException(
+				status.getReasonPhrase() + ": " + fetchMessage(resp));
 		}
 	}
 
