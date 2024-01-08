@@ -16,7 +16,7 @@ import org.openlca.ilcd.epd.model.SubType;
 import org.openlca.ilcd.epd.model.content.ContentDeclaration;
 import org.openlca.ilcd.epd.model.qmeta.QMetaData;
 import org.openlca.ilcd.util.Strings;
-import org.openlca.ilcd.processes.Method;
+import org.openlca.ilcd.processes.InventoryMethod;
 import org.openlca.ilcd.processes.Process;
 import org.openlca.ilcd.util.Processes;
 import org.slf4j.LoggerFactory;
@@ -61,7 +61,7 @@ record EpdExtensionReader(Process process, EpdProfile profile) {
 	private void readSubType(EpdDataSet dataSet) {
 		if (process.modelling == null)
 			return;
-		Method method = process.modelling.method;
+		InventoryMethod method = process.modelling.inventoryMethod;
 		if (method == null || method.other == null)
 			return;
 		var elem = Dom.getElement(method.other, "subType");

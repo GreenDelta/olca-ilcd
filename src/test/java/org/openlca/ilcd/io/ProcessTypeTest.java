@@ -27,7 +27,7 @@ public class ProcessTypeTest {
 	public void testProcessType() throws Exception {
 		with(p -> {
 			Assert.assertEquals(ProcessType.UNIT_PROCESS,
-					p.modelling.method.processType);
+					p.modelling.inventoryMethod.processType);
 		});
 	}
 

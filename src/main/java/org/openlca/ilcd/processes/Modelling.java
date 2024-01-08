@@ -28,7 +28,7 @@ public class Modelling implements Serializable {
 	private final static long serialVersionUID = 1L;
 
 	@XmlElement(name = "LCIMethodAndAllocation")
-	public Method method;
+	public InventoryMethod inventoryMethod;
 
 	@XmlElement(name = "dataSourcesTreatmentAndRepresentativeness")
 	public Representativeness representativeness;
@@ -49,8 +49,8 @@ public class Modelling implements Serializable {
 	@Override
 	public Modelling clone() {
 		Modelling clone = new Modelling();
-		if (method != null)
-			clone.method = method.clone();
+		if (inventoryMethod != null)
+			clone.inventoryMethod = inventoryMethod.clone();
 		if (representativeness != null)
 			clone.representativeness = representativeness.clone();
 		if (completeness != null)

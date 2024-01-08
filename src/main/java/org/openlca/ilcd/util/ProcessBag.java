@@ -15,7 +15,7 @@ import org.openlca.ilcd.processes.DataGenerator;
 import org.openlca.ilcd.processes.DataSetInfo;
 import org.openlca.ilcd.processes.Exchange;
 import org.openlca.ilcd.processes.Geography;
-import org.openlca.ilcd.processes.Method;
+import org.openlca.ilcd.processes.InventoryMethod;
 import org.openlca.ilcd.processes.Modelling;
 import org.openlca.ilcd.processes.Parameter;
 import org.openlca.ilcd.processes.ParameterSection;
@@ -112,7 +112,7 @@ public class ProcessBag implements IBag<Process> {
 	public ProcessType getProcessType() {
 		Modelling mav = process.modelling;
 		if (mav != null) {
-			Method method = mav.method;
+			InventoryMethod method = mav.inventoryMethod;
 			if (method != null)
 				return method.processType;
 		}
@@ -176,10 +176,10 @@ public class ProcessBag implements IBag<Process> {
 		return process.exchanges;
 	}
 
-	public Method getLciMethod() {
+	public InventoryMethod getLciMethod() {
 		Modelling mav = process.modelling;
 		if (mav != null)
-			return mav.method;
+			return mav.inventoryMethod;
 		return null;
 	}
 

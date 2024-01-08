@@ -8,7 +8,7 @@ import javax.xml.namespace.QName;
 
 import org.openlca.ilcd.commons.Other;
 import org.openlca.ilcd.epd.model.EpdDataSet;
-import org.openlca.ilcd.processes.Method;
+import org.openlca.ilcd.processes.InventoryMethod;
 import org.openlca.ilcd.processes.Modelling;
 import org.openlca.ilcd.processes.Process;
 import org.openlca.ilcd.util.Processes;
@@ -102,13 +102,13 @@ class EpdExtensionWriter {
 
 	private void writeSubType() {
 		if (epd.subType == null) {
-			Method m = Processes.getMethod(epd.process);
+			InventoryMethod m = Processes.getInventoryMethod(epd.process);
 			if (m == null)
 				return;
 			m.other = null;
 			return;
 		}
-		var method = Processes.forceMethod(epd.process);
+		var method = Processes.forceInventoryMethod(epd.process);
 		method.other = new Other();
 		var elem = Dom.createElement(Vocab.NS_EPD, "subType");
 		if (elem != null) {

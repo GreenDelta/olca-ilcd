@@ -200,11 +200,11 @@ public class ObjectFactory {
 	}
 
 	/**
-	 * Create an instance of {@link Method }
+	 * Create an instance of {@link InventoryMethod }
 	 *
 	 */
-	public Method createLCIMethod() {
-		return new Method();
+	public InventoryMethod createLCIMethod() {
+		return new InventoryMethod();
 	}
 
 	/**

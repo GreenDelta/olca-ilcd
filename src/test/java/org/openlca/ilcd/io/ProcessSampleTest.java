@@ -23,7 +23,7 @@ import org.openlca.ilcd.processes.DataSetInfo;
 import org.openlca.ilcd.processes.Exchange;
 import org.openlca.ilcd.processes.LCIAResult;
 import org.openlca.ilcd.processes.Location;
-import org.openlca.ilcd.processes.Method;
+import org.openlca.ilcd.processes.InventoryMethod;
 import org.openlca.ilcd.processes.Parameter;
 import org.openlca.ilcd.processes.ParameterSection;
 import org.openlca.ilcd.processes.Process;
@@ -126,15 +126,15 @@ public class ProcessSampleTest {
 	@Test
 	public void testMethod() {
 		with(p -> {
-			Method method = p.modelling.method;
+			InventoryMethod method = p.modelling.inventoryMethod;
 			assertEquals(ProcessType.UNIT_PROCESS, method.processType);
 			assertEquals(ModellingPrinciple.ATTRIBUTIONAL, method.principle);
 			assertEquals(2, method.approaches.size());
-			assertEquals(2, method.approachComment.size());
+			assertEquals(2, method.approachDeviations.size());
 			assertEquals(2, method.constants.size());
-			assertEquals(2, method.constantsComment.size());
-			assertEquals(2, method.methodSources.size());
-			assertEquals(2, method.principleComment.size());
+			assertEquals(2, method.constantsDeviations.size());
+			assertEquals(2, method.sources.size());
+			assertEquals(2, method.principleDeviations.size());
 		});
 	}
 

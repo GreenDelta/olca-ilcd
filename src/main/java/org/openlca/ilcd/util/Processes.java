@@ -19,7 +19,7 @@ import org.openlca.ilcd.processes.DataSetInfo;
 import org.openlca.ilcd.processes.Exchange;
 import org.openlca.ilcd.processes.Geography;
 import org.openlca.ilcd.processes.Location;
-import org.openlca.ilcd.processes.Method;
+import org.openlca.ilcd.processes.InventoryMethod;
 import org.openlca.ilcd.processes.Modelling;
 import org.openlca.ilcd.processes.Parameter;
 import org.openlca.ilcd.processes.ParameterSection;
@@ -188,18 +188,18 @@ public final class Processes {
 		return p.modelling;
 	}
 
-	public static Method getMethod(Process p) {
+	public static InventoryMethod getInventoryMethod(Process p) {
 		var modelling = getModelling(p);
 		if (modelling == null)
 			return null;
-		return modelling.method;
+		return modelling.inventoryMethod;
 	}
 
-	public static Method forceMethod(Process p) {
+	public static InventoryMethod forceInventoryMethod(Process p) {
 		var modelling = forceModelling(p);
-		if (modelling.method == null)
-			modelling.method = new Method();
-		return modelling.method;
+		if (modelling.inventoryMethod == null)
+			modelling.inventoryMethod = new InventoryMethod();
+		return modelling.inventoryMethod;
 	}
 
 	public static Representativeness getRepresentativeness(Process p) {

@@ -7,7 +7,7 @@ import org.openlca.ilcd.commons.Ref;
 import org.openlca.ilcd.processes.ComplianceDeclaration;
 import org.openlca.ilcd.processes.ComplianceList;
 import org.openlca.ilcd.processes.DataEntry;
-import org.openlca.ilcd.processes.Method;
+import org.openlca.ilcd.processes.InventoryMethod;
 import org.openlca.ilcd.processes.Process;
 import org.openlca.ilcd.processes.Publication;
 import org.openlca.ilcd.processes.Representativeness;
@@ -64,12 +64,12 @@ class SourceRefCollection {
 		return refs;
 	}
 
-	private static List<Ref> getFrom(Method method) {
+	private static List<Ref> getFrom(InventoryMethod method) {
 		List<Ref> refs = new ArrayList<>();
 		if (method == null)
 			return refs;
-		if (method.methodSources != null)
-			refs.addAll(method.methodSources);
+		if (method.sources != null)
+			refs.addAll(method.sources);
 		return refs;
 	}
 
