@@ -1,19 +1,17 @@
 package org.openlca.ilcd.methods;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-
-import org.openlca.ilcd.commons.LangString;
-import org.openlca.ilcd.commons.Ref;
-import org.openlca.ilcd.commons.ReviewType;
-import org.openlca.ilcd.commons.annotations.FreeText;
-
 import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlAttribute;
 import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlType;
+import org.openlca.ilcd.commons.LangString;
+import org.openlca.ilcd.commons.Ref;
+import org.openlca.ilcd.commons.ReviewType;
+import org.openlca.ilcd.commons.annotations.FreeText;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "ReviewType", propOrder = {
@@ -23,9 +21,7 @@ import jakarta.xml.bind.annotation.XmlType;
 		"otherDetails",
 		"report"
 })
-public class Review implements Serializable {
-
-	private final static long serialVersionUID = 1L;
+public class Review {
 
 	@XmlElement(name = "scope")
 	public final List<Scope> scopes = new ArrayList<>();
@@ -49,9 +45,7 @@ public class Review implements Serializable {
 
 	@XmlAccessorType(XmlAccessType.FIELD)
 	@XmlType(name = "", propOrder = { "methods" })
-	public static class Scope implements Serializable {
-
-		private final static long serialVersionUID = 1L;
+	public static class Scope {
 
 		@XmlElement(name = "method")
 		public final List<Method> methods = new ArrayList<>();
@@ -61,15 +55,10 @@ public class Review implements Serializable {
 
 		@XmlAccessorType(XmlAccessType.FIELD)
 		@XmlType(name = "")
-		public static class Method implements Serializable {
-
-			private final static long serialVersionUID = 1L;
+		public static class Method {
 
 			@XmlAttribute(name = "name", required = true)
 			public ReviewMethod name;
-
 		}
-
 	}
-
 }

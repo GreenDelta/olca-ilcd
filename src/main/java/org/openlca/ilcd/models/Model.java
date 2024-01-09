@@ -26,8 +26,6 @@ import jakarta.xml.bind.annotation.XmlType;
 @XmlRootElement(name = "lifeCycleModelDataSet", namespace = "http://eplca.jrc.ec.europa.eu/ILCD/LifeCycleModel/2017")
 public class Model implements IDataSet {
 
-	private static final long serialVersionUID = -5507252231374830139L;
-
 	@XmlElement(name = "lifeCycleModelInformation")
 	public ModelInfo info;
 

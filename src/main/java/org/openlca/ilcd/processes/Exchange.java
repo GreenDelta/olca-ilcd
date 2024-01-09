@@ -1,13 +1,13 @@
 package org.openlca.ilcd.processes;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.xml.namespace.QName;
-
+import jakarta.xml.bind.annotation.XmlAccessType;
+import jakarta.xml.bind.annotation.XmlAccessorType;
+import jakarta.xml.bind.annotation.XmlAnyAttribute;
+import jakarta.xml.bind.annotation.XmlAttribute;
+import jakarta.xml.bind.annotation.XmlElement;
+import jakarta.xml.bind.annotation.XmlElementWrapper;
+import jakarta.xml.bind.annotation.XmlType;
+import org.openlca.ilcd.commons.Copyable;
 import org.openlca.ilcd.commons.DataDerivation;
 import org.openlca.ilcd.commons.ExchangeDirection;
 import org.openlca.ilcd.commons.ExchangeFunction;
@@ -17,13 +17,11 @@ import org.openlca.ilcd.commons.Ref;
 import org.openlca.ilcd.commons.UncertaintyDistribution;
 import org.openlca.ilcd.commons.annotations.Label;
 
-import jakarta.xml.bind.annotation.XmlAccessType;
-import jakarta.xml.bind.annotation.XmlAccessorType;
-import jakarta.xml.bind.annotation.XmlAnyAttribute;
-import jakarta.xml.bind.annotation.XmlAttribute;
-import jakarta.xml.bind.annotation.XmlElement;
-import jakarta.xml.bind.annotation.XmlElementWrapper;
-import jakarta.xml.bind.annotation.XmlType;
+import javax.xml.namespace.QName;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "ExchangeType", propOrder = {
@@ -44,9 +42,7 @@ import jakarta.xml.bind.annotation.XmlType;
 		"sources",
 		"comment",
 		"other" })
-public class Exchange implements Serializable {
-
-	private final static long serialVersionUID = 1L;
+public class Exchange implements Copyable<Exchange> {
 
 	/** The data set internal ID (dataSetInternalID) of the exchange. */
 	@XmlAttribute(name = "dataSetInternalID", required = true)
@@ -105,8 +101,8 @@ public class Exchange implements Serializable {
 	public Map<QName, String> otherAttributes = new HashMap<>();
 
 	@Override
-	public Exchange clone() {
-		Exchange clone = new Exchange();
+	public Exchange copy() {
+		var clone = new Exchange();
 		clone.id = id;
 		if (flow != null)
 			clone.flow = flow.copy();
@@ -138,7 +134,7 @@ public class Exchange implements Serializable {
 		for (int i = 0; i < allocations.length; i++) {
 			if (allocations[i] == null)
 				continue;
-			clone.allocations[i] = allocations[i].clone();
+			clone.allocations[i] = allocations[i].copy();
 		}
 	}
 

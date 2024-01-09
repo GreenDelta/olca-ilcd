@@ -1,17 +1,14 @@
 package org.openlca.ilcd.methods;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.xml.datatype.XMLGregorianCalendar;
-
-import org.openlca.ilcd.commons.Ref;
-
 import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlType;
+import org.openlca.ilcd.commons.Ref;
+
+import javax.xml.datatype.XMLGregorianCalendar;
+import java.util.ArrayList;
+import java.util.List;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "DataEntryByType", propOrder = {
@@ -21,9 +18,7 @@ import jakarta.xml.bind.annotation.XmlType;
 		"documentor",
 		"recommendationBy"
 })
-public class DataEntry implements Serializable {
-
-	private final static long serialVersionUID = 1L;
+public class DataEntry {
 
 	@XmlElement(namespace = "http://lca.jrc.it/ILCD/Common")
 	public XMLGregorianCalendar timeStamp;

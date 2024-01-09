@@ -30,8 +30,6 @@ import jakarta.xml.bind.annotation.XmlType;
 })
 public class LCIAMethod implements IDataSet {
 
-	private final static long serialVersionUID = 1L;
-
 	@XmlElement(name = "LCIAMethodInformation", required = true)
 	public MethodInfo methodInfo;
 

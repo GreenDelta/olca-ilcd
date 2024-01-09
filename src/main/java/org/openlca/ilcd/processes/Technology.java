@@ -1,23 +1,21 @@
 package org.openlca.ilcd.processes;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.xml.namespace.QName;
-
-import org.openlca.ilcd.commons.LangString;
-import org.openlca.ilcd.commons.Other;
-import org.openlca.ilcd.commons.Ref;
-import org.openlca.ilcd.commons.annotations.FreeText;
-
 import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlAnyAttribute;
 import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlType;
+import org.openlca.ilcd.commons.Copyable;
+import org.openlca.ilcd.commons.LangString;
+import org.openlca.ilcd.commons.Other;
+import org.openlca.ilcd.commons.Ref;
+import org.openlca.ilcd.commons.annotations.FreeText;
+
+import javax.xml.namespace.QName;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "TechnologyType", propOrder = {
@@ -28,9 +26,7 @@ import jakarta.xml.bind.annotation.XmlType;
 		"pictures",
 		"other"
 })
-public class Technology implements Serializable {
-
-	private final static long serialVersionUID = 1L;
+public class Technology implements Copyable<Technology> {
 
 	@FreeText
 	@XmlElement(name = "technologyDescriptionAndIncludedProcesses")
@@ -56,8 +52,8 @@ public class Technology implements Serializable {
 	public final Map<QName, String> otherAttributes = new HashMap<>();
 
 	@Override
-	public Technology clone() {
-		Technology clone = new Technology();
+	public Technology copy() {
+		var clone = new Technology();
 		LangString.copy(description, clone.description);
 		Ref.copy(includedProcesses, clone.includedProcesses);
 		LangString.copy(applicability, clone.applicability);

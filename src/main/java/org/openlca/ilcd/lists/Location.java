@@ -1,22 +1,19 @@
 
 package org.openlca.ilcd.lists;
 
-import java.io.Serializable;
-import java.util.Objects;
-
 import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlAttribute;
 import jakarta.xml.bind.annotation.XmlType;
 import jakarta.xml.bind.annotation.XmlValue;
 
+import java.util.Objects;
+
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "LocationType", namespace = "http://lca.jrc.it/ILCD/Locations", propOrder = {
 		"name"
 })
-public class Location implements Serializable {
-
-	private final static long serialVersionUID = 1L;
+public class Location {
 
 	@XmlValue
 	public String name;

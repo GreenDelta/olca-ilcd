@@ -32,22 +32,14 @@ public class MemDataStore implements DataStore {
 		if (ds == null)
 			return;
 		Class<?> clazz = ds.getClass();
-		HashMap<String, Object> map = content.get(clazz);
-		if (map == null) {
-			map = new HashMap<>();
-			content.put(clazz, map);
-		}
+		var map = content.computeIfAbsent(clazz, k -> new HashMap<>());
 		map.put(ds.getUUID(), ds);
 	}
 
 	@Override
 	public void put(Source source, File[] files) {
 		put(source);
-		HashMap<String, Object> map = content.get(File.class);
-		if (map == null) {
-			map = new HashMap<>();
-			content.put(File.class, map);
-		}
+		var map = content.computeIfAbsent(File.class, k -> new HashMap<>());
 		for (File file : files)
 			map.put(file.getName(), file);
 	}

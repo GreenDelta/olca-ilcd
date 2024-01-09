@@ -15,7 +15,7 @@ import java.util.zip.ZipFile;
 
 class ILCDFolder {
 
-	private File rootDir;
+	private final File rootDir;
 	private File zipFile;
 
 	public ILCDFolder(File rootDir) {

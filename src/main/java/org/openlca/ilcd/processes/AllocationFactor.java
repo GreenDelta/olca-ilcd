@@ -1,17 +1,14 @@
 package org.openlca.ilcd.processes;
 
-import java.io.Serializable;
-
 import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlAttribute;
 import jakarta.xml.bind.annotation.XmlType;
+import org.openlca.ilcd.commons.Copyable;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "AllocationType")
-public class AllocationFactor implements Serializable {
-
-	private final static long serialVersionUID = 1L;
+public class AllocationFactor implements Copyable<AllocationFactor> {
 
 	@XmlAttribute(name = "internalReferenceToCoProduct")
 	public int productExchangeId;
@@ -20,8 +17,8 @@ public class AllocationFactor implements Serializable {
 	public double fraction;
 
 	@Override
-	public AllocationFactor clone() {
-		AllocationFactor clone = new AllocationFactor();
+	public AllocationFactor copy() {
+		var clone = new AllocationFactor();
 		clone.productExchangeId = productExchangeId;
 		clone.fraction = fraction;
 		return clone;

@@ -1,24 +1,22 @@
 package org.openlca.ilcd.processes;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.xml.namespace.QName;
-
+import jakarta.xml.bind.annotation.XmlAccessType;
+import jakarta.xml.bind.annotation.XmlAccessorType;
+import jakarta.xml.bind.annotation.XmlAnyAttribute;
+import jakarta.xml.bind.annotation.XmlElement;
+import jakarta.xml.bind.annotation.XmlType;
+import org.openlca.ilcd.commons.Copyable;
 import org.openlca.ilcd.commons.LangString;
 import org.openlca.ilcd.commons.Other;
 import org.openlca.ilcd.commons.Ref;
 import org.openlca.ilcd.commons.annotations.FreeText;
 import org.openlca.ilcd.commons.annotations.Label;
 
-import jakarta.xml.bind.annotation.XmlAccessType;
-import jakarta.xml.bind.annotation.XmlAccessorType;
-import jakarta.xml.bind.annotation.XmlAnyAttribute;
-import jakarta.xml.bind.annotation.XmlElement;
-import jakarta.xml.bind.annotation.XmlType;
+import javax.xml.namespace.QName;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "DataSourcesTreatmentAndRepresentativenessType", propOrder = {
@@ -38,9 +36,7 @@ import jakarta.xml.bind.annotation.XmlType;
 		"useAdvice",
 		"other"
 })
-public class Representativeness implements Serializable {
-
-	private final static long serialVersionUID = 1L;
+public class Representativeness implements Copyable<Representativeness> {
 
 	@FreeText
 	@XmlElement(name = "dataCutOffAndCompletenessPrinciples")
@@ -102,8 +98,8 @@ public class Representativeness implements Serializable {
 	public final Map<QName, String> otherAttributes = new HashMap<>();
 
 	@Override
-	public Representativeness clone() {
-		Representativeness clone = new Representativeness();
+	public Representativeness copy() {
+		var clone = new Representativeness();
 		LangString.copy(completeness, clone.completeness);
 		LangString.copy(completenessComment, clone.completenessComment);
 		LangString.copy(dataSelection, clone.dataSelection);

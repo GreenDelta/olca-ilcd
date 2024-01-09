@@ -1,23 +1,21 @@
 
 package org.openlca.ilcd.processes;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.xml.namespace.QName;
-
-import org.openlca.ilcd.commons.LangString;
-import org.openlca.ilcd.commons.Other;
-import org.openlca.ilcd.commons.annotations.Label;
-
 import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlAnyAttribute;
 import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlType;
+import org.openlca.ilcd.commons.Copyable;
+import org.openlca.ilcd.commons.LangString;
+import org.openlca.ilcd.commons.Other;
+import org.openlca.ilcd.commons.annotations.Label;
+
+import javax.xml.namespace.QName;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "NameType", propOrder = {
@@ -27,9 +25,7 @@ import jakarta.xml.bind.annotation.XmlType;
 		"flowProperties",
 		"other"
 })
-public class ProcessName implements Serializable {
-
-	private final static long serialVersionUID = 1L;
+public class ProcessName implements Copyable<ProcessName> {
 
 	/**
 	 * General descriptive name of the process and/or its main good(s) or
@@ -76,8 +72,8 @@ public class ProcessName implements Serializable {
 	public final Map<QName, String> otherAttributes = new HashMap<>();
 
 	@Override
-	public ProcessName clone() {
-		ProcessName clone = new ProcessName();
+	public ProcessName copy() {
+		var clone = new ProcessName();
 		LangString.copy(name, clone.name);
 		LangString.copy(technicalDetails, clone.technicalDetails);
 		LangString.copy(mixAndLocation, clone.mixAndLocation);

@@ -1,13 +1,13 @@
 package org.openlca.ilcd.processes;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.xml.namespace.QName;
-
+import jakarta.xml.bind.annotation.XmlAccessType;
+import jakarta.xml.bind.annotation.XmlAccessorType;
+import jakarta.xml.bind.annotation.XmlAnyAttribute;
+import jakarta.xml.bind.annotation.XmlAttribute;
+import jakarta.xml.bind.annotation.XmlElement;
+import jakarta.xml.bind.annotation.XmlElementWrapper;
+import jakarta.xml.bind.annotation.XmlType;
+import org.openlca.ilcd.commons.Copyable;
 import org.openlca.ilcd.commons.DataQualityIndicator;
 import org.openlca.ilcd.commons.LangString;
 import org.openlca.ilcd.commons.Other;
@@ -17,21 +17,17 @@ import org.openlca.ilcd.commons.ReviewScope;
 import org.openlca.ilcd.commons.ReviewType;
 import org.openlca.ilcd.commons.annotations.FreeText;
 
-import jakarta.xml.bind.annotation.XmlAccessType;
-import jakarta.xml.bind.annotation.XmlAccessorType;
-import jakarta.xml.bind.annotation.XmlAnyAttribute;
-import jakarta.xml.bind.annotation.XmlAttribute;
-import jakarta.xml.bind.annotation.XmlElement;
-import jakarta.xml.bind.annotation.XmlElementWrapper;
-import jakarta.xml.bind.annotation.XmlType;
+import javax.xml.namespace.QName;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "ReviewType", propOrder = { "scopes", "indicators",
 		"details", "reviewers",
 		"otherDetails", "report", "other" })
-public class Review implements Serializable {
-
-	private final static long serialVersionUID = 1L;
+public class Review implements Copyable<Review> {
 
 	@XmlElement(namespace = "http://lca.jrc.it/ILCD/Common", name = "scope")
 	public final List<Scope> scopes = new ArrayList<>();
@@ -65,9 +61,7 @@ public class Review implements Serializable {
 
 	@XmlAccessorType(XmlAccessType.FIELD)
 	@XmlType(name = "", propOrder = { "methods" })
-	public static class Scope implements Serializable {
-
-		private final static long serialVersionUID = 1L;
+	public static class Scope implements Copyable<Scope> {
 
 		@XmlElement(namespace = "http://lca.jrc.it/ILCD/Common", name = "method")
 		public final List<Method> methods = new ArrayList<>();
@@ -76,12 +70,12 @@ public class Review implements Serializable {
 		public ReviewScope name;
 
 		@Override
-		public Scope clone() {
+		public Scope copy() {
 			Scope clone = new Scope();
 			for (Method m : methods) {
 				if (m == null)
 					continue;
-				clone.methods.add(m.clone());
+				clone.methods.add(m.copy());
 			}
 			clone.name = name;
 			return clone;
@@ -90,15 +84,13 @@ public class Review implements Serializable {
 	}
 
 	@XmlAccessorType(XmlAccessType.FIELD)
-	public static class Method implements Serializable {
-
-		private final static long serialVersionUID = 1L;
+	public static class Method implements Copyable<Method> {
 
 		@XmlAttribute(name = "name", required = true)
 		public ReviewMethod name;
 
 		@Override
-		public Method clone() {
+		public Method copy() {
 			Method clone = new Method();
 			clone.name = name;
 			return clone;
@@ -106,10 +98,10 @@ public class Review implements Serializable {
 	}
 
 	@Override
-	public Review clone() {
+	public Review copy() {
 		Review clone = new Review();
 		for (Scope s : scopes)
-			clone.scopes.add(s.clone());
+			clone.scopes.add(s.copy());
 		if (indicators != null) {
 			clone.indicators = new DataQualityIndicator[indicators.length];
 			for (int i = 0; i < indicators.length; i++) {

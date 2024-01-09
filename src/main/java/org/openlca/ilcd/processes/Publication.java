@@ -1,27 +1,25 @@
 
 package org.openlca.ilcd.processes;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.xml.datatype.XMLGregorianCalendar;
-import javax.xml.namespace.QName;
-
-import org.openlca.ilcd.commons.LangString;
-import org.openlca.ilcd.commons.Other;
-import org.openlca.ilcd.commons.PublicationStatus;
-import org.openlca.ilcd.commons.Ref;
-import org.openlca.ilcd.commons.annotations.FreeText;
-
 import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlAnyAttribute;
 import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlSchemaType;
 import jakarta.xml.bind.annotation.XmlType;
+import org.openlca.ilcd.commons.Copyable;
+import org.openlca.ilcd.commons.LangString;
+import org.openlca.ilcd.commons.Other;
+import org.openlca.ilcd.commons.PublicationStatus;
+import org.openlca.ilcd.commons.Ref;
+import org.openlca.ilcd.commons.annotations.FreeText;
+
+import javax.xml.datatype.XMLGregorianCalendar;
+import javax.xml.namespace.QName;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "PublicationAndOwnershipType", propOrder = {
@@ -40,9 +38,7 @@ import jakarta.xml.bind.annotation.XmlType;
 		"accessRestrictions",
 		"other"
 })
-public class Publication implements Serializable {
-
-	private final static long serialVersionUID = 1L;
+public class Publication implements Copyable<Publication> {
 
 	@XmlElement(namespace = "http://lca.jrc.it/ILCD/Common", name = "dateOfLastRevision")
 	public XMLGregorianCalendar lastRevision;
@@ -92,8 +88,8 @@ public class Publication implements Serializable {
 	public final Map<QName, String> otherAttributes = new HashMap<>();
 
 	@Override
-	public Publication clone() {
-		Publication clone = new Publication();
+	public Publication copy() {
+		var clone = new Publication();
 		clone.lastRevision = lastRevision;
 		clone.version = version;
 		Ref.copy(precedingVersions, clone.precedingVersions);

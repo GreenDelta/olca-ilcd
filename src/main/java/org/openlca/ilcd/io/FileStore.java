@@ -17,9 +17,9 @@ import org.slf4j.LoggerFactory;
 
 public class FileStore implements DataStore {
 
-	private File rootDir;
-	private Logger log = LoggerFactory.getLogger(this.getClass());
-	private XmlBinder binder = new XmlBinder();
+	private final File rootDir;
+	private final Logger log = LoggerFactory.getLogger(this.getClass());
+	private final XmlBinder binder = new XmlBinder();
 
 	public FileStore(String pathToFolder) {
 		this(new File(pathToFolder));
@@ -230,7 +230,7 @@ public class FileStore implements DataStore {
 	public void close() throws IOException {
 	}
 
-	private class FileIterator<T> implements Iterator<T> {
+	private static class FileIterator<T> implements Iterator<T> {
 
 		final Class<T> type;
 		int idx = 0;

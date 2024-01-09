@@ -1,39 +1,35 @@
 package org.openlca.ilcd.processes;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.xml.namespace.QName;
-
-import org.openlca.ilcd.commons.LangString;
-import org.openlca.ilcd.commons.Other;
-import org.openlca.ilcd.commons.UncertaintyDistribution;
-import org.openlca.ilcd.commons.annotations.Label;
-
 import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlAnyAttribute;
 import jakarta.xml.bind.annotation.XmlAttribute;
 import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlType;
+import org.openlca.ilcd.commons.Copyable;
+import org.openlca.ilcd.commons.LangString;
+import org.openlca.ilcd.commons.Other;
+import org.openlca.ilcd.commons.UncertaintyDistribution;
+import org.openlca.ilcd.commons.annotations.Label;
+
+import javax.xml.namespace.QName;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "VariableParameterType", propOrder = {
-		"formula",
-		"mean",
-		"min",
-		"max",
-		"distribution",
-		"dispersion",
-		"comment",
-		"other"
+	"formula",
+	"mean",
+	"min",
+	"max",
+	"distribution",
+	"dispersion",
+	"comment",
+	"other"
 })
-public class Parameter implements Serializable {
-
-	private final static long serialVersionUID = 1L;
+public class Parameter implements Copyable<Parameter> {
 
 	/**
 	 * Mathematical expression that determines the value of a variable. [Note: A
@@ -110,8 +106,8 @@ public class Parameter implements Serializable {
 	public final Map<QName, String> otherAttributes = new HashMap<>();
 
 	@Override
-	public Parameter clone() {
-		Parameter clone = new Parameter();
+	public Parameter copy() {
+		var clone = new Parameter();
 		clone.formula = formula;
 		clone.mean = mean;
 		clone.min = min;

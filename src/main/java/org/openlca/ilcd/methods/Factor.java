@@ -1,9 +1,10 @@
 package org.openlca.ilcd.methods;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-
+import jakarta.xml.bind.annotation.XmlAccessType;
+import jakarta.xml.bind.annotation.XmlAccessorType;
+import jakarta.xml.bind.annotation.XmlElement;
+import jakarta.xml.bind.annotation.XmlElementWrapper;
+import jakarta.xml.bind.annotation.XmlType;
 import org.openlca.ilcd.commons.DataDerivation;
 import org.openlca.ilcd.commons.ExchangeDirection;
 import org.openlca.ilcd.commons.LangString;
@@ -12,11 +13,8 @@ import org.openlca.ilcd.commons.Ref;
 import org.openlca.ilcd.commons.UncertaintyDistribution;
 import org.openlca.ilcd.commons.annotations.Label;
 
-import jakarta.xml.bind.annotation.XmlAccessType;
-import jakarta.xml.bind.annotation.XmlAccessorType;
-import jakarta.xml.bind.annotation.XmlElement;
-import jakarta.xml.bind.annotation.XmlElementWrapper;
-import jakarta.xml.bind.annotation.XmlType;
+import java.util.ArrayList;
+import java.util.List;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "CharacterisationFactorType", propOrder = {
@@ -33,9 +31,7 @@ import jakarta.xml.bind.annotation.XmlType;
 		"dataSources",
 		"comment"
 })
-public class Factor implements Serializable {
-
-	private final static long serialVersionUID = 1L;
+public class Factor {
 
 	@XmlElement(name = "referenceToFlowDataSet", required = true)
 	public Ref flow;

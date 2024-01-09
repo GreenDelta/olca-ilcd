@@ -37,8 +37,8 @@ import jakarta.xml.bind.Unmarshaller;
  */
 public class XmlBinder {
 
-	private HashMap<Class<?>, Marshaller> marshallers = new HashMap<>();
-	private HashMap<Class<?>, Unmarshaller> unmarshallers = new HashMap<>();
+	private final HashMap<Class<?>, Marshaller> marshallers = new HashMap<>();
+	private final HashMap<Class<?>, Unmarshaller> unmarshallers = new HashMap<>();
 
 	/** Writes the given ILCD object to a file. */
 	public void toFile(Object ilcdObject, File file) throws JAXBException {
@@ -140,8 +140,7 @@ public class XmlBinder {
 	private Unmarshaller createUnmarshaller(Class<?> clazz)
 			throws JAXBException {
 		JAXBContext context = JAXBContext.newInstance(clazz);
-		Unmarshaller unmarshaller = context.createUnmarshaller();
-		return unmarshaller;
+		return context.createUnmarshaller();
 	}
 
 	/**

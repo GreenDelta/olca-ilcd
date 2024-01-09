@@ -65,7 +65,7 @@ public class EpdDataSet implements Copyable<EpdDataSet> {
 
 	@Override
 	public EpdDataSet copy() {
-		var clone = new EpdDataSet(process.clone());
+		var clone = new EpdDataSet(process.copy());
 		clone.profile = profile;
 		clone.subType = subType;
 
