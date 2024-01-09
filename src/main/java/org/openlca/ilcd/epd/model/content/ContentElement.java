@@ -4,12 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import org.openlca.ilcd.commons.Copyable;
 import org.openlca.ilcd.commons.LangString;
 import org.openlca.ilcd.epd.conversion.Dom;
 import org.openlca.ilcd.epd.conversion.Vocab;
 import org.w3c.dom.Element;
 
-public abstract class ContentElement {
+public abstract class ContentElement implements Copyable<ContentElement> {
 
 	/** Name of the component, material, or substance. */
 	public final List<LangString> name = new ArrayList<>();
@@ -79,19 +80,19 @@ public abstract class ContentElement {
 		if (other == null)
 			return;
 		for (LangString n : name) {
-			other.name.add(n.clone());
+			other.name.add(n.copy());
 		}
 		if (massPerc != null) {
-			other.massPerc = massPerc.clone();
+			other.massPerc = massPerc.copy();
 		}
 		if (mass != null) {
-			other.mass = mass.clone();
+			other.mass = mass.copy();
 		}
 		for (LangString c : comment) {
-			other.comment.add(c.clone());
+			other.comment.add(c.copy());
 		}
 	}
 
 	@Override
-	public abstract ContentElement clone();
+	public abstract ContentElement copy();
 }

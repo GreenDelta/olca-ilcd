@@ -22,9 +22,7 @@ import jakarta.xml.bind.annotation.XmlType;
 		"publication",
 		"other"
 })
-public class AdminInfo implements Serializable {
-
-	private final static long serialVersionUID = 1L;
+public class AdminInfo {
 
 	@XmlElement(name = "dataEntryBy")
 	public DataEntry dataEntry;

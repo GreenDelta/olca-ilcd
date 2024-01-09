@@ -100,18 +100,18 @@ public class DataSetInfo implements Serializable {
 				Ref p = complementingProcesses[i];
 				if (p == null)
 					continue;
-				clone.complementingProcesses[i] = p.clone();
+				clone.complementingProcesses[i] = p.copy();
 			}
 		}
 		for (Classification c : classifications) {
 			if (c == null)
 				continue;
-			clone.classifications.add(c.clone());
+			clone.classifications.add(c.copy());
 		}
 		LangString.copy(comment, clone.comment);
 		Ref.copy(externalDocs, clone.externalDocs);
 		if (other != null)
-			clone.other = other.clone();
+			clone.other = other.copy();
 		clone.otherAttributes.putAll(otherAttributes);
 		return clone;
 	}

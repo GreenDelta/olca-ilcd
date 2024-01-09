@@ -16,12 +16,8 @@ import jakarta.xml.bind.annotation.XmlType;
 		"useRestrictions"
 })
 @XmlRootElement(name = "accessInformation")
-public class AccessInfo implements Serializable {
-
-	private final static long serialVersionUID = 1L;
-
+public class AccessInfo {
 	public Boolean copyright;
 	public String licenseType;
 	public LangString useRestrictions;
-
 }

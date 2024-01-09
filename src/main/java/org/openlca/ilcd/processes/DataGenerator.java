@@ -40,7 +40,7 @@ public class DataGenerator implements Serializable {
 		DataGenerator clone = new DataGenerator();
 		Ref.copy(contacts, clone.contacts);
 		if (other != null)
-			clone.other = other.clone();
+			clone.other = other.copy();
 		clone.otherAttributes.putAll(otherAttributes);
 		return clone;
 	}

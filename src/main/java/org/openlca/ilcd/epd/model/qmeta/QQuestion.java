@@ -1,11 +1,12 @@
 package org.openlca.ilcd.epd.model.qmeta;
 
+import org.openlca.ilcd.commons.Copyable;
 import org.openlca.ilcd.epd.conversion.Dom;
 import org.openlca.ilcd.epd.conversion.Vocab;
 import org.openlca.ilcd.util.Strings;
 import org.w3c.dom.Element;
 
-public class QQuestion {
+public class QQuestion implements Copyable<QQuestion> {
 
 	public String id;
 	public String group;
@@ -64,13 +65,13 @@ public class QQuestion {
 	}
 
 	@Override
-	public QQuestion clone() {
-		QQuestion clone = new QQuestion();
+	public QQuestion copy() {
+		var clone = new QQuestion();
 		clone.id = id;
 		clone.group = group;
 		clone.comment = comment;
 		if (answer != null) {
-			clone.answer = answer.clone();
+			clone.answer = answer.copy();
 		}
 		clone.text = text;
 		clone.type = type;

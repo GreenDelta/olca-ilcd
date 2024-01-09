@@ -58,13 +58,13 @@ public class LCIAResult implements Serializable {
 	public LCIAResult clone() {
 		LCIAResult clone = new LCIAResult();
 		if (method != null)
-			clone.method = method.clone();
+			clone.method = method.copy();
 		clone.amount = amount;
 		clone.uncertaintyDistribution = uncertaintyDistribution;
 		clone.relativeStandardDeviation95In = relativeStandardDeviation95In;
 		LangString.copy(comment, clone.comment);
 		if (other != null)
-			clone.other = other.clone();
+			clone.other = other.copy();
 		clone.otherAttributes.putAll(otherAttributes);
 		return clone;
 	}

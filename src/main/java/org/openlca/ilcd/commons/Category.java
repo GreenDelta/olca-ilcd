@@ -1,7 +1,6 @@
 
 package org.openlca.ilcd.commons;
 
-import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -19,9 +18,7 @@ import jakarta.xml.bind.annotation.XmlValue;
 @XmlType(name = "ClassType", propOrder = {
 		"value"
 })
-public class Category implements Serializable {
-
-	private final static long serialVersionUID = 1L;
+public class Category implements Copyable<Category> {
 
 	@XmlValue
 	public String value;
@@ -46,8 +43,8 @@ public class Category implements Serializable {
 	public final Map<QName, String> otherAttributes = new HashMap<>();
 
 	@Override
-	public Category clone() {
-		Category clone = new Category();
+	public Category copy() {
+		var clone = new Category();
 		clone.value = value;
 		clone.level = level;
 		clone.classId = classId;
@@ -61,9 +58,8 @@ public class Category implements Serializable {
 			return false;
 		if (obj == this)
 			return true;
-		if (!(obj instanceof Category))
+		if (!(obj instanceof Category other))
 			return false;
-		Category other = (Category) obj;
 		if (classId != null || other.classId != null)
 			return Objects.equals(classId, other.classId);
 		if (level != other.level)

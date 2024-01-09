@@ -119,7 +119,7 @@ public class Representativeness implements Serializable {
 		LangString.copy(uncertaintyAdjustments, clone.uncertaintyAdjustments);
 		LangString.copy(useAdvice, clone.useAdvice);
 		if (other != null)
-			clone.other = other.clone();
+			clone.other = other.copy();
 		clone.otherAttributes.putAll(otherAttributes);
 		return clone;
 	}

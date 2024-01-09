@@ -1,20 +1,15 @@
 package org.openlca.ilcd.commons;
 
-import java.io.Serial;
-import java.io.Serializable;
-import java.util.List;
-import java.util.Objects;
-
 import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlAttribute;
 import jakarta.xml.bind.annotation.XmlValue;
 
-@XmlAccessorType(XmlAccessType.FIELD)
-public final class LangString implements Serializable {
+import java.util.List;
+import java.util.Objects;
 
-	@Serial
-	private static final long serialVersionUID = -818083869232748527L;
+@XmlAccessorType(XmlAccessType.FIELD)
+public final class LangString implements Copyable<LangString> {
 
 	@XmlValue
 	public final String value;
@@ -23,8 +18,8 @@ public final class LangString implements Serializable {
 	public final String lang;
 
 	/**
-	 * This private constructor is required so that JAXB can initialize it.
-	 * see: https://stackoverflow.com/a/14820037
+	 * This private constructor is required so that JAXB can call it, see
+	 * <a href="https://stackoverflow.com/a/14820037">https://stackoverflow.com/a/14820037</a>
 	 */
 	@SuppressWarnings("unused")
 	private LangString() {
@@ -49,7 +44,7 @@ public final class LangString implements Serializable {
 	}
 
 	@Override
-	public LangString clone() {
+	public LangString copy() {
 		return LangString.of(value, lang);
 	}
 
@@ -60,7 +55,7 @@ public final class LangString implements Serializable {
 		if (!(o instanceof LangString other))
 			return false;
 		return Objects.equals(value, other.value)
-					 && Objects.equals(lang, other.lang);
+			&& Objects.equals(lang, other.lang);
 	}
 
 	@Override
@@ -75,7 +70,7 @@ public final class LangString implements Serializable {
 		if (source == null || target == null)
 			return;
 		for (LangString s : source) {
-			target.add(s.clone());
+			target.add(s.copy());
 		}
 	}
 
@@ -113,7 +108,7 @@ public final class LangString implements Serializable {
 		if (list == null || list.isEmpty())
 			return null;
 		if (langs == null || langs.length == 0) {
-			langs = new String[] { "en" };
+			langs = new String[]{"en"};
 		}
 		for (String lang : langs) {
 			LangString s = get(list, lang);
@@ -146,7 +141,7 @@ public final class LangString implements Serializable {
 	private static boolean empty(String s) {
 		if (s == null)
 			return true;
-		return s.trim().length() == 0;
+		return s.trim().isEmpty();
 	}
 
 }

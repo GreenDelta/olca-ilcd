@@ -48,7 +48,7 @@ public class AdminInfo implements Serializable {
 	public AdminInfo clone() {
 		AdminInfo clone = new AdminInfo();
 		if (commissionerAndGoal != null)
-			clone.commissionerAndGoal = commissionerAndGoal.clone();
+			clone.commissionerAndGoal = commissionerAndGoal.copy();
 		if (dataGenerator != null)
 			clone.dataGenerator = dataGenerator.clone();
 		if (dataEntry != null)
@@ -56,7 +56,7 @@ public class AdminInfo implements Serializable {
 		if (publication != null)
 			clone.publication = publication.clone();
 		if (other != null)
-			clone.other = other.clone();
+			clone.other = other.copy();
 		clone.otherAttributes.putAll(otherAttributes);
 		return clone;
 	}

@@ -30,8 +30,6 @@ import jakarta.xml.bind.annotation.XmlType;
 })
 public class FlowProperty implements IDataSet {
 
-	private final static long serialVersionUID = 1L;
-
 	@XmlElement(name = "flowPropertiesInformation", required = true)
 	public FlowPropertyInfo flowPropertyInfo;
 

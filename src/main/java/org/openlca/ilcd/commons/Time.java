@@ -1,27 +1,22 @@
 package org.openlca.ilcd.commons;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.xml.namespace.QName;
-
-import org.openlca.ilcd.commons.annotations.FreeText;
-
 import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlAnyAttribute;
 import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlType;
+import org.openlca.ilcd.commons.annotations.FreeText;
+
+import javax.xml.namespace.QName;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "TimeType", propOrder = { "referenceYear", "validUntil",
-		"description", "other" })
-public class Time implements Serializable {
-
-	private final static long serialVersionUID = 1L;
+@XmlType(name = "TimeType", propOrder = {"referenceYear", "validUntil",
+	"description", "other"})
+public class Time implements Copyable<Time> {
 
 	/**
 	 * Start year of the time period for which the data set is valid (until year
@@ -56,13 +51,13 @@ public class Time implements Serializable {
 	public final Map<QName, String> otherAttributes = new HashMap<>();
 
 	@Override
-	public Time clone() {
-		Time clone = new Time();
+	public Time copy() {
+		var clone = new Time();
 		clone.referenceYear = referenceYear;
 		clone.validUntil = validUntil;
 		LangString.copy(description, clone.description);
 		if (other != null)
-			clone.other = other.clone();
+			clone.other = other.copy();
 		clone.otherAttributes.putAll(otherAttributes);
 		return clone;
 	}

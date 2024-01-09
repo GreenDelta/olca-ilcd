@@ -1,18 +1,16 @@
 
 package org.openlca.ilcd.descriptors;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-
-import org.openlca.ilcd.commons.LangString;
-
 import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlAttribute;
 import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlSchemaType;
 import jakarta.xml.bind.annotation.XmlType;
+import org.openlca.ilcd.commons.LangString;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
@@ -23,9 +21,7 @@ import jakarta.xml.bind.annotation.XmlType;
 		"classification",
 		"generalComment"
 })
-public class MethodDescriptor implements Serializable {
-
-	private final static long serialVersionUID = 1L;
+public class MethodDescriptor {
 
 	@XmlElement(namespace = "http://www.ilcd-network.org/ILCD/ServiceAPI")
 	public String uuid;

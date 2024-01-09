@@ -1,8 +1,10 @@
 package org.openlca.ilcd.epd.model;
 
+import org.openlca.ilcd.commons.Copyable;
+
 import java.util.Objects;
 
-public class Amount {
+public class Amount implements Copyable<Amount> {
 
 	public Module module;
 	public String scenario;
@@ -22,8 +24,8 @@ public class Amount {
 	}
 
 	@Override
-	public Amount clone() {
-		Amount clone = new Amount();
+	public Amount copy() {
+		var clone = new Amount();
 		clone.module = module;
 		clone.scenario = scenario;
 		clone.value = value;

@@ -54,7 +54,7 @@ public class Unit implements Serializable {
 		clone.factor = factor;
 		LangString.copy(comment, clone.comment);
 		if (other != null)
-			clone.other = other.clone();
+			clone.other = other.copy();
 		clone.id = id;
 		clone.otherAttributes.putAll(otherAttributes);
 		return clone;

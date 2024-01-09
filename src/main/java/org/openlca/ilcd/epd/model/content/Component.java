@@ -26,12 +26,12 @@ public class Component extends ContentElement {
 	}
 
 	@Override
-	public Component clone() {
+	public Component copy() {
 		Component clone = new Component();
 		copyTo(clone);
 		for (ContentElement e : content) {
 			if (e != null) {
-				clone.content.add(e.clone());
+				clone.content.add(e.copy());
 			}
 		}
 		return clone;

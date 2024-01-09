@@ -29,8 +29,6 @@ import jakarta.xml.bind.annotation.XmlType;
 })
 public class Contact implements IDataSet {
 
-	private final static long serialVersionUID = 1L;
-
 	@XmlElement(required = true, name = "contactInformation")
 	public ContactInfo contactInfo;
 

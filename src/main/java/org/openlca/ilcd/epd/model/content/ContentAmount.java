@@ -1,12 +1,13 @@
 package org.openlca.ilcd.epd.model.content;
 
+import org.openlca.ilcd.commons.Copyable;
 import org.openlca.ilcd.epd.conversion.Vocab;
 import org.openlca.ilcd.util.Strings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.Element;
 
-public class ContentAmount {
+public class ContentAmount implements Copyable<ContentAmount> {
 
 	/**
 	 * For specifying a discrete value: the value.
@@ -80,8 +81,8 @@ public class ContentAmount {
 	}
 
 	@Override
-	public ContentAmount clone() {
-		ContentAmount clone = new ContentAmount();
+	public ContentAmount copy() {
+		var clone = new ContentAmount();
 		clone.value = value;
 		clone.lowerValue = lowerValue;
 		clone.upperValue = upperValue;

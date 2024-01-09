@@ -1,10 +1,11 @@
 package org.openlca.ilcd.epd.model.qmeta;
 
+import org.openlca.ilcd.commons.Copyable;
 import org.openlca.ilcd.epd.conversion.Dom;
 import org.openlca.ilcd.epd.conversion.Vocab;
 import org.w3c.dom.Element;
 
-public class QAnswer {
+public class QAnswer implements Copyable<QAnswer> {
 
 	public Boolean yesNo;
 	public String listText;
@@ -48,8 +49,8 @@ public class QAnswer {
 	}
 
 	@Override
-	public QAnswer clone() {
-		QAnswer clone = new QAnswer();
+	public QAnswer copy() {
+		var clone = new QAnswer();
 		clone.yesNo = yesNo;
 		clone.listText = listText;
 		return clone;

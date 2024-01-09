@@ -100,18 +100,18 @@ public class Publication implements Serializable {
 		clone.uri = uri;
 		clone.status = status;
 		if (republication != null)
-			clone.republication = republication.clone();
+			clone.republication = republication.copy();
 		if (registrationAuthority != null)
-			clone.registrationAuthority = registrationAuthority.clone();
+			clone.registrationAuthority = registrationAuthority.copy();
 		clone.registrationNumber = registrationNumber;
 		if (owner != null)
-			clone.owner = owner.clone();
+			clone.owner = owner.copy();
 		clone.copyright = copyright;
 		Ref.copy(entitiesWithExclusiveAccess, clone.entitiesWithExclusiveAccess);
 		clone.license = license;
 		LangString.copy(accessRestrictions, clone.accessRestrictions);
 		if (other != null)
-			clone.other = other.clone();
+			clone.other = other.copy();
 		clone.otherAttributes.putAll(otherAttributes);
 		return clone;
 	}

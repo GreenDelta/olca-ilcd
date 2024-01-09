@@ -109,7 +109,7 @@ public class Exchange implements Serializable {
 		Exchange clone = new Exchange();
 		clone.id = id;
 		if (flow != null)
-			clone.flow = flow.clone();
+			clone.flow = flow.copy();
 		clone.location = location;
 		clone.exchangeFunction = exchangeFunction;
 		clone.direction = direction;
@@ -126,7 +126,7 @@ public class Exchange implements Serializable {
 		LangString.copy(comment, clone.comment);
 		cloneAllocations(clone);
 		if (other != null)
-			clone.other = other.clone();
+			clone.other = other.copy();
 		clone.otherAttributes.putAll(otherAttributes);
 		return clone;
 	}

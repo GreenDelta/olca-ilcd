@@ -113,8 +113,8 @@ public class Substance extends ContentElement {
 	}
 
 	@Override
-	public Substance clone() {
-		Substance clone = new Substance();
+	public Substance copy() {
+		var clone = new Substance();
 		copyTo(clone);
 		return clone;
 	}

@@ -1,16 +1,19 @@
 package org.openlca.ilcd.epd.model;
 
-public final class MaterialPropertyValue implements Cloneable {
+import org.openlca.ilcd.commons.Copyable;
+
+public final class MaterialPropertyValue implements Copyable<MaterialPropertyValue> {
 
 	public MaterialProperty property;
 	public double value;
 
 	@Override
-	public MaterialPropertyValue clone() {
-		try {
-			return (MaterialPropertyValue) super.clone();
-		} catch (CloneNotSupportedException e) {
-			throw new RuntimeException(e);
+	public MaterialPropertyValue copy() {
+		var clone = new MaterialPropertyValue();
+		if (property != null) {
+			clone.property = property.copy();
 		}
+		clone.value = value;
+		return clone;
 	}
 }

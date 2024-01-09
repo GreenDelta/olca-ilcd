@@ -62,7 +62,7 @@ public class Completeness implements Serializable {
 		}
 		LangString.copy(otherDetails, clone.otherDetails);
 		if (other != null)
-			clone.other = other.clone();
+			clone.other = other.copy();
 		clone.otherAttributes.putAll(otherAttributes);
 		return clone;
 	}

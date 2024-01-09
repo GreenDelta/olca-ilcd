@@ -1,23 +1,19 @@
 package org.openlca.ilcd.commons;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-
-import org.w3c.dom.Element;
-
 import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlAnyElement;
 import jakarta.xml.bind.annotation.XmlRootElement;
 import jakarta.xml.bind.annotation.XmlType;
+import org.w3c.dom.Element;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = { "any" })
 @XmlRootElement(name = "other")
-public class Other implements Serializable {
-
-	private final static long serialVersionUID = 1L;
+public class Other implements Copyable<Other> {
 
 	/**
 	 * Objects of the following type(s) are allowed in the list {@link Element }
@@ -27,11 +23,10 @@ public class Other implements Serializable {
 	public final List<Object> any = new ArrayList<>();
 
 	@Override
-	public Other clone() {
+	public Other copy() {
 		Other clone = new Other();
 		for (Object o : any) {
-			if (o instanceof Element) {
-				Element e = (Element) o;
+			if (o instanceof Element e) {
 				clone.any.add(e.cloneNode(true));
 			}
 		}

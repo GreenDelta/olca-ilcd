@@ -62,7 +62,7 @@ public class ComplianceDeclaration implements Serializable {
 	public ComplianceDeclaration clone() {
 		ComplianceDeclaration clone = new ComplianceDeclaration();
 		if (system != null)
-			clone.system = system.clone();
+			clone.system = system.copy();
 		clone.approval = approval;
 		clone.nomenclature = nomenclature;
 		clone.method = method;
@@ -70,7 +70,7 @@ public class ComplianceDeclaration implements Serializable {
 		clone.documentation = documentation;
 		clone.quality = quality;
 		if (other != null)
-			clone.other = other.clone();
+			clone.other = other.copy();
 		clone.otherAttributes.putAll(otherAttributes);
 		return clone;
 	}

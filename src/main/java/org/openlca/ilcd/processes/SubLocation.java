@@ -49,7 +49,7 @@ public class SubLocation implements Serializable {
 		SubLocation clone = new SubLocation();
 		LangString.copy(description, clone.description);
 		if (other != null)
-			clone.other = other.clone();
+			clone.other = other.copy();
 		clone.subLocation = subLocation;
 		clone.latitudeAndLongitude = latitudeAndLongitude;
 		clone.otherAttributes.putAll(otherAttributes);

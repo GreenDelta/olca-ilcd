@@ -83,7 +83,7 @@ public class ProcessName implements Serializable {
 		LangString.copy(mixAndLocation, clone.mixAndLocation);
 		LangString.copy(flowProperties, clone.flowProperties);
 		if (other != null)
-			clone.other = other.clone();
+			clone.other = other.copy();
 		clone.otherAttributes.putAll(otherAttributes);
 		return clone;
 	}

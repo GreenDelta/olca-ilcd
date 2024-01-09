@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import org.openlca.ilcd.commons.Copyable;
 import org.openlca.ilcd.commons.Other;
 import org.openlca.ilcd.epd.conversion.Dom;
 import org.openlca.ilcd.epd.conversion.Vocab;
@@ -15,7 +16,7 @@ import org.w3c.dom.Element;
  * may contain component, material and/or substance elements, which may (but do
  * not have to) be nested.
  */
-public class ContentDeclaration {
+public class ContentDeclaration implements Copyable<ContentDeclaration> {
 
 	/**
 	 * A content declaration can contain components, materials, and substances.
@@ -38,7 +39,7 @@ public class ContentDeclaration {
 			if (!(any instanceof Element e))
 				continue;
 			if (Objects.equals(Vocab.NS_EPDv2, e.getNamespaceURI())
-					&& Objects.equals("contentDeclaration", e.getLocalName())) {
+				&& Objects.equals("contentDeclaration", e.getLocalName())) {
 				root = e;
 				break;
 			}
@@ -68,7 +69,7 @@ public class ContentDeclaration {
 		if (content.isEmpty())
 			return;
 		Element root = doc.createElementNS(
-				Vocab.NS_EPDv2, "epd2:contentDeclaration");
+			Vocab.NS_EPDv2, "epd2:contentDeclaration");
 		other.any.add(root);
 		for (ContentElement e : content) {
 			writeElement(root, e);
@@ -106,11 +107,11 @@ public class ContentDeclaration {
 	}
 
 	@Override
-	public ContentDeclaration clone() {
+	public ContentDeclaration copy() {
 		ContentDeclaration clone = new ContentDeclaration();
 		for (ContentElement elem : content) {
 			if (elem != null) {
-				clone.content.add(elem.clone());
+				clone.content.add(elem.copy());
 			}
 		}
 		return clone;

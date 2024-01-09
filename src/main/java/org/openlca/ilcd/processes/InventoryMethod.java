@@ -81,7 +81,7 @@ public class InventoryMethod implements Serializable {
 		LangString.copy(constantsDeviations, clone.constantsDeviations);
 		Ref.copy(sources, clone.sources);
 		if (other != null) {
-			clone.other = other.clone();
+			clone.other = other.copy();
 		}
 		clone.otherAttributes.putAll(otherAttributes);
 		return clone;

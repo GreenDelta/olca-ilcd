@@ -1,34 +1,31 @@
 package org.openlca.ilcd.commons;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-
-import org.openlca.ilcd.commons.annotations.ShortText;
-import org.openlca.ilcd.contacts.Contact;
-import org.openlca.ilcd.flowproperties.FlowProperty;
-import org.openlca.ilcd.flows.Flow;
-import org.openlca.ilcd.methods.LCIAMethod;
-import org.openlca.ilcd.processes.Process;
-import org.openlca.ilcd.sources.Source;
-import org.openlca.ilcd.units.UnitGroup;
-
 import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlAttribute;
 import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlSchemaType;
 import jakarta.xml.bind.annotation.XmlType;
+import org.openlca.ilcd.commons.annotations.ShortText;
+import org.openlca.ilcd.contacts.Contact;
+import org.openlca.ilcd.flowproperties.FlowProperty;
+import org.openlca.ilcd.flows.Flow;
+import org.openlca.ilcd.methods.LCIAMethod;
+import org.openlca.ilcd.models.Model;
+import org.openlca.ilcd.processes.Process;
+import org.openlca.ilcd.sources.Source;
+import org.openlca.ilcd.units.UnitGroup;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 /**
  * Ref describes an ILCD data set reference (GlobalReferenceType).
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "GlobalReferenceType", propOrder = { "name" })
-public class Ref implements Serializable {
-
-	private final static long serialVersionUID = 1L;
+public class Ref implements Copyable<Ref> {
 
 	@ShortText
 	@XmlElement(name = "shortDescription")
@@ -67,15 +64,14 @@ public class Ref implements Serializable {
 			return false;
 		if (obj == this)
 			return true;
-		if (!(obj instanceof Ref))
+		if (!(obj instanceof Ref other))
 			return false;
-		Ref other = (Ref) obj;
 		return Objects.equals(this.type, other.type)
 				&& Objects.equals(this.uuid, other.uuid);
 	}
 
 	@Override
-	public Ref clone() {
+	public Ref copy() {
 		Ref clone = new Ref();
 		LangString.copy(name, clone.name);
 		clone.type = type;
@@ -95,7 +91,7 @@ public class Ref implements Serializable {
 		for (Ref ref : source) {
 			if (ref == null)
 				continue;
-			target.add(ref.clone());
+			target.add(ref.copy());
 		}
 	}
 
@@ -106,7 +102,7 @@ public class Ref implements Serializable {
 		for (int i = 0; i < refs.length; i++) {
 			if (refs[i] == null)
 				continue;
-			copy[i] = refs[i].clone();
+			copy[i] = refs[i].copy();
 		}
 		return copy;
 	}
@@ -114,24 +110,17 @@ public class Ref implements Serializable {
 	public Class<? extends IDataSet> getDataSetClass() {
 		if (type == null)
 			return null;
-		switch (type) {
-		case CONTACT:
-			return Contact.class;
-		case SOURCE:
-			return Source.class;
-		case UNIT_GROUP:
-			return UnitGroup.class;
-		case FLOW_PROPERTY:
-			return FlowProperty.class;
-		case FLOW:
-			return Flow.class;
-		case PROCESS:
-			return Process.class;
-		case LCIA_METHOD:
-			return LCIAMethod.class;
-		default:
-			return null;
-		}
+		return switch (type) {
+			case CONTACT -> Contact.class;
+			case SOURCE -> Source.class;
+			case UNIT_GROUP -> UnitGroup.class;
+			case FLOW_PROPERTY -> FlowProperty.class;
+			case FLOW -> Flow.class;
+			case PROCESS -> Process.class;
+			case LCIA_METHOD -> LCIAMethod.class;
+			case MODEL -> Model.class;
+			default -> null;
+		};
 	}
 
 	public static Ref of(IDataSet dataSet) {

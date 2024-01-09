@@ -43,7 +43,7 @@ public class Geography implements Serializable {
 		for (SubLocation sub : subLocations)
 			clone.subLocations.add(sub.clone());
 		if (other != null)
-			clone.other = other.clone();
+			clone.other = other.copy();
 		clone.otherAttributes.putAll(otherAttributes);
 		return clone;
 	}

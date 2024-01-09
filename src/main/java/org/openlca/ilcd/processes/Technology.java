@@ -62,10 +62,10 @@ public class Technology implements Serializable {
 		Ref.copy(includedProcesses, clone.includedProcesses);
 		LangString.copy(applicability, clone.applicability);
 		if (pictogram != null)
-			clone.pictogram = pictogram.clone();
+			clone.pictogram = pictogram.copy();
 		Ref.copy(pictures, clone.pictures);
 		if (other != null)
-			clone.other = other.clone();
+			clone.other = other.copy();
 		clone.otherAttributes.putAll(otherAttributes);
 		return clone;
 	}

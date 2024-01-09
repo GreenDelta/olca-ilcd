@@ -1,26 +1,21 @@
 
 package org.openlca.ilcd.flows;
 
-import java.io.Serializable;
-import java.util.HashMap;
-import java.util.Map;
-
-import javax.xml.namespace.QName;
-
-import org.openlca.ilcd.commons.Availability;
-import org.openlca.ilcd.commons.ImpactCategory;
-
 import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlAnyAttribute;
 import jakarta.xml.bind.annotation.XmlAttribute;
 import jakarta.xml.bind.annotation.XmlType;
+import org.openlca.ilcd.commons.Availability;
+import org.openlca.ilcd.commons.ImpactCategory;
+
+import javax.xml.namespace.QName;
+import java.util.HashMap;
+import java.util.Map;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "CompletenessAvailabilityImpactFactorsType")
-public class ImpactFactorAvailability implements Serializable {
-
-	private final static long serialVersionUID = 1L;
+public class ImpactFactorAvailability {
 
 	@XmlAttribute(name = "type", required = true)
 	public ImpactCategory type;

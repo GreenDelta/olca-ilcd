@@ -1,8 +1,10 @@
 package org.openlca.ilcd.epd.model;
 
+import org.openlca.ilcd.commons.Copyable;
+
 import java.util.Objects;
 
-public final class MaterialProperty implements Cloneable {
+public final class MaterialProperty implements Copyable<MaterialProperty> {
 
 	public String id;
 	public String name;
@@ -28,11 +30,12 @@ public final class MaterialProperty implements Cloneable {
 	}
 
 	@Override
-	public MaterialProperty clone() {
-		try {
-			return (MaterialProperty) super.clone();
-		} catch (CloneNotSupportedException e) {
-			throw new RuntimeException(e);
-		}
+	public MaterialProperty copy() {
+		var clone = new MaterialProperty();
+		clone.id = id;
+		clone.name = name;
+		clone.unit = unit;
+		clone.unitDescription = unitDescription;
+		return clone;
 	}
 }

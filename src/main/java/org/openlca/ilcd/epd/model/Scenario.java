@@ -1,8 +1,10 @@
 package org.openlca.ilcd.epd.model;
 
+import org.openlca.ilcd.commons.Copyable;
+
 import java.util.Objects;
 
-public final class Scenario implements Cloneable {
+public final class Scenario implements Copyable<Scenario> {
 
 	public String name;
 	public boolean defaultScenario;
@@ -15,12 +17,13 @@ public final class Scenario implements Cloneable {
 	}
 
 	@Override
-	public Scenario clone() {
-		try {
-			return (Scenario) super.clone();
-		} catch (CloneNotSupportedException e) {
-			throw new RuntimeException(e);
-		}
+	public Scenario copy() {
+		var clone = new Scenario();
+		clone.name = name;
+		clone.defaultScenario = defaultScenario;
+		clone.group = group;
+		clone.description = description;
+		return clone;
 	}
 
 	@Override

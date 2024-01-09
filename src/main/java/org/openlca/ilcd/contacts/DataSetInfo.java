@@ -27,9 +27,7 @@ import jakarta.xml.bind.annotation.XmlType;
 		"name", "classifications", "contactAddress", "telephone",
 		"telefax", "email", "wwwAddress", "centralContactPoint", "description",
 		"belongsTo", "logo", "other" })
-public class DataSetInfo implements Serializable {
-
-	private final static long serialVersionUID = 1L;
+public class DataSetInfo {
 
 	@XmlElement(name = "UUID", namespace = "http://lca.jrc.it/ILCD/Common", required = true)
 	public String uuid;

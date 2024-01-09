@@ -124,7 +124,7 @@ public class Process implements IDataSet {
 		}
 		cloneResults(clone);
 		if (other != null)
-			clone.other = other.clone();
+			clone.other = other.copy();
 		clone.version = version;
 		clone.locations = locations;
 		clone.metaDataOnly = metaDataOnly;

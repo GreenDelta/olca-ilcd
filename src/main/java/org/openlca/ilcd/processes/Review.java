@@ -115,16 +115,16 @@ public class Review implements Serializable {
 			for (int i = 0; i < indicators.length; i++) {
 				if (indicators[i] == null)
 					continue;
-				clone.indicators[i] = indicators[i].clone();
+				clone.indicators[i] = indicators[i].copy();
 			}
 		}
 		LangString.copy(details, clone.details);
 		Ref.copy(reviewers, clone.reviewers);
 		LangString.copy(otherDetails, clone.otherDetails);
 		if (report != null)
-			clone.report = report.clone();
+			clone.report = report.copy();
 		if (other != null)
-			clone.other = other.clone();
+			clone.other = other.copy();
 		clone.type = type;
 		clone.otherAttributes.putAll(otherAttributes);
 		return clone;

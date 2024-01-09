@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import org.openlca.ilcd.commons.Copyable;
 import org.openlca.ilcd.commons.Other;
 import org.openlca.ilcd.epd.conversion.Dom;
 import org.openlca.ilcd.epd.conversion.Vocab;
@@ -16,7 +17,7 @@ import org.openlca.ilcd.util.Processes;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
-public class QMetaData {
+public class QMetaData implements Copyable<QMetaData> {
 
 	public List<QQuestion> questions = new ArrayList<>();
 
@@ -147,11 +148,11 @@ public class QMetaData {
 	}
 
 	@Override
-	public QMetaData clone() {
-		QMetaData clone = new QMetaData();
-		for (QQuestion q : questions) {
+	public QMetaData copy() {
+		var clone = new QMetaData();
+		for (var q : questions) {
 			if (q != null) {
-				clone.questions.add(q.clone());
+				clone.questions.add(q.copy());
 			}
 		}
 		return clone;

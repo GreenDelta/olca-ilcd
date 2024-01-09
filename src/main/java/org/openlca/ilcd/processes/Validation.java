@@ -40,7 +40,7 @@ public class Validation implements Serializable {
 			clone.reviews.add(r.clone());
 		}
 		if (other != null)
-			clone.other = other.clone();
+			clone.other = other.copy();
 		clone.otherAttributes.putAll(otherAttributes);
 		return clone;
 	}

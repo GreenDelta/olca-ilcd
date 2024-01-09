@@ -48,7 +48,7 @@ public class ParameterSection implements Serializable {
 			clone.parameters.add(p.clone());
 		}
 		if (other != null)
-			clone.other = other.clone();
+			clone.other = other.copy();
 		clone.otherAttributes.putAll(otherAttributes);
 		return clone;
 	}

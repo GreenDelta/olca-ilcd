@@ -1,8 +1,10 @@
 package org.openlca.ilcd.epd.model;
 
+import org.openlca.ilcd.commons.Copyable;
+
 import java.util.Objects;
 
-public class ModuleEntry {
+public class ModuleEntry implements Copyable<ModuleEntry> {
 
 	public Module module;
 	public String scenario;
@@ -31,8 +33,8 @@ public class ModuleEntry {
 	}
 
 	@Override
-	public ModuleEntry clone() {
-		ModuleEntry clone = new ModuleEntry();
+	public ModuleEntry copy() {
+		var clone = new ModuleEntry();
 		clone.module = module;
 		clone.scenario = scenario;
 		clone.description = description;

@@ -1,6 +1,5 @@
 package org.openlca.ilcd.commons;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -20,9 +19,7 @@ import jakarta.xml.bind.annotation.XmlType;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "CommissionerAndGoalType", propOrder = { "commissioners",
 		"project", "intendedApplications", "other" })
-public class CommissionerAndGoal implements Serializable {
-
-	private final static long serialVersionUID = 1L;
+public class CommissionerAndGoal implements Copyable<CommissionerAndGoal> {
 
 	@XmlElement(name = "referenceToCommissioner")
 	public final List<Ref> commissioners = new ArrayList<>();
@@ -36,16 +33,16 @@ public class CommissionerAndGoal implements Serializable {
 	public Other other;
 
 	@XmlAnyAttribute
-	private Map<QName, String> otherAttributes = new HashMap<>();
+	private final Map<QName, String> otherAttributes = new HashMap<>();
 
 	@Override
-	public CommissionerAndGoal clone() {
-		CommissionerAndGoal clone = new CommissionerAndGoal();
+	public CommissionerAndGoal copy() {
+		var clone = new CommissionerAndGoal();
 		Ref.copy(commissioners, clone.commissioners);
 		LangString.copy(project, clone.project);
 		LangString.copy(intendedApplications, clone.intendedApplications);
 		if (other != null)
-			clone.other = other.clone();
+			clone.other = other.copy();
 		clone.otherAttributes.putAll(otherAttributes);
 		return clone;
 	}

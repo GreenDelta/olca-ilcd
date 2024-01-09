@@ -58,7 +58,7 @@ public class ProcessInfo implements Serializable {
 		if (quantitativeReference != null)
 			clone.quantitativeReference = quantitativeReference.clone();
 		if (time != null)
-			clone.time = time.clone();
+			clone.time = time.copy();
 		if (geography != null)
 			clone.geography = geography.clone();
 		if (technology != null)
@@ -66,7 +66,7 @@ public class ProcessInfo implements Serializable {
 		if (parameters != null)
 			clone.parameters = parameters.clone();
 		if (other != null)
-			clone.other = other.clone();
+			clone.other = other.copy();
 		clone.otherAttributes.putAll(otherAttributes);
 		return clone;
 	}

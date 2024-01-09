@@ -75,7 +75,7 @@ public class Location implements Serializable {
 		Location clone = new Location();
 		LangString.copy(description, clone.description);
 		if (other != null)
-			clone.other = other.clone();
+			clone.other = other.copy();
 		clone.code = code;
 		clone.latitudeAndLongitude = latitudeAndLongitude;
 		clone.otherAttributes.putAll(otherAttributes);

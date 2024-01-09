@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import org.openlca.ilcd.commons.Copyable;
 import org.openlca.ilcd.commons.LangString;
 import org.openlca.ilcd.commons.QuantitativeReferenceType;
 import org.openlca.ilcd.commons.Ref;
@@ -15,7 +16,7 @@ import org.openlca.ilcd.processes.Process;
 import org.openlca.ilcd.processes.ProcessName;
 import org.openlca.ilcd.util.Processes;
 
-public class EpdDataSet {
+public class EpdDataSet implements Copyable<EpdDataSet> {
 
 	public final Process process;
 	public String profile;
@@ -63,7 +64,7 @@ public class EpdDataSet {
 	}
 
 	@Override
-	public EpdDataSet clone() {
+	public EpdDataSet copy() {
 		var clone = new EpdDataSet(process.clone());
 		clone.profile = profile;
 		clone.subType = subType;
@@ -76,30 +77,30 @@ public class EpdDataSet {
 		}
 
 		clone.safetyMargins = safetyMargins != null
-				? safetyMargins.clone()
+				? safetyMargins.copy()
 				: null;
 		clone.contentDeclaration = contentDeclaration != null
-				? contentDeclaration.clone()
+				? contentDeclaration.copy()
 				: null;
 		clone.qMetaData = qMetaData != null
-				? qMetaData.clone()
+				? qMetaData.copy()
 				: null;
 
 		for (var result : results) {
-			clone.results.add(result.clone());
+			clone.results.add(result.copy());
 		}
 		for (var entry : moduleEntries) {
-			clone.moduleEntries.add(entry.clone());
+			clone.moduleEntries.add(entry.copy());
 		}
 		for (var scenario : scenarios) {
-			clone.scenarios.add(scenario.clone());
+			clone.scenarios.add(scenario.copy());
 		}
 
 		for (var ref : publishers) {
-			clone.publishers.add(ref.clone());
+			clone.publishers.add(ref.copy());
 		}
 		for (var ref : originalEPDs) {
-			clone.originalEPDs.add(ref.clone());
+			clone.originalEPDs.add(ref.copy());
 		}
 
 		return clone;

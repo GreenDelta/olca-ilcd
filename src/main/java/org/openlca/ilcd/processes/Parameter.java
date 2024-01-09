@@ -120,7 +120,7 @@ public class Parameter implements Serializable {
 		clone.dispersion = dispersion;
 		LangString.copy(comment, clone.comment);
 		if (other != null)
-			clone.other = other.clone();
+			clone.other = other.copy();
 		clone.name = name;
 		clone.otherAttributes.putAll(otherAttributes);
 		return clone;

@@ -22,9 +22,7 @@ import jakarta.xml.bind.annotation.XmlType;
 		"formats",
 		"other"
 })
-public class DataEntry implements Serializable {
-
-	private final static long serialVersionUID = 1L;
+public class DataEntry {
 
 	@XmlElement(namespace = "http://lca.jrc.it/ILCD/Common")
 	public XMLGregorianCalendar timeStamp;

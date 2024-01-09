@@ -39,12 +39,12 @@ public class Material extends Substance {
 	}
 
 	@Override
-	public Material clone() {
-		Material clone = new Material();
+	public Material copy() {
+		var clone = new Material();
 		copyTo(clone);
-		for (Substance s : substances) {
+		for (var s : substances) {
 			if (s != null) {
-				clone.substances.add(s.clone());
+				clone.substances.add(s.copy());
 			}
 		}
 		return clone;

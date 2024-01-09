@@ -59,12 +59,12 @@ public class DataEntry implements Serializable {
 		clone.timeStamp = timeStamp;
 		Ref.copy(formats, clone.formats);
 		if (originalDataSet != null)
-			clone.originalDataSet = originalDataSet.clone();
+			clone.originalDataSet = originalDataSet.copy();
 		if (documentor != null)
-			clone.documentor = documentor.clone();
+			clone.documentor = documentor.copy();
 		Ref.copy(useApprovals, clone.useApprovals);
 		if (other != null)
-			clone.other = other.clone();
+			clone.other = other.copy();
 		clone.otherAttributes.putAll(otherAttributes);
 		return clone;
 	}

@@ -45,12 +45,11 @@ public class QuantitativeReference implements Serializable {
 
 	@Override
 	public QuantitativeReference clone() {
-		QuantitativeReference clone = new QuantitativeReference();
-		for (Integer ref : referenceFlows)
-			clone.referenceFlows.add(ref);
+		var clone = new QuantitativeReference();
+		clone.referenceFlows.addAll(referenceFlows);
 		LangString.copy(functionalUnit, clone.functionalUnit);
 		if (other != null)
-			clone.other = other.clone();
+			clone.other = other.copy();
 		clone.type = type;
 		clone.otherAttributes.putAll(otherAttributes);
 		return clone;

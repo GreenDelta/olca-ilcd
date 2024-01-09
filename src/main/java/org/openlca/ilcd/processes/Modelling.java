@@ -61,7 +61,7 @@ public class Modelling implements Serializable {
 			clone.complianceDeclarations = complianceDeclarations.clone();
 		}
 		if (other != null)
-			clone.other = other.clone();
+			clone.other = other.copy();
 		clone.otherAttributes.putAll(otherAttributes);
 		return clone;
 	}
