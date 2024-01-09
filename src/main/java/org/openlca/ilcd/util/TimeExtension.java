@@ -8,7 +8,7 @@ import org.openlca.ilcd.commons.Time;
 
 public class TimeExtension {
 
-	private Time time;
+	private final Time time;
 	private final String START_DATE = "startDate";
 	private final String END_DATE = "endDate";
 

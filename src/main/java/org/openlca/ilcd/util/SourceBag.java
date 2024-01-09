@@ -16,8 +16,8 @@ import org.openlca.ilcd.sources.Source;
 
 public class SourceBag implements IBag<Source> {
 
-	private Source source;
-	private String[] langs;
+	private final Source source;
+	private final String[] langs;
 
 	public SourceBag(Source source, String... langs) {
 		this.source = source;

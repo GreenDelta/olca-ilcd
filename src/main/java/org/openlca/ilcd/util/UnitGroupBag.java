@@ -14,8 +14,8 @@ import org.openlca.ilcd.units.UnitGroup;
 
 public class UnitGroupBag implements IBag<UnitGroup> {
 
-	private UnitGroup unitGroup;
-	private String[] langs;
+	private final UnitGroup unitGroup;
+	private final String[] langs;
 
 	public UnitGroupBag(UnitGroup unitGroup, String... langs) {
 		this.unitGroup = unitGroup;

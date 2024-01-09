@@ -5,7 +5,7 @@ import org.openlca.ilcd.methods.LCIAMethod;
 
 public class MethodBag implements IBag<LCIAMethod> {
 
-	private LCIAMethod method;
+	private final LCIAMethod method;
 
 	public MethodBag(LCIAMethod method) {
 		this.method = method;

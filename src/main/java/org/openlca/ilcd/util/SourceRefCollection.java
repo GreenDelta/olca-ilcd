@@ -49,8 +49,7 @@ class SourceRefCollection {
 		List<Ref> refs = new ArrayList<>();
 		if (repr == null)
 			return refs;
-		for (Ref ref : repr.sources)
-			refs.add(ref);
+		refs.addAll(repr.sources);
 		return refs;
 	}
 
@@ -58,9 +57,10 @@ class SourceRefCollection {
 		List<Ref> refs = new ArrayList<>();
 		if (entry == null)
 			return refs;
-		refs.add(entry.originalDataSet);
-		if (entry.formats != null)
-			refs.addAll(entry.formats);
+		if (entry.originalDataSet != null) {
+			refs.add(entry.originalDataSet);
+		}
+		refs.addAll(entry.formats);
 		return refs;
 	}
 
@@ -68,14 +68,13 @@ class SourceRefCollection {
 		List<Ref> refs = new ArrayList<>();
 		if (method == null)
 			return refs;
-		if (method.sources != null)
-			refs.addAll(method.sources);
+		refs.addAll(method.sources);
 		return refs;
 	}
 
 	private static List<Ref> getFrom(Publication pub) {
 		List<Ref> refs = new ArrayList<>();
-		if (pub == null)
+		if (pub == null || pub.republication == null)
 			return refs;
 		refs.add(pub.republication);
 		return refs;
@@ -85,15 +84,16 @@ class SourceRefCollection {
 		List<Ref> refs = new ArrayList<>();
 		if (tec == null)
 			return refs;
-		refs.add(tec.pictogram);
-		if (tec.pictures != null)
-			refs.addAll(tec.pictures);
+		if (tec.pictogram != null) {
+			refs.add(tec.pictogram);
+		}
+		refs.addAll(tec.pictures);
 		return refs;
 	}
 
 	private static List<Ref> getFrom(Review rev) {
 		List<Ref> refs = new ArrayList<>();
-		if (rev == null)
+		if (rev == null || rev.report == null)
 			return refs;
 		refs.add(rev.report);
 		return refs;

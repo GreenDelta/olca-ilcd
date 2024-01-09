@@ -7,7 +7,7 @@ import org.openlca.ilcd.processes.Parameter;
 public class ParameterExtension {
 
 	private final String SCOPE = "scope";
-	private Parameter parameter;
+	private final Parameter parameter;
 
 	public ParameterExtension(Parameter parameter) {
 		this.parameter = parameter;

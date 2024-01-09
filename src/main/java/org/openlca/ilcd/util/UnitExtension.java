@@ -6,7 +6,7 @@ import org.openlca.ilcd.units.Unit;
 
 public class UnitExtension {
 
-	private Unit unit;
+	private final Unit unit;
 	private final String UNIT_ID = "unitId";
 
 	public UnitExtension(Unit unit) {

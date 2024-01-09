@@ -22,7 +22,7 @@ import org.openlca.ilcd.processes.Validation;
 
 public class ProcessBuilder {
 
-	private Process process;
+	private final Process process;
 	private DataSetInfo dataSetInfo;
 	private Integer refFlowId;
 	private Time time;

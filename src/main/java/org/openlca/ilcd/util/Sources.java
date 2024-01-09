@@ -1,6 +1,7 @@
 package org.openlca.ilcd.util;
 
 import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 import java.util.Collections;
 import java.util.List;
 import org.openlca.ilcd.commons.DataEntry;
@@ -107,7 +108,7 @@ public final class Sources {
 			if (pos != -1) {
 				s = s.substring(pos + 1);
 			}
-			return URLDecoder.decode(s, "UTF-8");
+			return URLDecoder.decode(s, StandardCharsets.UTF_8);
 		} catch (Exception e) {
 			Logger log = LoggerFactory.getLogger(Sources.class);
 			log.error("could not get file name from " + ref.uri, e);

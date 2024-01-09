@@ -15,8 +15,8 @@ import org.openlca.ilcd.flowproperties.QuantitativeReference;
 
 public class FlowPropertyBag implements IBag<FlowProperty> {
 
-	private FlowProperty flowProperty;
-	private String[] langs;
+	private final FlowProperty flowProperty;
+	private final String[] langs;
 
 	public FlowPropertyBag(FlowProperty flowProperty, String... langs) {
 		this.flowProperty = flowProperty;

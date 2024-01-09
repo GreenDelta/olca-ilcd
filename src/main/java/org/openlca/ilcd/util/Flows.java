@@ -117,7 +117,7 @@ public final class Flows {
 					text = text.trim();
 					if (text.isEmpty())
 						return;
-					if (name.length() > 0) {
+					if (!name.isEmpty()) {
 						name.append("; ");
 					}
 					name.append(text);

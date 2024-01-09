@@ -94,24 +94,16 @@ public class Refs {
 			String element = reader.getLocalName();
 			if (element == null)
 				return null;
-			switch (element) {
-			case "LCIAMethodDataSet":
-				return DataSetType.LCIA_METHOD;
-			case "processDataSet":
-				return DataSetType.PROCESS;
-			case "contactDataSet":
-				return DataSetType.CONTACT;
-			case "sourceDataSet":
-				return DataSetType.SOURCE;
-			case "flowDataSet":
-				return DataSetType.FLOW;
-			case "flowPropertyDataSet":
-				return DataSetType.FLOW_PROPERTY;
-			case "unitGroupDataSet":
-				return DataSetType.UNIT_GROUP;
-			default:
-				return null;
-			}
+			return switch (element) {
+				case "LCIAMethodDataSet" -> DataSetType.LCIA_METHOD;
+				case "processDataSet" -> DataSetType.PROCESS;
+				case "contactDataSet" -> DataSetType.CONTACT;
+				case "sourceDataSet" -> DataSetType.SOURCE;
+				case "flowDataSet" -> DataSetType.FLOW;
+				case "flowPropertyDataSet" -> DataSetType.FLOW_PROPERTY;
+				case "unitGroupDataSet" -> DataSetType.UNIT_GROUP;
+				default -> null;
+			};
 		}
 
 		void start() {
@@ -170,20 +162,16 @@ public class Refs {
 		}
 
 		private boolean matchName(String name) {
-			switch (name) {
-			case "name":
-				return ref.type == DataSetType.CONTACT
+			return switch (name) {
+				case "name" -> ref.type == DataSetType.CONTACT
 						|| ref.type == DataSetType.FLOW_PROPERTY
 						|| ref.type == DataSetType.UNIT_GROUP
 						|| ref.type == DataSetType.LCIA_METHOD;
-			case "baseName":
-				return ref.type == DataSetType.FLOW
+				case "baseName" -> ref.type == DataSetType.FLOW
 						|| ref.type == DataSetType.PROCESS;
-			case "shortName":
-				return ref.type == DataSetType.SOURCE;
-			default:
-				return false;
-			}
+				case "shortName" -> ref.type == DataSetType.SOURCE;
+				default -> false;
+			};
 		}
 	}
 }

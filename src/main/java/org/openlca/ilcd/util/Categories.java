@@ -45,7 +45,7 @@ public final class Categories {
 			compartments(flow).stream()
 					.map(c -> c.value)
 					.forEach(add);
-			if (path.size() > 0)
+			if (!path.isEmpty())
 				return path.toArray(new String[0]);
 		}
 		sorted(ds).stream()

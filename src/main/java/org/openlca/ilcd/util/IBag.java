@@ -2,8 +2,8 @@ package org.openlca.ilcd.util;
 
 public interface IBag<T> {
 
-	public String getId();
+	String getId();
 
-	public T getValue();
+	T getValue();
 
 }

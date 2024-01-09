@@ -22,8 +22,8 @@ public class SchemaValidator {
 
 	private ErrorHandler errorHandler;
 
-	private Logger log = LoggerFactory.getLogger(getClass());
-	private HashMap<DataSetType, Schema> schemas = new HashMap<>(10);
+	private final Logger log = LoggerFactory.getLogger(getClass());
+	private final HashMap<DataSetType, Schema> schemas = new HashMap<>(10);
 
 	public void setErrorHandler(ErrorHandler h) {
 		this.errorHandler = h;
@@ -86,25 +86,19 @@ public class SchemaValidator {
 	private String schemaName(DataSetType type) {
 		if (type == null)
 			return null;
-		switch (type) {
-		case CONTACT:
-			return "ILCD_ContactDataSet.xsd";
-		case FLOW:
-			return "ILCD_FlowDataSet.xsd";
-		case FLOW_PROPERTY:
-			return "ILCD_FlowPropertyDataSet.xsd";
-		case LCIA_METHOD:
-			return "ILCD_LCIAMethodDataSet.xsd";
-		case PROCESS:
-			return "ILCD_ProcessDataSet.xsd";
-		case SOURCE:
-			return "ILCD_SourceDataSet.xsd";
-		case UNIT_GROUP:
-			return "ILCD_UnitGroupDataSet.xsd";
-		default:
-			log.error("no schema available for data set type {}", type);
-			return null;
-		}
+		return switch (type) {
+			case CONTACT -> "ILCD_ContactDataSet.xsd";
+			case FLOW -> "ILCD_FlowDataSet.xsd";
+			case FLOW_PROPERTY -> "ILCD_FlowPropertyDataSet.xsd";
+			case LCIA_METHOD -> "ILCD_LCIAMethodDataSet.xsd";
+			case PROCESS -> "ILCD_ProcessDataSet.xsd";
+			case SOURCE -> "ILCD_SourceDataSet.xsd";
+			case UNIT_GROUP -> "ILCD_UnitGroupDataSet.xsd";
+			default -> {
+				log.error("no schema available for data set type {}", type);
+				yield null;
+			}
+		};
 	}
 
 	private Schema loadSchema(String name) {

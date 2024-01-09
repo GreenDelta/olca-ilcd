@@ -112,13 +112,11 @@ public class RefTree {
 					addNode(field, (Ref) val, nodes);
 					continue;
 				}
-				if (val instanceof Collection) {
-					Collection<?> c = (Collection<?>) val;
+				if (val instanceof Collection<?> c) {
 					followCollection(field, c, nodes);
 					continue;
 				}
-				if (val instanceof Map) {
-					Map<?, ?> m = (Map<?, ?>) val;
+				if (val instanceof Map<?, ?> m) {
 					followCollection(field, m.values(), nodes);
 					continue;
 				}
@@ -195,10 +193,7 @@ public class RefTree {
 			return false;
 		if (Enum.class.isAssignableFrom(clazz))
 			return false;
-		if (XMLGregorianCalendar.class.isAssignableFrom(clazz))
-			return false;
-		else
-			return true;
+		return !XMLGregorianCalendar.class.isAssignableFrom(clazz);
 	}
 
 }

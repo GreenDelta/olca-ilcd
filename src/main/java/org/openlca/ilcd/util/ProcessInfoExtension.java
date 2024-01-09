@@ -6,7 +6,7 @@ import org.openlca.ilcd.processes.ProcessInfo;
 
 public class ProcessInfoExtension {
 
-	private ProcessInfo info;
+	private final ProcessInfo info;
 	private final String MODEL_REF_PROCESS = "modelRefProcess";
 
 	public ProcessInfoExtension(ProcessInfo info) {

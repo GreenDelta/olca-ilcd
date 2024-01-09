@@ -12,8 +12,8 @@ import org.openlca.ilcd.contacts.DataSetInfo;
 
 public class ContactBag implements IBag<Contact> {
 
-	private Contact contact;
-	private String[] langs;
+	private final Contact contact;
+	private final String[] langs;
 
 	public ContactBag(Contact contact, String... langs) {
 		this.contact = contact;
