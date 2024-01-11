@@ -107,15 +107,20 @@ public final class LangString implements Copyable<LangString> {
 	public static String getFirst(List<LangString> list, String... langs) {
 		if (list == null || list.isEmpty())
 			return null;
+
 		if (langs == null || langs.length == 0) {
-			langs = new String[]{"en"};
+			var v = getVal(list, "en");
+			if (v != null)
+				return v;
+		} else {
+			for (var lang : langs) {
+				var v = getVal(list, lang);
+				if (v != null)
+					return v;
+			}
 		}
-		for (String lang : langs) {
-			LangString s = get(list, lang);
-			if (s != null)
-				return s.value;
-		}
-		return list.get(0).value;
+		var first = list.get(0);
+		return first != null ? first.value : null;
 	}
 
 	/**

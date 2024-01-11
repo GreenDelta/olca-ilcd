@@ -12,6 +12,7 @@ import org.openlca.ilcd.units.DataSetInfo;
 import org.openlca.ilcd.units.Unit;
 import org.openlca.ilcd.units.UnitGroup;
 
+@Deprecated
 public class UnitGroupBag implements IBag<UnitGroup> {
 
 	private final UnitGroup unitGroup;

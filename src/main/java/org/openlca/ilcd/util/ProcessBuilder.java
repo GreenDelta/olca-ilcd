@@ -20,6 +20,7 @@ import org.openlca.ilcd.processes.Review;
 import org.openlca.ilcd.processes.Technology;
 import org.openlca.ilcd.processes.Validation;
 
+@Deprecated
 public class ProcessBuilder {
 
 	private final Process process;

@@ -14,6 +14,7 @@ import org.openlca.ilcd.sources.DataSetInfo;
 import org.openlca.ilcd.sources.FileRef;
 import org.openlca.ilcd.sources.Source;
 
+@Deprecated
 public class SourceBag implements IBag<Source> {
 
 	private final Source source;

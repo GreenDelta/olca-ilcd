@@ -3,6 +3,7 @@ package org.openlca.ilcd.util;
 import org.openlca.ilcd.methods.DataSetInfo;
 import org.openlca.ilcd.methods.ImpactMethod;
 
+@Deprecated
 public class MethodBag implements IBag<ImpactMethod> {
 
 	private final ImpactMethod method;

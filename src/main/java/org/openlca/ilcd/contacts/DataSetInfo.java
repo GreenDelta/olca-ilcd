@@ -20,10 +20,23 @@ import java.util.List;
 import java.util.Map;
 
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "DataSetInformationType", propOrder = { "uuid", "shortName",
-		"name", "classifications", "contactAddress", "telephone",
-		"telefax", "email", "wwwAddress", "centralContactPoint", "description",
-		"belongsTo", "logo", "other" })
+@XmlType(name = "DataSetInformationType",
+	propOrder = {
+		"uuid",
+		"shortName",
+		"name",
+		"classifications",
+		"contactAddress",
+		"telephone",
+		"telefax",
+		"email",
+		"webSite",
+		"centralContactPoint",
+		"description",
+		"belongsTo",
+		"logo",
+		"other"
+	})
 public class DataSetInfo {
 
 	@XmlElement(name = "UUID", namespace = "http://lca.jrc.it/ILCD/Common", required = true)
@@ -51,7 +64,7 @@ public class DataSetInfo {
 	public String email;
 
 	@XmlElement(name = "WWWAddress")
-	public String wwwAddress;
+	public String webSite;
 
 	@ShortText
 	public final List<LangString> centralContactPoint = new ArrayList<>();

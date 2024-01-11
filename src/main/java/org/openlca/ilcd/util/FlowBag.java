@@ -14,6 +14,7 @@ import org.openlca.ilcd.flows.Flow;
 import org.openlca.ilcd.flows.FlowInfo;
 import org.openlca.ilcd.flows.Geography;
 
+@Deprecated
 public class FlowBag implements IBag<Flow> {
 
 	public final Flow flow;

@@ -13,69 +13,74 @@ public final class Contacts {
 	}
 
 	public static ContactInfo getContactInfo(Contact c) {
-		if (c == null)
-			return null;
-		return c.contactInfo;
+		return c != null
+			? c.contactInfo
+			: null;
 	}
 
-	public static ContactInfo contactInfo(Contact c) {
-		if (c.contactInfo == null)
+	public static ContactInfo forceContactInfo(Contact c) {
+		if (c.contactInfo == null) {
 			c.contactInfo = new ContactInfo();
+		}
 		return c.contactInfo;
 	}
 
 	public static DataSetInfo getDataSetInfo(Contact c) {
-		ContactInfo ci = getContactInfo(c);
-		if (ci == null)
-			return null;
-		return ci.dataSetInfo;
+		var info = getContactInfo(c);
+		return info != null
+			? info.dataSetInfo
+			: null;
 	}
 
-	public static DataSetInfo dataSetInfo(Contact c) {
-		ContactInfo ci = contactInfo(c);
-		if (ci.dataSetInfo == null)
-			ci.dataSetInfo = new DataSetInfo();
-		return ci.dataSetInfo;
+	public static DataSetInfo forceDataSetInfo(Contact c) {
+		var info = forceContactInfo(c);
+		if (info.dataSetInfo == null) {
+			info.dataSetInfo = new DataSetInfo();
+		}
+		return info.dataSetInfo;
 	}
 
 	public static AdminInfo getAdminInfo(Contact c) {
-		if (c == null)
-			return null;
-		return c.adminInfo;
+		return c != null
+			? c.adminInfo
+			: null;
 	}
 
-	public static AdminInfo adminInfo(Contact c) {
-		if (c.adminInfo == null)
+	public static AdminInfo forceAdminInfo(Contact c) {
+		if (c.adminInfo == null) {
 			c.adminInfo = new AdminInfo();
+		}
 		return c.adminInfo;
 	}
 
 	public static DataEntry getDataEntry(Contact c) {
-		AdminInfo ai = getAdminInfo(c);
-		if (ai == null)
-			return null;
-		return ai.dataEntry;
+		var adminInfo = getAdminInfo(c);
+		return adminInfo != null
+			? adminInfo.dataEntry
+			: null;
 	}
 
-	public static DataEntry dataEntry(Contact c) {
-		AdminInfo ai = adminInfo(c);
-		if (ai.dataEntry == null)
-			ai.dataEntry = new DataEntry();
-		return ai.dataEntry;
+	public static DataEntry forceDataEntry(Contact c) {
+		var adminInfo = forceAdminInfo(c);
+		if (adminInfo.dataEntry == null) {
+			adminInfo.dataEntry = new DataEntry();
+		}
+		return adminInfo.dataEntry;
 	}
 
 	public static Publication getPublication(Contact c) {
-		AdminInfo ai = getAdminInfo(c);
-		if (ai == null)
-			return null;
-		return ai.publication;
+		var adminInfo = getAdminInfo(c);
+		return adminInfo != null
+			? adminInfo.publication
+			: null;
 	}
 
-	public static Publication publication(Contact c) {
-		AdminInfo ai = adminInfo(c);
-		if (ai.publication == null)
-			ai.publication = new Publication();
-		return ai.publication;
+	public static Publication forcePublication(Contact c) {
+		var adminInfo = forceAdminInfo(c);
+		if (adminInfo.publication == null) {
+			adminInfo.publication = new Publication();
+		}
+		return adminInfo.publication;
 	}
 
 }

@@ -13,6 +13,7 @@ import org.openlca.ilcd.flowproperties.FlowProperty;
 import org.openlca.ilcd.flowproperties.FlowPropertyInfo;
 import org.openlca.ilcd.flowproperties.QuantitativeReference;
 
+@Deprecated
 public class FlowPropertyBag implements IBag<FlowProperty> {
 
 	private final FlowProperty flowProperty;

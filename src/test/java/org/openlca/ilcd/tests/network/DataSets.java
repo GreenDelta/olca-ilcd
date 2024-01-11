@@ -8,16 +8,12 @@ import org.openlca.ilcd.io.Xml;
 import org.openlca.ilcd.processes.Process;
 import org.openlca.ilcd.sources.Source;
 import org.openlca.ilcd.units.UnitGroup;
-import org.openlca.ilcd.util.ContactBag;
-import org.openlca.ilcd.util.FlowBag;
-import org.openlca.ilcd.util.FlowPropertyBag;
-import org.openlca.ilcd.util.ProcessBag;
-import org.openlca.ilcd.util.SourceBag;
-import org.openlca.ilcd.util.UnitGroupBag;
 
 import java.util.Objects;
 
-/** Helper class for uploading the sample data sets into the test instance. */
+/**
+ * Helper class for uploading the sample data sets into the test instance.
+ */
 class DataSets {
 
 	static void upload() {
@@ -33,45 +29,38 @@ class DataSets {
 	}
 
 	private static void putContact(SodaClient client) {
-		Contact contact = load(Contact.class, "contact.xml");
-		ContactBag bag = new ContactBag(contact, "en");
-		if (!client.contains(Contact.class, bag.getId()))
+		var contact = load(Contact.class, "contact.xml");
+		if (!client.contains(Contact.class, contact.getUUID()))
 			client.put(contact);
 	}
 
 	private static void putFlowProperty(SodaClient client) {
-		FlowProperty flowProperty = load(FlowProperty.class,
-				"flowproperty.xml");
-		FlowPropertyBag bag = new FlowPropertyBag(flowProperty, "en");
-		if (!client.contains(FlowProperty.class, bag.getId()))
-			client.put(flowProperty);
+		var prop = load(FlowProperty.class, "flowproperty.xml");
+		if (!client.contains(FlowProperty.class, prop.getUUID()))
+			client.put(prop);
 	}
 
 	private static void putFlow(SodaClient client) {
-		Flow flow = load(Flow.class, "flow.xml");
-		FlowBag bag = new FlowBag(flow, "en");
-		if (!client.contains(Flow.class, bag.getId()))
+		var flow = load(Flow.class, "flow.xml");
+		if (!client.contains(Flow.class, flow.getUUID()))
 			client.put(flow);
 	}
 
 	private static void putProcess(SodaClient client) {
-		Process process = load(Process.class, "process.xml");
-		ProcessBag bag = new ProcessBag(process, "en");
-		if (!client.contains(Process.class, bag.getId()))
+		var process = load(Process.class, "process.xml");
+		if (!client.contains(Process.class, process.getUUID()))
 			client.put(process);
 	}
 
 	private static void putSource(SodaClient client) {
-		Source source = load(Source.class, "source.xml");
-		SourceBag bag = new SourceBag(source, "en");
-		if (!client.contains(Source.class, bag.getId()))
+		var source = load(Source.class, "source.xml");
+		if (!client.contains(Source.class, source.getUUID()))
 			client.put(source);
 	}
 
 	private static void putUnitGroup(SodaClient client) {
-		UnitGroup group = load(UnitGroup.class, "unit.xml");
-		UnitGroupBag bag = new UnitGroupBag(group, "en");
-		if (!client.contains(UnitGroup.class, bag.getId()))
+		var group = load(UnitGroup.class, "unit.xml");
+		if (!client.contains(UnitGroup.class, group.getUUID()))
 			client.put(group);
 	}
 
