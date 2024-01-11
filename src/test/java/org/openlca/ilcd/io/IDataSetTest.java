@@ -11,7 +11,7 @@ import org.openlca.ilcd.commons.IDataSet;
 import org.openlca.ilcd.contacts.Contact;
 import org.openlca.ilcd.flowproperties.FlowProperty;
 import org.openlca.ilcd.flows.Flow;
-import org.openlca.ilcd.methods.LCIAMethod;
+import org.openlca.ilcd.methods.ImpactMethod;
 import org.openlca.ilcd.sources.Source;
 import org.openlca.ilcd.units.UnitGroup;
 
@@ -93,7 +93,7 @@ public class IDataSetTest {
 
 	@Test
 	public void testMethod() throws Exception {
-		with("sdk_sample_lciamethod.xml", LCIAMethod.class, ds -> {
+		with("sdk_sample_lciamethod.xml", ImpactMethod.class, ds -> {
 			assertEquals("00000000-0000-0000-0000-000000000000", ds.getUUID());
 			assertEquals("00.00", ds.getVersion());
 			assertEquals(DataSetType.LCIA_METHOD, ds.getDataSetType());

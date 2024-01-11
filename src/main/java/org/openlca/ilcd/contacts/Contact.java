@@ -1,27 +1,24 @@
 
 package org.openlca.ilcd.contacts;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.xml.namespace.QName;
-
 import jakarta.xml.bind.JAXBElement;
-import jakarta.xml.bind.annotation.XmlElementDecl;
-import org.openlca.ilcd.commons.Classification;
-import org.openlca.ilcd.commons.DataSetType;
-import org.openlca.ilcd.commons.IDataSet;
-import org.openlca.ilcd.commons.LangString;
-import org.openlca.ilcd.commons.Other;
-
 import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlAnyAttribute;
 import jakarta.xml.bind.annotation.XmlAttribute;
 import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlType;
+import org.openlca.ilcd.commons.Classification;
+import org.openlca.ilcd.commons.DataSetType;
+import org.openlca.ilcd.commons.IDataSet;
+import org.openlca.ilcd.commons.LangString;
+import org.openlca.ilcd.commons.Other;
+
+import javax.xml.namespace.QName;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "ContactDataSetType", propOrder = {
@@ -86,9 +83,6 @@ public class Contact implements IDataSet {
 		return contactInfo.dataSetInfo.name;
 	}
 
-	@XmlElementDecl(
-		namespace = "http://lca.jrc.it/ILCD/Contact",
-		name = "contactDataSet")
 	public JAXBElement<Contact> toElement() {
 		var qname = new QName("http://lca.jrc.it/ILCD/Contact", "contactDataSet");
 		return new JAXBElement<>(qname, Contact.class, null, this);

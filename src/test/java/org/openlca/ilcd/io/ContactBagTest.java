@@ -14,12 +14,8 @@ public class ContactBagTest {
 
 	@Before
 	public void setUp() throws Exception {
-		try (var stream = this.getClass().getResourceAsStream("contact.xml")) {
-			var xml = new XmlBinder();
-			var contact = xml.fromBytes(Contact.class,
-				xml.toBytes(xml.fromStream(Contact.class, stream)));
-			bag = new ContactBag(contact, "en");
-		}
+		var contact = Tests.read(Contact.class, "contact.xml");
+		bag = new ContactBag(contact, "en");
 	}
 
 	@Test
@@ -47,7 +43,7 @@ public class ContactBagTest {
 	@Test
 	public void testGetContactAddress() {
 		assertEquals("Rue Colonel Bourg 120 B-1140 Brussels, Belgium",
-				bag.getContactAddress());
+			bag.getContactAddress());
 	}
 
 	@Test
@@ -68,7 +64,7 @@ public class ContactBagTest {
 	@Test
 	public void testGetCentralContactPoint() {
 		assertEquals("Rue Colonel Bourg 120 B-1140 Brussels, Belgium",
-				bag.getCentralContactPoint());
+			bag.getCentralContactPoint());
 	}
 
 }

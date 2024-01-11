@@ -1,11 +1,5 @@
 package org.openlca.ilcd.io;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-
-import java.io.InputStream;
-import java.util.List;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.openlca.ilcd.commons.FlowType;
@@ -16,18 +10,18 @@ import org.openlca.ilcd.util.Categories;
 import org.openlca.ilcd.util.FlowBag;
 import org.openlca.ilcd.util.Flows;
 
+import java.util.List;
+
+import static org.junit.Assert.*;
+
 public class FlowBagTest {
 
 	private FlowBag bag;
 
 	@Before
 	public void setUp() throws Exception {
-		try (InputStream stream = this.getClass().getResourceAsStream(
-				"flow.xml")) {
-			XmlBinder binder = new XmlBinder();
-			Flow flow = binder.fromStream(Flow.class, stream);
-			bag = new FlowBag(flow, "en");
-		}
+		var flow = Tests.read(Flow.class, "flow.xml");
+		bag = new FlowBag(flow, "en");
 	}
 
 	@Test
@@ -53,7 +47,7 @@ public class FlowBagTest {
 	@Test
 	public void testGetReferenceFlowPropertyId() {
 		assertEquals(Integer.valueOf(0),
-				Flows.getQuantitativeReference(bag.flow).referenceFlowProperty);
+			Flows.getQuantitativeReference(bag.flow).referenceFlowProperty);
 	}
 
 	@Test
@@ -73,7 +67,7 @@ public class FlowBagTest {
 		assertTrue(props.size() == 1);
 		FlowPropertyRef ref = props.get(0);
 		assertEquals("93a60a56-a3c8-11da-a746-0800200b9a66",
-				ref.flowProperty.uuid);
+			ref.flowProperty.uuid);
 	}
 
 	@Test
@@ -83,7 +77,7 @@ public class FlowBagTest {
 		assertEquals("Emissions", path[0]);
 		assertEquals("Emissions to air", path[1]);
 		assertEquals("Emissions to lower stratosphere and upper troposphere",
-				path[2]);
+			path[2]);
 	}
 
 }

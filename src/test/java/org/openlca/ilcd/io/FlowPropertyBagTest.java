@@ -1,9 +1,5 @@
 package org.openlca.ilcd.io;
 
-import static org.junit.Assert.assertEquals;
-
-import java.io.InputStream;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.openlca.ilcd.commons.Ref;
@@ -11,18 +7,16 @@ import org.openlca.ilcd.flowproperties.FlowProperty;
 import org.openlca.ilcd.util.Categories;
 import org.openlca.ilcd.util.FlowPropertyBag;
 
+import static org.junit.Assert.assertEquals;
+
 public class FlowPropertyBagTest {
 
 	private FlowPropertyBag bag;
 
 	@Before
 	public void setUp() throws Exception {
-		try (InputStream stream = this.getClass().getResourceAsStream(
-				"flowproperty.xml")) {
-			XmlBinder binder = new XmlBinder();
-			FlowProperty group = binder.fromStream(FlowProperty.class, stream);
-			this.bag = new FlowPropertyBag(group, "en");
-		}
+		var prop = Tests.read(FlowProperty.class, "flowproperty.xml");
+		this.bag = new FlowPropertyBag(prop, "en");
 	}
 
 	@Test

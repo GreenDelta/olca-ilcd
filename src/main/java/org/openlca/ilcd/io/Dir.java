@@ -10,7 +10,7 @@ import org.openlca.ilcd.descriptors.SourceDescriptor;
 import org.openlca.ilcd.descriptors.UnitGroupDescriptor;
 import org.openlca.ilcd.flowproperties.FlowProperty;
 import org.openlca.ilcd.flows.Flow;
-import org.openlca.ilcd.methods.LCIAMethod;
+import org.openlca.ilcd.methods.ImpactMethod;
 import org.openlca.ilcd.models.Model;
 import org.openlca.ilcd.processes.Process;
 import org.openlca.ilcd.sources.Source;
@@ -34,7 +34,7 @@ class Dir {
 			return "flowproperties";
 		if (c.equals(UnitGroup.class) || c.equals(UnitGroupDescriptor.class))
 			return "unitgroups";
-		if (c.equals(LCIAMethod.class) || c.equals(MethodDescriptor.class))
+		if (c.equals(ImpactMethod.class) || c.equals(MethodDescriptor.class))
 			return "lciamethods";
 		if (c.equals(Source.class) || c.equals(SourceDescriptor.class))
 			return "sources";

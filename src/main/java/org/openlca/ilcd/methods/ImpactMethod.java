@@ -7,6 +7,7 @@ import java.util.Map;
 
 import javax.xml.namespace.QName;
 
+import jakarta.xml.bind.JAXBElement;
 import org.openlca.ilcd.commons.Classification;
 import org.openlca.ilcd.commons.DataSetType;
 import org.openlca.ilcd.commons.IDataSet;
@@ -22,13 +23,13 @@ import jakarta.xml.bind.annotation.XmlType;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "LCIAMethodDataSetType", propOrder = {
-		"methodInfo",
-		"modelling",
-		"adminInfo",
-		"characterisationFactors",
-		"other"
+	"methodInfo",
+	"modelling",
+	"adminInfo",
+	"characterisationFactors",
+	"other"
 })
-public class LCIAMethod implements IDataSet {
+public class ImpactMethod implements IDataSet {
 
 	@XmlElement(name = "LCIAMethodInformation", required = true)
 	public MethodInfo methodInfo;
@@ -94,6 +95,12 @@ public class LCIAMethod implements IDataSet {
 		if (methodInfo == null || methodInfo.dataSetInfo == null)
 			return Collections.emptyList();
 		return methodInfo.dataSetInfo.name;
+	}
+
+	public JAXBElement<ImpactMethod> toElement() {
+		var qname = new QName(
+			"http://lca.jrc.it/ILCD/LCIAMethod", "LCIAMethodDataSet");
+		return new JAXBElement<>(qname, ImpactMethod.class, null, this);
 	}
 
 }

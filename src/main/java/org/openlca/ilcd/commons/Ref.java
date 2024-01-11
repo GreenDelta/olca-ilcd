@@ -10,7 +10,7 @@ import org.openlca.ilcd.commons.annotations.ShortText;
 import org.openlca.ilcd.contacts.Contact;
 import org.openlca.ilcd.flowproperties.FlowProperty;
 import org.openlca.ilcd.flows.Flow;
-import org.openlca.ilcd.methods.LCIAMethod;
+import org.openlca.ilcd.methods.ImpactMethod;
 import org.openlca.ilcd.models.Model;
 import org.openlca.ilcd.processes.Process;
 import org.openlca.ilcd.sources.Source;
@@ -117,7 +117,7 @@ public class Ref implements Copyable<Ref> {
 			case FLOW_PROPERTY -> FlowProperty.class;
 			case FLOW -> Flow.class;
 			case PROCESS -> Process.class;
-			case LCIA_METHOD -> LCIAMethod.class;
+			case LCIA_METHOD -> ImpactMethod.class;
 			case MODEL -> Model.class;
 			default -> null;
 		};

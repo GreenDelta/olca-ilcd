@@ -1,18 +1,18 @@
 package org.openlca.ilcd.util;
 
 import org.openlca.ilcd.methods.DataSetInfo;
-import org.openlca.ilcd.methods.LCIAMethod;
+import org.openlca.ilcd.methods.ImpactMethod;
 
-public class MethodBag implements IBag<LCIAMethod> {
+public class MethodBag implements IBag<ImpactMethod> {
 
-	private final LCIAMethod method;
+	private final ImpactMethod method;
 
-	public MethodBag(LCIAMethod method) {
+	public MethodBag(ImpactMethod method) {
 		this.method = method;
 	}
 
 	@Override
-	public LCIAMethod getValue() {
+	public ImpactMethod getValue() {
 		return method;
 	}
 

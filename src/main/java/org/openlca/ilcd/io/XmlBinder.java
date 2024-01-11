@@ -17,7 +17,7 @@ import org.openlca.ilcd.contacts.Contact;
 import org.openlca.ilcd.descriptors.DescriptorList;
 import org.openlca.ilcd.flowproperties.FlowProperty;
 import org.openlca.ilcd.flows.Flow;
-import org.openlca.ilcd.methods.LCIAMethod;
+import org.openlca.ilcd.methods.ImpactMethod;
 import org.openlca.ilcd.models.Model;
 import org.openlca.ilcd.processes.ObjectFactory;
 import org.openlca.ilcd.processes.Process;
@@ -70,7 +70,7 @@ public class XmlBinder {
 		writer.close();
 	}
 
-	public byte[] toBytes(Object obj) throws JAXBException,	IOException {
+	public byte[] toBytes(Object obj) throws JAXBException, IOException {
 		var os = new ByteArrayOutputStream();
 		toStream(obj, os);
 		return os.toByteArray();
@@ -165,12 +165,10 @@ public class XmlBinder {
 		if (value instanceof Process) {
 			ObjectFactory factory = new ObjectFactory();
 			return factory.createProcessDataSet((Process) value);
-		} else if (value instanceof Flow) {
-			org.openlca.ilcd.flows.ObjectFactory fac = new org.openlca.ilcd.flows.ObjectFactory();
-			return fac.createFlowDataSet((Flow) value);
-		} else if (value instanceof FlowProperty) {
-			org.openlca.ilcd.flowproperties.ObjectFactory fac = new org.openlca.ilcd.flowproperties.ObjectFactory();
-			return fac.createFlowPropertyDataSet((FlowProperty) value);
+		} else if (value instanceof Flow flow) {
+			return flow.toElement();
+		} else if (value instanceof FlowProperty prop) {
+			return prop.toElement();
 		} else if (value instanceof UnitGroup) {
 			org.openlca.ilcd.units.ObjectFactory fac = new org.openlca.ilcd.units.ObjectFactory();
 			return fac.createUnitGroupDataSet((UnitGroup) value);
@@ -179,9 +177,8 @@ public class XmlBinder {
 		} else if (value instanceof Source) {
 			org.openlca.ilcd.sources.ObjectFactory fac = new org.openlca.ilcd.sources.ObjectFactory();
 			return fac.createSourceDataSet((Source) value);
-		} else if (value instanceof LCIAMethod) {
-			org.openlca.ilcd.methods.ObjectFactory fac = new org.openlca.ilcd.methods.ObjectFactory();
-			return fac.createLCIAMethodDataSet((LCIAMethod) value);
+		} else if (value instanceof ImpactMethod method) {
+			return method.toElement();
 		} else if (value instanceof DescriptorList) {
 			org.openlca.ilcd.descriptors.ObjectFactory fac = new org.openlca.ilcd.descriptors.ObjectFactory();
 			return fac.createDataSetList((DescriptorList) value);

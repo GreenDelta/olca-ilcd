@@ -8,6 +8,7 @@ import java.util.Map;
 
 import javax.xml.namespace.QName;
 
+import jakarta.xml.bind.JAXBElement;
 import org.openlca.ilcd.commons.Classification;
 import org.openlca.ilcd.commons.DataSetType;
 import org.openlca.ilcd.commons.IDataSet;
@@ -99,5 +100,10 @@ public class Flow implements IDataSet {
 		if (name == null)
 			return Collections.emptyList();
 		return name.baseName;
+	}
+
+	public JAXBElement<Flow> toElement() {
+		var qname = new QName("http://lca.jrc.it/ILCD/Flow", "flowDataSet");
+		return new JAXBElement<>(qname, Flow.class, null, this);
 	}
 }
