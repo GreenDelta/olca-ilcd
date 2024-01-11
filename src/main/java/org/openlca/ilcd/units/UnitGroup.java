@@ -30,8 +30,6 @@ import jakarta.xml.bind.annotation.XmlType;
 })
 public class UnitGroup implements IDataSet {
 
-	private final static long serialVersionUID = 1L;
-
 	@XmlElement(required = true, name = "unitGroupInformation")
 	public UnitGroupInfo unitGroupInfo;
 

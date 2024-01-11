@@ -1,13 +1,10 @@
 package org.openlca.ilcd.descriptors;
 
-import java.io.Serializable;
-
-import org.openlca.ilcd.commons.LangString;
-
 import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlRootElement;
 import jakarta.xml.bind.annotation.XmlType;
+import org.openlca.ilcd.commons.LangString;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {

@@ -1,22 +1,20 @@
 package org.openlca.ilcd.units;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.xml.namespace.QName;
-
-import org.openlca.ilcd.commons.LangString;
-import org.openlca.ilcd.commons.Other;
-
 import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlAnyAttribute;
 import jakarta.xml.bind.annotation.XmlAttribute;
 import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlType;
+import org.openlca.ilcd.commons.Copyable;
+import org.openlca.ilcd.commons.LangString;
+import org.openlca.ilcd.commons.Other;
+
+import javax.xml.namespace.QName;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "UnitType", propOrder = {
@@ -25,9 +23,7 @@ import jakarta.xml.bind.annotation.XmlType;
 		"comment",
 		"other"
 })
-public class Unit implements Serializable {
-
-	private final static long serialVersionUID = 1L;
+public class Unit implements Copyable<Unit> {
 
 	@XmlElement(required = true)
 	public String name;
@@ -48,7 +44,7 @@ public class Unit implements Serializable {
 	public final Map<QName, String> otherAttributes = new HashMap<>();
 
 	@Override
-	public Unit clone() {
+	public Unit copy() {
 		Unit clone = new Unit();
 		clone.name = name;
 		clone.factor = factor;

@@ -1,19 +1,16 @@
 
 package org.openlca.ilcd.sources;
 
-import java.io.Serializable;
-
 import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlAttribute;
 import jakarta.xml.bind.annotation.XmlSchemaType;
 import jakarta.xml.bind.annotation.XmlType;
+import org.openlca.ilcd.commons.Copyable;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "ReferenceToDigitalFileType")
-public class FileRef implements Serializable {
-
-	private final static long serialVersionUID = 1L;
+public class FileRef implements Copyable<FileRef> {
 
 	@XmlAttribute(name = "uri")
 	@XmlSchemaType(name = "anyURI")
@@ -25,9 +22,8 @@ public class FileRef implements Serializable {
 			return false;
 		if (obj == this)
 			return true;
-		if (!(obj instanceof FileRef))
+		if (!(obj instanceof FileRef other))
 			return false;
-		FileRef other = (FileRef) obj;
 		if (this.uri == null && other.uri == null)
 			return true;
 		if (this.uri == null || other.uri == null)
@@ -41,7 +37,7 @@ public class FileRef implements Serializable {
 	}
 
 	@Override
-	public FileRef clone() {
+	public FileRef copy() {
 		FileRef clone = new FileRef();
 		clone.uri = uri;
 		return clone;

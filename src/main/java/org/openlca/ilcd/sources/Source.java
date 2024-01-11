@@ -28,8 +28,6 @@ import jakarta.xml.bind.annotation.XmlType;
 })
 public class Source implements IDataSet {
 
-	private final static long serialVersionUID = 1L;
-
 	@XmlElement(required = true, name = "sourceInformation")
 	public SourceInfo sourceInfo;
 
