@@ -28,7 +28,7 @@ public enum DataSetType {
 	CONTACT("contact data set"),
 
 	@XmlEnumValue("LCIA method data set")
-	LCIA_METHOD("LCIA method data set"),
+	IMPACT_METHOD("LCIA method data set"),
 
 	@XmlEnumValue("other external file")
 	EXTERNAL_FILE("other external file"),

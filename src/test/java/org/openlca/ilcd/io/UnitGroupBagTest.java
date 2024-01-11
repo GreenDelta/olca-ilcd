@@ -1,11 +1,5 @@
 package org.openlca.ilcd.io;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-
-import java.io.InputStream;
-import java.util.List;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.openlca.ilcd.units.Unit;
@@ -14,6 +8,10 @@ import org.openlca.ilcd.util.Categories;
 import org.openlca.ilcd.util.UnitGroupBag;
 import org.openlca.ilcd.util.UnitGroups;
 
+import java.util.List;
+
+import static org.junit.Assert.*;
+
 public class UnitGroupBagTest {
 
 	private UnitGroupBag bag;
@@ -21,12 +19,8 @@ public class UnitGroupBagTest {
 
 	@Before
 	public void setUp() throws Exception {
-		try (InputStream stream = this.getClass().getResourceAsStream(
-				"unit.xml")) {
-			XmlBinder binder = new XmlBinder();
-			ug = binder.fromStream(UnitGroup.class, stream);
-			this.bag = new UnitGroupBag(ug, "en");
-		}
+		ug = Tests.read(UnitGroup.class, "unit.xml");
+		bag = new UnitGroupBag(ug, "en");
 	}
 
 	@Test
@@ -37,7 +31,7 @@ public class UnitGroupBagTest {
 	@Test
 	public void testGetUnits() {
 		List<Unit> units = UnitGroups.getUnits(ug);
-		assertTrue(units.size() == 4);
+		assertEquals(4, units.size());
 		assertEquals("kg*a", units.get(0).name);
 	}
 
@@ -54,10 +48,10 @@ public class UnitGroupBagTest {
 	@Test
 	public void testGetComment() {
 		assertEquals(
-				"Reference Unit Group Data Set of the International Reference "
-						+ "Life Cycle Data System (ILCD).",
-				bag.getComment().replace("\n", "").replace("\t", " ")
-						.replace("    ", " ").trim());
+			"Reference Unit Group Data Set of the International Reference "
+				+ "Life Cycle Data System (ILCD).",
+			bag.getComment().replace("\n", "").replace("\t", " ")
+				.replace("    ", " ").trim());
 	}
 
 	@Test

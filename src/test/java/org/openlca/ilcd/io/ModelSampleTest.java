@@ -5,6 +5,7 @@ import static org.junit.Assert.assertEquals;
 import java.io.InputStream;
 import java.util.function.Consumer;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.openlca.ilcd.models.Model;
 
@@ -12,18 +13,16 @@ import jakarta.xml.bind.JAXB;
 
 public class ModelSampleTest {
 
-	@Test
-	public void testDataSetInfo() throws Exception {
-		with(m -> {
-			assertEquals("10062015-184a-41b8-8fa6-49e999cbd101", m.getUUID());
-		});
+	private Model model;
+
+	@Before
+	public void setup() {
+		model = Tests.read(Model.class, "eilcd_sample_model.xml");
 	}
 
-	private void with(Consumer<Model> fn) throws Exception {
-		try (InputStream in = getClass()
-				.getResourceAsStream("eilcd_sample_model.xml")) {
-			Model p = JAXB.unmarshal(in, Model.class);
-			fn.accept(p);
-		}
+	@Test
+	public void testDataSetInfo() {
+		assertEquals("10062015-184a-41b8-8fa6-49e999cbd101", model.getUUID());
 	}
+
 }

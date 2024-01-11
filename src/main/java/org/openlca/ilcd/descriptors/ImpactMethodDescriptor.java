@@ -6,11 +6,11 @@ import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
 
 @XmlAccessorType(XmlAccessType.FIELD)
-public class LCIAMethodDescriptor extends Descriptor {
+public class ImpactMethodDescriptor extends Descriptor {
 
 	@Override
 	protected DataSetType getType() {
-		return DataSetType.LCIA_METHOD;
+		return DataSetType.IMPACT_METHOD;
 	}
 
 }

@@ -1,5 +1,6 @@
 package org.openlca.ilcd.processes;
 
+import jakarta.xml.bind.JAXBElement;
 import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlAnyAttribute;
@@ -23,9 +24,9 @@ import java.util.List;
 import java.util.Map;
 
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "ProcessDataSetType", propOrder = { "processInfo",
-		"modelling", "adminInfo", "exchanges",
-		"lciaResults", "other" })
+@XmlType(name = "ProcessDataSetType", propOrder = {"processInfo",
+	"modelling", "adminInfo", "exchanges",
+	"lciaResults", "other"})
 public class Process implements IDataSet, Copyable<Process> {
 
 	@XmlElement(required = true, name = "processInformation")
@@ -144,12 +145,18 @@ public class Process implements IDataSet, Copyable<Process> {
 		if (r == null)
 			return;
 		if (lciaResults == null) {
-			lciaResults = new LCIAResult[] { r };
+			lciaResults = new LCIAResult[]{r};
 			return;
 		}
 		LCIAResult[] next = new LCIAResult[lciaResults.length + 1];
 		System.arraycopy(lciaResults, 0, next, 0, lciaResults.length);
 		next[lciaResults.length] = r;
 		lciaResults = next;
+	}
+
+	public JAXBElement<Process> toElement() {
+		var qname = new QName(
+			"http://lca.jrc.it/ILCD/Process", "processDataSet");
+		return new JAXBElement<>(qname, Process.class, null, this);
 	}
 }

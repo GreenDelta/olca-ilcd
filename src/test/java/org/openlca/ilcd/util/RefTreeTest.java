@@ -48,7 +48,7 @@ public class RefTreeTest {
 		assertTrue(tree.getRefs().size() > 2);
 		int lciaResultCount = 0;
 		for (Ref ref : tree.getRefs()) {
-			if (ref.type == DataSetType.LCIA_METHOD) {
+			if (ref.type == DataSetType.IMPACT_METHOD) {
 				assertTrue(ref.isValid());
 				lciaResultCount++;
 			}

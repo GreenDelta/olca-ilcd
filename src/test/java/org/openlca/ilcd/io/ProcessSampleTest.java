@@ -168,7 +168,7 @@ public class ProcessSampleTest {
 			assertEquals(2, p.lciaResults.length);
 			LCIAResult r1 = p.lciaResults[0];
 			assertTrue(r1.method.isValid());
-			assertEquals(DataSetType.LCIA_METHOD, r1.method.type);
+			assertEquals(DataSetType.IMPACT_METHOD, r1.method.type);
 		});
 	}
 

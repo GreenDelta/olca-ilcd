@@ -95,7 +95,7 @@ public class Refs {
 			if (element == null)
 				return null;
 			return switch (element) {
-				case "LCIAMethodDataSet" -> DataSetType.LCIA_METHOD;
+				case "LCIAMethodDataSet" -> DataSetType.IMPACT_METHOD;
 				case "processDataSet" -> DataSetType.PROCESS;
 				case "contactDataSet" -> DataSetType.CONTACT;
 				case "sourceDataSet" -> DataSetType.SOURCE;
@@ -166,7 +166,7 @@ public class Refs {
 				case "name" -> ref.type == DataSetType.CONTACT
 						|| ref.type == DataSetType.FLOW_PROPERTY
 						|| ref.type == DataSetType.UNIT_GROUP
-						|| ref.type == DataSetType.LCIA_METHOD;
+						|| ref.type == DataSetType.IMPACT_METHOD;
 				case "baseName" -> ref.type == DataSetType.FLOW
 						|| ref.type == DataSetType.PROCESS;
 				case "shortName" -> ref.type == DataSetType.SOURCE;

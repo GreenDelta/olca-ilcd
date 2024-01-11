@@ -90,7 +90,7 @@ public class SchemaValidator {
 			case CONTACT -> "ILCD_ContactDataSet.xsd";
 			case FLOW -> "ILCD_FlowDataSet.xsd";
 			case FLOW_PROPERTY -> "ILCD_FlowPropertyDataSet.xsd";
-			case LCIA_METHOD -> "ILCD_LCIAMethodDataSet.xsd";
+			case IMPACT_METHOD -> "ILCD_LCIAMethodDataSet.xsd";
 			case PROCESS -> "ILCD_ProcessDataSet.xsd";
 			case SOURCE -> "ILCD_SourceDataSet.xsd";
 			case UNIT_GROUP -> "ILCD_UnitGroupDataSet.xsd";

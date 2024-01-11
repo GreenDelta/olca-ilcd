@@ -17,7 +17,7 @@ public class RefsTest {
 	@Test
 	public void testFetchMethodRef() {
 		with("sdk_sample_lciamethod.xml", ref -> {
-			assertEquals(DataSetType.LCIA_METHOD, ref.type);
+			assertEquals(DataSetType.IMPACT_METHOD, ref.type);
 			assertEquals("name0", LangString.getVal(ref.name, "en"));
 			assertEquals("name1", LangString.getVal(ref.name, "de"));
 		});

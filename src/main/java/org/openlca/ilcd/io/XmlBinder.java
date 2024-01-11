@@ -1,5 +1,21 @@
 package org.openlca.ilcd.io;
 
+import jakarta.xml.bind.JAXBContext;
+import jakarta.xml.bind.JAXBElement;
+import jakarta.xml.bind.JAXBException;
+import jakarta.xml.bind.Marshaller;
+import jakarta.xml.bind.Unmarshaller;
+import org.openlca.ilcd.contacts.Contact;
+import org.openlca.ilcd.descriptors.DescriptorList;
+import org.openlca.ilcd.flowproperties.FlowProperty;
+import org.openlca.ilcd.flows.Flow;
+import org.openlca.ilcd.methods.ImpactMethod;
+import org.openlca.ilcd.models.Model;
+import org.openlca.ilcd.processes.Process;
+import org.openlca.ilcd.sources.Source;
+import org.openlca.ilcd.units.UnitGroup;
+
+import javax.xml.transform.stream.StreamSource;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -7,28 +23,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.Reader;
+import java.io.StringWriter;
 import java.io.Writer;
 import java.util.HashMap;
-
-import javax.xml.namespace.QName;
-import javax.xml.transform.stream.StreamSource;
-
-import org.openlca.ilcd.contacts.Contact;
-import org.openlca.ilcd.descriptors.DescriptorList;
-import org.openlca.ilcd.flowproperties.FlowProperty;
-import org.openlca.ilcd.flows.Flow;
-import org.openlca.ilcd.methods.ImpactMethod;
-import org.openlca.ilcd.models.Model;
-import org.openlca.ilcd.processes.ObjectFactory;
-import org.openlca.ilcd.processes.Process;
-import org.openlca.ilcd.sources.Source;
-import org.openlca.ilcd.units.UnitGroup;
-
-import jakarta.xml.bind.JAXBContext;
-import jakarta.xml.bind.JAXBElement;
-import jakarta.xml.bind.JAXBException;
-import jakarta.xml.bind.Marshaller;
-import jakarta.xml.bind.Unmarshaller;
 
 /**
  * A helper class for reading and writing ILCD types from / to XML. Uses the
@@ -70,10 +67,22 @@ public class XmlBinder {
 		writer.close();
 	}
 
-	public byte[] toBytes(Object obj) throws JAXBException, IOException {
-		var os = new ByteArrayOutputStream();
-		toStream(obj, os);
-		return os.toByteArray();
+	public byte[] toBytes(Object obj) {
+		try (var os = new ByteArrayOutputStream()) {
+			toStream(obj, os);
+			return os.toByteArray();
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	public String toString(Object obj) {
+		try (var writer = new StringWriter()) {
+			toWriter(obj, writer);
+			return writer.toString();
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
 	}
 
 	private Marshaller getMarshaller(Object ilcdObject) throws JAXBException {
@@ -162,33 +171,25 @@ public class XmlBinder {
 	 * object factory method for the given type.
 	 */
 	public static JAXBElement<?> toElement(Object value) {
-		if (value instanceof Process) {
-			ObjectFactory factory = new ObjectFactory();
-			return factory.createProcessDataSet((Process) value);
-		} else if (value instanceof Flow flow) {
+		if (value instanceof Process process)
+			return process.toElement();
+		if (value instanceof Flow flow)
 			return flow.toElement();
-		} else if (value instanceof FlowProperty prop) {
+		if (value instanceof FlowProperty prop)
 			return prop.toElement();
-		} else if (value instanceof UnitGroup) {
-			org.openlca.ilcd.units.ObjectFactory fac = new org.openlca.ilcd.units.ObjectFactory();
-			return fac.createUnitGroupDataSet((UnitGroup) value);
-		} else if (value instanceof Contact contact) {
+		if (value instanceof UnitGroup group)
+			return group.toElement();
+		if (value instanceof Contact contact)
 			return contact.toElement();
-		} else if (value instanceof Source) {
-			org.openlca.ilcd.sources.ObjectFactory fac = new org.openlca.ilcd.sources.ObjectFactory();
-			return fac.createSourceDataSet((Source) value);
-		} else if (value instanceof ImpactMethod method) {
+		if (value instanceof Source source)
+			return source.toElement();
+		if (value instanceof ImpactMethod method)
 			return method.toElement();
-		} else if (value instanceof DescriptorList) {
-			org.openlca.ilcd.descriptors.ObjectFactory fac = new org.openlca.ilcd.descriptors.ObjectFactory();
-			return fac.createDataSetList((DescriptorList) value);
-		} else if (value instanceof Model) {
-			QName qname = new QName("http://eplca.jrc.ec.europa.eu/ILCD/LifeCycleModel/2017",
-				"lifeCycleModelDataSet");
-			return new JAXBElement<>(qname, Model.class, null, (Model) value);
-		} else {
-			throw new IllegalArgumentException("Unsupported type " + value);
-		}
+		if (value instanceof DescriptorList list)
+			return list.toElement();
+		if (value instanceof Model model)
+			return model.toElement();
+		throw new IllegalArgumentException("Unsupported type " + value);
 	}
 
 }

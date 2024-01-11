@@ -7,6 +7,7 @@ import java.util.Map;
 
 import javax.xml.namespace.QName;
 
+import jakarta.xml.bind.JAXBElement;
 import org.openlca.ilcd.commons.Classification;
 import org.openlca.ilcd.commons.DataSetType;
 import org.openlca.ilcd.commons.IDataSet;
@@ -91,4 +92,9 @@ public class UnitGroup implements IDataSet {
 		return unitGroupInfo.dataSetInfo.name;
 	}
 
+	public JAXBElement<UnitGroup> toElement() {
+		var qname = new QName(
+			"http://lca.jrc.it/ILCD/UnitGroup", "unitGroupDataSet");
+		return new JAXBElement<>(qname, UnitGroup.class, null, this);
+	}
 }

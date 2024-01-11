@@ -59,7 +59,7 @@ public class ImpactMethod implements IDataSet {
 
 	@Override
 	public DataSetType getDataSetType() {
-		return DataSetType.LCIA_METHOD;
+		return DataSetType.IMPACT_METHOD;
 	}
 
 	@Override

@@ -98,7 +98,7 @@ public class IDataSetRefTest {
 			assertEquals("00000000-0000-0000-0000-000000000000", ref.uuid);
 			assertEquals("00.00", ref.version);
 			assertEquals("name0", ref.name.get(0).value.trim());
-			assertEquals(DataSetType.LCIA_METHOD, ref.type);
+			assertEquals(DataSetType.IMPACT_METHOD, ref.type);
 			assertEquals("http://www.ilcd-network.org/data/lciamethods/sample_lciamethod.xml", ref.uri.trim());
 		});
 	}

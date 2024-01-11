@@ -23,12 +23,8 @@ public class ProcessBagTest {
 
 	@Before
 	public void setUp() throws Exception {
-		try (InputStream stream = this.getClass().getResourceAsStream(
-				"process.xml")) {
-			XmlBinder binder = new XmlBinder();
-			Process process = binder.fromStream(Process.class, stream);
-			bag = new ProcessBag(process, "en");
-		}
+		var process = Tests.read(Process.class, "process.xml");
+		bag = new ProcessBag(process, "en");
 	}
 
 	@Test
@@ -39,18 +35,18 @@ public class ProcessBagTest {
 	@Test
 	public void testGetName() {
 		assertEquals("Acrylonitrile-Butadiene-Styrene granulate "
-				+ "(ABS), production mix, at plant", 
-				Processes.fullName(bag.getValue(), "en"));
+				+ "(ABS), production mix, at plant",
+			Processes.fullName(bag.getValue(), "en"));
 	}
 
 	@Test
 	public void testGetSynonyms() {
 		assertEquals(
-				"Acrylonitrile-butadiene-styrene copolymer; "
-						+ "Styrene, acrylonitrile, butadiene polymer; 2-Propenenitrile, "
-						+ "polymer with 1,3-butadiene and ethenylbenzene; Acrylonitrile, "
-						+ "polymer with 1,3-butadiene and styrene",
-				bag.getSynonyms());
+			"Acrylonitrile-butadiene-styrene copolymer; "
+				+ "Styrene, acrylonitrile, butadiene polymer; 2-Propenenitrile, "
+				+ "polymer with 1,3-butadiene and ethenylbenzene; Acrylonitrile, "
+				+ "polymer with 1,3-butadiene and styrene",
+			bag.getSynonyms());
 	}
 
 	@Test
@@ -83,7 +79,7 @@ public class ProcessBagTest {
 	@Test
 	public void testGetProcessType() {
 		assertEquals(ProcessType.PARTLY_TERMINATED_SYSTEM,
-				bag.getProcessType());
+			bag.getProcessType());
 	}
 
 	@Test

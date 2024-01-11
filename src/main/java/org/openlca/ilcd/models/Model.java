@@ -7,6 +7,7 @@ import java.util.Map;
 
 import javax.xml.namespace.QName;
 
+import jakarta.xml.bind.JAXBElement;
 import org.openlca.ilcd.commons.Classification;
 import org.openlca.ilcd.commons.DataSetType;
 import org.openlca.ilcd.commons.IDataSet;
@@ -22,7 +23,7 @@ import jakarta.xml.bind.annotation.XmlRootElement;
 import jakarta.xml.bind.annotation.XmlType;
 
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(propOrder = { "info", "modelling", "adminInfo" })
+@XmlType(propOrder = {"info", "modelling", "adminInfo"})
 @XmlRootElement(name = "lifeCycleModelDataSet", namespace = "http://eplca.jrc.ec.europa.eu/ILCD/LifeCycleModel/2017")
 public class Model implements IDataSet {
 
@@ -84,5 +85,12 @@ public class Model implements IDataSet {
 		if (pub == null)
 			return null;
 		return pub.version;
+	}
+
+	public JAXBElement<Model> toElement() {
+		var qname = new QName(
+			"http://eplca.jrc.ec.europa.eu/ILCD/LifeCycleModel/2017",
+			"lifeCycleModelDataSet");
+		return new JAXBElement<>(qname, Model.class, null, this);
 	}
 }

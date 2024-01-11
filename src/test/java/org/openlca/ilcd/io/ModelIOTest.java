@@ -1,7 +1,5 @@
 package org.openlca.ilcd.io;
 
-import static org.junit.Assert.assertEquals;
-
 import java.io.StringReader;
 import java.io.StringWriter;
 import java.util.UUID;
@@ -21,6 +19,8 @@ import org.openlca.ilcd.models.Technology;
 import org.openlca.ilcd.util.Models;
 
 import jakarta.xml.bind.JAXB;
+
+import static org.junit.Assert.*;
 
 public class ModelIOTest {
 
@@ -77,7 +77,7 @@ public class ModelIOTest {
 	@Test
 	public void testOrigin() {
 		Model m = new Model();
-		assertEquals(null, Models.getOrigin(m));
+		assertNull(Models.getOrigin(m));
 		Models.setOrigin(m, "openLCA");
 		StringWriter writer = new StringWriter();
 		JAXB.marshal(m, writer);

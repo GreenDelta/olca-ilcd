@@ -4,12 +4,15 @@ package org.openlca.ilcd.descriptors;
 import java.util.ArrayList;
 import java.util.List;
 
+import jakarta.xml.bind.JAXBElement;
 import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlAttribute;
 import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlElements;
 import jakarta.xml.bind.annotation.XmlType;
+
+import javax.xml.namespace.QName;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(
@@ -20,7 +23,7 @@ import jakarta.xml.bind.annotation.XmlType;
 public class DescriptorList {
 
 	@XmlElements({
-		@XmlElement(name = "LCIAMethod", type = LCIAMethodDescriptor.class,
+		@XmlElement(name = "LCIAMethod", type = ImpactMethodDescriptor.class,
 			namespace = "http://www.ilcd-network.org/ILCD/ServiceAPI/LCIAMethod"),
 		@XmlElement(name = "process", type = ProcessDescriptor.class,
 			namespace = "http://www.ilcd-network.org/ILCD/ServiceAPI/Process"),
@@ -52,4 +55,9 @@ public class DescriptorList {
 		namespace = "http://www.ilcd-network.org/ILCD/ServiceAPI")
 	public int pageSize;
 
+	public JAXBElement<DescriptorList> toElement() {
+		var qname = new QName(
+			"http://www.ilcd-network.org/ILCD/ServiceAPI", "dataSetList");
+		return new JAXBElement<>(qname, DescriptorList.class, null, this);
+	}
 }

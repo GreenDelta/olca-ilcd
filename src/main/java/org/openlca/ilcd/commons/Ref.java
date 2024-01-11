@@ -117,7 +117,7 @@ public class Ref implements Copyable<Ref> {
 			case FLOW_PROPERTY -> FlowProperty.class;
 			case FLOW -> Flow.class;
 			case PROCESS -> Process.class;
-			case LCIA_METHOD -> ImpactMethod.class;
+			case IMPACT_METHOD -> ImpactMethod.class;
 			case MODEL -> Model.class;
 			default -> null;
 		};

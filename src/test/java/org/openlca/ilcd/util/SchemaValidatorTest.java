@@ -15,7 +15,7 @@ public class SchemaValidatorTest {
 	@Ignore
 	public void testPass() {
 		DataSetType[] types = {
-				DataSetType.LCIA_METHOD,
+				DataSetType.IMPACT_METHOD,
 				DataSetType.PROCESS,
 				DataSetType.FLOW,
 				DataSetType.FLOW_PROPERTY,

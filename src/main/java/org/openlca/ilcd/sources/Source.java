@@ -7,6 +7,7 @@ import java.util.Map;
 
 import javax.xml.namespace.QName;
 
+import jakarta.xml.bind.JAXBElement;
 import org.openlca.ilcd.commons.Classification;
 import org.openlca.ilcd.commons.DataSetType;
 import org.openlca.ilcd.commons.IDataSet;
@@ -81,5 +82,10 @@ public class Source implements IDataSet {
 		if (sourceInfo == null || sourceInfo.dataSetInfo == null)
 			return Collections.emptyList();
 		return sourceInfo.dataSetInfo.name;
+	}
+
+	public JAXBElement<Source> toElement() {
+		var qname = new QName("http://lca.jrc.it/ILCD/Source", "sourceDataSet");
+		return new JAXBElement<>(qname, Source.class, null, this);
 	}
 }

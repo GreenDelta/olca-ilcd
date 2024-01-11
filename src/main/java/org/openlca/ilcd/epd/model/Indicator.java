@@ -57,7 +57,7 @@ public final class Indicator {
 		ref.uri = "../" + path + "/" + uuid;
 		ref.type = type == Type.LCI
 				? DataSetType.FLOW
-				: DataSetType.LCIA_METHOD;
+				: DataSetType.IMPACT_METHOD;
 		LangString.set(ref.name, name, lang);
 		return ref;
 	}

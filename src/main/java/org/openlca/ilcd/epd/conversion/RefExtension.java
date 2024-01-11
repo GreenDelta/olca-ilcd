@@ -70,7 +70,7 @@ public class RefExtension {
 			case CONTACT -> "contacts";
 			case SOURCE -> "sources";
 			case FLOW -> "flows";
-			case LCIA_METHOD -> "lciamethods";
+			case IMPACT_METHOD -> "lciamethods";
 			case PROCESS -> "processes";
 			case FLOW_PROPERTY -> "flowproperties";
 			case UNIT_GROUP -> "unitgroups";

@@ -17,12 +17,9 @@ public class SourceBagTest {
 
 	@Before
 	public void setUp() throws Exception {
-		try (InputStream stream = this.getClass().getResourceAsStream(
-				"source.xml")) {
-			XmlBinder binder = new XmlBinder();
-			Source source = binder.fromStream(Source.class, stream);
-			bag = new SourceBag(source, "en");
-		}
+		var source = Tests.read(Source.class, "source.xml");
+		System.out.println(new XmlBinder().toString(source));
+		bag = new SourceBag(source, "en");
 	}
 
 	@Test
@@ -34,8 +31,8 @@ public class SourceBagTest {
 	public void testGetShortName() {
 		assertEquals("IMA-Europe_Plastic_Clay_diagramme_"
 				+ "2c699413-f88b-4cb5-a56d-98cb4068472f.jpg",
-				bag
-						.getShortName().trim());
+			bag
+				.getShortName().trim());
 	}
 
 	@Test
