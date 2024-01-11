@@ -130,7 +130,7 @@ public class SodaClient implements DataStore {
 		var r = resource(Dir.get(ds.getClass()));
 		log.info("Publish resource: {}/{}", r.getUri(), ds.getUUID());
 		try {
-			byte[] bytes = binder.toByteArray(ds);
+			byte[] bytes = binder.toBytes(ds);
 			var builder = cookies(r).accept(MediaType.APPLICATION_XML);
 			if (Strings.notEmpty(dataStockId)) {
 				log.trace("post to data stock {}", dataStockId);
@@ -155,7 +155,7 @@ public class SodaClient implements DataStore {
 			}
 
 			// add the XML as `file` parameter
-			byte[] bytes = binder.toByteArray(source);
+			byte[] bytes = binder.toBytes(source);
 			var xmlStream = new ByteArrayInputStream(bytes);
 			var xmlPart = new FormDataBodyPart("file", xmlStream,
 				MediaType.MULTIPART_FORM_DATA_TYPE);

@@ -19,7 +19,7 @@ public class ProcessReadWriteTest {
 		setNameAndComment(process);
 		createExchange(process);
 		XmlBinder binder = new XmlBinder();
-		byte[] bytes = binder.toByteArray(process);
+		byte[] bytes = binder.toBytes(process);
 		process = binder.fromStream(Process.class,
 				new ByteArrayInputStream(bytes));
 		Assert.assertEquals("process name",

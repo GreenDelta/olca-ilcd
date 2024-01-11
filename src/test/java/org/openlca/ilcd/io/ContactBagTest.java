@@ -2,8 +2,6 @@ package org.openlca.ilcd.io;
 
 import static org.junit.Assert.assertEquals;
 
-import java.io.InputStream;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.openlca.ilcd.contacts.Contact;
@@ -16,10 +14,10 @@ public class ContactBagTest {
 
 	@Before
 	public void setUp() throws Exception {
-		try (InputStream stream = this.getClass().getResourceAsStream(
-				"contact.xml")) {
-			XmlBinder binder = new XmlBinder();
-			Contact contact = binder.fromStream(Contact.class, stream);
+		try (var stream = this.getClass().getResourceAsStream("contact.xml")) {
+			var xml = new XmlBinder();
+			var contact = xml.fromBytes(Contact.class,
+				xml.toBytes(xml.fromStream(Contact.class, stream)));
 			bag = new ContactBag(contact, "en");
 		}
 	}

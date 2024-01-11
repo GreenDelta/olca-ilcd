@@ -8,6 +8,8 @@ import java.util.Map;
 
 import javax.xml.namespace.QName;
 
+import jakarta.xml.bind.JAXBElement;
+import jakarta.xml.bind.annotation.XmlElementDecl;
 import org.openlca.ilcd.commons.Classification;
 import org.openlca.ilcd.commons.DataSetType;
 import org.openlca.ilcd.commons.IDataSet;
@@ -23,9 +25,9 @@ import jakarta.xml.bind.annotation.XmlType;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "ContactDataSetType", propOrder = {
-		"contactInfo",
-		"adminInfo",
-		"other"
+	"contactInfo",
+	"adminInfo",
+	"other"
 })
 public class Contact implements IDataSet {
 
@@ -84,4 +86,11 @@ public class Contact implements IDataSet {
 		return contactInfo.dataSetInfo.name;
 	}
 
+	@XmlElementDecl(
+		namespace = "http://lca.jrc.it/ILCD/Contact",
+		name = "contactDataSet")
+	public JAXBElement<Contact> toElement() {
+		var qname = new QName("http://lca.jrc.it/ILCD/Contact", "contactDataSet");
+		return new JAXBElement<>(qname, Contact.class, null, this);
+	}
 }

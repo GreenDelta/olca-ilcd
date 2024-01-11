@@ -1,5 +1,6 @@
 package org.openlca.ilcd.io;
 
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
@@ -40,7 +41,9 @@ public class XmlBinder {
 	private final HashMap<Class<?>, Marshaller> marshallers = new HashMap<>();
 	private final HashMap<Class<?>, Unmarshaller> unmarshallers = new HashMap<>();
 
-	/** Writes the given ILCD object to a file. */
+	/**
+	 * Writes the given ILCD object to a file.
+	 */
 	public void toFile(Object ilcdObject, File file) throws JAXBException {
 		getMarshaller(ilcdObject).marshal(toElement(ilcdObject), file);
 	}
@@ -50,7 +53,7 @@ public class XmlBinder {
 	 * and closed within this method.
 	 */
 	public void toStream(Object ilcdObject, OutputStream stream)
-			throws JAXBException, IOException {
+		throws JAXBException, IOException {
 		getMarshaller(ilcdObject).marshal(toElement(ilcdObject), stream);
 		stream.flush();
 		stream.close();
@@ -61,16 +64,15 @@ public class XmlBinder {
 	 * closed within this method.
 	 */
 	public void toWriter(Object ilcdObject, Writer writer)
-			throws JAXBException, IOException {
+		throws JAXBException, IOException {
 		getMarshaller(ilcdObject).marshal(toElement(ilcdObject), writer);
 		writer.flush();
 		writer.close();
 	}
 
-	public byte[] toByteArray(Object ilcdObject) throws JAXBException,
-			IOException {
-		ByteArrayOutputStream os = new ByteArrayOutputStream();
-		toStream(ilcdObject, os);
+	public byte[] toBytes(Object obj) throws JAXBException,	IOException {
+		var os = new ByteArrayOutputStream();
+		toStream(obj, os);
 		return os.toByteArray();
 	}
 
@@ -91,9 +93,21 @@ public class XmlBinder {
 		return marshaller;
 	}
 
-	/** Reads an ILCD object of the given type from the given file. */
+	public <T> T fromBytes(Class<T> clazz, byte[] bytes) {
+		try (var stream = new ByteArrayInputStream(bytes)) {
+			var source = new StreamSource(stream);
+			return unmarshal(clazz, source);
+		} catch (Exception e) {
+			throw new RuntimeException(
+				"failed to parse byte array for class " + clazz, e);
+		}
+	}
+
+	/**
+	 * Reads an ILCD object of the given type from the given file.
+	 */
 	public <T> T fromFile(Class<T> clazz, File file) throws JAXBException {
-		StreamSource source = new StreamSource(file);
+		var source = new StreamSource(file);
 		return unmarshal(clazz, source);
 	}
 
@@ -102,7 +116,7 @@ public class XmlBinder {
 	 * is closed within this method.
 	 */
 	public <T> T fromStream(Class<T> clazz, InputStream stream)
-			throws JAXBException, IOException {
+		throws JAXBException, IOException {
 		StreamSource source = new StreamSource(stream);
 		T obj = unmarshal(clazz, source);
 		stream.close();
@@ -114,7 +128,7 @@ public class XmlBinder {
 	 * is closed within this method.
 	 */
 	public <T> T fromReader(Class<T> clazz, Reader reader)
-			throws JAXBException, IOException {
+		throws JAXBException, IOException {
 		StreamSource source = new StreamSource(reader);
 		T obj = unmarshal(clazz, source);
 		reader.close();
@@ -122,7 +136,7 @@ public class XmlBinder {
 	}
 
 	private <T> T unmarshal(Class<T> clazz, StreamSource source)
-			throws JAXBException {
+		throws JAXBException {
 		Unmarshaller unmarshaller = getUnmarshaller(clazz);
 		JAXBElement<T> elem = unmarshaller.unmarshal(source, clazz);
 		return elem.getValue();
@@ -138,7 +152,7 @@ public class XmlBinder {
 	}
 
 	private Unmarshaller createUnmarshaller(Class<?> clazz)
-			throws JAXBException {
+		throws JAXBException {
 		JAXBContext context = JAXBContext.newInstance(clazz);
 		return context.createUnmarshaller();
 	}
@@ -160,9 +174,8 @@ public class XmlBinder {
 		} else if (value instanceof UnitGroup) {
 			org.openlca.ilcd.units.ObjectFactory fac = new org.openlca.ilcd.units.ObjectFactory();
 			return fac.createUnitGroupDataSet((UnitGroup) value);
-		} else if (value instanceof Contact) {
-			org.openlca.ilcd.contacts.ObjectFactory fac = new org.openlca.ilcd.contacts.ObjectFactory();
-			return fac.createContactDataSet((Contact) value);
+		} else if (value instanceof Contact contact) {
+			return contact.toElement();
 		} else if (value instanceof Source) {
 			org.openlca.ilcd.sources.ObjectFactory fac = new org.openlca.ilcd.sources.ObjectFactory();
 			return fac.createSourceDataSet((Source) value);
@@ -174,7 +187,7 @@ public class XmlBinder {
 			return fac.createDataSetList((DescriptorList) value);
 		} else if (value instanceof Model) {
 			QName qname = new QName("http://eplca.jrc.ec.europa.eu/ILCD/LifeCycleModel/2017",
-					"lifeCycleModelDataSet");
+				"lifeCycleModelDataSet");
 			return new JAXBElement<>(qname, Model.class, null, (Model) value);
 		} else {
 			throw new IllegalArgumentException("Unsupported type " + value);
