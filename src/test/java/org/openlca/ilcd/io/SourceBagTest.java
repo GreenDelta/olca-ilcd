@@ -3,8 +3,6 @@ package org.openlca.ilcd.io;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 
-import java.io.InputStream;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.openlca.ilcd.sources.Source;
@@ -18,7 +16,6 @@ public class SourceBagTest {
 	@Before
 	public void setUp() throws Exception {
 		var source = Tests.read(Source.class, "source.xml");
-		System.out.println(new XmlBinder().toString(source));
 		bag = new SourceBag(source, "en");
 	}
 

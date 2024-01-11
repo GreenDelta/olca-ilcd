@@ -1,9 +1,13 @@
 package org.openlca.ilcd.io;
 
+import org.openlca.ilcd.commons.IDataSet;
+import org.openlca.ilcd.sources.Source;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
 import java.net.URI;
 import java.nio.file.FileSystem;
 import java.nio.file.FileSystems;
@@ -22,11 +26,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.function.Consumer;
 
-import org.openlca.ilcd.commons.IDataSet;
-import org.openlca.ilcd.sources.Source;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 public class ZipStore implements DataStore {
 
 	private final Logger log = LoggerFactory.getLogger(getClass());
@@ -39,8 +38,6 @@ public class ZipStore implements DataStore {
 	 * contains and then do the export if necessary.
 	 */
 	private final HashMap<Class<?>, Set<String>> addedContent = new HashMap<>();
-
-	private final XmlBinder binder = new XmlBinder();
 
 	public ZipStore(File zipFile) throws IOException {
 		log.trace("Create zip store {}", zipFile);
@@ -96,12 +93,17 @@ public class ZipStore implements DataStore {
 		String dir = Dir.get(ds.getClass());
 		String entryName = "ILCD" + "/" + dir + "/" + ds.getUUID() + ".xml";
 		try {
-			Path entry = zip.getPath(entryName);
-			Path parent = entry.getParent();
-			if (parent != null && !Files.exists(parent))
+
+			var entry = zip.getPath(entryName);
+			var parent = entry.getParent();
+			if (parent != null && !Files.exists(parent)) {
 				Files.createDirectories(parent);
-			OutputStream os = Files.newOutputStream(entry);
-			binder.toStream(ds, os);
+			}
+
+			try (var os = Files.newOutputStream(entry)) {
+				Xml.write(ds, os);
+			}
+
 			List<Path> list = getEntries(dir);
 			list.add(entry);
 			var ids = addedContent.computeIfAbsent(
@@ -154,9 +156,8 @@ public class ZipStore implements DataStore {
 	}
 
 	<T> T unmarshal(Class<T> type, Path entry) {
-		try {
-			InputStream is = Files.newInputStream(entry);
-			return binder.fromStream(type, is);
+		try (	var is = Files.newInputStream(entry)) {
+			return Xml.read(type, is);
 		} catch (Exception e) {
 			throw new RuntimeException("Cannot load " + type + " from entry "
 					+ entry, e);

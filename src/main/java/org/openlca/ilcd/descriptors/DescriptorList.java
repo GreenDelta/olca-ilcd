@@ -11,6 +11,7 @@ import jakarta.xml.bind.annotation.XmlAttribute;
 import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlElements;
 import jakarta.xml.bind.annotation.XmlType;
+import org.openlca.ilcd.commons.XmlRoot;
 
 import javax.xml.namespace.QName;
 
@@ -20,7 +21,7 @@ import javax.xml.namespace.QName;
 	namespace = "http://www.ilcd-network.org/ILCD/ServiceAPI",
 	propOrder = {"descriptors"}
 )
-public class DescriptorList {
+public class DescriptorList implements XmlRoot {
 
 	@XmlElements({
 		@XmlElement(name = "LCIAMethod", type = ImpactMethodDescriptor.class,
@@ -55,6 +56,7 @@ public class DescriptorList {
 		namespace = "http://www.ilcd-network.org/ILCD/ServiceAPI")
 	public int pageSize;
 
+	@Override
 	public JAXBElement<DescriptorList> toElement() {
 		var qname = new QName(
 			"http://www.ilcd-network.org/ILCD/ServiceAPI", "dataSetList");

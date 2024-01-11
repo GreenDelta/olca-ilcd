@@ -2,7 +2,7 @@ package org.openlca.ilcd.commons;
 
 import java.util.List;
 
-public interface IDataSet {
+public interface IDataSet extends XmlRoot {
 
 	DataSetType getDataSetType();
 

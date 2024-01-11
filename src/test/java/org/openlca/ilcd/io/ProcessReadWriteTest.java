@@ -1,7 +1,5 @@
 package org.openlca.ilcd.io;
 
-import java.io.ByteArrayInputStream;
-
 import org.junit.Assert;
 import org.junit.Test;
 import org.openlca.ilcd.commons.LangString;
@@ -14,14 +12,12 @@ import org.openlca.ilcd.processes.ProcessName;
 public class ProcessReadWriteTest {
 
 	@Test
-	public void testReadWrite() throws Exception {
+	public void testReadWrite() {
 		Process process = new Process();
 		setNameAndComment(process);
 		createExchange(process);
-		XmlBinder binder = new XmlBinder();
-		byte[] bytes = binder.toBytes(process);
-		process = binder.fromStream(Process.class,
-				new ByteArrayInputStream(bytes));
+		byte[] bytes = Xml.toBytes(process);
+		process = Xml.read(Process.class, bytes);
 		Assert.assertEquals("process name",
 				process.processInfo.dataSetInfo.name.name.get(0).value);
 		Assert.assertEquals("process description",

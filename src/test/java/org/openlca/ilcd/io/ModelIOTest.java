@@ -25,7 +25,7 @@ import static org.junit.Assert.*;
 public class ModelIOTest {
 
 	@Test
-	public void testSimpleModel() throws Exception {
+	public void testSimpleModel() {
 		Model model = new Model();
 		Models.forceDataSetInfo(model).uuid = UUID.randomUUID().toString();
 		Models.forceModelName(model).name.add(LangString.of("Example model", "en"));
@@ -66,8 +66,7 @@ public class ModelIOTest {
 		pi.connections.add(con);
 
 		StringWriter writer = new StringWriter();
-		XmlBinder binder = new XmlBinder();
-		binder.toWriter(model, writer);
+		Xml.write(model, writer);
 		StringReader reader = new StringReader(writer.toString());
 		model = JAXB.unmarshal(reader, Model.class);
 

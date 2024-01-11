@@ -90,6 +90,7 @@ public class FlowProperty implements IDataSet {
 		return flowPropertyInfo.dataSetInfo.name;
 	}
 
+	@Override
 	public JAXBElement<FlowProperty> toElement() {
 		var qname = new QName(
 			"http://lca.jrc.it/ILCD/FlowProperty", "flowPropertyDataSet");

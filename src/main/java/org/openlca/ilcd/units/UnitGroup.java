@@ -92,6 +92,7 @@ public class UnitGroup implements IDataSet {
 		return unitGroupInfo.dataSetInfo.name;
 	}
 
+	@Override
 	public JAXBElement<UnitGroup> toElement() {
 		var qname = new QName(
 			"http://lca.jrc.it/ILCD/UnitGroup", "unitGroupDataSet");

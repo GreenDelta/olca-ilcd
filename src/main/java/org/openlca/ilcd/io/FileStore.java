@@ -19,7 +19,6 @@ public class FileStore implements DataStore {
 
 	private final File rootDir;
 	private final Logger log = LoggerFactory.getLogger(this.getClass());
-	private final XmlBinder binder = new XmlBinder();
 
 	public FileStore(String pathToFolder) {
 		this(new File(pathToFolder));
@@ -65,7 +64,7 @@ public class FileStore implements DataStore {
 			File file = getFile(type, id);
 			if (file != null) {
 				log.trace("Unmarshal from file {}", file);
-				return binder.fromFile(type, file);
+				return Xml.read(type, file);
 			}
 			log.trace("No file found, return null");
 			return null;
@@ -112,7 +111,7 @@ public class FileStore implements DataStore {
 		log.trace("Store {} in file.", ds);
 		try {
 			File file = newFile(ds.getClass(), ds.getUUID());
-			binder.toFile(ds, file);
+			Xml.write(ds, file);
 		} catch (Exception e) {
 			String message = "Cannot store in file";
 			log.error(message, e);
@@ -253,8 +252,7 @@ public class FileStore implements DataStore {
 			try {
 				File file = files[idx];
 				idx++;
-				XmlBinder binder = new XmlBinder();
-				return binder.fromFile(type, file);
+				return Xml.read(type, file);
 			} catch (Exception e) {
 				throw new RuntimeException("failed to load unmarshal XML file",
 						e);

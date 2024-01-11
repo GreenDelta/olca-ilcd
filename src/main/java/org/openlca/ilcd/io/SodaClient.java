@@ -45,7 +45,6 @@ public class SodaClient implements DataStore {
 	private String dataStockId;
 
 	private final List<Cookie> cookies = new ArrayList<>();
-	private final XmlBinder binder = new XmlBinder();
 
 	private SodaClient(String url) {
 		this.url = url;
@@ -117,8 +116,8 @@ public class SodaClient implements DataStore {
 		log.info("Get resource: {}", r.getUri());
 		var response = cookies(r).get();
 		eval(response);
-		try {
-			return binder.fromStream(type, response.readEntity(InputStream.class));
+		try (var stream = response.readEntity(InputStream.class)) {
+			return Xml.read(type, stream);
 		} catch (Exception e) {
 			throw new RuntimeException("Failed to load resource " + id
 				+ " of type " + type, e);
@@ -130,7 +129,7 @@ public class SodaClient implements DataStore {
 		var r = resource(Dir.get(ds.getClass()));
 		log.info("Publish resource: {}/{}", r.getUri(), ds.getUUID());
 		try {
-			byte[] bytes = binder.toBytes(ds);
+			byte[] bytes = Xml.toBytes(ds);
 			var builder = cookies(r).accept(MediaType.APPLICATION_XML);
 			if (Strings.notEmpty(dataStockId)) {
 				log.trace("post to data stock {}", dataStockId);
@@ -155,7 +154,7 @@ public class SodaClient implements DataStore {
 			}
 
 			// add the XML as `file` parameter
-			byte[] bytes = binder.toBytes(source);
+			byte[] bytes = Xml.toBytes(source);
 			var xmlStream = new ByteArrayInputStream(bytes);
 			var xmlPart = new FormDataBodyPart("file", xmlStream,
 				MediaType.MULTIPART_FORM_DATA_TYPE);
