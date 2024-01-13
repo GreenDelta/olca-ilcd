@@ -16,100 +16,107 @@ public final class FlowProperties {
 	}
 
 	public static FlowPropertyInfo getFlowPropertyInfo(FlowProperty fp) {
-		if (fp == null)
-			return null;
-		return fp.flowPropertyInfo;
+		return fp != null
+			? fp.flowPropertyInfo
+			: null;
 	}
 
-	public static FlowPropertyInfo flowPropertyInfo(FlowProperty fp) {
-		if (fp.flowPropertyInfo == null)
+	public static FlowPropertyInfo forceFlowPropertyInfo(FlowProperty fp) {
+		if (fp.flowPropertyInfo == null) {
 			fp.flowPropertyInfo = new FlowPropertyInfo();
+		}
 		return fp.flowPropertyInfo;
 	}
 
 	public static QuantitativeReference getQuantitativeReference(
-			FlowProperty fp) {
-		FlowPropertyInfo fpi = getFlowPropertyInfo(fp);
-		if (fpi == null)
-			return null;
-		return fpi.quantitativeReference;
+		FlowProperty fp) {
+		var info = getFlowPropertyInfo(fp);
+		return info != null
+			? info.quantitativeReference
+			: null;
 	}
 
-	public static QuantitativeReference quantitativeReference(FlowProperty fp) {
-		FlowPropertyInfo fpi = flowPropertyInfo(fp);
-		if (fpi.quantitativeReference == null)
-			fpi.quantitativeReference = new QuantitativeReference();
-		return fpi.quantitativeReference;
+	public static QuantitativeReference forceQuantitativeReference(
+		FlowProperty fp) {
+		var info = forceFlowPropertyInfo(fp);
+		if (info.quantitativeReference == null) {
+			info.quantitativeReference = new QuantitativeReference();
+		}
+		return info.quantitativeReference;
 	}
 
 	public static Ref getUnitGroupRef(FlowProperty fp) {
-		QuantitativeReference qr = getQuantitativeReference(fp);
-		if (qr == null)
-			return null;
-		return qr.unitGroup;
+		var qref = getQuantitativeReference(fp);
+		return qref != null
+			? qref.unitGroup
+			: null;
 	}
 
-	public static Ref unitGroupRef(FlowProperty fp) {
-		QuantitativeReference qr = quantitativeReference(fp);
-		if (qr.unitGroup == null) {
-			qr.unitGroup = new Ref();
-			qr.unitGroup.type = DataSetType.UNIT_GROUP;
+	public static Ref forceUnitGroupRef(FlowProperty fp) {
+		var qref = forceQuantitativeReference(fp);
+		if (qref.unitGroup == null) {
+			qref.unitGroup = new Ref();
+			qref.unitGroup.type = DataSetType.UNIT_GROUP;
 		}
-		return qr.unitGroup;
+		return qref.unitGroup;
 	}
 
 	public static DataSetInfo getDataSetInfo(FlowProperty fp) {
-		FlowPropertyInfo fpi = getFlowPropertyInfo(fp);
-		if (fpi == null)
-			return null;
-		return fpi.dataSetInfo;
+		var info = getFlowPropertyInfo(fp);
+		return info != null
+			? info.dataSetInfo
+			: null;
 	}
 
-	public static DataSetInfo dataSetInfo(FlowProperty fp) {
-		FlowPropertyInfo fpi = flowPropertyInfo(fp);
-		if (fpi.dataSetInfo == null)
-			fpi.dataSetInfo = new DataSetInfo();
-		return fpi.dataSetInfo;
+	public static DataSetInfo forceDataSetInfo(FlowProperty fp) {
+		var info = forceFlowPropertyInfo(fp);
+		if (info.dataSetInfo == null) {
+			info.dataSetInfo = new DataSetInfo();
+		}
+		return info.dataSetInfo;
 	}
 
 	public static AdminInfo getAdminInfo(FlowProperty fp) {
-		if (fp == null)
-			return null;
-		return fp.adminInfo;
+		return fp != null
+			? fp.adminInfo
+			: null;
 	}
 
-	public static AdminInfo adminInfo(FlowProperty fp) {
-		if (fp.adminInfo == null)
+	public static AdminInfo forceAdminInfo(FlowProperty fp) {
+		if (fp.adminInfo == null) {
 			fp.adminInfo = new AdminInfo();
+		}
 		return fp.adminInfo;
 	}
 
 	public static DataEntry getDataEntry(FlowProperty fp) {
-		AdminInfo ai = getAdminInfo(fp);
-		if (ai == null)
-			return null;
-		return ai.dataEntry;
+		var info = getAdminInfo(fp);
+		return info != null
+			? info.dataEntry
+			: null;
 	}
 
-	public static DataEntry dataEntry(FlowProperty fp) {
-		AdminInfo ai = adminInfo(fp);
-		if (ai.dataEntry == null)
-			ai.dataEntry = new DataEntry();
-		return ai.dataEntry;
+	public static DataEntry forceDataEntry(FlowProperty fp) {
+		var info = forceAdminInfo(fp);
+		if (info.dataEntry == null) {
+			info.dataEntry = new DataEntry();
+		}
+		return info.dataEntry;
 	}
 
 	public static Publication getPublication(FlowProperty fp) {
-		AdminInfo ai = getAdminInfo(fp);
-		if (ai == null)
-			return null;
-		return ai.publication;
+		var info = getAdminInfo(fp);
+		return info != null
+			? info.publication
+			: null;
 	}
 
-	public static Publication publication(FlowProperty fp) {
-		AdminInfo ai = adminInfo(fp);
-		if (ai.publication == null)
-			ai.publication = new Publication();
-		return ai.publication;
+	public static Publication forcePublication(FlowProperty fp) {
+		var info = forceAdminInfo(fp);
+		if (info.publication == null) {
+			info.publication = new Publication();
+		}
+		return info.publication;
 	}
 
 }
