@@ -20,8 +20,14 @@ public final class Methods {
 	}
 
 	public static MethodInfo getMethodInfo(ImpactMethod m) {
-		if (m == null)
-			return null;
+		return m != null
+			? m.methodInfo
+			: null;
+	}
+
+	public static MethodInfo forceMethodInfo(ImpactMethod m) {
+		if (m.methodInfo == null)
+			m.methodInfo = new MethodInfo();
 		return m.methodInfo;
 	}
 
@@ -32,71 +38,85 @@ public final class Methods {
 			: info.time;
 	}
 
-	public static QuantitativeReference getQuantitativeReference(ImpactMethod m) {
-		var info = getMethodInfo(m);
-		return info == null
-			? null
-			: info.quantitativeReference;
+	public static Time forceTime(ImpactMethod m) {
+		var info = forceMethodInfo(m);
+		if (info.time == null) {
+			info.time = new Time();
+		}
+		return info.time;
 	}
 
-	public static MethodInfo forceMethodInfo(ImpactMethod m) {
-		if (m.methodInfo == null)
-			m.methodInfo = new MethodInfo();
-		return m.methodInfo;
+	public static QuantitativeReference getQuantitativeReference(ImpactMethod m) {
+		var info = getMethodInfo(m);
+		return info != null
+			? info.quantitativeReference
+			: null;
+	}
+
+	public static QuantitativeReference forceQuantitativeReference(ImpactMethod m) {
+		var info = forceMethodInfo(m);
+		if (info.quantitativeReference == null) {
+			info.quantitativeReference = new QuantitativeReference();
+		}
+		return info.quantitativeReference;
 	}
 
 	public static DataSetInfo getDataSetInfo(ImpactMethod m) {
-		MethodInfo mi = getMethodInfo(m);
-		if (mi == null)
-			return null;
-		return mi.dataSetInfo;
+		var info = getMethodInfo(m);
+		return info != null
+			? info.dataSetInfo
+			: null;
 	}
 
 	public static DataSetInfo forceDataSetInfo(ImpactMethod m) {
-		MethodInfo mi = forceMethodInfo(m);
-		if (mi.dataSetInfo == null)
-			mi.dataSetInfo = new DataSetInfo();
-		return mi.dataSetInfo;
+		var info = forceMethodInfo(m);
+		if (info.dataSetInfo == null) {
+			info.dataSetInfo = new DataSetInfo();
+		}
+		return info.dataSetInfo;
 	}
 
 	public static AdminInfo getAdminInfo(ImpactMethod m) {
-		if (m == null)
-			return null;
-		return m.adminInfo;
+		return m != null
+			? m.adminInfo
+			: null;
 	}
 
 	public static AdminInfo forceAdminInfo(ImpactMethod m) {
-		if (m.adminInfo == null)
+		if (m.adminInfo == null) {
 			m.adminInfo = new AdminInfo();
+		}
 		return m.adminInfo;
 	}
 
 	public static DataEntry getDataEntry(ImpactMethod m) {
-		AdminInfo ai = getAdminInfo(m);
-		if (ai == null)
-			return null;
-		return ai.dataEntry;
+		var info = getAdminInfo(m);
+		return info != null
+			? info.dataEntry
+			: null;
 	}
 
 	public static DataEntry forceDataEntry(ImpactMethod m) {
-		AdminInfo ai = forceAdminInfo(m);
-		if (ai.dataEntry == null)
-			ai.dataEntry = new DataEntry();
-		return ai.dataEntry;
+		var info = forceAdminInfo(m);
+		if (info.dataEntry == null) {
+			info.dataEntry = new DataEntry();
+		}
+		return info.dataEntry;
 	}
 
 	public static Publication getPublication(ImpactMethod m) {
-		AdminInfo ai = getAdminInfo(m);
-		if (ai == null)
-			return null;
-		return ai.publication;
+		var info = getAdminInfo(m);
+		return info != null
+			? info.publication
+			: null;
 	}
 
 	public static Publication forcePublication(ImpactMethod m) {
-		AdminInfo ai = forceAdminInfo(m);
-		if (ai.publication == null)
-			ai.publication = new Publication();
-		return ai.publication;
+		var info = forceAdminInfo(m);
+		if (info.publication == null) {
+			info.publication = new Publication();
+		}
+		return info.publication;
 	}
 
 	public static List<Factor> getFactors(ImpactMethod m) {
@@ -106,8 +126,9 @@ public final class Methods {
 	}
 
 	public static List<Factor> forceFactors(ImpactMethod m) {
-		if (m.characterisationFactors == null)
+		if (m.characterisationFactors == null) {
 			m.characterisationFactors = new FactorList();
+		}
 		return m.characterisationFactors.factors;
 	}
 
