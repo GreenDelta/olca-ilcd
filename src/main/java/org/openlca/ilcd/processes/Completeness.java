@@ -20,7 +20,7 @@ import java.util.Map;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "CompletenessType", propOrder = {
-		"type",
+		"productCompleteness",
 		"supportedImpactMethods",
 		"entries",
 		"otherDetails",
@@ -28,7 +28,7 @@ import java.util.Map;
 public class Completeness implements Copyable<Completeness> {
 
 	@XmlElement(name = "completenessProductModel")
-	public FlowCompleteness type;
+	public FlowCompleteness productCompleteness;
 
 	@XmlElement(name = "referenceToSupportedImpactAssessmentMethods")
 	public final List<Ref> supportedImpactMethods = new ArrayList<>();
@@ -49,7 +49,7 @@ public class Completeness implements Copyable<Completeness> {
 	@Override
 	public Completeness copy() {
 		var clone = new Completeness();
-		clone.type = type;
+		clone.productCompleteness = productCompleteness;
 		Ref.copy(supportedImpactMethods, clone.supportedImpactMethods);
 		for (FlowCompletenessEntry e : entries) {
 			if (e == null)

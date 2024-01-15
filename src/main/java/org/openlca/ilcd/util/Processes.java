@@ -10,27 +10,8 @@ import org.openlca.ilcd.commons.CommissionerAndGoal;
 import org.openlca.ilcd.commons.LangString;
 import org.openlca.ilcd.commons.Ref;
 import org.openlca.ilcd.commons.Time;
-import org.openlca.ilcd.processes.AdminInfo;
-import org.openlca.ilcd.processes.ComplianceDeclaration;
-import org.openlca.ilcd.processes.ComplianceList;
-import org.openlca.ilcd.processes.DataEntry;
-import org.openlca.ilcd.processes.DataGenerator;
-import org.openlca.ilcd.processes.DataSetInfo;
-import org.openlca.ilcd.processes.Exchange;
-import org.openlca.ilcd.processes.Geography;
-import org.openlca.ilcd.processes.Location;
-import org.openlca.ilcd.processes.InventoryMethod;
-import org.openlca.ilcd.processes.Modelling;
-import org.openlca.ilcd.processes.Parameter;
-import org.openlca.ilcd.processes.ParameterSection;
+import org.openlca.ilcd.processes.*;
 import org.openlca.ilcd.processes.Process;
-import org.openlca.ilcd.processes.ProcessInfo;
-import org.openlca.ilcd.processes.ProcessName;
-import org.openlca.ilcd.processes.Publication;
-import org.openlca.ilcd.processes.QuantitativeReference;
-import org.openlca.ilcd.processes.Representativeness;
-import org.openlca.ilcd.processes.Technology;
-import org.openlca.ilcd.processes.Validation;
 
 public final class Processes {
 
@@ -200,6 +181,21 @@ public final class Processes {
 		if (modelling.inventoryMethod == null)
 			modelling.inventoryMethod = new InventoryMethod();
 		return modelling.inventoryMethod;
+	}
+
+	public static Completeness getCompleteness(Process p) {
+		var modelling = getModelling(p);
+		return modelling != null
+			? modelling.completeness
+			: null;
+	}
+
+	public static Completeness forceCompleteness(Process p) {
+		var modelling = forceModelling(p);
+		if (modelling.completeness == null) {
+			modelling.completeness = new Completeness();
+		}
+		return modelling.completeness;
 	}
 
 	public static Representativeness getRepresentativeness(Process p) {
