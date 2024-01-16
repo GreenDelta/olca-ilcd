@@ -3,6 +3,9 @@ package org.openlca.ilcd.commons;
 import jakarta.xml.bind.annotation.XmlEnum;
 import jakarta.xml.bind.annotation.XmlEnumValue;
 import jakarta.xml.bind.annotation.XmlType;
+import org.openlca.ilcd.util.Strings;
+
+import java.util.Optional;
 
 @XmlType(name = "WorkflowAndPublicationStatusValues")
 @XmlEnum
@@ -80,13 +83,15 @@ public enum PublicationStatus {
 		return value;
 	}
 
-	public static PublicationStatus fromValue(String v) {
+	public static Optional<PublicationStatus> fromValue(String v) {
+		if (Strings.nullOrEmpty(v))
+			return Optional.empty();
 		for (PublicationStatus c : PublicationStatus.values()) {
 			if (c.value.equals(v)) {
-				return c;
+				return Optional.of(c);
 			}
 		}
-		throw new IllegalArgumentException(v);
+		return Optional.empty();
 	}
 
 }

@@ -3,15 +3,18 @@ package org.openlca.ilcd.processes;
 import jakarta.xml.bind.annotation.XmlEnum;
 import jakarta.xml.bind.annotation.XmlEnumValue;
 import jakarta.xml.bind.annotation.XmlType;
+import org.openlca.ilcd.util.Strings;
+
+import java.util.Optional;
 
 @XmlType(name = "ScopeOfReviewValues")
 @XmlEnum
 public enum ReviewScope {
 
 	/**
-	 * Review/verification is done on basis of the original "raw data", i.e. the
-	 * data before it was scaled, converted, or treated in other ways to be used
-	 * for modelling of a unit process.
+	 * Review/verification is done on the basis of the original "raw data", i.e.
+	 * the data before it was scaled, converted, or treated in other ways to be
+	 * used for modelling of a unit process.
 	 *
 	 */
 	@XmlEnumValue("Raw data")
@@ -19,7 +22,7 @@ public enum ReviewScope {
 
 	/**
 	 * The review is done on the level of the "Unit operation type unit
-	 * process(es)" that can not be further subdivided. Covers multi-functional
+	 * process(es)" that cannot be further subdivided. Covers multi-functional
 	 * processes of unit operation type.
 	 *
 	 */
@@ -84,7 +87,7 @@ public enum ReviewScope {
 	 * refers to a correspondance of the elementary flows in the Inputs and
 	 * Outputs of the product system with the once referenced by the applied
 	 * LCIA method(s) regarding e.g. correct assignment, coverage/gaps,
-	 * doublecounting, etc. [Note: See also definition for entry "LCIA
+	 * double counting, etc. [Note: See also definition for entry "LCIA
 	 * results".]
 	 *
 	 */
@@ -111,13 +114,15 @@ public enum ReviewScope {
 		return value;
 	}
 
-	public static ReviewScope fromValue(String v) {
+	public static Optional<ReviewScope> fromValue(String v) {
+		if (Strings.nullOrEmpty(v))
+			return Optional.empty();
 		for (ReviewScope c : ReviewScope.values()) {
 			if (c.value.equals(v)) {
-				return c;
+				return Optional.of(c);
 			}
 		}
-		throw new IllegalArgumentException(v);
+		return Optional.empty();
 	}
 
 }

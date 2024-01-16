@@ -4,6 +4,9 @@ package org.openlca.ilcd.commons;
 import jakarta.xml.bind.annotation.XmlEnum;
 import jakarta.xml.bind.annotation.XmlEnumValue;
 import jakarta.xml.bind.annotation.XmlType;
+import org.openlca.ilcd.util.Strings;
+
+import java.util.Optional;
 
 @XmlType(name = "StandardMethodTypeValues")
 @XmlEnum
@@ -47,13 +50,15 @@ public enum StandardLciaMethod {
 		return value;
 	}
 
-	public static StandardLciaMethod fromValue(String v) {
+	public static Optional<StandardLciaMethod> fromValue(String v) {
+		if (Strings.nullOrEmpty(v))
+			return Optional.empty();
 		for (StandardLciaMethod c : StandardLciaMethod.values()) {
 			if (c.value.equals(v)) {
-				return c;
+				return Optional.of(c);
 			}
 		}
-		throw new IllegalArgumentException(v);
+		return Optional.empty();
 	}
 
 }

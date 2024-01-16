@@ -4,6 +4,9 @@ package org.openlca.ilcd.commons;
 import jakarta.xml.bind.annotation.XmlEnum;
 import jakarta.xml.bind.annotation.XmlEnumValue;
 import jakarta.xml.bind.annotation.XmlType;
+import org.openlca.ilcd.util.Strings;
+
+import java.util.Optional;
 
 @XmlType(name = "CompletenessTypeValues")
 @XmlEnum
@@ -46,28 +49,28 @@ public enum ImpactCategory {
 	ACIDIFICATION("Acidification"),
 
 	/**
-	 * Human toxicity (EXcluding ionising radiation and respiratory inorganics)
+	 * Human toxicity (Excluding ionising radiation and respiratory inorganics)
 	 *
 	 */
 	@XmlEnumValue("Human toxicity")
 	HUMAN_TOXICITY("Human toxicity"),
 
 	/**
-	 * Freshwater eco-toxicity (EXcluding ionising radiation)
+	 * Freshwater eco-toxicity (Excluding ionising radiation)
 	 *
 	 */
 	@XmlEnumValue("Freshwater ecotoxicity")
 	FRESHWATER_ECOTOXICITY("Freshwater ecotoxicity"),
 
 	/**
-	 * Seawater eco-toxicity (EXcluding ionising radiation)
+	 * Seawater eco-toxicity (Excluding ionising radiation)
 	 *
 	 */
 	@XmlEnumValue("Seawater eco-toxicity")
 	SEAWATER_ECO_TOXICITY("Seawater eco-toxicity"),
 
 	/**
-	 * Terrestric eco-toxicity (EXcluding ionising radiation)
+	 * Terrestric eco-toxicity (Excluding ionising radiation)
 	 *
 	 */
 	@XmlEnumValue("Terrestric eco-toxicity")
@@ -123,7 +126,7 @@ public enum ImpactCategory {
 	PARTICULATE_MATTER_RESPIRATORY_INORGANICS("Particulate matter/respiratory inorganics"),
 
 	/**
-	 * Depletion of gentic resources by consumption of specific animal and plant
+	 * Depletion of genetic resources by consumption of specific animal and plant
 	 * species
 	 *
 	 */
@@ -147,13 +150,15 @@ public enum ImpactCategory {
 		return value;
 	}
 
-	public static ImpactCategory fromValue(String v) {
+	public static Optional<ImpactCategory> fromValue(String v) {
+		if (Strings.nullOrEmpty(v))
+			return Optional.empty();
 		for (ImpactCategory c : ImpactCategory.values()) {
 			if (c.value.equals(v)) {
-				return c;
+				return Optional.of(c);
 			}
 		}
-		throw new IllegalArgumentException(v);
+		return Optional.empty();
 	}
 
 }

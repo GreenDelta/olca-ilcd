@@ -3,13 +3,16 @@ package org.openlca.ilcd.commons;
 import jakarta.xml.bind.annotation.XmlEnum;
 import jakarta.xml.bind.annotation.XmlEnumValue;
 import jakarta.xml.bind.annotation.XmlType;
+import org.openlca.ilcd.util.Strings;
+
+import java.util.Optional;
 
 @XmlType(name = "TypeOfProcessValues")
 @XmlEnum
 public enum ProcessType {
 
 	/**
-	 * Unit operation type unit process that can not be further subdivided.
+	 * Unit operation type unit process that cannot be further subdivided.
 	 * Covers multi-functional processes of unit operation type.
 	 *
 	 */
@@ -77,13 +80,15 @@ public enum ProcessType {
 		return value;
 	}
 
-	public static ProcessType fromValue(String v) {
+	public static Optional<ProcessType> fromValue(String v) {
+		if (Strings.nullOrEmpty(v))
+			return Optional.empty();
 		for (ProcessType c : ProcessType.values()) {
 			if (c.value.equals(v)) {
-				return c;
+				return Optional.of(c);
 			}
 		}
-		throw new IllegalArgumentException(v);
+		return Optional.empty();
 	}
 
 }

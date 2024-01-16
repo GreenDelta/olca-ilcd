@@ -4,6 +4,9 @@ package org.openlca.ilcd.commons;
 import jakarta.xml.bind.annotation.XmlEnum;
 import jakarta.xml.bind.annotation.XmlEnumValue;
 import jakarta.xml.bind.annotation.XmlType;
+import org.openlca.ilcd.util.Strings;
+
+import java.util.Optional;
 
 @XmlType(name = "TypeOfReviewValues")
 @XmlEnum
@@ -13,7 +16,7 @@ public enum ReviewType {
 	 * Reviewer(s)/verifier(s) have been involved in collecting, modelling, or
 	 * entering the data set information or inventory, have commissioned or
 	 * financed the work, or represent the process or product system (or
-	 * quantiatitively relevant parts of it).
+	 * quantitatively relevant parts of it).
 	 */
 	@XmlEnumValue("Dependent internal review")
 	DEPENDENT_INTERNAL_REVIEW("Dependent internal review"),
@@ -22,7 +25,7 @@ public enum ReviewType {
 	 * Reviewer(s)/verifier(s) have NOT been involved in collecting, modelling,
 	 * or entering the data set information or inventory, have not commissioned
 	 * or financed the work, and do not represent the process or product system
-	 * (or quantiatitively relevant parts of it). But the reviewer(s) belong(s)
+	 * (or quantitatively relevant parts of it). But the reviewer(s) belong(s)
 	 * to the organisation(s) or legally linked organisation(s) that have been
 	 * involved in the above.
 	 */
@@ -34,7 +37,7 @@ public enum ReviewType {
 	 * linked organisations that have been involved in collecting, modelling, or
 	 * entering the data set information or inventory, have not commissioned or
 	 * financed the work, or represent the process or product system (or
-	 * quantiatitively relevant parts of it).
+	 * quantitatively relevant parts of it).
 	 */
 	@XmlEnumValue("Independent external review")
 	INDEPENDENT_EXTERNAL_REVIEW("Independent external review"),
@@ -44,7 +47,7 @@ public enum ReviewType {
 	 * linked organisations that have been involved in collecting, modelling, or
 	 * entering the data set information or inventory, have not commissioned or
 	 * financed the work, or represent the process or product system (or
-	 * quantiatitively relevant parts of it). The reviewer(s)/verifier(s) are
+	 * quantitatively relevant parts of it). The reviewer(s)/verifier(s) are
 	 * accredited by an accreditation body, that is independent of the
 	 * reviewer(s)/verifier(s) and the scheme operator or standardisation party.
 	 */
@@ -53,19 +56,19 @@ public enum ReviewType {
 
 	/**
 	 * Panel of at least three independent internal or external
-	 * reviewers/verfiers. Chairperson is independent external
+	 * reviewers/verifiers. Chairperson is independent external
 	 * reviewer/verifier. Chairperson may invite interested parties affected by
 	 * the conclusions drawn from the LCA, such as government agencies,
 	 * non-governmental groups, competitors and affected industries. [Notes:
 	 * "Independent": Reviewer(s)/verifier(s) have NOT been involved in
 	 * collecting, modelling, or entering the data set information or inventory,
 	 * have not commissioned or financed the work, and do not represent the
-	 * process or product system (or quantiatitively relevant parts of it).
+	 * process or product system (or quantitatively relevant parts of it).
 	 * "External": Reviewer(s)/verifier(s) do not belong to the organisations or
 	 * legally linked organisations that have been involved in collecting,
 	 * modelling, or entering the data set information or inventory, have not
 	 * commissioned or financed the work, or represent the process or product
-	 * system (or quantiatitively relevant parts of it).
+	 * system (or quantitatively relevant parts of it).
 	 */
 	@XmlEnumValue("Independent review panel")
 	INDEPENDENT_REVIEW_PANEL("Independent review panel"),
@@ -85,13 +88,15 @@ public enum ReviewType {
 		return value;
 	}
 
-	public static ReviewType fromValue(String v) {
+	public static Optional<ReviewType> fromValue(String v) {
+		if (Strings.nullOrEmpty(v))
+			return Optional.empty();
 		for (ReviewType c : ReviewType.values()) {
 			if (c.value.equals(v)) {
-				return c;
+				return Optional.of(c);
 			}
 		}
-		throw new IllegalArgumentException(v);
+		return Optional.empty();
 	}
 
 }

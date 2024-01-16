@@ -4,6 +4,9 @@ package org.openlca.ilcd.lists;
 import jakarta.xml.bind.annotation.XmlEnum;
 import jakarta.xml.bind.annotation.XmlEnumValue;
 import jakarta.xml.bind.annotation.XmlType;
+import org.openlca.ilcd.util.Strings;
+
+import java.util.Optional;
 
 /**
  * Specifies the type of data sets that can be contained in a category.
@@ -43,13 +46,15 @@ public enum ContentType {
 		return value;
 	}
 
-	public static ContentType fromValue(String v) {
+	public static Optional<ContentType> fromValue(String v) {
+		if (Strings.nullOrEmpty(v))
+			return Optional.empty();
 		for (ContentType c : ContentType.values()) {
 			if (c.value.equals(v)) {
-				return c;
+				return Optional.of(c);
 			}
 		}
-		throw new IllegalArgumentException(v);
+		return Optional.empty();
 	}
 
 }

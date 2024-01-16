@@ -4,6 +4,9 @@ package org.openlca.ilcd.commons;
 import jakarta.xml.bind.annotation.XmlEnum;
 import jakarta.xml.bind.annotation.XmlEnumValue;
 import jakarta.xml.bind.annotation.XmlType;
+import org.openlca.ilcd.util.Strings;
+
+import java.util.Optional;
 
 @XmlType(name = "LCIMethodApproachesValues")
 @XmlEnum
@@ -176,7 +179,7 @@ public enum ModellingApproach {
 	 * system(s)", i.e. by the inverted or negative LCI result of the respective
 	 * function(s). The "Avoided product system" is modelled as average market
 	 * mix of production, with correction for different technical properties
-	 * (e.g. fibre length, tensile stength, etc.) of the substituted product
+	 * (e.g. fibre length, tensile strength, etc.) of the substituted product
 	 * system. Additional information is given in "Deviations from LCI method
 	 * approaches / explanations".
 	 *
@@ -275,13 +278,15 @@ public enum ModellingApproach {
 		return value;
 	}
 
-	public static ModellingApproach fromValue(String v) {
+	public static Optional<ModellingApproach> fromValue(String v) {
+		if (Strings.nullOrEmpty(v))
+			return Optional.empty();
 		for (ModellingApproach c : ModellingApproach.values()) {
 			if (c.value.equals(v)) {
-				return c;
+				return Optional.of(c);
 			}
 		}
-		throw new IllegalArgumentException(v);
+		return Optional.empty();
 	}
 
 }

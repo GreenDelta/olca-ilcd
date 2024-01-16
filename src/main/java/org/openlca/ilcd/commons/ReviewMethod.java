@@ -4,6 +4,9 @@ package org.openlca.ilcd.commons;
 import jakarta.xml.bind.annotation.XmlEnum;
 import jakarta.xml.bind.annotation.XmlEnumValue;
 import jakarta.xml.bind.annotation.XmlType;
+import org.openlca.ilcd.util.Strings;
+
+import java.util.Optional;
 
 @XmlType(name = "MethodOfReviewValues")
 @XmlEnum
@@ -19,7 +22,7 @@ public enum ReviewMethod {
 	/**
 	 * Values in the inventory are re-calculated from the raw data, or other
 	 * calculations are validated exemplarily, e.g. scaling, averaging, summing
-	 * up, stochiometric calculations, formulas in the mathematical models, etc.
+	 * up, stoichiometric calculations, formulas in the mathematical models, etc.
 	 */
 	@XmlEnumValue("Sample tests on calculations")
 	SAMPLE_TESTS_ON_CALCULATIONS("Sample tests on calculations"),
@@ -96,7 +99,7 @@ public enum ReviewMethod {
 
 	/**
 	 * Interviews and/or plant visits are performed to validate data and other
-	 * informtion, tyically in case of inconsistencies, uncertainties, or
+	 * information, typically in case of inconsistencies, uncertainties, or
 	 * doubts. People interviewed have detailed technical expertise on the
 	 * analysed process(es).
 	 */
@@ -113,13 +116,15 @@ public enum ReviewMethod {
 		return value;
 	}
 
-	public static ReviewMethod fromValue(String v) {
+	public static Optional<ReviewMethod> fromValue(String v) {
+		if (Strings.nullOrEmpty(v))
+			return Optional.empty();
 		for (ReviewMethod c : ReviewMethod.values()) {
 			if (c.value.equals(v)) {
-				return c;
+				return Optional.of(c);
 			}
 		}
-		throw new IllegalArgumentException(v);
+		return Optional.empty();
 	}
 
 }
