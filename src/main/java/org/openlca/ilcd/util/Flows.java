@@ -29,12 +29,12 @@ public final class Flows {
 	}
 
 	public static AdminInfo getAdminInfo(Flow f) {
-		if (f == null)
-			return null;
-		return f.adminInfo;
+		return f != null
+			? f.adminInfo
+			: null;
 	}
 
-	public static AdminInfo adminInfo(Flow f) {
+	public static AdminInfo forceAdminInfo(Flow f) {
 		if (f.adminInfo == null)
 			f.adminInfo = new AdminInfo();
 		return f.adminInfo;
@@ -42,13 +42,13 @@ public final class Flows {
 
 	public static DataEntry getDataEntry(Flow f) {
 		AdminInfo ai = getAdminInfo(f);
-		if (ai == null)
-			return null;
-		return ai.dataEntry;
+		return ai != null
+			? ai.dataEntry
+			: null;
 	}
 
-	public static DataEntry dataEntry(Flow f) {
-		AdminInfo ai = adminInfo(f);
+	public static DataEntry forceDataEntry(Flow f) {
+		AdminInfo ai = forceAdminInfo(f);
 		if (ai.dataEntry == null)
 			ai.dataEntry = new DataEntry();
 		return ai.dataEntry;
@@ -56,25 +56,25 @@ public final class Flows {
 
 	public static Publication getPublication(Flow f) {
 		AdminInfo ai = getAdminInfo(f);
-		if (ai == null)
-			return null;
-		return ai.publication;
+		return ai != null
+			? ai.publication
+			: null;
 	}
 
-	public static Publication publication(Flow f) {
-		AdminInfo ai = adminInfo(f);
+	public static Publication forcePublication(Flow f) {
+		AdminInfo ai = forceAdminInfo(f);
 		if (ai.publication == null)
 			ai.publication = new Publication();
 		return ai.publication;
 	}
 
 	public static FlowInfo getFlowInfo(Flow f) {
-		if (f == null)
-			return null;
-		return f.flowInfo;
+		return f != null
+			? f.flowInfo
+			: null;
 	}
 
-	public static FlowInfo flowInfo(Flow f) {
+	public static FlowInfo forceFlowInfo(Flow f) {
 		if (f.flowInfo == null)
 			f.flowInfo = new FlowInfo();
 		return f.flowInfo;
@@ -82,13 +82,13 @@ public final class Flows {
 
 	public static DataSetInfo getDataSetInfo(Flow f) {
 		FlowInfo fi = getFlowInfo(f);
-		if (fi == null)
-			return null;
-		return fi.dataSetInfo;
+		return fi != null
+			? fi.dataSetInfo
+			: null;
 	}
 
-	public static DataSetInfo dataSetInfo(Flow f) {
-		FlowInfo fi = flowInfo(f);
+	public static DataSetInfo forceDataSetInfo(Flow f) {
+		FlowInfo fi = forceFlowInfo(f);
 		if (fi.dataSetInfo == null)
 			fi.dataSetInfo = new DataSetInfo();
 		return fi.dataSetInfo;
@@ -96,9 +96,9 @@ public final class Flows {
 
 	public static FlowName getFlowName(Flow f) {
 		DataSetInfo dsi = getDataSetInfo(f);
-		if (dsi == null)
-			return null;
-		return dsi.name;
+		return dsi != null
+			? dsi.name
+			: null;
 	}
 
 	public static String getFullName(Flow f, String... langs) {
@@ -107,26 +107,26 @@ public final class Flows {
 			return null;
 		StringBuilder name = new StringBuilder();
 		Arrays.asList(
-				fn.baseName,
-				fn.flowProperties,
-				fn.mixAndLocationTypes,
-				fn.treatmentStandardsRoutes).forEach(list -> {
-					String text = LangString.getFirst(list, langs);
-					if (text == null)
-						return;
-					text = text.trim();
-					if (text.isEmpty())
-						return;
-					if (!name.isEmpty()) {
-						name.append("; ");
-					}
-					name.append(text);
-				});
+			fn.baseName,
+			fn.flowProperties,
+			fn.mixAndLocationTypes,
+			fn.treatmentStandardsRoutes).forEach(list -> {
+				String text = LangString.getFirst(list, langs);
+				if (text == null)
+					return;
+				text = text.trim();
+				if (text.isEmpty())
+					return;
+				if (!name.isEmpty()) {
+					name.append("; ");
+				}
+				name.append(text);
+			});
 		return name.toString();
 	}
 
-	public static FlowName flowName(Flow f) {
-		DataSetInfo dsi = dataSetInfo(f);
+	public static FlowName forceFlowName(Flow f) {
+		DataSetInfo dsi = forceDataSetInfo(f);
 		if (dsi.name == null)
 			dsi.name = new FlowName();
 		return dsi.name;
@@ -134,13 +134,13 @@ public final class Flows {
 
 	public static QuantitativeReference getQuantitativeReference(Flow f) {
 		FlowInfo fi = getFlowInfo(f);
-		if (fi == null)
-			return null;
-		return fi.quantitativeReference;
+		return fi != null
+			? fi.quantitativeReference
+			: null;
 	}
 
-	public static QuantitativeReference quantitativeReference(Flow f) {
-		FlowInfo fi = flowInfo(f);
+	public static QuantitativeReference forceQuantitativeReference(Flow f) {
+		FlowInfo fi = forceFlowInfo(f);
 		if (fi.quantitativeReference == null)
 			fi.quantitativeReference = new QuantitativeReference();
 		return fi.quantitativeReference;
@@ -152,18 +152,20 @@ public final class Flows {
 	 */
 	public static Integer getReferenceFlowPropertyID(Flow f) {
 		QuantitativeReference qref = getQuantitativeReference(f);
-		return qref == null ? null : qref.referenceFlowProperty;
+		return qref != null
+			? qref.referenceFlowProperty
+			: null;
 	}
 
 	public static Geography getGeography(Flow f) {
 		FlowInfo fi = getFlowInfo(f);
-		if (fi == null)
-			return null;
-		return fi.geography;
+		return fi != null
+			? fi.geography
+			: null;
 	}
 
-	public static Geography geography(Flow f) {
-		FlowInfo fi = flowInfo(f);
+	public static Geography forceGeography(Flow f) {
+		FlowInfo fi = forceFlowInfo(f);
 		if (fi.geography == null)
 			fi.geography = new Geography();
 		return fi.geography;
@@ -171,13 +173,13 @@ public final class Flows {
 
 	public static Technology getTechnology(Flow f) {
 		FlowInfo fi = getFlowInfo(f);
-		if (fi == null)
-			return null;
-		return fi.technology;
+		return fi != null
+			? fi.technology
+			: null;
 	}
 
-	public static Technology technology(Flow f) {
-		FlowInfo fi = flowInfo(f);
+	public static Technology forceTechnology(Flow f) {
+		FlowInfo fi = forceFlowInfo(f);
 		if (fi.technology == null)
 			fi.technology = new Technology();
 		return fi.technology;
@@ -190,18 +192,20 @@ public final class Flows {
 		return info.classificationInformation.classifications;
 	}
 
-	public static List<Classification> classifications(Flow f) {
-		DataSetInfo info = dataSetInfo(f);
+	public static List<Classification> forceClassifications(Flow f) {
+		DataSetInfo info = forceDataSetInfo(f);
 		if (info.classificationInformation == null)
 			info.classificationInformation = new FlowCategoryInfo();
 		return info.classificationInformation.classifications;
 	}
 
 	public static Modelling getModelling(Flow f) {
-		return f == null ? null : f.modelling;
+		return f != null
+			? f.modelling
+			: null;
 	}
 
-	public static Modelling modelling(Flow f) {
+	public static Modelling forceModelling(Flow f) {
 		if (f.modelling == null)
 			f.modelling = new Modelling();
 		return f.modelling;
@@ -209,11 +213,13 @@ public final class Flows {
 
 	public static LCIMethod getInventoryMethod(Flow f) {
 		Modelling m = getModelling(f);
-		return m == null ? null : m.lciMethod;
+		return m != null
+			? m.lciMethod
+			: null;
 	}
 
-	public static LCIMethod inventoryMethod(Flow f) {
-		Modelling m = modelling(f);
+	public static LCIMethod forceInventoryMethod(Flow f) {
+		Modelling m = forceModelling(f);
 		if (m.lciMethod == null)
 			m.lciMethod = new LCIMethod();
 		return m.lciMethod;
@@ -221,7 +227,9 @@ public final class Flows {
 
 	public static FlowType getType(Flow f) {
 		LCIMethod m = getInventoryMethod(f);
-		return m == null ? null : m.flowType;
+		return m != null
+			? m.flowType
+			: null;
 	}
 
 	public static List<FlowPropertyRef> getFlowProperties(Flow f) {
@@ -230,7 +238,7 @@ public final class Flows {
 		return f.flowPropertyList.flowProperties;
 	}
 
-	public static List<FlowPropertyRef> flowProperties(Flow f) {
+	public static List<FlowPropertyRef> forceFlowProperties(Flow f) {
 		if (f.flowPropertyList == null)
 			f.flowPropertyList = new FlowPropertyList();
 		return f.flowPropertyList.flowProperties;
