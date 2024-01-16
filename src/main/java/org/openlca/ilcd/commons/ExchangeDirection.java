@@ -4,6 +4,9 @@ package org.openlca.ilcd.commons;
 import jakarta.xml.bind.annotation.XmlEnum;
 import jakarta.xml.bind.annotation.XmlEnumValue;
 import jakarta.xml.bind.annotation.XmlType;
+import org.openlca.ilcd.util.Strings;
+
+import java.util.Optional;
 
 @XmlType(name = "ExchangeDirectionValues")
 @XmlEnum
@@ -12,7 +15,7 @@ public enum ExchangeDirection {
 	/**
 	 * Flow in input list of the process, e.g. resources from nature or energy
 	 * carriers, or commodities and services entering from the technosphere. (In
-	 * case the flow has an negative "resulting amount" value this is equivalent
+	 * case the flow has a negative "resulting amount" value this is equivalent
 	 * to belonging to the output list of the process.)
 	 *
 	 */
@@ -39,13 +42,15 @@ public enum ExchangeDirection {
 		return value;
 	}
 
-	public static ExchangeDirection fromValue(String v) {
+	public static Optional<ExchangeDirection> fromValue(String v) {
+		if (Strings.nullOrEmpty(v))
+			return Optional.empty();
 		for (ExchangeDirection c : ExchangeDirection.values()) {
 			if (c.value.equals(v)) {
-				return c;
+				return Optional.of(c);
 			}
 		}
-		throw new IllegalArgumentException(v);
+		return Optional.empty();
 	}
 
 }

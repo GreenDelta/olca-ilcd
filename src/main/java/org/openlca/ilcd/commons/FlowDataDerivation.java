@@ -4,6 +4,9 @@ package org.openlca.ilcd.commons;
 import jakarta.xml.bind.annotation.XmlEnum;
 import jakarta.xml.bind.annotation.XmlEnumValue;
 import jakarta.xml.bind.annotation.XmlType;
+import org.openlca.ilcd.util.Strings;
+
+import java.util.Optional;
 
 @XmlType(name = "FlowDataDerivationTypeStatusValues")
 @XmlEnum
@@ -17,7 +20,7 @@ public enum FlowDataDerivation {
 	MEASURED("Measured"),
 
 	/**
-	 * Stochiometric, enthalpic or other theoretical methods were used to
+	 * Stoichiometric, enthalpic or other theoretical methods were used to
 	 * systematically calculate the value of this property from another
 	 * characteristic.
 	 */
@@ -33,7 +36,7 @@ public enum FlowDataDerivation {
 	ESTIMATED("Estimated"),
 
 	/**
-	 * Data derivation type information fully or at least for quantiatively
+	 * Data derivation type information fully or at least for quantitatively
 	 * relevant parts unavailable.
 	 */
 	@XmlEnumValue("Unknown derivation")
@@ -49,13 +52,15 @@ public enum FlowDataDerivation {
 		return value;
 	}
 
-	public static FlowDataDerivation fromValue(String v) {
+	public static Optional<FlowDataDerivation> fromValue(String v) {
+		if (Strings.nullOrEmpty(v))
+			return Optional.empty();
 		for (FlowDataDerivation c : FlowDataDerivation.values()) {
 			if (c.value.equals(v)) {
-				return c;
+				return Optional.of(c);
 			}
 		}
-		throw new IllegalArgumentException(v);
+		return Optional.empty();
 	}
 
 }

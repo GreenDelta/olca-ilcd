@@ -4,6 +4,9 @@ package org.openlca.ilcd.commons;
 import jakarta.xml.bind.annotation.XmlEnum;
 import jakarta.xml.bind.annotation.XmlEnumValue;
 import jakarta.xml.bind.annotation.XmlType;
+import org.openlca.ilcd.util.Strings;
+
+import java.util.Optional;
 
 @XmlType(name = "GlobalReferenceTypeValues")
 @XmlEnum
@@ -46,13 +49,15 @@ public enum DataSetType {
 		return value;
 	}
 
-	public static DataSetType fromValue(String v) {
+	public static Optional<DataSetType> fromValue(String v) {
+		if (Strings.nullOrEmpty(v))
+			return Optional.empty();
 		for (var type : DataSetType.values()) {
 			if (type.value.equals(v)) {
-				return type;
+				return Optional.of(type);
 			}
 		}
-		return null;
+		return Optional.empty();
 	}
 
 	@Override

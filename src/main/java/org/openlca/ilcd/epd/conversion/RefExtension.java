@@ -18,7 +18,7 @@ public class RefExtension {
 		if (elem == null)
 			return Optional.empty();
 		Ref ref = new Ref();
-		ref.type = DataSetType.fromValue(elem.getAttribute("type"));
+		ref.type = DataSetType.fromValue(elem.getAttribute("type")).orElse(null);
 		ref.uuid = elem.getAttribute("refObjectId");
 		ref.version = elem.getAttribute("version");
 		ref.uri = elem.getAttribute("uri");

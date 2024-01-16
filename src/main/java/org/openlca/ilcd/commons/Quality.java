@@ -4,6 +4,9 @@ package org.openlca.ilcd.commons;
 import jakarta.xml.bind.annotation.XmlEnum;
 import jakarta.xml.bind.annotation.XmlEnumValue;
 import jakarta.xml.bind.annotation.XmlType;
+import org.openlca.ilcd.util.Strings;
+
+import java.util.Optional;
 
 @XmlType(name = "QualityValues")
 @XmlEnum
@@ -62,7 +65,7 @@ public enum Quality {
 
 	/**
 	 * This criterium is not applicable to this data set, e.g. its geographical
-	 * representative can not be evaluated as it is a location-unspecific
+	 * representative cannot be evaluated as it is a location-unspecific
 	 * technology unit process.
 	 *
 	 */
@@ -79,13 +82,15 @@ public enum Quality {
 		return value;
 	}
 
-	public static Quality fromValue(String v) {
+	public static Optional<Quality> fromValue(String v) {
+		if (Strings.nullOrEmpty(v))
+			return Optional.empty();
 		for (Quality c : Quality.values()) {
 			if (c.value.equals(v)) {
-				return c;
+				return Optional.of(c);
 			}
 		}
-		throw new IllegalArgumentException(v);
+		return Optional.empty();
 	}
 
 }

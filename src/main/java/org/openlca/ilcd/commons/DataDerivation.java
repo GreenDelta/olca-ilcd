@@ -4,6 +4,9 @@ package org.openlca.ilcd.commons;
 import jakarta.xml.bind.annotation.XmlEnum;
 import jakarta.xml.bind.annotation.XmlEnumValue;
 import jakarta.xml.bind.annotation.XmlType;
+import org.openlca.ilcd.util.Strings;
+
+import java.util.Optional;
 
 @XmlType(name = "DataDerivationTypeStatusValues")
 @XmlEnum
@@ -75,13 +78,15 @@ public enum DataDerivation {
 		return value;
 	}
 
-	public static DataDerivation fromValue(String v) {
+	public static Optional<DataDerivation> fromValue(String v) {
+		if (Strings.nullOrEmpty(v))
+			return Optional.empty();
 		for (DataDerivation c : DataDerivation.values()) {
 			if (c.value.equals(v)) {
-				return c;
+				return Optional.of(c);
 			}
 		}
-		throw new IllegalArgumentException(v);
+		return Optional.empty();
 	}
 
 }

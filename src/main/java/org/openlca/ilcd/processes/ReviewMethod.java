@@ -4,6 +4,9 @@ package org.openlca.ilcd.processes;
 import jakarta.xml.bind.annotation.XmlEnum;
 import jakarta.xml.bind.annotation.XmlEnumValue;
 import jakarta.xml.bind.annotation.XmlType;
+import org.openlca.ilcd.util.Strings;
+
+import java.util.Optional;
 
 @XmlType(name = "MethodOfReviewValues")
 @XmlEnum
@@ -43,13 +46,14 @@ public enum ReviewMethod {
 		return value;
 	}
 
-	public static ReviewMethod fromValue(String v) {
+	public static Optional<ReviewMethod> fromValue(String v) {
+		if (Strings.nullOrEmpty(v))
+			return Optional.empty();
 		for (ReviewMethod c : ReviewMethod.values()) {
 			if (c.value.equals(v)) {
-				return c;
+				return Optional.of(c);
 			}
 		}
-		throw new IllegalArgumentException(v);
+		return Optional.empty();
 	}
-
 }

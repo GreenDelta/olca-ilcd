@@ -3,6 +3,9 @@ package org.openlca.ilcd.methods;
 import jakarta.xml.bind.annotation.XmlEnum;
 import jakarta.xml.bind.annotation.XmlEnumValue;
 import jakarta.xml.bind.annotation.XmlType;
+import org.openlca.ilcd.util.Strings;
+
+import java.util.Optional;
 
 @XmlType(name = "TypeOfLCIAMethodValues")
 @XmlEnum
@@ -58,13 +61,15 @@ public enum LCIAMethodType {
 		return value;
 	}
 
-	public static LCIAMethodType fromValue(String v) {
+	public static Optional<LCIAMethodType> fromValue(String v) {
+		if (Strings.nullOrEmpty(v))
+			return Optional.empty();
 		for (LCIAMethodType c : LCIAMethodType.values()) {
 			if (c.value.equals(v)) {
-				return c;
+				return Optional.of(c);
 			}
 		}
-		throw new IllegalArgumentException(v);
+		return Optional.empty();
 	}
 
 }

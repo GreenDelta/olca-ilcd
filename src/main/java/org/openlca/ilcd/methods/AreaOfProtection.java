@@ -3,6 +3,9 @@ package org.openlca.ilcd.methods;
 import jakarta.xml.bind.annotation.XmlEnum;
 import jakarta.xml.bind.annotation.XmlEnumValue;
 import jakarta.xml.bind.annotation.XmlType;
+import org.openlca.ilcd.util.Strings;
+
+import java.util.Optional;
 
 @XmlType(name = "AreaOfProtectionValues")
 @XmlEnum
@@ -33,13 +36,15 @@ public enum AreaOfProtection {
 		return value;
 	}
 
-	public static AreaOfProtection fromValue(String v) {
+	public static Optional<AreaOfProtection> fromValue(String v) {
+		if (Strings.nullOrEmpty(v))
+			return Optional.empty();
 		for (AreaOfProtection c : AreaOfProtection.values()) {
 			if (c.value.equals(v)) {
-				return c;
+				return Optional.of(c);
 			}
 		}
-		throw new IllegalArgumentException(v);
+		return Optional.empty();
 	}
 
 }
