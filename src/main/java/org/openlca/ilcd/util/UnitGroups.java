@@ -19,99 +19,106 @@ public final class UnitGroups {
 	}
 
 	public static UnitGroupInfo getUnitGroupInfo(UnitGroup u) {
-		if (u == null)
-			return null;
-		return u.unitGroupInfo;
+		return u != null
+			? u.unitGroupInfo
+			: null;
 	}
 
-	public static UnitGroupInfo unitGroupInfo(UnitGroup u) {
-		if (u.unitGroupInfo == null)
+	public static UnitGroupInfo forceUnitGroupInfo(UnitGroup u) {
+		if (u.unitGroupInfo == null) {
 			u.unitGroupInfo = new UnitGroupInfo();
+		}
 		return u.unitGroupInfo;
 	}
 
 	public static DataSetInfo getDataSetInfo(UnitGroup u) {
-		UnitGroupInfo ugi = getUnitGroupInfo(u);
-		if (ugi == null)
-			return null;
-		return ugi.dataSetInfo;
+		var info = getUnitGroupInfo(u);
+		return info != null
+			? info.dataSetInfo
+			: null;
 	}
 
-	public static DataSetInfo dataSetInfo(UnitGroup u) {
-		UnitGroupInfo ugi = unitGroupInfo(u);
-		if (ugi.dataSetInfo == null)
-			ugi.dataSetInfo = new DataSetInfo();
-		return ugi.dataSetInfo;
+	public static DataSetInfo foceDataSetInfo(UnitGroup u) {
+		var info = forceUnitGroupInfo(u);
+		if (info.dataSetInfo == null) {
+			info.dataSetInfo = new DataSetInfo();
+		}
+		return info.dataSetInfo;
 	}
 
 	public static QuantitativeReference getQuantitativeReference(UnitGroup u) {
-		UnitGroupInfo ugi = getUnitGroupInfo(u);
-		if (ugi == null)
-			return null;
-		return ugi.quantitativeReference;
+		var info = getUnitGroupInfo(u);
+		return info != null
+			? info.quantitativeReference
+			: null;
 	}
 
-	public static QuantitativeReference quantitativeReference(UnitGroup u) {
-		UnitGroupInfo ugi = unitGroupInfo(u);
-		if (ugi.quantitativeReference == null)
-			ugi.quantitativeReference = new QuantitativeReference();
-		return ugi.quantitativeReference;
+	public static QuantitativeReference forceQuantitativeReference(UnitGroup u) {
+		var info = forceUnitGroupInfo(u);
+		if (info.quantitativeReference == null) {
+			info.quantitativeReference = new QuantitativeReference();
+		}
+		return info.quantitativeReference;
 	}
 
 	public static AdminInfo getAdminInfo(UnitGroup u) {
-		if (u == null)
-			return null;
-		return u.adminInfo;
+		return u != null
+			? u.adminInfo
+			: null;
 	}
 
-	public static AdminInfo adminInfo(UnitGroup u) {
-		if (u.adminInfo == null)
+	public static AdminInfo forceAdminInfo(UnitGroup u) {
+		if (u.adminInfo == null) {
 			u.adminInfo = new AdminInfo();
+		}
 		return u.adminInfo;
 	}
 
 	public static DataEntry getDataEntry(UnitGroup u) {
-		AdminInfo ai = getAdminInfo(u);
-		if (ai == null)
-			return null;
-		return ai.dataEntry;
+		var info = getAdminInfo(u);
+		return info != null
+			? info.dataEntry
+			: null;
 	}
 
-	public static DataEntry dataEntry(UnitGroup u) {
-		AdminInfo ai = adminInfo(u);
-		if (ai.dataEntry == null)
-			ai.dataEntry = new DataEntry();
-		return ai.dataEntry;
+	public static DataEntry forceDataEntry(UnitGroup u) {
+		var info = forceAdminInfo(u);
+		if (info.dataEntry == null) {
+			info.dataEntry = new DataEntry();
+		}
+		return info.dataEntry;
 	}
 
 	public static Publication getPublication(UnitGroup u) {
-		AdminInfo ai = getAdminInfo(u);
-		if (ai == null)
-			return null;
-		return ai.publication;
+		var info = getAdminInfo(u);
+		return info != null
+			? info.publication
+			: null;
 	}
 
-	public static Publication publication(UnitGroup u) {
-		AdminInfo ai = adminInfo(u);
-		if (ai.publication == null)
-			ai.publication = new Publication();
-		return ai.publication;
+	public static Publication forcePublication(UnitGroup u) {
+		var info = forceAdminInfo(u);
+		if (info.publication == null) {
+			info.publication = new Publication();
+		}
+		return info.publication;
 	}
 
 	public static List<Unit> getUnits(UnitGroup u) {
-		if (u == null || u.unitList == null)
-			return Collections.emptyList();
-		return u.unitList.units;
+		return u == null || u.unitList == null
+			? Collections.emptyList()
+			: u.unitList.units;
 	}
 
-	public static List<Unit> units(UnitGroup u) {
-		if (u.unitList == null)
+	public static List<Unit> forceUnits(UnitGroup u) {
+		if (u.unitList == null) {
 			u.unitList = new UnitList();
+		}
 		return u.unitList.units;
 	}
 
 	public static Unit getReferenceUnit(UnitGroup u) {
-		QuantitativeReference qRef = getQuantitativeReference(u);
+		var qRef = getQuantitativeReference(u);
 		if (qRef == null)
 			return null;
 		for (Unit unit : getUnits(u)) {
