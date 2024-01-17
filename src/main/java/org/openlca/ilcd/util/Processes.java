@@ -1,35 +1,22 @@
 package org.openlca.ilcd.util;
 
+import org.openlca.ilcd.commons.CommissionerAndGoal;
+import org.openlca.ilcd.commons.LangString;
+import org.openlca.ilcd.commons.ProcessType;
+import org.openlca.ilcd.commons.Ref;
+import org.openlca.ilcd.commons.Time;
+import org.openlca.ilcd.processes.Process;
+import org.openlca.ilcd.processes.*;
+
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import org.openlca.ilcd.commons.CommissionerAndGoal;
-import org.openlca.ilcd.commons.LangString;
-import org.openlca.ilcd.commons.Ref;
-import org.openlca.ilcd.commons.Time;
-import org.openlca.ilcd.processes.*;
-import org.openlca.ilcd.processes.Process;
-
 public final class Processes {
 
 	private Processes() {
-	}
-
-	public static String fullName(Process p, String... langs) {
-		var name = getProcessName(p);
-		if (name == null)
-			return "";
-		return Stream.of(
-			name.name,
-			name.mixAndLocation,
-			name.technicalDetails,
-			name.flowProperties)
-			.map(list -> LangString.getFirst(list, langs))
-			.filter(s -> s != null && !s.trim().isEmpty())
-			.collect(Collectors.joining(", "));
 	}
 
 	public static ProcessInfo getProcessInfo(Process p) {
@@ -63,6 +50,20 @@ public final class Processes {
 		if (info == null)
 			return null;
 		return info.name;
+	}
+
+	public static String getFullName(Process p, String... langs) {
+		var name = getProcessName(p);
+		if (name == null)
+			return null;
+		return Stream.of(
+				name.name,
+				name.mixAndLocation,
+				name.technicalDetails,
+				name.flowProperties)
+			.map(strings -> LangString.getFirst(strings, langs))
+			.filter(s -> s != null && !s.trim().isEmpty())
+			.collect(Collectors.joining(", "));
 	}
 
 	public static ProcessName forceProcessName(Process p) {
@@ -112,6 +113,17 @@ public final class Processes {
 		if (info.quantitativeReference == null)
 			info.quantitativeReference = new QuantitativeReference();
 		return info.quantitativeReference;
+	}
+
+	public static List<Integer> getReferenceFlows(Process p) {
+		var qref = getQuantitativeReference(p);
+		return qref != null
+			? qref.referenceFlows
+			: Collections.emptyList();
+	}
+
+	public static List<Integer> forceReferenceFlows(Process p) {
+		return forceQuantitativeReference(p).referenceFlows;
 	}
 
 	public static Technology getTechnology(Process p) {
@@ -183,6 +195,13 @@ public final class Processes {
 		return modelling.inventoryMethod;
 	}
 
+	public static ProcessType getProcessType(Process p) {
+		var method = getInventoryMethod(p);
+		return method != null
+			? method.processType
+			: null;
+	}
+
 	public static Completeness getCompleteness(Process p) {
 		var modelling = getModelling(p);
 		return modelling != null
@@ -226,6 +245,17 @@ public final class Processes {
 		return modelling.validation;
 	}
 
+	public static List<Review> getReviews(Process p) {
+		var v = getValidation(p);
+		return v != null
+			? v.reviews
+			: Collections.emptyList();
+	}
+
+	public static List<Review> forceReviews(Process p) {
+		return forceValidation(p).reviews;
+	}
+
 	public static AdminInfo getAdminInfo(Process p) {
 		if (p == null)
 			return null;
@@ -242,8 +272,8 @@ public final class Processes {
 	public static CommissionerAndGoal getCommissionerAndGoal(Process p) {
 		var info = getAdminInfo(p);
 		return info == null
-				? null
-				: info.commissionerAndGoal;
+			? null
+			: info.commissionerAndGoal;
 	}
 
 	public static CommissionerAndGoal forceCommissionerAndGoal(Process p) {
@@ -272,8 +302,8 @@ public final class Processes {
 	public static DataEntry getDataEntry(Process p) {
 		var info = getAdminInfo(p);
 		return info == null
-				? null
-				: info.dataEntry;
+			? null
+			: info.dataEntry;
 	}
 
 	public static DataEntry forceDataEntry(Process p) {
@@ -304,15 +334,15 @@ public final class Processes {
 	}
 
 	public static List<ComplianceDeclaration> getComplianceDeclarations(
-			Process p) {
+		Process p) {
 		if (p == null || p.modelling == null
-				|| p.modelling.complianceDeclarations == null)
+			|| p.modelling.complianceDeclarations == null)
 			return Collections.emptyList();
 		return p.modelling.complianceDeclarations.entries;
 	}
 
 	public static List<ComplianceDeclaration> forceComplianceDeclarations(
-			Process p) {
+		Process p) {
 		if (p.modelling == null)
 			p.modelling = new Modelling();
 		if (p.modelling.complianceDeclarations == null)
@@ -328,7 +358,7 @@ public final class Processes {
 	}
 
 	public static ComplianceDeclaration getComplianceDeclaration(Process p,
-			Ref system) {
+																															 Ref system) {
 		List<ComplianceDeclaration> list = getComplianceDeclarations(p);
 		for (ComplianceDeclaration cd : list) {
 			if (Objects.equals(cd.system, system))

@@ -1,27 +1,15 @@
 package org.openlca.ilcd.util;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-
 import org.openlca.ilcd.commons.Classification;
 import org.openlca.ilcd.commons.FlowType;
 import org.openlca.ilcd.commons.LangString;
 import org.openlca.ilcd.commons.Publication;
-import org.openlca.ilcd.flows.AdminInfo;
-import org.openlca.ilcd.flows.DataEntry;
-import org.openlca.ilcd.flows.DataSetInfo;
-import org.openlca.ilcd.flows.Flow;
-import org.openlca.ilcd.flows.FlowCategoryInfo;
-import org.openlca.ilcd.flows.FlowInfo;
-import org.openlca.ilcd.flows.FlowName;
-import org.openlca.ilcd.flows.FlowPropertyList;
-import org.openlca.ilcd.flows.FlowPropertyRef;
-import org.openlca.ilcd.flows.Geography;
-import org.openlca.ilcd.flows.LCIMethod;
-import org.openlca.ilcd.flows.Modelling;
-import org.openlca.ilcd.flows.QuantitativeReference;
-import org.openlca.ilcd.flows.Technology;
+import org.openlca.ilcd.flows.*;
+
+import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public final class Flows {
 
@@ -102,27 +90,17 @@ public final class Flows {
 	}
 
 	public static String getFullName(Flow f, String... langs) {
-		FlowName fn = getFlowName(f);
-		if (fn == null)
+		var name = getFlowName(f);
+		if (name == null)
 			return null;
-		StringBuilder name = new StringBuilder();
-		Arrays.asList(
-			fn.baseName,
-			fn.flowProperties,
-			fn.mixAndLocationTypes,
-			fn.treatmentStandardsRoutes).forEach(list -> {
-				String text = LangString.getFirst(list, langs);
-				if (text == null)
-					return;
-				text = text.trim();
-				if (text.isEmpty())
-					return;
-				if (!name.isEmpty()) {
-					name.append("; ");
-				}
-				name.append(text);
-			});
-		return name.toString();
+		return Stream.of(
+				name.baseName,
+				name.flowProperties,
+				name.mixAndLocationTypes,
+				name.treatmentStandardsRoutes)
+			.map(strings -> LangString.getFirst(strings, langs))
+			.filter(Strings::notEmpty)
+			.collect(Collectors.joining(", "));
 	}
 
 	public static FlowName forceFlowName(Flow f) {
