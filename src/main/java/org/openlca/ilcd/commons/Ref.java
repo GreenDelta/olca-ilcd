@@ -119,7 +119,7 @@ public class Ref implements Copyable<Ref> {
 			case PROCESS -> Process.class;
 			case IMPACT_METHOD -> ImpactMethod.class;
 			case MODEL -> Model.class;
-			default -> null;
+			case EXTERNAL_FILE -> null;
 		};
 	}
 
