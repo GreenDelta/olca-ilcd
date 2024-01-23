@@ -12,8 +12,6 @@ import org.openlca.ilcd.commons.DataQualityIndicator;
 import org.openlca.ilcd.commons.LangString;
 import org.openlca.ilcd.commons.Other;
 import org.openlca.ilcd.commons.Ref;
-import org.openlca.ilcd.commons.ReviewMethod;
-import org.openlca.ilcd.commons.ReviewScope;
 import org.openlca.ilcd.commons.ReviewType;
 import org.openlca.ilcd.commons.annotations.FreeText;
 

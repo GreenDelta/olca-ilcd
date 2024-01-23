@@ -1,3 +1,4 @@
+
 package org.openlca.ilcd.processes;
 
 import jakarta.xml.bind.annotation.XmlEnum;
@@ -15,7 +16,6 @@ public enum ReviewScope {
 	 * Review/verification is done on the basis of the original "raw data", i.e.
 	 * the data before it was scaled, converted, or treated in other ways to be
 	 * used for modelling of a unit process.
-	 *
 	 */
 	@XmlEnumValue("Raw data")
 	RAW_DATA("Raw data"),
@@ -24,7 +24,6 @@ public enum ReviewScope {
 	 * The review is done on the level of the "Unit operation type unit
 	 * process(es)" that cannot be further subdivided. Covers multi-functional
 	 * processes of unit operation type.
-	 *
 	 */
 	@XmlEnumValue("Unit process(es), single operation")
 	UNIT_PROCESS_ES_SINGLE_OPERATION("Unit process(es), single operation"),
@@ -35,7 +34,6 @@ public enum ReviewScope {
 	 * different sites. Covers also those multi-functional unit processes, where
 	 * the different co-products undergo different processing steps within the
 	 * black box.
-	 *
 	 */
 	@XmlEnumValue("Unit process(es), black box")
 	UNIT_PROCESS_ES_BLACK_BOX("Unit process(es), black box"),
@@ -76,7 +74,6 @@ public enum ReviewScope {
 	 * or attributional or other/combination), and the application of the
 	 * related modelling approaches such as allocation and system expansion etc.
 	 * for the process / throughout the product system.
-	 *
 	 */
 	@XmlEnumValue("Life cycle inventory methods")
 	LIFE_CYCLE_INVENTORY_METHODS("Life cycle inventory methods"),
@@ -84,7 +81,7 @@ public enum ReviewScope {
 	/**
 	 * The selection and application of the LCIA method(s) that have been used
 	 * for calculation of the LCIA results have been reviewed. This especially
-	 * refers to a correspondance of the elementary flows in the Inputs and
+	 * refers to a correspondence of the elementary flows in the Inputs and
 	 * Outputs of the product system with the once referenced by the applied
 	 * LCIA method(s) regarding e.g. correct assignment, coverage/gaps,
 	 * double counting, etc. [Note: See also definition for entry "LCIA

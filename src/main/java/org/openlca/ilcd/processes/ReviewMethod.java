@@ -1,5 +1,5 @@
 
-package org.openlca.ilcd.commons;
+package org.openlca.ilcd.processes;
 
 import jakarta.xml.bind.annotation.XmlEnum;
 import jakarta.xml.bind.annotation.XmlEnumValue;
