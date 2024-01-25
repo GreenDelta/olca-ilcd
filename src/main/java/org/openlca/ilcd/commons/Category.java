@@ -16,12 +16,12 @@ import jakarta.xml.bind.annotation.XmlValue;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "ClassType", propOrder = {
-		"value"
+	"value"
 })
 public class Category implements Copyable<Category> {
 
 	@XmlValue
-	public String value;
+	private String value;
 
 	/**
 	 * If more than one class is specified in a hierarchical classification
@@ -29,7 +29,7 @@ public class Category implements Copyable<Category> {
 	 * attribute of class.
 	 */
 	@XmlAttribute(name = "level", required = true)
-	public int level;
+	private int level;
 
 	/**
 	 * Unique identifier for the class. [ If such identifiers are also defined
@@ -37,19 +37,69 @@ public class Category implements Copyable<Category> {
 	 * can be UUID's, but also other forms are allowed.]
 	 */
 	@XmlAttribute(name = "classId")
-	public String classId;
+	private String classId;
 
 	@XmlAnyAttribute
-	public final Map<QName, String> otherAttributes = new HashMap<>();
+	private Map<QName, String> otherAttributes;
+
+	// region getters
+
+	public String getValue() {
+		return value;
+	}
+
+	public int getLevel() {
+		return level;
+	}
+
+	public String getClassId() {
+		return classId;
+	}
+
+	public Map<QName, String> getOtherAttributes() {
+		return otherAttributes != null
+			? otherAttributes
+			: Map.of();
+	}
+
+	// endregion
+
+	// region fluent setters
+
+	public Category withValue(String value) {
+		this.value = value;
+		return this;
+	}
+
+	public Category withLevel(int level) {
+		this.level = level;
+		return this;
+	}
+
+	public Category withClassId(String classId) {
+		this.classId = classId;
+		return this;
+	}
+
+	public Map<QName, String> withOtherAttributes() {
+		if (otherAttributes == null) {
+			otherAttributes = new HashMap<>();
+		}
+		return otherAttributes;
+	}
+
+	// endregion
 
 	@Override
 	public Category copy() {
-		var clone = new Category();
-		clone.value = value;
-		clone.level = level;
-		clone.classId = classId;
-		clone.otherAttributes.putAll(otherAttributes);
-		return clone;
+		var copy = new Category()
+			.withValue(value)
+			.withLevel(level)
+			.withClassId(classId);
+		if (otherAttributes != null) {
+			copy.withOtherAttributes().putAll(otherAttributes);
+		}
+		return copy;
 	}
 
 	@Override

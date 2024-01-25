@@ -43,14 +43,14 @@ public final class Categories {
 
 		if (ds instanceof Flow flow) {
 			compartments(flow).stream()
-					.map(c -> c.value)
-					.forEach(add);
+				.map(c -> c.value)
+				.forEach(add);
 			if (!path.isEmpty())
 				return path.toArray(new String[0]);
 		}
 		sorted(ds).stream()
-				.map(c -> c.value)
-				.forEach(add);
+			.map(Category::getValue)
+			.forEach(add);
 		return path.toArray(new String[0]);
 	}
 
@@ -60,8 +60,8 @@ public final class Categories {
 		var list = ds.getClassifications();
 		if (list.isEmpty())
 			return Collections.emptyList();
-		var classes = list.get(0).categories;
-		classes.sort(Comparator.comparingInt(c -> c.level));
+		var classes = list.get(0).getCategories();
+		classes.sort(Comparator.comparingInt(Category::getLevel));
 		return classes;
 	}
 
@@ -85,7 +85,7 @@ public final class Categories {
 		List<Classification> list = new ArrayList<>();
 		try (BufferedInputStream buffer = new BufferedInputStream(is)) {
 			XMLStreamReader reader = XMLInputFactory.newFactory()
-					.createXMLStreamReader(buffer);
+				.createXMLStreamReader(buffer);
 
 			Classification classification = null;
 			Category category = null;
@@ -101,16 +101,16 @@ public final class Categories {
 
 				if (evt == XMLStreamConstants.END_ELEMENT) {
 					if (reader.getLocalName()
-							.equals("classificationInformation"))
+						.equals("classificationInformation"))
 						break;
 					if (eq(reader, "classification")
-							&& classification != null) {
+						&& classification != null) {
 						list.add(classification);
 						classification = null;
 					}
 					if (eq(reader, "class") && category != null
-							&& classification != null) {
-						classification.categories.add(category);
+						&& classification != null) {
+						classification.withCategories().add(category);
 						category = null;
 					}
 				}
@@ -129,25 +129,22 @@ public final class Categories {
 	}
 
 	private static Classification initClassification(XMLStreamReader reader) {
-		Classification classification;
-		classification = new Classification();
-		classification.name = reader.getAttributeValue(null, "name");
-		classification.url = reader.getAttributeValue(null, "classes");
-		return classification;
+		return new Classification()
+			.withName(reader.getAttributeValue(null, "name"))
+			.withUrl(reader.getAttributeValue(null, "classes"));
 	}
 
 	private static Category initCategory(XMLStreamReader reader) {
-		Category category;
-		category = new Category();
-		category.classId = reader.getAttributeValue(null, "classId");
-		String level = reader.getAttributeValue(null, "level");
+		var category = new Category()
+			.withClassId(reader.getAttributeValue(null, "classId"));
+		var level = reader.getAttributeValue(null, "level");
 		if (level == null)
 			return category;
 		try {
-			category.level = Integer.parseInt(level);
+			category.withLevel(Integer.parseInt(level));
 		} catch (Exception e) {
 			Logger log = LoggerFactory.getLogger(Categories.class);
-			log.error("No numeric level for class " + category.classId, e);
+			log.error("No numeric level for class " + category.getClassId(), e);
 		}
 		return category;
 	}
@@ -159,10 +156,11 @@ public final class Categories {
 		s = s.trim();
 		if (s.isEmpty())
 			return;
-		if (category.value == null)
-			category.value = s;
-		else
-			category.value += " " + s;
+		var v = category.getValue();
+		var next = v == null
+			? s
+			: v + " " + s;
+		category.withValue(next);
 	}
 
 	private static boolean eq(XMLStreamReader reader, String tag) {

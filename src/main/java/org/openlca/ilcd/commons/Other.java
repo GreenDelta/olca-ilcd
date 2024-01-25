@@ -24,13 +24,13 @@ public class Other implements Copyable<Other> {
 
 	@Override
 	public Other copy() {
-		Other clone = new Other();
-		for (Object o : any) {
+		var copy = new Other();
+		for (var o : any) {
 			if (o instanceof Element e) {
-				clone.any.add(e.cloneNode(true));
+				copy.any.add(e.cloneNode(true));
 			}
 		}
-		return clone;
+		return copy;
 	}
 
 }

@@ -22,29 +22,97 @@ import jakarta.xml.bind.annotation.XmlType;
 public class CommissionerAndGoal implements Copyable<CommissionerAndGoal> {
 
 	@XmlElement(name = "referenceToCommissioner")
-	public final List<Ref> commissioners = new ArrayList<>();
+	private List<Ref> commissioners;
 
 	@Label
-	public final List<LangString> project = new ArrayList<>();
+	private LangString2 project;
 
 	@FreeText
-	public final List<LangString> intendedApplications = new ArrayList<>();
+	private LangString2 intendedApplications;
 
-	public Other other;
+	private Other other;
 
 	@XmlAnyAttribute
-	private final Map<QName, String> otherAttributes = new HashMap<>();
+	private Map<QName, String> otherAttributes;
+
+	// region getters
+
+	public List<Ref> getCommissioners() {
+		return commissioners;
+	}
+
+	public LangString2 getProject() {
+		return project != null
+			? project
+			: LangString2.empty();
+	}
+
+	public LangString2 getIntendedApplications() {
+		return intendedApplications != null
+			? intendedApplications
+			: LangString2.empty();
+	}
+
+	public Other getOther() {
+		return other;
+	}
+
+	public Map<QName, String> getOtherAttributes() {
+		return otherAttributes;
+	}
+
+	// endregion
+
+  // region fluent setters
+
+	public List<Ref> withCommissioners() {
+		if (commissioners == null) {
+			commissioners = new ArrayList<>();
+		}
+		return commissioners;
+	}
+
+	public LangString2 withProject() {
+		if (project == null) {
+			project = new LangString2();
+		}
+		return project;
+	}
+
+	public LangString2 withIntendedApplications() {
+		if (intendedApplications == null) {
+			intendedApplications = new LangString2();
+		}
+		return intendedApplications;
+	}
+
+	public Other withOther() {
+		if (other == null) {
+			other = new Other();
+		}
+		return other;
+	}
+
+	public Map<QName, String> withOtherAttributes() {
+		if (otherAttributes == null) {
+			otherAttributes = new HashMap<>();
+		}
+		return otherAttributes;
+	}
+
+	// endregion
 
 	@Override
 	public CommissionerAndGoal copy() {
-		var clone = new CommissionerAndGoal();
-		Ref.copy(commissioners, clone.commissioners);
-		LangString.copy(project, clone.project);
-		LangString.copy(intendedApplications, clone.intendedApplications);
-		if (other != null)
-			clone.other = other.copy();
-		clone.otherAttributes.putAll(otherAttributes);
-		return clone;
+		var copy = new CommissionerAndGoal();
+		Ref.copy(commissioners, copy.commissioners);
+		LangString2.copy(project, copy::withProject);
+		LangString2.copy(intendedApplications, copy::withIntendedApplications);
+		if (other != null) {
+			copy.other = other.copy();
+		}
+		copy.otherAttributes.putAll(otherAttributes);
+		return copy;
 	}
 
 }

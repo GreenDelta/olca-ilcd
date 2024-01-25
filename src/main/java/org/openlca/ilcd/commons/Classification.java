@@ -15,34 +15,101 @@ import java.util.List;
 import java.util.Map;
 
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "ClassificationType", propOrder = { "categories", "other" })
+@XmlType(name = "ClassificationType", propOrder = {"categories", "other"})
 public class Classification implements Copyable<Classification> {
 
 	@XmlElement(name = "class", required = true)
-	public final List<Category> categories = new ArrayList<>();
+	private List<Category> categories;
 
-	public Other other;
+	private Other other;
 
 	@XmlAttribute(name = "name")
-	public String name;
+	private String name;
 
 	@XmlAttribute(name = "classes")
 	@XmlSchemaType(name = "anyURI")
-	public String url;
+	private String url;
 
 	@XmlAnyAttribute
-	public final Map<QName, String> otherAttributes = new HashMap<>();
+	private Map<QName, String> otherAttributes;
+
+	// region getters
+
+	public List<Category> getCategories() {
+		return categories != null
+			? categories
+			: List.of();
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public String getUrl() {
+		return url;
+	}
+
+	public Other getOther() {
+		return other;
+	}
+
+	public Map<QName, String> getOtherAttributes() {
+		return otherAttributes != null
+			? otherAttributes
+			: Map.of();
+	}
+
+	// endregion
+
+	// region fluent setters
+
+	public Classification withName(String name) {
+		this.name = name;
+		return this;
+	}
+
+	public Classification withUrl(String url) {
+		this.url = url;
+		return this;
+	}
+
+	public List<Category> withCategories() {
+		if (categories == null) {
+			categories = new ArrayList<>();
+		}
+		return categories;
+	}
+
+	public Other withOther() {
+		if (other == null) {
+			other = new Other();
+		}
+		return other;
+	}
+
+	public Map<QName, String> withOtherAttributes() {
+		if (otherAttributes == null) {
+			otherAttributes = new HashMap<>();
+		}
+		return otherAttributes;
+	}
+
+	// endregion
 
 	@Override
 	public Classification copy() {
-		var clone = new Classification();
-		for (Category c : categories)
-			clone.categories.add(c.copy());
-		if (other != null)
-			clone.other = other.copy();
-		clone.name = name;
-		clone.url = url;
-		clone.otherAttributes.putAll(otherAttributes);
-		return clone;
+		var copy = new Classification()
+			.withName(name)
+			.withUrl(url);
+		for (Category c : getCategories()) {
+			copy.withCategories().add(c.copy());
+		}
+		if (other != null) {
+			copy.other = other.copy();
+		}
+		if (otherAttributes != null) {
+			copy.withOtherAttributes().putAll(otherAttributes);
+		}
+		return copy;
 	}
 }

@@ -36,8 +36,8 @@ class Cleanup {
 		// bug #59, remove empty commissioner and goal types
 		if (adminInfo != null && adminInfo.commissionerAndGoal != null) {
 			var comGoal = adminInfo.commissionerAndGoal;
-			if (isEmpty(comGoal.other)) {
-				comGoal.other = null;
+			if (isEmpty(comGoal.getOther())) {
+				comGoal.w = null;
 			}
 			if (isEmpty(comGoal)) {
 				adminInfo.commissionerAndGoal = null;
