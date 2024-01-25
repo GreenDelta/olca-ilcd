@@ -16,13 +16,13 @@ public class ClassListTest {
 				"/org/openlca/ilcd/io/sdk_sample_process.xml");
 		List<Classification> list = Categories.read(is);
 		assertEquals(2, list.size());
-		assertEquals("ILCD", list.get(0).name);
-		assertEquals(2, list.get(0).categories.size());
-		assertEquals("classId3", list.get(0).categories.get(1).classId);
-		assertEquals("Custom", list.get(1).name);
-		assertEquals(2, list.get(1).categories.size());
-		assertEquals("classId7", list.get(1).categories.get(1).classId);
-		assertEquals("class3", list.get(1).categories.get(1).value);
+		assertEquals("ILCD", list.get(0).getName());
+		assertEquals(2, list.get(0).getCategories().size());
+		assertEquals("classId3", list.get(0).getCategories().get(1).getClassId());
+		assertEquals("Custom", list.get(1).getName());
+		assertEquals(2, list.get(1).getCategories().size());
+		assertEquals("classId7", list.get(1).getCategories().get(1).getClassId());
+		assertEquals("class3", list.get(1).getCategories().get(1).getValue());
 	}
 
 }

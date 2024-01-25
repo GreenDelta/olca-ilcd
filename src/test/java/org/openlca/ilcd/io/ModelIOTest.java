@@ -32,10 +32,10 @@ public class ModelIOTest {
 		Models.forcePublication(model).version = "01.00.000";
 
 		Classification classification = new Classification();
-		Category category = new Category();
-		category.level = 0;
-		category.value = "Life cycle models";
-		classification.categories.add(category);
+		var category = new Category()
+			.withLevel(0)
+			.withValue("Life cycle models");
+		classification.withCategories().add(category);
 		Models.forceClassifications(model).add(classification);
 
 		Models.forceQuantitativeReference(model).refProcess = 42;

@@ -15,6 +15,7 @@ import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlAnyAttribute;
 import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlType;
+import org.openlca.ilcd.util.Val;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "CommissionerAndGoalType", propOrder = { "commissioners",
@@ -34,6 +35,32 @@ public class CommissionerAndGoal implements Copyable<CommissionerAndGoal> {
 
 	@XmlAnyAttribute
 	private Map<QName, String> otherAttributes;
+
+	public boolean isEmpty() {
+		return Val.isEmpty(commissioners)
+			&& Val.isEmpty(project)
+			&& Val.isEmpty(intendedApplications)
+			&& Val.isEmpty(other)
+			&& Val.isEmpty(otherAttributes);
+	}
+
+	public void trim() {
+		if (Val.isEmpty(commissioners)) {
+			commissioners = null;
+		}
+		if (Val.isEmpty(project)) {
+			project = null;
+		}
+		if (Val.isEmpty(intendedApplications)) {
+			intendedApplications = null;
+		}
+		if (Val.isEmpty(other)) {
+			other = null;
+		}
+		if (Val.isEmpty(otherAttributes)) {
+			otherAttributes = null;
+		}
+	}
 
 	// region getters
 

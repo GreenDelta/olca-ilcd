@@ -28,7 +28,7 @@ public class ImpactMethodTest {
 		assertEquals("00000000-0000-0000-0000-000000000000", info.uuid);
 		assertEquals(2, info.name.size());
 		assertEquals(2, info.methods.size());
-		assertEquals("ILCD", info.classifications.get(0).name);
+		assertEquals("ILCD", info.classifications.get(0).getName());
 		assertEquals("Acidification", info.impactCategories.get(1));
 		assertEquals(AreaOfProtection.NATURAL_RESOURCES, info.areasOfProtection.get(0));
 		assertEquals(2, info.comment.size());

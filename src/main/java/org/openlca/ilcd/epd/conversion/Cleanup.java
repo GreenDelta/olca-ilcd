@@ -1,6 +1,5 @@
 package org.openlca.ilcd.epd.conversion;
 
-import org.openlca.ilcd.commons.CommissionerAndGoal;
 import org.openlca.ilcd.commons.Other;
 import org.openlca.ilcd.commons.Time;
 import org.openlca.ilcd.epd.model.EpdDataSet;
@@ -36,10 +35,8 @@ class Cleanup {
 		// bug #59, remove empty commissioner and goal types
 		if (adminInfo != null && adminInfo.commissionerAndGoal != null) {
 			var comGoal = adminInfo.commissionerAndGoal;
-			if (isEmpty(comGoal.getOther())) {
-				comGoal.w = null;
-			}
-			if (isEmpty(comGoal)) {
+			comGoal.trim();
+			if (comGoal.isEmpty()) {
 				adminInfo.commissionerAndGoal = null;
 			}
 		}
@@ -47,15 +44,6 @@ class Cleanup {
 		if (adminInfo != null && isEmpty(adminInfo.dataGenerator)) {
 			adminInfo.dataGenerator = null;
 		}
-	}
-
-	private static boolean isEmpty(CommissionerAndGoal comGoal) {
-		if (comGoal == null)
-			return true;
-		return comGoal.commissioners.isEmpty()
-					 && comGoal.intendedApplications.isEmpty()
-					 && comGoal.project.isEmpty()
-					 && isEmpty(comGoal.other);
 	}
 
 	private static boolean isEmpty(Time time) {
