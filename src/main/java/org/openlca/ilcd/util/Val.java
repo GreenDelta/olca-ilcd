@@ -1,6 +1,5 @@
 package org.openlca.ilcd.util;
 
-import org.openlca.ilcd.commons.LangString2;
 import org.openlca.ilcd.commons.Other;
 
 import java.util.List;
@@ -17,10 +16,6 @@ public class Val {
 
 	public static boolean isEmpty(Map<? , ?> map) {
 		return map == null || map.isEmpty();
-	}
-
-	public static boolean isEmpty(LangString2 str) {
-		return str == null || str.isEmpty();
 	}
 
 	public static boolean isEmpty(Other other) {

@@ -18,18 +18,18 @@ import jakarta.xml.bind.annotation.XmlType;
 import org.openlca.ilcd.util.Val;
 
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "CommissionerAndGoalType", propOrder = { "commissioners",
-		"project", "intendedApplications", "other" })
+@XmlType(name = "CommissionerAndGoalType", propOrder = {"commissioners",
+	"project", "intendedApplications", "other"})
 public class CommissionerAndGoal implements Copyable<CommissionerAndGoal> {
 
 	@XmlElement(name = "referenceToCommissioner")
 	private List<Ref> commissioners;
 
 	@Label
-	private LangString2 project;
+	private List<LangString> project;
 
 	@FreeText
-	private LangString2 intendedApplications;
+	private List<LangString> intendedApplications;
 
 	private Other other;
 
@@ -68,16 +68,12 @@ public class CommissionerAndGoal implements Copyable<CommissionerAndGoal> {
 		return commissioners;
 	}
 
-	public LangString2 getProject() {
-		return project != null
-			? project
-			: LangString2.empty();
+	public List<LangString> getProject() {
+		return project != null ? project : List.of();
 	}
 
-	public LangString2 getIntendedApplications() {
-		return intendedApplications != null
-			? intendedApplications
-			: LangString2.empty();
+	public List<LangString> getIntendedApplications() {
+		return intendedApplications != null ? intendedApplications : List.of();
 	}
 
 	public Other getOther() {
@@ -90,7 +86,7 @@ public class CommissionerAndGoal implements Copyable<CommissionerAndGoal> {
 
 	// endregion
 
-  // region fluent setters
+	// region fluent setters
 
 	public List<Ref> withCommissioners() {
 		if (commissioners == null) {
@@ -99,16 +95,16 @@ public class CommissionerAndGoal implements Copyable<CommissionerAndGoal> {
 		return commissioners;
 	}
 
-	public LangString2 withProject() {
+	public List<LangString> withProject() {
 		if (project == null) {
-			project = new LangString2();
+			project = new ArrayList<>();
 		}
 		return project;
 	}
 
-	public LangString2 withIntendedApplications() {
+	public List<LangString> withIntendedApplications() {
 		if (intendedApplications == null) {
-			intendedApplications = new LangString2();
+			intendedApplications = new ArrayList<>();
 		}
 		return intendedApplications;
 	}
@@ -133,8 +129,8 @@ public class CommissionerAndGoal implements Copyable<CommissionerAndGoal> {
 	public CommissionerAndGoal copy() {
 		var copy = new CommissionerAndGoal();
 		Ref.copy(commissioners, copy.commissioners);
-		LangString2.copy(project, copy::withProject);
-		LangString2.copy(intendedApplications, copy::withIntendedApplications);
+		LangString.copy(project, copy::withProject);
+		LangString.copy(intendedApplications, copy::withIntendedApplications);
 		if (other != null) {
 			copy.other = other.copy();
 		}

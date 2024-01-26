@@ -7,13 +7,8 @@
 	@XmlNs(prefix = "u", namespaceURI = "http://lca.jrc.it/ILCD/UnitGroup"),
 	@XmlNs(prefix = "m", namespaceURI = "http://lca.jrc.it/ILCD/LCIAMethod"),
 	@XmlNs(prefix = "common", namespaceURI = "http://lca.jrc.it/ILCD/Common")})
-@XmlJavaTypeAdapters({
-	@XmlJavaTypeAdapter(type = LangString2.class, value = LangStringAdapter.class)
-})
 package org.openlca.ilcd.commons;
 
 import jakarta.xml.bind.annotation.XmlNs;
 import jakarta.xml.bind.annotation.XmlNsForm;
 import jakarta.xml.bind.annotation.XmlSchema;
-import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
-import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapters;

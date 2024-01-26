@@ -4,23 +4,26 @@ import jakarta.xml.bind.JAXB;
 import org.junit.Test;
 
 import java.io.StringWriter;
+import java.util.List;
 
 public class LangString2Test {
 
 	@Test
 	public void testAdapter() {
 		var goal = new CommissionerAndGoal();
-		goal.withProject()
-			.putDefault("A project")
-			.put("de", "Ein Projekt");
-		goal.withIntendedApplications()
-			.putDefault("for testing")
-			.put("de", "zum Testen");
+		goal.withProject().addAll(List.of(
+			LangString.of("A project", "en"),
+			LangString.of("Ein project", "de")
+		));
+
+		goal.withIntendedApplications().addAll(List.of(
+			LangString.of("for testing", "en"),
+			LangString.of("zum Testen", "de")
+		));
 
 		var xml = new StringWriter();
 		JAXB.marshal(goal, xml);
 		System.out.println(xml);
-
 	}
 
 }

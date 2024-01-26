@@ -7,6 +7,7 @@ import jakarta.xml.bind.annotation.XmlValue;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.function.Supplier;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 public final class LangString implements Copyable<LangString> {
@@ -72,6 +73,13 @@ public final class LangString implements Copyable<LangString> {
 		for (LangString s : source) {
 			target.add(s.copy());
 		}
+	}
+
+	public static void copy(
+		List<LangString> source, Supplier<List<LangString>> target) {
+		if (source == null || source.isEmpty())
+			return;
+		target.get().addAll(source);
 	}
 
 	/**
