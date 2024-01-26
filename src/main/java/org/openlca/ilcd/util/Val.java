@@ -3,6 +3,7 @@ package org.openlca.ilcd.util;
 import org.openlca.ilcd.commons.Copyable;
 import org.openlca.ilcd.commons.Other;
 
+import javax.xml.datatype.XMLGregorianCalendar;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
@@ -17,7 +18,7 @@ public class Val {
 		return list == null || list.isEmpty();
 	}
 
-	public static boolean isEmpty(Map<? , ?> map) {
+	public static boolean isEmpty(Map<?, ?> map) {
 		return map == null || map.isEmpty();
 	}
 
@@ -45,6 +46,18 @@ public class Val {
 		if (source == null)
 			return;
 		target.accept(source.copy());
+	}
+
+	public static void copy(
+		XMLGregorianCalendar cal, Consumer<XMLGregorianCalendar> target) {
+		if (cal == null)
+			return;
+		try {
+			var copy = (XMLGregorianCalendar) cal.clone();
+			target.accept(copy);
+		} catch (Exception e) {
+			throw new RuntimeException("failed to clone calendar: " + col, e);
+		}
 	}
 
 }
