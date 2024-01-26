@@ -6,6 +6,7 @@ import jakarta.xml.bind.annotation.XmlAnyAttribute;
 import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlType;
 import org.openlca.ilcd.commons.annotations.FreeText;
+import org.openlca.ilcd.util.Val;
 
 import javax.xml.namespace.QName;
 import java.util.ArrayList;
@@ -25,7 +26,7 @@ public class Time implements Copyable<Time> {
 	 * overall environmental impact. In that case, the reference year is derived
 	 * by expert judgement.
 	 */
-	public Integer referenceYear;
+	private Integer referenceYear;
 
 	/**
 	 * End year of the time period for which the data set is still valid /
@@ -35,7 +36,7 @@ public class Time implements Copyable<Time> {
 	 * values, including in the background system.
 	 */
 	@XmlElement(name = "dataSetValidUntil")
-	public Integer validUntil;
+	private Integer validUntil;
 
 	/**
 	 * Description of the valid time span of the data set including information
@@ -43,22 +44,95 @@ public class Time implements Copyable<Time> {
 	 */
 	@FreeText
 	@XmlElement(name = "timeRepresentativenessDescription")
-	public final List<LangString> description = new ArrayList<>();
+	private List<LangString> description;
 
-	public Other other;
+	private Other other;
 
 	@XmlAnyAttribute
-	public final Map<QName, String> otherAttributes = new HashMap<>();
+	private Map<QName, String> otherAttributes;
+
+	// region getters
+
+	public Integer getReferenceYear() {
+		return referenceYear;
+	}
+
+	public Integer getValidUntil() {
+		return validUntil;
+	}
+
+	public List<LangString> getDescription() {
+		return description != null ? description : List.of();
+	}
+
+	public Other getOther() {
+		return other;
+	}
+
+	public Map<QName, String> getOtherAttributes() {
+		return otherAttributes != null ? otherAttributes : Map.of();
+	}
+
+	// endregion
+
+	// region setters
+
+	public Time withReferenceYear(Integer referenceYear) {
+		this.referenceYear = referenceYear;
+		return this;
+	}
+
+	public Time withValidUntil(Integer validUntil) {
+		this.validUntil = validUntil;
+		return this;
+	}
+
+	public Time withDescription(List<LangString> description) {
+		this.description = description;
+		return this;
+	}
+
+	public Time withOther(Other other) {
+		this.other = other;
+		return this;
+	}
+
+	public Time withOtherAttributes(Map<QName, String> otherAttributes) {
+		this.otherAttributes = otherAttributes;
+		return this;
+	}
+
+	public List<LangString> withDescription() {
+		if (description == null) {
+			description = new ArrayList<>();
+		}
+		return description;
+	}
+
+	public Other withOther() {
+		if (other == null) {
+			other = new Other();
+		}
+		return other;
+	}
+
+	public Map<QName, String> withOtherAttributes() {
+		if (otherAttributes == null) {
+			otherAttributes = new HashMap<>();
+		}
+		return otherAttributes;
+	}
+
+	// endregion
 
 	@Override
 	public Time copy() {
-		var clone = new Time();
-		clone.referenceYear = referenceYear;
-		clone.validUntil = validUntil;
-		LangString.copy(description, clone.description);
-		if (other != null)
-			clone.other = other.copy();
-		clone.otherAttributes.putAll(otherAttributes);
-		return clone;
+		var copy = new Time()
+			.withReferenceYear(referenceYear)
+			.withValidUntil(validUntil);
+		Val.copy(description, copy::withDescription);
+		Val.copy(other, copy::withOther);
+		Val.copy(otherAttributes, copy::withOtherAttributes);
+		return copy;
 	}
 }

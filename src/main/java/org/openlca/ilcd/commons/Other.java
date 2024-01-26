@@ -20,14 +20,41 @@ public class Other implements Copyable<Other> {
 	 * {@link Object }
 	 */
 	@XmlAnyElement(lax = true)
-	public final List<Object> any = new ArrayList<>();
+	private List<Object> any;
+
+	// region getters
+
+	public List<Object> getAny() {
+		return any;
+	}
+
+	// endregion
+
+	// region setters
+
+	public List<Object> withAny() {
+		if (any == null) {
+			any = new ArrayList<>();
+		}
+		return any;
+	}
+
+	public Other withAny(List<Object> any) {
+		this.any = any;
+		return this;
+	}
+
+	// endregion
 
 	@Override
 	public Other copy() {
 		var copy = new Other();
+		if (any == null)
+			return copy;
+		var target = copy.withAny();
 		for (var o : any) {
 			if (o instanceof Element e) {
-				copy.any.add(e.cloneNode(true));
+				target.add(e.cloneNode(true));
 			}
 		}
 		return copy;

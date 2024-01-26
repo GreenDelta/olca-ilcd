@@ -15,6 +15,7 @@ import org.openlca.ilcd.models.Model;
 import org.openlca.ilcd.processes.Process;
 import org.openlca.ilcd.sources.Source;
 import org.openlca.ilcd.units.UnitGroup;
+import org.openlca.ilcd.util.Val;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,25 +25,86 @@ import java.util.Objects;
  * Ref describes an ILCD data set reference (GlobalReferenceType).
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "GlobalReferenceType", propOrder = { "name" })
+@XmlType(name = "GlobalReferenceType", propOrder = {"name"})
 public class Ref implements Copyable<Ref> {
 
 	@ShortText
 	@XmlElement(name = "shortDescription")
-	public final List<LangString> name = new ArrayList<>();
+	private List<LangString> name;
 
 	@XmlAttribute(name = "type", required = true)
-	public DataSetType type;
+	private DataSetType type;
 
 	@XmlAttribute(name = "refObjectId")
-	public String uuid;
+	private String uuid;
 
 	@XmlAttribute(name = "version")
-	public String version;
+	private String version;
 
 	@XmlAttribute(name = "uri")
 	@XmlSchemaType(name = "anyURI")
-	public String uri;
+	private String uri;
+
+	// region getters
+
+	public List<LangString> getName() {
+		return name;
+	}
+
+	public DataSetType getType() {
+		return type;
+	}
+
+	public String getUuid() {
+		return uuid;
+	}
+
+	public String getVersion() {
+		return version;
+	}
+
+	public String getUri() {
+		return uri;
+	}
+
+	// endregion
+
+	// region setters
+
+	public Ref withName(List<LangString> name) {
+		this.name = name;
+		return this;
+	}
+
+	public Ref withType(DataSetType type) {
+		this.type = type;
+		return this;
+	}
+
+	public Ref withUuid(String uuid) {
+		this.uuid = uuid;
+		return this;
+	}
+
+	public Ref withVersion(String version) {
+		this.version = version;
+		return this;
+	}
+
+	public Ref withUri(String uri) {
+		this.uri = uri;
+		return this;
+	}
+
+	public List<LangString> withName() {
+		if (name == null) {
+			name = new ArrayList<>();
+		}
+		return name;
+	}
+
+	// endregion
+
 
 	@Override
 	public String toString() {
@@ -67,18 +129,18 @@ public class Ref implements Copyable<Ref> {
 		if (!(obj instanceof Ref other))
 			return false;
 		return Objects.equals(this.type, other.type)
-				&& Objects.equals(this.uuid, other.uuid);
+			&& Objects.equals(this.uuid, other.uuid);
 	}
 
 	@Override
 	public Ref copy() {
-		Ref clone = new Ref();
-		LangString.copy(name, clone.name);
-		clone.type = type;
-		clone.uuid = uuid;
-		clone.version = version;
-		clone.uri = uri;
-		return clone;
+		var copy = new Ref()
+			.withType(type)
+			.withUuid(uuid)
+			.withVersion(version)
+			.withUri(uri);
+		Val.copy(name, copy::withName);
+		return copy;
 	}
 
 	/**

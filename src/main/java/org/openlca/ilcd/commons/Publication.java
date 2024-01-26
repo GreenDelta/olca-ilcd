@@ -25,22 +25,112 @@ import java.util.Map;
 public class Publication {
 
 	@XmlElement(namespace = "http://lca.jrc.it/ILCD/Common", required = true, name = "dataSetVersion")
-	public String version;
+	private String version;
 
 	@XmlElement(namespace = "http://lca.jrc.it/ILCD/Common", name = "referenceToPrecedingDataSetVersion")
-	public final List<Ref> precedingVersions = new ArrayList<>();
+	private List<Ref> precedingVersions;
 
 	@XmlElement(namespace = "http://lca.jrc.it/ILCD/Common", name = "permanentDataSetURI")
 	@XmlSchemaType(name = "anyURI")
-	public String uri;
+	private String uri;
 
 	@XmlElement(namespace = "http://lca.jrc.it/ILCD/Common", name = "referenceToOwnershipOfDataSet")
-	public Ref owner;
+	private Ref owner;
 
 	@XmlElement(namespace = "http://lca.jrc.it/ILCD/Common")
-	public Other other;
+	private Other other;
 
 	@XmlAnyAttribute
-	public final Map<QName, String> otherAttributes = new HashMap<>();
+	private Map<QName, String> otherAttributes;
+
+	// region getters
+
+	public String getVersion() {
+		return version;
+	}
+
+	public List<Ref> getPrecedingVersions() {
+		return precedingVersions != null ? precedingVersions : List.of();
+	}
+
+	public String getUri() {
+		return uri;
+	}
+
+	public Ref getOwner() {
+		return owner;
+	}
+
+	public Other getOther() {
+		return other;
+	}
+
+	public Map<QName, String> getOtherAttributes() {
+		return otherAttributes != null ? otherAttributes : Map.of();
+	}
+
+	// endregion
+
+	// region setters
+
+	public Publication withVersion(String version) {
+		this.version = version;
+		return this;
+	}
+
+	public Publication withPrecedingVersions(List<Ref> precedingVersions) {
+		this.precedingVersions = precedingVersions;
+		return this;
+	}
+
+	public Publication withUri(String uri) {
+		this.uri = uri;
+		return this;
+	}
+
+	public Publication withOwner(Ref owner) {
+		this.owner = owner;
+		return this;
+	}
+
+	public Publication withOther(Other other) {
+		this.other = other;
+		return this;
+	}
+
+	public Publication withOtherAttributes(Map<QName, String> otherAttributes) {
+		this.otherAttributes = otherAttributes;
+		return this;
+	}
+
+	public List<Ref> withPrecedingVersions() {
+		if (precedingVersions == null) {
+			precedingVersions = new ArrayList<>();
+		}
+		return precedingVersions;
+	}
+
+	public Ref withOwner() {
+		if (owner == null) {
+			owner = new Ref();
+		}
+		return owner;
+	}
+
+	public Other withOther() {
+		if (other == null) {
+			other = new Other();
+		}
+		return other;
+	}
+
+	public Map<QName, String> withOtherAttributes() {
+		if (otherAttributes == null) {
+			otherAttributes = new HashMap<>();
+		}
+		return otherAttributes;
+	}
+
+	// endregion
 
 }
