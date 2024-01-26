@@ -6,7 +6,7 @@ import org.junit.Test;
 import java.io.StringWriter;
 import java.util.List;
 
-public class LangString2Test {
+public class LangStringTest {
 
 	@Test
 	public void testAdapter() {

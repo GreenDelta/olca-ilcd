@@ -7,6 +7,7 @@ import jakarta.xml.bind.annotation.XmlAttribute;
 import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlSchemaType;
 import jakarta.xml.bind.annotation.XmlType;
+import org.openlca.ilcd.util.Val;
 
 import javax.xml.namespace.QName;
 import java.util.ArrayList;
@@ -73,6 +74,21 @@ public class Classification implements Copyable<Classification> {
 		return this;
 	}
 
+	public Classification withCategories(List<Category> categories) {
+		this.categories = categories;
+		return this;
+	}
+
+	public Classification withOther(Other other) {
+		this.other = other;
+		return this;
+	}
+
+	public Classification withOtherAttributes(Map<QName, String> attributes) {
+		this.otherAttributes = attributes;
+		return this;
+	}
+
 	public List<Category> withCategories() {
 		if (categories == null) {
 			categories = new ArrayList<>();
@@ -101,15 +117,9 @@ public class Classification implements Copyable<Classification> {
 		var copy = new Classification()
 			.withName(name)
 			.withUrl(url);
-		for (Category c : getCategories()) {
-			copy.withCategories().add(c.copy());
-		}
-		if (other != null) {
-			copy.other = other.copy();
-		}
-		if (otherAttributes != null) {
-			copy.withOtherAttributes().putAll(otherAttributes);
-		}
+		Val.copy(categories, copy::withCategories);
+		Val.copy(other, copy::withOther);
+		Val.copy(otherAttributes, copy::withOtherAttributes);
 		return copy;
 	}
 }

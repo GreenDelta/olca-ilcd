@@ -13,6 +13,7 @@ import jakarta.xml.bind.annotation.XmlAnyAttribute;
 import jakarta.xml.bind.annotation.XmlAttribute;
 import jakarta.xml.bind.annotation.XmlType;
 import jakarta.xml.bind.annotation.XmlValue;
+import org.openlca.ilcd.util.Val;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "ClassType", propOrder = {
@@ -81,6 +82,11 @@ public class Category implements Copyable<Category> {
 		return this;
 	}
 
+	public Category withOtherAttributes(Map<QName, String> attributes) {
+		this.otherAttributes = attributes;
+		return this;
+	}
+
 	public Map<QName, String> withOtherAttributes() {
 		if (otherAttributes == null) {
 			otherAttributes = new HashMap<>();
@@ -96,9 +102,7 @@ public class Category implements Copyable<Category> {
 			.withValue(value)
 			.withLevel(level)
 			.withClassId(classId);
-		if (otherAttributes != null) {
-			copy.withOtherAttributes().putAll(otherAttributes);
-		}
+		Val.copy(otherAttributes, copy::withOtherAttributes);
 		return copy;
 	}
 

@@ -88,6 +88,31 @@ public class CommissionerAndGoal implements Copyable<CommissionerAndGoal> {
 
 	// region fluent setters
 
+	public CommissionerAndGoal withCommissioners(List<Ref> commissioners) {
+		this.commissioners = commissioners;
+		return this;
+	}
+
+	public CommissionerAndGoal withProject(List<LangString> project) {
+		this.project = project;
+		return this;
+	}
+
+	public CommissionerAndGoal withIntendedApplications(List<LangString> intendedApplications) {
+		this.intendedApplications = intendedApplications;
+		return this;
+	}
+
+	public CommissionerAndGoal withOther(Other other) {
+		this.other = other;
+		return this;
+	}
+
+	public CommissionerAndGoal withOtherAttributes(Map<QName, String> otherAttributes) {
+		this.otherAttributes = otherAttributes;
+		return this;
+	}
+
 	public List<Ref> withCommissioners() {
 		if (commissioners == null) {
 			commissioners = new ArrayList<>();
@@ -128,13 +153,11 @@ public class CommissionerAndGoal implements Copyable<CommissionerAndGoal> {
 	@Override
 	public CommissionerAndGoal copy() {
 		var copy = new CommissionerAndGoal();
-		Ref.copy(commissioners, copy.commissioners);
-		LangString.copy(project, copy::withProject);
-		LangString.copy(intendedApplications, copy::withIntendedApplications);
-		if (other != null) {
-			copy.other = other.copy();
-		}
-		copy.otherAttributes.putAll(otherAttributes);
+		Val.copy(commissioners, copy::withCommissioners);
+		Val.copy(project, copy::withProject);
+		Val.copy(intendedApplications, copy::withIntendedApplications);
+		Val.copy(other, copy::withOther);
+		Val.copy(otherAttributes, copy::withOtherAttributes);
 		return copy;
 	}
 
