@@ -5,22 +5,82 @@ import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlAttribute;
 import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlType;
+import org.openlca.ilcd.commons.Copyable;
 import org.openlca.ilcd.commons.Ref;
+import org.openlca.ilcd.util.Val;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "CategorySystemType", propOrder = { "source", "categories" })
-public class CategorySystem {
+@XmlType(name = "CategorySystemType", propOrder = {"source", "categories"})
+public class CategorySystem implements Copyable<CategorySystem> {
 
 	@XmlElement(name = "referenceToSource")
-	public Ref source;
+	private Ref source;
 
 	@XmlElement(required = true)
-	public final List<CategoryList> categories = new ArrayList<>();
+	private List<CategoryList> categories;
 
 	@XmlAttribute(name = "name")
-	public String name;
+	private String name;
+
+	// region getters
+
+	public Ref getSource() {
+		return source;
+	}
+
+	public List<CategoryList> getCategories() {
+		return categories != null ? categories : List.of();
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	// endregion
+
+	// region setters
+
+	public CategorySystem withSource(Ref source) {
+		this.source = source;
+		return this;
+	}
+
+	public CategorySystem withCategories(List<CategoryList> categories) {
+		this.categories = categories;
+		return this;
+	}
+
+	public CategorySystem withName(String name) {
+		this.name = name;
+		return this;
+	}
+
+	public Ref withSource() {
+		if (source == null) {
+			source = new Ref();
+		}
+		return source;
+	}
+
+	public List<CategoryList> withCategories() {
+		if (categories == null) {
+			categories = new ArrayList<>();
+		}
+		return categories;
+	}
+
+	// endregion
+
+	@Override
+	public CategorySystem copy() {
+		var copy = new CategorySystem();
+		Val.copy(source, this::withSource);
+		Val.copy(categories, this::withCategories);
+		copy.withName(name);
+		return copy;
+	}
 
 }

@@ -12,15 +12,41 @@ import java.util.Objects;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "LocationType", namespace = "http://lca.jrc.it/ILCD/Locations", propOrder = {
-		"name"
+	"name"
 })
 public class Location implements Copyable<Location> {
 
 	@XmlValue
-	public String name;
+	private String name;
 
 	@XmlAttribute(name = "value", required = true)
-	public String code;
+	private String code;
+
+	// region getters
+
+	public String getName() {
+		return name;
+	}
+
+	public String getCode() {
+		return code;
+	}
+
+	// endregion
+
+	// region setters
+
+	public Location withName(String name) {
+		this.name = name;
+		return this;
+	}
+
+	public Location withCode(String code) {
+		this.code = code;
+		return this;
+	}
+
+	// endregion
 
 	@Override
 	public boolean equals(Object obj) {
@@ -31,7 +57,7 @@ public class Location implements Copyable<Location> {
 		if (!(obj instanceof Location other))
 			return false;
 		return Objects.equals(this.code, other.code)
-				&& Objects.equals(this.name, other.name);
+			&& Objects.equals(this.name, other.name);
 	}
 
 	@Override
