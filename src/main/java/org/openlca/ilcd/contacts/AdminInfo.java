@@ -50,7 +50,7 @@ public class AdminInfo implements Copyable<AdminInfo> {
 	}
 
 	public Map<QName, String> getOtherAttributes() {
-		return otherAttributes;
+		return otherAttributes != null ? otherAttributes : Map.of();
 	}
 
 	// endregion

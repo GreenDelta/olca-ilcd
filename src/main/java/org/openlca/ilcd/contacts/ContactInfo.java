@@ -40,7 +40,7 @@ public class ContactInfo implements Copyable<ContactInfo> {
 	}
 
 	public Map<QName, String> getOtherAttributes() {
-		return otherAttributes;
+		return otherAttributes != null ? otherAttributes : Map.of();
 	}
 
 	// endregion

@@ -59,7 +59,7 @@ public class Contact implements IDataSet, Copyable<Contact> {
 	}
 
 	public Map<QName, String> getOtherAttributes() {
-		return otherAttributes;
+		return otherAttributes != null ? otherAttributes : Map.of();
 	}
 
 	// endregion

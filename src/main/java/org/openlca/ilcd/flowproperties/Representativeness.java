@@ -5,8 +5,10 @@ import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlAnyAttribute;
 import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlType;
+import org.openlca.ilcd.commons.Copyable;
 import org.openlca.ilcd.commons.Other;
 import org.openlca.ilcd.commons.Ref;
+import org.openlca.ilcd.util.Val;
 
 import javax.xml.namespace.QName;
 import java.util.ArrayList;
@@ -16,16 +18,81 @@ import java.util.Map;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "DataSourcesTreatmentAndRepresentativenessType", propOrder = {
-		"dataSource", "other" })
-public class Representativeness {
+	"dataSource", "other"})
+public class Representativeness implements Copyable<Representativeness> {
 
 	@XmlElement(name = "referenceToDataSource")
-	public final List<Ref> dataSource = new ArrayList<>();
+	private List<Ref> dataSource;
 
 	@XmlElement(namespace = "http://lca.jrc.it/ILCD/Common")
-	public Other other;
+	private Other other;
 
 	@XmlAnyAttribute
-	public final Map<QName, String> otherAttributes = new HashMap<>();
+	private Map<QName, String> otherAttributes;
+
+	// region getters
+
+	public List<Ref> getDataSource() {
+		return dataSource != null ? dataSource : List.of();
+	}
+
+	public Other getOther() {
+		return other;
+	}
+
+	public Map<QName, String> getOtherAttributes() {
+		return otherAttributes != null ? otherAttributes : Map.of();
+	}
+
+	// endregion
+
+	// region setters
+
+	public Representativeness withDataSource(List<Ref> dataSource) {
+		this.dataSource = dataSource;
+		return this;
+	}
+
+	public Representativeness withOther(Other other) {
+		this.other = other;
+		return this;
+	}
+
+	public Representativeness withOtherAttributes(Map<QName, String> otherAttributes) {
+		this.otherAttributes = otherAttributes;
+		return this;
+	}
+
+	public List<Ref> withDataSource() {
+		if (dataSource == null) {
+			dataSource = new ArrayList<>();
+		}
+		return dataSource;
+	}
+
+	public Other withOther() {
+		if (other == null) {
+			other = new Other();
+		}
+		return other;
+	}
+
+	public Map<QName, String> withOtherAttributes() {
+		if (otherAttributes == null) {
+			otherAttributes = new HashMap<>();
+		}
+		return otherAttributes;
+	}
+
+	// endregion
+
+	@Override
+	public Representativeness copy() {
+		var copy = new Representativeness();
+		Val.copy(dataSource, this::withDataSource);
+		Val.copy(other, this::withOther);
+		Val.copy(otherAttributes, this::withOtherAttributes);
+		return copy;
+	}
 
 }

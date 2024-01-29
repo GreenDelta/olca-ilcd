@@ -1,93 +1,156 @@
 
 package org.openlca.ilcd.flowproperties;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.xml.namespace.QName;
-
 import jakarta.xml.bind.JAXBElement;
-import jakarta.xml.bind.annotation.XmlElementDecl;
-import org.openlca.ilcd.commons.Classification;
-import org.openlca.ilcd.commons.DataSetType;
-import org.openlca.ilcd.commons.IDataSet;
-import org.openlca.ilcd.commons.LangString;
-import org.openlca.ilcd.commons.Other;
-
 import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlAnyAttribute;
 import jakarta.xml.bind.annotation.XmlAttribute;
 import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlType;
+import org.openlca.ilcd.commons.Copyable;
+import org.openlca.ilcd.commons.IDataSet;
+import org.openlca.ilcd.commons.Other;
+import org.openlca.ilcd.util.Val;
+
+import javax.xml.namespace.QName;
+import java.util.HashMap;
+import java.util.Map;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "FlowPropertyDataSetType", propOrder = {
-		"flowPropertyInfo",
-		"modelling",
-		"adminInfo",
-		"other"
+	"flowPropertyInfo",
+	"modelling",
+	"adminInfo",
+	"other"
 })
-public class FlowProperty implements IDataSet {
+public class FlowProperty implements IDataSet, Copyable<FlowProperty> {
 
 	@XmlElement(name = "flowPropertiesInformation", required = true)
-	public FlowPropertyInfo flowPropertyInfo;
+	private FlowPropertyInfo flowPropertyInfo;
 
 	@XmlElement(name = "modellingAndValidation")
-	public Modelling modelling;
+	private Modelling modelling;
 
 	@XmlElement(name = "administrativeInformation")
-	public AdminInfo adminInfo;
+	private AdminInfo adminInfo;
 
 	@XmlElement(namespace = "http://lca.jrc.it/ILCD/Common")
-	public Other other;
+	private Other other;
 
 	@XmlAttribute(name = "version", required = true)
-	public String version;
+	private String version;
 
 	@XmlAnyAttribute
-	public final Map<QName, String> otherAttributes = new HashMap<>();
+	private Map<QName, String> otherAttributes;
 
-	@Override
-	public DataSetType getDataSetType() {
-		return DataSetType.FLOW_PROPERTY;
+	// region getters
+
+	public FlowPropertyInfo getFlowPropertyInfo() {
+		return flowPropertyInfo;
 	}
 
-	@Override
-	public String getURI() {
-		if (adminInfo == null || adminInfo.publication == null)
-			return null;
-		return adminInfo.publication.uri;
+	public Modelling getModelling() {
+		return modelling;
 	}
 
-	@Override
-	public String getUUID() {
-		if (flowPropertyInfo == null || flowPropertyInfo.dataSetInfo == null)
-			return null;
-		return flowPropertyInfo.dataSetInfo.uuid;
+	public AdminInfo getAdminInfo() {
+		return adminInfo;
 	}
 
-	@Override
+	public Other getOther() {
+		return other;
+	}
+
 	public String getVersion() {
-		if (adminInfo == null || adminInfo.publication == null)
-			return null;
-		return adminInfo.publication.version;
+		return version;
 	}
 
-	@Override
-	public List<Classification> getClassifications() {
-		if (flowPropertyInfo == null || flowPropertyInfo.dataSetInfo == null)
-			return Collections.emptyList();
-		return flowPropertyInfo.dataSetInfo.classifications;
+	public Map<QName, String> getOtherAttributes() {
+		return otherAttributes != null ? otherAttributes : Map.of();
 	}
 
+	// endregion
+
+	// region setters
+
+	public FlowProperty withFlowPropertyInfo(FlowPropertyInfo flowPropertyInfo) {
+		this.flowPropertyInfo = flowPropertyInfo;
+		return this;
+	}
+
+	public FlowProperty withModelling(Modelling modelling) {
+		this.modelling = modelling;
+		return this;
+	}
+
+	public FlowProperty withAdminInfo(AdminInfo adminInfo) {
+		this.adminInfo = adminInfo;
+		return this;
+	}
+
+	public FlowProperty withOther(Other other) {
+		this.other = other;
+		return this;
+	}
+
+	public FlowProperty withVersion(String version) {
+		this.version = version;
+		return this;
+	}
+
+	public FlowProperty withOtherAttributes(Map<QName, String> otherAttributes) {
+		this.otherAttributes = otherAttributes;
+		return this;
+	}
+
+	public FlowPropertyInfo withFlowPropertyInfo() {
+		if (flowPropertyInfo == null) {
+			flowPropertyInfo = new FlowPropertyInfo();
+		}
+		return flowPropertyInfo;
+	}
+
+	public Modelling withModelling() {
+		if (modelling == null) {
+			modelling = new Modelling();
+		}
+		return modelling;
+	}
+
+	public AdminInfo withAdminInfo() {
+		if (adminInfo == null) {
+			adminInfo = new AdminInfo();
+		}
+		return adminInfo;
+	}
+
+	public Other withOther() {
+		if (other == null) {
+			other = new Other();
+		}
+		return other;
+	}
+
+	public Map<QName, String> withOtherAttributes() {
+		if (otherAttributes == null) {
+			otherAttributes = new HashMap<>();
+		}
+		return otherAttributes;
+	}
+
+	// endregion
+
 	@Override
-	public List<LangString> getName() {
-		if (flowPropertyInfo == null || flowPropertyInfo.dataSetInfo == null)
-			return Collections.emptyList();
-		return flowPropertyInfo.dataSetInfo.name;
+	public FlowProperty copy() {
+		var copy = new FlowProperty();
+		Val.copy(flowPropertyInfo, this::withFlowPropertyInfo);
+		Val.copy(modelling, this::withModelling);
+		Val.copy(adminInfo, this::withAdminInfo);
+		Val.copy(other, this::withOther);
+		copy.withVersion(version);
+		Val.copy(otherAttributes, this::withOtherAttributes);
+		return copy;
 	}
 
 	@Override
