@@ -7,6 +7,7 @@ import jakarta.xml.bind.annotation.XmlAnyAttribute;
 import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlSchemaType;
 import jakarta.xml.bind.annotation.XmlType;
+import org.openlca.ilcd.util.Val;
 
 import javax.xml.namespace.QName;
 import java.util.ArrayList;
@@ -16,13 +17,13 @@ import java.util.Map;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "PublicationAndOwnershipType", propOrder = {
-		"version",
-		"precedingVersions",
-		"uri",
-		"owner",
-		"other"
+	"version",
+	"precedingVersions",
+	"uri",
+	"owner",
+	"other"
 })
-public class Publication {
+public class Publication implements Copyable<Publication> {
 
 	@XmlElement(namespace = "http://lca.jrc.it/ILCD/Common", required = true, name = "dataSetVersion")
 	private String version;
@@ -133,4 +134,16 @@ public class Publication {
 
 	// endregion
 
+
+	@Override
+	public Publication copy() {
+		var copy = new Publication()
+			.withUri(uri)
+			.withVersion(version);
+		Val.copy(other, copy::withOther);
+		Val.copy(otherAttributes, copy::withOtherAttributes);
+		Val.copy(precedingVersions, copy::withPrecedingVersions);
+		Val.copy(owner, copy::withOwner);
+		return null;
+	}
 }

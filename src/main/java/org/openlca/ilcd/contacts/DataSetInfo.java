@@ -7,11 +7,13 @@ import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlElementWrapper;
 import jakarta.xml.bind.annotation.XmlType;
 import org.openlca.ilcd.commons.Classification;
+import org.openlca.ilcd.commons.Copyable;
 import org.openlca.ilcd.commons.LangString;
 import org.openlca.ilcd.commons.Other;
 import org.openlca.ilcd.commons.Ref;
 import org.openlca.ilcd.commons.annotations.Label;
 import org.openlca.ilcd.commons.annotations.ShortText;
+import org.openlca.ilcd.util.Val;
 
 import javax.xml.namespace.QName;
 import java.util.ArrayList;
@@ -37,52 +39,285 @@ import java.util.Map;
 		"logo",
 		"other"
 	})
-public class DataSetInfo {
+public class DataSetInfo implements Copyable<DataSetInfo> {
 
 	@XmlElement(name = "UUID", namespace = "http://lca.jrc.it/ILCD/Common", required = true)
-	public String uuid;
+	private String uuid;
 
 	@Label
 	@XmlElement(namespace = "http://lca.jrc.it/ILCD/Common")
-	public final List<LangString> shortName = new ArrayList<>();
+	private List<LangString> shortName;
 
 	@Label
 	@XmlElement(namespace = "http://lca.jrc.it/ILCD/Common")
-	public final List<LangString> name = new ArrayList<>();
+	private List<LangString> name;
 
 	@XmlElementWrapper(name = "classificationInformation")
 	@XmlElement(name = "classification", namespace = "http://lca.jrc.it/ILCD/Common")
-	public final List<Classification> classifications = new ArrayList<>();
+	private List<Classification> classifications;
 
 	@ShortText
-	public final List<LangString> contactAddress = new ArrayList<>();
+	private List<LangString> contactAddress;
 
-	public String telephone;
+	private String telephone;
 
-	public String telefax;
+	private String telefax;
 
-	public String email;
+	private String email;
 
 	@XmlElement(name = "WWWAddress")
-	public String webSite;
+	private String webSite;
 
 	@ShortText
-	public final List<LangString> centralContactPoint = new ArrayList<>();
+	private List<LangString> centralContactPoint;
 
 	@ShortText
 	@XmlElement(name = "contactDescriptionOrComment")
-	public final List<LangString> description = new ArrayList<>();
+	private List<LangString> description;
 
 	@XmlElement(name = "referenceToContact")
-	public final List<Ref> belongsTo = new ArrayList<>();
+	private List<Ref> belongsTo;
 
 	@XmlElement(name = "referenceToLogo")
-	public Ref logo;
+	private Ref logo;
 
 	@XmlElement(namespace = "http://lca.jrc.it/ILCD/Common")
-	public Other other;
+	private Other other;
 
 	@XmlAnyAttribute
-	public final Map<QName, String> otherAttributes = new HashMap<>();
+	private Map<QName, String> otherAttributes;
 
+	// region getters
+
+	public String getUuid() {
+		return uuid;
+	}
+
+	public List<LangString> getShortName() {
+		return shortName;
+	}
+
+	public List<LangString> getName() {
+		return name;
+	}
+
+	public List<Classification> getClassifications() {
+		return classifications;
+	}
+
+	public List<LangString> getContactAddress() {
+		return contactAddress;
+	}
+
+	public String getTelephone() {
+		return telephone;
+	}
+
+	public String getTelefax() {
+		return telefax;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public String getWebSite() {
+		return webSite;
+	}
+
+	public List<LangString> getCentralContactPoint() {
+		return centralContactPoint;
+	}
+
+	public List<LangString> getDescription() {
+		return description;
+	}
+
+	public List<Ref> getBelongsTo() {
+		return belongsTo;
+	}
+
+	public Ref getLogo() {
+		return logo;
+	}
+
+	public Other getOther() {
+		return other;
+	}
+
+	public Map<QName, String> getOtherAttributes() {
+		return otherAttributes;
+	}
+
+	// endregion
+
+	// region setters
+
+	public DataSetInfo withUuid(String uuid) {
+		this.uuid = uuid;
+		return this;
+	}
+
+	public DataSetInfo withShortName(List<LangString> shortName) {
+		this.shortName = shortName;
+		return this;
+	}
+
+	public DataSetInfo withName(List<LangString> name) {
+		this.name = name;
+		return this;
+	}
+
+	public DataSetInfo withClassifications(List<Classification> classifications) {
+		this.classifications = classifications;
+		return this;
+	}
+
+	public DataSetInfo withContactAddress(List<LangString> contactAddress) {
+		this.contactAddress = contactAddress;
+		return this;
+	}
+
+	public DataSetInfo withTelephone(String telephone) {
+		this.telephone = telephone;
+		return this;
+	}
+
+	public DataSetInfo withTelefax(String telefax) {
+		this.telefax = telefax;
+		return this;
+	}
+
+	public DataSetInfo withEmail(String email) {
+		this.email = email;
+		return this;
+	}
+
+	public DataSetInfo withWebSite(String webSite) {
+		this.webSite = webSite;
+		return this;
+	}
+
+	public DataSetInfo withCentralContactPoint(List<LangString> centralContactPoint) {
+		this.centralContactPoint = centralContactPoint;
+		return this;
+	}
+
+	public DataSetInfo withDescription(List<LangString> description) {
+		this.description = description;
+		return this;
+	}
+
+	public DataSetInfo withBelongsTo(List<Ref> belongsTo) {
+		this.belongsTo = belongsTo;
+		return this;
+	}
+
+	public DataSetInfo withLogo(Ref logo) {
+		this.logo = logo;
+		return this;
+	}
+
+	public DataSetInfo withOther(Other other) {
+		this.other = other;
+		return this;
+	}
+
+	public DataSetInfo withOtherAttributes(Map<QName, String> otherAttributes) {
+		this.otherAttributes = otherAttributes;
+		return this;
+	}
+
+	public List<LangString> withShortName() {
+		if (shortName == null) {
+			shortName = new ArrayList<>();
+		}
+		return shortName;
+	}
+
+	public List<LangString> withName() {
+		if (name == null) {
+			name = new ArrayList<>();
+		}
+		return name;
+	}
+
+	public List<Classification> withClassifications() {
+		if (classifications == null) {
+			classifications = new ArrayList<>();
+		}
+		return classifications;
+	}
+
+	public List<LangString> withContactAddress() {
+		if (contactAddress == null) {
+			contactAddress = new ArrayList<>();
+		}
+		return contactAddress;
+	}
+
+	public List<LangString> withCentralContactPoint() {
+		if (centralContactPoint == null) {
+			centralContactPoint = new ArrayList<>();
+		}
+		return centralContactPoint;
+	}
+
+	public List<LangString> withDescription() {
+		if (description == null) {
+			description = new ArrayList<>();
+		}
+		return description;
+	}
+
+	public List<Ref> withBelongsTo() {
+		if (belongsTo == null) {
+			belongsTo = new ArrayList<>();
+		}
+		return belongsTo;
+	}
+
+	public Ref withLogo() {
+		if (logo == null) {
+			logo = new Ref();
+		}
+		return logo;
+	}
+
+	public Other withOther() {
+		if (other == null) {
+			other = new Other();
+		}
+		return other;
+	}
+
+	public Map<QName, String> withOtherAttributes() {
+		if (otherAttributes == null) {
+			otherAttributes = new HashMap<>();
+		}
+		return otherAttributes;
+	}
+
+	// endregion
+
+	@Override
+	public DataSetInfo copy() {
+		var copy = new DataSetInfo();
+		copy.withUuid(uuid);
+		Val.copy(shortName, this::withShortName);
+		Val.copy(name, this::withName);
+		Val.copy(classifications, this::withClassifications);
+		Val.copy(contactAddress, this::withContactAddress);
+		copy.withTelephone(telephone);
+		copy.withTelefax(telefax);
+		copy.withEmail(email);
+		copy.withWebSite(webSite);
+		Val.copy(centralContactPoint, this::withCentralContactPoint);
+		Val.copy(description, this::withDescription);
+		Val.copy(belongsTo, this::withBelongsTo);
+		Val.copy(logo, this::withLogo);
+		Val.copy(other, this::withOther);
+		Val.copy(otherAttributes, this::withOtherAttributes);
+		return copy;
+	}
 }

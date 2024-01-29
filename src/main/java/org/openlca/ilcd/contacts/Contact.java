@@ -8,16 +8,13 @@ import jakarta.xml.bind.annotation.XmlAnyAttribute;
 import jakarta.xml.bind.annotation.XmlAttribute;
 import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlType;
-import org.openlca.ilcd.commons.Classification;
-import org.openlca.ilcd.commons.DataSetType;
+import org.openlca.ilcd.commons.Copyable;
 import org.openlca.ilcd.commons.IDataSet;
-import org.openlca.ilcd.commons.LangString;
 import org.openlca.ilcd.commons.Other;
+import org.openlca.ilcd.util.Val;
 
 import javax.xml.namespace.QName;
-import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -26,63 +23,116 @@ import java.util.Map;
 	"adminInfo",
 	"other"
 })
-public class Contact implements IDataSet {
+public class Contact implements IDataSet, Copyable<Contact> {
 
 	@XmlElement(required = true, name = "contactInformation")
-	public ContactInfo contactInfo;
+	private ContactInfo contactInfo;
 
 	@XmlElement(name = "administrativeInformation")
-	public AdminInfo adminInfo;
+	private AdminInfo adminInfo;
 
 	@XmlElement(namespace = "http://lca.jrc.it/ILCD/Common")
-	public Other other;
+	private Other other;
 
 	@XmlAttribute(name = "version", required = true)
-	public String version;
+	private String version;
 
 	@XmlAnyAttribute
-	public final Map<QName, String> otherAttributes = new HashMap<>();
+	private Map<QName, String> otherAttributes;
 
-	@Override
-	public DataSetType getDataSetType() {
-		return DataSetType.CONTACT;
+	// region getters
+
+	public ContactInfo getContactInfo() {
+		return contactInfo;
 	}
 
-	@Override
-	public String getURI() {
-		if (adminInfo == null || adminInfo.publication == null)
-			return null;
-		return adminInfo.publication.uri;
+	public AdminInfo getAdminInfo() {
+		return adminInfo;
 	}
 
-	@Override
-	public String getUUID() {
-		if (contactInfo == null || contactInfo.dataSetInfo == null)
-			return null;
-		return contactInfo.dataSetInfo.uuid;
+	public Other getOther() {
+		return other;
 	}
 
-	@Override
 	public String getVersion() {
-		if (adminInfo == null || adminInfo.publication == null)
-			return null;
-		return adminInfo.publication.version;
+		return version;
+	}
+
+	public Map<QName, String> getOtherAttributes() {
+		return otherAttributes;
+	}
+
+	// endregion
+
+	// region setters
+
+	public Contact withContactInfo(ContactInfo contactInfo) {
+		this.contactInfo = contactInfo;
+		return this;
+	}
+
+	public Contact withAdminInfo(AdminInfo adminInfo) {
+		this.adminInfo = adminInfo;
+		return this;
+	}
+
+	public Contact withOther(Other other) {
+		this.other = other;
+		return this;
+	}
+
+	public Contact withVersion(String version) {
+		this.version = version;
+		return this;
+	}
+
+	public Contact withOtherAttributes(Map<QName, String> otherAttributes) {
+		this.otherAttributes = otherAttributes;
+		return this;
+	}
+
+	public ContactInfo withContactInfo() {
+		if (contactInfo == null) {
+			contactInfo = new ContactInfo();
+		}
+		return contactInfo;
+	}
+
+	public AdminInfo withAdminInfo() {
+		if (adminInfo == null) {
+			adminInfo = new AdminInfo();
+		}
+		return adminInfo;
+	}
+
+	public Other withOther() {
+		if (other == null) {
+			other = new Other();
+		}
+		return other;
+	}
+
+	public Map<QName, String> withOtherAttributes() {
+		if (otherAttributes == null) {
+			otherAttributes = new HashMap<>();
+		}
+		return otherAttributes;
+	}
+
+	// endregion
+
+	@Override
+	public Contact copy() {
+		var copy = new Contact();
+		Val.copy(contactInfo, this::withContactInfo);
+		Val.copy(adminInfo, this::withAdminInfo);
+		Val.copy(other, this::withOther);
+		copy.withVersion(version);
+		Val.copy(otherAttributes, this::withOtherAttributes);
+		return copy;
 	}
 
 	@Override
-	public List<Classification> getClassifications() {
-		if (contactInfo == null || contactInfo.dataSetInfo == null)
-			return Collections.emptyList();
-		return contactInfo.dataSetInfo.classifications;
-	}
-
-	@Override
-	public List<LangString> getName() {
-		if (contactInfo == null || contactInfo.dataSetInfo == null)
-			return Collections.emptyList();
-		return contactInfo.dataSetInfo.name;
-	}
-
 	public JAXBElement<Contact> toElement() {
 		var qname = new QName("http://lca.jrc.it/ILCD/Contact", "contactDataSet");
 		return new JAXBElement<>(qname, Contact.class, null, this);

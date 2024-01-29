@@ -13,6 +13,7 @@ public final class Contacts {
 	}
 
 	public static ContactInfo getContactInfo(Contact c) {
+
 		return c != null
 			? c.contactInfo
 			: null;

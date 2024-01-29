@@ -4,6 +4,14 @@ package org.openlca.ilcd.commons;
 import jakarta.xml.bind.annotation.XmlEnum;
 import jakarta.xml.bind.annotation.XmlEnumValue;
 import jakarta.xml.bind.annotation.XmlType;
+import org.openlca.ilcd.contacts.Contact;
+import org.openlca.ilcd.flowproperties.FlowProperty;
+import org.openlca.ilcd.flows.Flow;
+import org.openlca.ilcd.methods.ImpactMethod;
+import org.openlca.ilcd.models.Model;
+import org.openlca.ilcd.processes.Process;
+import org.openlca.ilcd.sources.Source;
+import org.openlca.ilcd.units.UnitGroup;
 import org.openlca.ilcd.util.Strings;
 
 import java.util.Optional;
@@ -58,6 +66,28 @@ public enum DataSetType {
 			}
 		}
 		return Optional.empty();
+	}
+
+	public static DataSetType of(IDataSet ds) {
+		if (ds == null)
+			return null;
+		if (ds instanceof Contact)
+			return DataSetType.CONTACT;
+		if (ds instanceof FlowProperty)
+			return DataSetType.FLOW_PROPERTY;
+		if (ds instanceof Flow)
+			return DataSetType.FLOW;
+		if (ds instanceof ImpactMethod)
+			return DataSetType.IMPACT_METHOD;
+		if (ds instanceof Model)
+			return DataSetType.MODEL;
+		if (ds instanceof Process)
+			return DataSetType.PROCESS;
+		if (ds instanceof Source)
+			return DataSetType.SOURCE;
+		if (ds instanceof UnitGroup)
+			return DataSetType.UNIT_GROUP;
+		return null;
 	}
 
 	@Override
