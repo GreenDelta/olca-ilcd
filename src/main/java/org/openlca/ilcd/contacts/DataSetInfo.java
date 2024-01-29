@@ -89,24 +89,24 @@ public class DataSetInfo implements Copyable<DataSetInfo> {
 
 	// region getters
 
-	public String getUuid() {
+	public String getUUID() {
 		return uuid;
 	}
 
 	public List<LangString> getShortName() {
-		return shortName;
+		return shortName != null ? shortName : List.of();
 	}
 
 	public List<LangString> getName() {
-		return name;
+		return name != null ? name : List.of();
 	}
 
 	public List<Classification> getClassifications() {
-		return classifications;
+		return classifications != null ? classifications : List.of();
 	}
 
 	public List<LangString> getContactAddress() {
-		return contactAddress;
+		return contactAddress != null ? contactAddress : List.of();
 	}
 
 	public String getTelephone() {
@@ -126,15 +126,15 @@ public class DataSetInfo implements Copyable<DataSetInfo> {
 	}
 
 	public List<LangString> getCentralContactPoint() {
-		return centralContactPoint;
+		return centralContactPoint != null ? centralContactPoint : List.of();
 	}
 
 	public List<LangString> getDescription() {
-		return description;
+		return description != null ? description : List.of();
 	}
 
 	public List<Ref> getBelongsTo() {
-		return belongsTo;
+		return belongsTo != null ? belongsTo : List.of();
 	}
 
 	public Ref getLogo() {
@@ -146,14 +146,14 @@ public class DataSetInfo implements Copyable<DataSetInfo> {
 	}
 
 	public Map<QName, String> getOtherAttributes() {
-		return otherAttributes;
+		return otherAttributes != null ? otherAttributes : Map.of();
 	}
 
 	// endregion
 
 	// region setters
 
-	public DataSetInfo withUuid(String uuid) {
+	public DataSetInfo withUUID(String uuid) {
 		this.uuid = uuid;
 		return this;
 	}
@@ -303,7 +303,7 @@ public class DataSetInfo implements Copyable<DataSetInfo> {
 	@Override
 	public DataSetInfo copy() {
 		var copy = new DataSetInfo();
-		copy.withUuid(uuid);
+		copy.withUUID(uuid);
 		Val.copy(shortName, this::withShortName);
 		Val.copy(name, this::withName);
 		Val.copy(classifications, this::withClassifications);

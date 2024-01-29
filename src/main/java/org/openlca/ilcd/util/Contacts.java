@@ -1,87 +1,102 @@
 package org.openlca.ilcd.util;
 
+import org.openlca.ilcd.commons.Classification;
 import org.openlca.ilcd.commons.DataEntry;
+import org.openlca.ilcd.commons.LangString;
 import org.openlca.ilcd.commons.Publication;
 import org.openlca.ilcd.contacts.AdminInfo;
 import org.openlca.ilcd.contacts.Contact;
 import org.openlca.ilcd.contacts.ContactInfo;
 import org.openlca.ilcd.contacts.DataSetInfo;
 
+import java.util.Collections;
+import java.util.List;
+
 public final class Contacts {
 
 	private Contacts() {
 	}
 
-	public static ContactInfo getContactInfo(Contact c) {
+	public static String getUri(Contact c) {
+		var pub = Contacts.getPublication(c);
+		return pub != null ? pub.getUri() : null;
+	}
 
-		return c != null
-			? c.contactInfo
+	public static String getUUID(Contact c) {
+		var info = getDataSetInfo(c);
+		return info != null
+			? info.getUUID()
 			: null;
 	}
 
-	public static ContactInfo forceContactInfo(Contact c) {
-		if (c.contactInfo == null) {
-			c.contactInfo = new ContactInfo();
-		}
-		return c.contactInfo;
+	public static String getVersion(Contact c) {
+		var pub = Contacts.getPublication(c);
+		return pub != null ? pub.getVersion() : null;
+	}
+
+	public static List<Classification> getClassifications(Contact c) {
+		var info = getDataSetInfo(c);
+		return info != null
+			? info.getClassifications()
+			: Collections.emptyList();
+	}
+
+	public static List<LangString> getName(Contact c) {
+		var info = getDataSetInfo(c);
+		return info != null
+			? info.getName()
+			: Collections.emptyList();
+	}
+
+	public static ContactInfo getContactInfo(Contact c) {
+		return c != null ? c.getContactInfo() : null;
+	}
+
+	public static ContactInfo withContactInfo(Contact c) {
+		return c.withContactInfo();
 	}
 
 	public static DataSetInfo getDataSetInfo(Contact c) {
 		var info = getContactInfo(c);
 		return info != null
-			? info.dataSetInfo
+			? info.getDataSetInfo()
 			: null;
 	}
 
-	public static DataSetInfo forceDataSetInfo(Contact c) {
-		var info = forceContactInfo(c);
-		if (info.dataSetInfo == null) {
-			info.dataSetInfo = new DataSetInfo();
-		}
-		return info.dataSetInfo;
+	public static DataSetInfo withDataSetInfo(Contact c) {
+		return c.withContactInfo().withDataSetInfo();
 	}
 
 	public static AdminInfo getAdminInfo(Contact c) {
 		return c != null
-			? c.adminInfo
+			? c.getAdminInfo()
 			: null;
 	}
 
-	public static AdminInfo forceAdminInfo(Contact c) {
-		if (c.adminInfo == null) {
-			c.adminInfo = new AdminInfo();
-		}
-		return c.adminInfo;
+	public static AdminInfo withAdminInfo(Contact c) {
+		return c.withAdminInfo();
 	}
 
 	public static DataEntry getDataEntry(Contact c) {
 		var adminInfo = getAdminInfo(c);
 		return adminInfo != null
-			? adminInfo.dataEntry
+			? adminInfo.getDataEntry()
 			: null;
 	}
 
-	public static DataEntry forceDataEntry(Contact c) {
-		var adminInfo = forceAdminInfo(c);
-		if (adminInfo.dataEntry == null) {
-			adminInfo.dataEntry = new DataEntry();
-		}
-		return adminInfo.dataEntry;
+	public static DataEntry withDataEntry(Contact c) {
+		return c.withAdminInfo().withDataEntry();
 	}
 
 	public static Publication getPublication(Contact c) {
 		var adminInfo = getAdminInfo(c);
 		return adminInfo != null
-			? adminInfo.publication
+			? adminInfo.getPublication()
 			: null;
 	}
 
-	public static Publication forcePublication(Contact c) {
-		var adminInfo = forceAdminInfo(c);
-		if (adminInfo.publication == null) {
-			adminInfo.publication = new Publication();
-		}
-		return adminInfo.publication;
+	public static Publication withPublication(Contact c) {
+		return c.getAdminInfo().withPublication();
 	}
 
 }
