@@ -7,27 +7,23 @@ import jakarta.xml.bind.annotation.XmlAnyAttribute;
 import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlType;
 import org.openlca.ilcd.commons.Copyable;
-import org.openlca.ilcd.commons.LangString;
+import org.openlca.ilcd.commons.FlowType;
 import org.openlca.ilcd.commons.Other;
-import org.openlca.ilcd.commons.annotations.Label;
 import org.openlca.ilcd.util.Val;
 
 import javax.xml.namespace.QName;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "GeographyType", propOrder = {
-	"location",
+@XmlType(name = "LCIMethodType", propOrder = {
+	"flowType",
 	"other"
 })
-public class Geography implements Copyable<Geography> {
+public class InventoryMethod implements Copyable<InventoryMethod> {
 
-	@Label
-	@XmlElement(name = "locationOfSupply", required = true)
-	private List<LangString> location;
+	@XmlElement(name = "typeOfDataSet", required = true)
+	private FlowType flowType;
 
 	@XmlElement(namespace = "http://lca.jrc.it/ILCD/Common")
 	private Other other;
@@ -37,8 +33,8 @@ public class Geography implements Copyable<Geography> {
 
 	// region getters
 
-	public List<LangString> getLocation() {
-		return location != null ? location : List.of();
+	public FlowType getFlowType() {
+		return flowType;
 	}
 
 	public Other getOther() {
@@ -53,26 +49,19 @@ public class Geography implements Copyable<Geography> {
 
 	// region setters
 
-	public Geography withLocation(List<LangString> location) {
-		this.location = location;
+	public InventoryMethod withFlowType(FlowType flowType) {
+		this.flowType = flowType;
 		return this;
 	}
 
-	public Geography withOther(Other other) {
+	public InventoryMethod withOther(Other other) {
 		this.other = other;
 		return this;
 	}
 
-	public Geography withOtherAttributes(Map<QName, String> otherAttributes) {
+	public InventoryMethod withOtherAttributes(Map<QName, String> otherAttributes) {
 		this.otherAttributes = otherAttributes;
 		return this;
-	}
-
-	public List<LangString> withLocation() {
-		if (location == null) {
-			location = new ArrayList<>();
-		}
-		return location;
 	}
 
 	public Other withOther() {
@@ -92,12 +81,11 @@ public class Geography implements Copyable<Geography> {
 	// endregion
 
 	@Override
-	public Geography copy() {
-		var copy = new Geography();
-		Val.copy(location, this::withLocation);
+	public InventoryMethod copy() {
+		var copy = new InventoryMethod();
+		copy.withFlowType(flowType);
 		Val.copy(other, this::withOther);
 		Val.copy(otherAttributes, this::withOtherAttributes);
 		return copy;
 	}
-
 }

@@ -189,22 +189,22 @@ public final class Flows {
 		return f.modelling;
 	}
 
-	public static LCIMethod getInventoryMethod(Flow f) {
+	public static InventoryMethod getInventoryMethod(Flow f) {
 		Modelling m = getModelling(f);
 		return m != null
-			? m.lciMethod
+			? m.inventoryMethod
 			: null;
 	}
 
-	public static LCIMethod forceInventoryMethod(Flow f) {
+	public static InventoryMethod forceInventoryMethod(Flow f) {
 		Modelling m = forceModelling(f);
-		if (m.lciMethod == null)
-			m.lciMethod = new LCIMethod();
-		return m.lciMethod;
+		if (m.inventoryMethod == null)
+			m.inventoryMethod = new InventoryMethod();
+		return m.inventoryMethod;
 	}
 
 	public static FlowType getType(Flow f) {
-		LCIMethod m = getInventoryMethod(f);
+		InventoryMethod m = getInventoryMethod(f);
 		return m != null
 			? m.flowType
 			: null;

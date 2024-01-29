@@ -9,7 +9,7 @@ import org.openlca.ilcd.epd.model.MaterialPropertyValue;
 import org.openlca.ilcd.flows.DataSetInfo;
 import org.openlca.ilcd.flows.Flow;
 import org.openlca.ilcd.flows.FlowInfo;
-import org.openlca.ilcd.flows.LCIMethod;
+import org.openlca.ilcd.flows.InventoryMethod;
 import org.openlca.ilcd.flows.Modelling;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -147,12 +147,12 @@ public class FlowExtensions {
 			mav = new Modelling();
 			flow.modelling = mav;
 		}
-		LCIMethod method = mav.lciMethod;
+		InventoryMethod method = mav.inventoryMethod;
 		if (method == null) {
 			if (!create)
 				return null;
-			method = new LCIMethod();
-			mav.lciMethod = method;
+			method = new InventoryMethod();
+			mav.inventoryMethod = method;
 		}
 		Other other = method.other;
 		if (other == null && create) {

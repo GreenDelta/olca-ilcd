@@ -4,28 +4,97 @@ import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlType;
+import org.openlca.ilcd.commons.Copyable;
 import org.openlca.ilcd.commons.LangString;
 import org.openlca.ilcd.commons.Other;
 import org.openlca.ilcd.commons.Ref;
 import org.openlca.ilcd.commons.annotations.FreeText;
+import org.openlca.ilcd.util.Val;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "TechnologyType", propOrder = {
-		"technologicalApplicability",
-		"technicalSpecifications",
-		"other"
+	"applicability",
+	"specifications",
+	"other"
 })
-public class Technology {
+public class Technology implements Copyable<Technology> {
 
 	@FreeText
-	public List<LangString> technologicalApplicability;
+	@XmlElement(name = "technologicalApplicability")
+	private List<LangString> applicability;
 
 	@XmlElement(name = "referenceToTechnicalSpecification")
-	public List<Ref> technicalSpecifications;
+	private List<Ref> specifications;
 
 	@XmlElement(namespace = "http://lca.jrc.it/ILCD/Common")
-	public Other other;
+	private Other other;
+
+	// region getters
+
+	public List<LangString> getApplicability() {
+		return applicability != null ? applicability : List.of();
+	}
+
+	public List<Ref> getSpecifications() {
+		return specifications != null ? specifications : List.of();
+	}
+
+	public Other getOther() {
+		return other;
+	}
+
+	// endregion
+
+	// region setters
+
+	public Technology withApplicability(List<LangString> applicability) {
+		this.applicability = applicability;
+		return this;
+	}
+
+	public Technology withSpecifications(List<Ref> specifications) {
+		this.specifications = specifications;
+		return this;
+	}
+
+	public Technology withOther(Other other) {
+		this.other = other;
+		return this;
+	}
+
+	public List<LangString> withApplicability() {
+		if (applicability == null) {
+			applicability = new ArrayList<>();
+		}
+		return applicability;
+	}
+
+	public List<Ref> withSpecifications() {
+		if (specifications == null) {
+			specifications = new ArrayList<>();
+		}
+		return specifications;
+	}
+
+	public Other withOther() {
+		if (other == null) {
+			other = new Other();
+		}
+		return other;
+	}
+
+	// endregion
+
+	@Override
+	public Technology copy() {
+		var copy = new Technology();
+		Val.copy(applicability, this::withApplicability);
+		Val.copy(specifications, this::withSpecifications);
+		Val.copy(other, this::withOther);
+		return copy;
+	}
 
 }

@@ -14,7 +14,7 @@ import org.openlca.ilcd.flows.DataSetInfo;
 import org.openlca.ilcd.flows.Flow;
 import org.openlca.ilcd.flows.FlowInfo;
 import org.openlca.ilcd.flows.FlowName;
-import org.openlca.ilcd.flows.LCIMethod;
+import org.openlca.ilcd.flows.InventoryMethod;
 import org.openlca.ilcd.flows.Modelling;
 import org.openlca.ilcd.io.SodaClient;
 
@@ -59,8 +59,8 @@ public class FlowUpdateTest {
 		flow.adminInfo = adminInfo;
 		Modelling mav = new Modelling();
 		flow.modelling = mav;
-		LCIMethod method = new LCIMethod();
-		mav.lciMethod = method;
+		InventoryMethod method = new InventoryMethod();
+		mav.inventoryMethod = method;
 		method.flowType = FlowType.ELEMENTARY_FLOW;
 		return flow;
 	}

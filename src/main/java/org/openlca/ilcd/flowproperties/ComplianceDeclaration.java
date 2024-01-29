@@ -17,8 +17,8 @@ import java.util.Map;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "ComplianceType", propOrder = {
-	"referenceToComplianceSystem",
-	"approvalOfOverallCompliance"
+	"system",
+	"overallCompliance"
 })
 public class ComplianceDeclaration implements Copyable<ComplianceDeclaration> {
 
