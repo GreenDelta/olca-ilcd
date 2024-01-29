@@ -44,7 +44,7 @@ public class LocationList implements Copyable<LocationList> {
 	@Override
 	public LocationList copy() {
 		var copy = new LocationList();
-		Val.copy(locations, this::withLocations);
+		Val.copy(locations, copy::withLocations);
 		return copy;
 	}
 }

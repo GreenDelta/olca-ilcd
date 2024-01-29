@@ -86,7 +86,7 @@ public class Compartment implements Copyable<Compartment> {
 		copy.withValue(value);
 		copy.withLevel(level);
 		copy.withCatId(catId);
-		Val.copy(otherAttributes, this::withOtherAttributes);
+		Val.copy(otherAttributes, copy::withOtherAttributes);
 		return copy;
 	}
 

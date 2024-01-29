@@ -203,17 +203,17 @@ public class FlowPropertyRef implements Copyable<FlowPropertyRef> {
 	@Override
 	public FlowPropertyRef copy() {
 		var copy = new FlowPropertyRef();
-		Val.copy(flowProperty, this::withFlowProperty);
+		Val.copy(flowProperty, copy::withFlowProperty);
 		copy.withMeanValue(meanValue);
 		copy.withMinimumValue(minimumValue);
 		copy.withMaximumValue(maximumValue);
 		copy.withUncertaintyDistribution(uncertaintyDistribution);
 		copy.withRelativeStandardDeviation95In(relativeStandardDeviation95In);
 		copy.withDataDerivation(dataDerivation);
-		Val.copy(generalComment, this::withGeneralComment);
-		Val.copy(other, this::withOther);
+		Val.copy(generalComment, copy::withGeneralComment);
+		Val.copy(other, copy::withOther);
 		copy.withDataSetInternalID(dataSetInternalID);
-		Val.copy(otherAttributes, this::withOtherAttributes);
+		Val.copy(otherAttributes, copy::withOtherAttributes);
 		return copy;
 	}
 

@@ -154,12 +154,12 @@ public class FlowName implements Copyable<FlowName> {
 	@Override
 	public FlowName copy() {
 		var copy = new FlowName();
-		Val.copy(baseName, this::withBaseName);
-		Val.copy(treatmentStandardsRoutes, this::withTreatmentStandardsRoutes);
-		Val.copy(mixAndLocationTypes, this::withMixAndLocationTypes);
-		Val.copy(flowProperties, this::withFlowProperties);
-		Val.copy(other, this::withOther);
-		Val.copy(otherAttributes, this::withOtherAttributes);
+		Val.copy(baseName, copy::withBaseName);
+		Val.copy(treatmentStandardsRoutes, copy::withTreatmentStandardsRoutes);
+		Val.copy(mixAndLocationTypes, copy::withMixAndLocationTypes);
+		Val.copy(flowProperties, copy::withFlowProperties);
+		Val.copy(other, copy::withOther);
+		Val.copy(otherAttributes, copy::withOtherAttributes);
 		return copy;
 	}
 

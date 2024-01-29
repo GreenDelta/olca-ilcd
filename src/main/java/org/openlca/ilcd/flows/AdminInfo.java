@@ -109,10 +109,10 @@ public class AdminInfo implements Copyable<AdminInfo> {
 	@Override
 	public AdminInfo copy() {
 		var copy = new AdminInfo();
-		Val.copy(dataEntry, this::withDataEntry);
-		Val.copy(publication, this::withPublication);
-		Val.copy(other, this::withOther);
-		Val.copy(otherAttributes, this::withOtherAttributes);
+		Val.copy(dataEntry, copy::withDataEntry);
+		Val.copy(publication, copy::withPublication);
+		Val.copy(other, copy::withOther);
+		Val.copy(otherAttributes, copy::withOtherAttributes);
 		return copy;
 	}
 

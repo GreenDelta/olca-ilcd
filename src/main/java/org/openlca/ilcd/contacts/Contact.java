@@ -124,11 +124,11 @@ public class Contact implements IDataSet, Copyable<Contact> {
 	@Override
 	public Contact copy() {
 		var copy = new Contact();
-		Val.copy(contactInfo, this::withContactInfo);
-		Val.copy(adminInfo, this::withAdminInfo);
-		Val.copy(other, this::withOther);
+		Val.copy(contactInfo, copy::withContactInfo);
+		Val.copy(adminInfo, copy::withAdminInfo);
+		Val.copy(other, copy::withOther);
 		copy.withVersion(version);
-		Val.copy(otherAttributes, this::withOtherAttributes);
+		Val.copy(otherAttributes, copy::withOtherAttributes);
 		return copy;
 	}
 

@@ -65,8 +65,8 @@ public class FlowCategoryInfo implements Copyable<FlowCategoryInfo> {
 	@Override
 	public FlowCategoryInfo copy() {
 		var copy = new FlowCategoryInfo();
-		Val.copy(compartmentLists, this::withCompartmentLists);
-		Val.copy(classifications, this::withClassifications);
+		Val.copy(compartmentLists, copy::withCompartmentLists);
+		Val.copy(classifications, copy::withClassifications);
 		return copy;
 	}
 

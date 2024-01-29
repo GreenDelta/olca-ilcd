@@ -92,10 +92,10 @@ public class Category implements Copyable<Category> {
 	@Override
 	public Category copy() {
 		var copy = new Category();
-		Val.copy(categories, this::withCategories);
+		Val.copy(categories, copy::withCategories);
 		copy.withId(id);
 		copy.withName(name);
-		Val.copy(otherAttributes, this::withOtherAttributes);
+		Val.copy(otherAttributes, copy::withOtherAttributes);
 		return copy;
 	}
 }

@@ -113,11 +113,11 @@ public class CompartmentList implements Copyable<CompartmentList> {
 	@Override
 	public CompartmentList copy() {
 		var copy = new CompartmentList();
-		Val.copy(compartments, this::withCompartments);
-		Val.copy(other, this::withOther);
+		Val.copy(compartments, copy::withCompartments);
+		Val.copy(other, copy::withOther);
 		copy.withName(name);
 		copy.withUrl(url);
-		Val.copy(otherAttributes, this::withOtherAttributes);
+		Val.copy(otherAttributes, copy::withOtherAttributes);
 		return copy;
 	}
 

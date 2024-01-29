@@ -84,8 +84,8 @@ public class InventoryMethod implements Copyable<InventoryMethod> {
 	public InventoryMethod copy() {
 		var copy = new InventoryMethod();
 		copy.withFlowType(flowType);
-		Val.copy(other, this::withOther);
-		Val.copy(otherAttributes, this::withOtherAttributes);
+		Val.copy(other, copy::withOther);
+		Val.copy(otherAttributes, copy::withOtherAttributes);
 		return copy;
 	}
 }

@@ -108,10 +108,10 @@ public class FlowPropertyInfo implements Copyable<FlowPropertyInfo> {
 	@Override
 	public FlowPropertyInfo copy() {
 		var copy = new FlowPropertyInfo();
-		Val.copy(dataSetInfo, this::withDataSetInfo);
-		Val.copy(quantitativeReference, this::withQuantitativeReference);
-		Val.copy(other, this::withOther);
-		Val.copy(otherAttributes, this::withOtherAttributes);
+		Val.copy(dataSetInfo, copy::withDataSetInfo);
+		Val.copy(quantitativeReference, copy::withQuantitativeReference);
+		Val.copy(other, copy::withOther);
+		Val.copy(otherAttributes, copy::withOtherAttributes);
 		return copy;
 	}
 

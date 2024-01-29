@@ -304,20 +304,20 @@ public class DataSetInfo implements Copyable<DataSetInfo> {
 	public DataSetInfo copy() {
 		var copy = new DataSetInfo();
 		copy.withUUID(uuid);
-		Val.copy(shortName, this::withShortName);
-		Val.copy(name, this::withName);
-		Val.copy(classifications, this::withClassifications);
-		Val.copy(contactAddress, this::withContactAddress);
+		Val.copy(shortName, copy::withShortName);
+		Val.copy(name, copy::withName);
+		Val.copy(classifications, copy::withClassifications);
+		Val.copy(contactAddress, copy::withContactAddress);
 		copy.withTelephone(telephone);
 		copy.withTelefax(telefax);
 		copy.withEmail(email);
 		copy.withWebSite(webSite);
-		Val.copy(centralContactPoint, this::withCentralContactPoint);
-		Val.copy(description, this::withDescription);
-		Val.copy(belongsTo, this::withBelongsTo);
-		Val.copy(logo, this::withLogo);
-		Val.copy(other, this::withOther);
-		Val.copy(otherAttributes, this::withOtherAttributes);
+		Val.copy(centralContactPoint, copy::withCentralContactPoint);
+		Val.copy(description, copy::withDescription);
+		Val.copy(belongsTo, copy::withBelongsTo);
+		Val.copy(logo, copy::withLogo);
+		Val.copy(other, copy::withOther);
+		Val.copy(otherAttributes, copy::withOtherAttributes);
 		return copy;
 	}
 }

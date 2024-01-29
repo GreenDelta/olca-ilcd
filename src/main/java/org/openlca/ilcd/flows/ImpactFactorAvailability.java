@@ -75,7 +75,7 @@ public class ImpactFactorAvailability implements Copyable<ImpactFactorAvailabili
 		var copy = new ImpactFactorAvailability();
 		copy.withType(type);
 		copy.withValue(value);
-		Val.copy(otherAttributes, this::withOtherAttributes);
+		Val.copy(otherAttributes, copy::withOtherAttributes);
 		return copy;
 	}
 

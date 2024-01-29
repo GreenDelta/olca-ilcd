@@ -88,9 +88,9 @@ public class ContactInfo implements Copyable<ContactInfo> {
 	@Override
 	public ContactInfo copy() {
 		var copy = new ContactInfo();
-		Val.copy(dataSetInfo, this::withDataSetInfo);
-		Val.copy(other, this::withOther);
-		Val.copy(otherAttributes, this::withOtherAttributes);
+		Val.copy(dataSetInfo, copy::withDataSetInfo);
+		Val.copy(other, copy::withOther);
+		Val.copy(otherAttributes, copy::withOtherAttributes);
 		return copy;
 	}
 }

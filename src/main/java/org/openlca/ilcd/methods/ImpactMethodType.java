@@ -9,7 +9,7 @@ import java.util.Optional;
 
 @XmlType(name = "TypeOfLCIAMethodValues")
 @XmlEnum
-public enum LCIAMethodType {
+public enum ImpactMethodType {
 
 	/**
 	 * Method for an inventory indicator, i.e. without impact assessment method.
@@ -53,7 +53,7 @@ public enum LCIAMethodType {
 	LCIA_METHODOLOGY_DOCUMENTATION("LCIA methodology documentation");
 	private final String value;
 
-	LCIAMethodType(String v) {
+	ImpactMethodType(String v) {
 		value = v;
 	}
 
@@ -61,10 +61,10 @@ public enum LCIAMethodType {
 		return value;
 	}
 
-	public static Optional<LCIAMethodType> fromValue(String v) {
+	public static Optional<ImpactMethodType> fromValue(String v) {
 		if (Strings.nullOrEmpty(v))
 			return Optional.empty();
-		for (LCIAMethodType c : LCIAMethodType.values()) {
+		for (ImpactMethodType c : ImpactMethodType.values()) {
 			if (c.value.equals(v)) {
 				return Optional.of(c);
 			}

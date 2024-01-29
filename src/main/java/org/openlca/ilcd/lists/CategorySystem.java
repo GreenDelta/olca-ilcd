@@ -77,8 +77,8 @@ public class CategorySystem implements Copyable<CategorySystem> {
 	@Override
 	public CategorySystem copy() {
 		var copy = new CategorySystem();
-		Val.copy(source, this::withSource);
-		Val.copy(categories, this::withCategories);
+		Val.copy(source, copy::withSource);
+		Val.copy(categories, copy::withCategories);
 		copy.withName(name);
 		return copy;
 	}

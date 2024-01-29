@@ -91,9 +91,9 @@ public class Technology implements Copyable<Technology> {
 	@Override
 	public Technology copy() {
 		var copy = new Technology();
-		Val.copy(applicability, this::withApplicability);
-		Val.copy(specifications, this::withSpecifications);
-		Val.copy(other, this::withOther);
+		Val.copy(applicability, copy::withApplicability);
+		Val.copy(specifications, copy::withSpecifications);
+		Val.copy(other, copy::withOther);
 		return copy;
 	}
 

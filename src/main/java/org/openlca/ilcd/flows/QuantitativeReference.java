@@ -82,8 +82,8 @@ public class QuantitativeReference implements Copyable<QuantitativeReference> {
 	public QuantitativeReference copy() {
 		var copy = new QuantitativeReference();
 		copy.withReferenceFlowProperty(referenceFlowProperty);
-		Val.copy(other, this::withOther);
-		Val.copy(otherAttributes, this::withOtherAttributes);
+		Val.copy(other, copy::withOther);
+		Val.copy(otherAttributes, copy::withOtherAttributes);
 		return copy;
 	}
 

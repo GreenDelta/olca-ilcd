@@ -167,12 +167,12 @@ public class DataSetInfo implements Copyable<DataSetInfo> {
 	public DataSetInfo copy() {
 		var copy = new DataSetInfo();
 		copy.withUuid(uuid);
-		Val.copy(name, this::withName);
-		Val.copy(synonyms, this::withSynonyms);
-		Val.copy(classifications, this::withClassifications);
-		Val.copy(generalComment, this::withGeneralComment);
-		Val.copy(other, this::withOther);
-		Val.copy(otherAttributes, this::withOtherAttributes);
+		Val.copy(name, copy::withName);
+		Val.copy(synonyms, copy::withSynonyms);
+		Val.copy(classifications, copy::withClassifications);
+		Val.copy(generalComment, copy::withGeneralComment);
+		Val.copy(other, copy::withOther);
+		Val.copy(otherAttributes, copy::withOtherAttributes);
 		return copy;
 	}
 }

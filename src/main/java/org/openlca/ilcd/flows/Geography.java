@@ -94,9 +94,9 @@ public class Geography implements Copyable<Geography> {
 	@Override
 	public Geography copy() {
 		var copy = new Geography();
-		Val.copy(location, this::withLocation);
-		Val.copy(other, this::withOther);
-		Val.copy(otherAttributes, this::withOtherAttributes);
+		Val.copy(location, copy::withLocation);
+		Val.copy(other, copy::withOther);
+		Val.copy(otherAttributes, copy::withOtherAttributes);
 		return copy;
 	}
 

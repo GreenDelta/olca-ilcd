@@ -89,9 +89,9 @@ public class Representativeness implements Copyable<Representativeness> {
 	@Override
 	public Representativeness copy() {
 		var copy = new Representativeness();
-		Val.copy(dataSource, this::withDataSource);
-		Val.copy(other, this::withOther);
-		Val.copy(otherAttributes, this::withOtherAttributes);
+		Val.copy(dataSource, copy::withDataSource);
+		Val.copy(other, copy::withOther);
+		Val.copy(otherAttributes, copy::withOtherAttributes);
 		return copy;
 	}
 

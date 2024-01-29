@@ -6,11 +6,13 @@ import jakarta.xml.bind.annotation.XmlAnyAttribute;
 import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlElementWrapper;
 import jakarta.xml.bind.annotation.XmlType;
+import org.openlca.ilcd.commons.Copyable;
 import org.openlca.ilcd.commons.LangString;
 import org.openlca.ilcd.commons.Other;
 import org.openlca.ilcd.commons.Ref;
 import org.openlca.ilcd.commons.annotations.ShortText;
 import org.openlca.ilcd.flowproperties.ComplianceDeclaration;
+import org.openlca.ilcd.util.Val;
 
 import javax.xml.namespace.QName;
 import java.util.ArrayList;
@@ -28,31 +30,181 @@ import java.util.Map;
 		"complianceDeclarations",
 		"other"
 })
-public class Modelling {
+public class Modelling implements Copyable<Modelling> {
 
 	@ShortText
 	@XmlElement(name = "useAdviceForDataSet")
-	public final List<LangString> useAdvice = new ArrayList<>();
+	private List<LangString> useAdvice;
 
 	@XmlElement(name = "LCIAMethodNormalisationAndWeighting")
-	public NormalisationAndWeighting normalisationAndWeighting;
+	private NormalisationAndWeighting normalisationAndWeighting;
 
 	@XmlElementWrapper(name = "dataSources")
 	@XmlElement(name = "referenceToDataSource")
-	public final List<Ref> dataSources = new ArrayList<>();
+	private List<Ref> dataSources;
 
-	public Completeness completeness;
+	private Completeness completeness;
 
-	public Validation validation;
+	private Validation validation;
 
 	@XmlElementWrapper(name = "complianceDeclarations")
 	@XmlElement(name = "compliance")
-	public ComplianceDeclaration[] complianceDeclarations;
+	private List<ComplianceDeclaration> complianceDeclarations;
 
 	@XmlElement(namespace = "http://lca.jrc.it/ILCD/Common")
-	public Other other;
+	private Other other;
 
 	@XmlAnyAttribute
-	public final Map<QName, String> otherAttributes = new HashMap<>();
+	private Map<QName, String> otherAttributes;
+
+	// region getters
+
+	public List<LangString> getUseAdvice() {
+		return useAdvice != null ? useAdvice : List.of();
+	}
+
+	public NormalisationAndWeighting getNormalisationAndWeighting() {
+		return normalisationAndWeighting;
+	}
+
+	public List<Ref> getDataSources() {
+		return dataSources != null ? dataSources : List.of();
+	}
+
+	public Completeness getCompleteness() {
+		return completeness;
+	}
+
+	public Validation getValidation() {
+		return validation;
+	}
+
+	public List<ComplianceDeclaration> getComplianceDeclarations() {
+		return complianceDeclarations != null ? complianceDeclarations : List.of();
+	}
+
+	public Other getOther() {
+		return other;
+	}
+
+	public Map<QName, String> getOtherAttributes() {
+		return otherAttributes != null ? otherAttributes : Map.of();
+	}
+
+	// endregion
+
+	// region setters
+
+	public Modelling withUseAdvice(List<LangString> useAdvice) {
+		this.useAdvice = useAdvice;
+		return this;
+	}
+
+	public Modelling withNormalisationAndWeighting(NormalisationAndWeighting normalisationAndWeighting) {
+		this.normalisationAndWeighting = normalisationAndWeighting;
+		return this;
+	}
+
+	public Modelling withDataSources(List<Ref> dataSources) {
+		this.dataSources = dataSources;
+		return this;
+	}
+
+	public Modelling withCompleteness(Completeness completeness) {
+		this.completeness = completeness;
+		return this;
+	}
+
+	public Modelling withValidation(Validation validation) {
+		this.validation = validation;
+		return this;
+	}
+
+	public Modelling withComplianceDeclarations(List<ComplianceDeclaration> complianceDeclarations) {
+		this.complianceDeclarations = complianceDeclarations;
+		return this;
+	}
+
+	public Modelling withOther(Other other) {
+		this.other = other;
+		return this;
+	}
+
+	public Modelling withOtherAttributes(Map<QName, String> otherAttributes) {
+		this.otherAttributes = otherAttributes;
+		return this;
+	}
+
+	public List<LangString> withUseAdvice() {
+		if (useAdvice == null) {
+			useAdvice = new ArrayList<>();
+		}
+		return useAdvice;
+	}
+
+	public NormalisationAndWeighting withNormalisationAndWeighting() {
+		if (normalisationAndWeighting == null) {
+			normalisationAndWeighting = new NormalisationAndWeighting();
+		}
+		return normalisationAndWeighting;
+	}
+
+	public List<Ref> withDataSources() {
+		if (dataSources == null) {
+			dataSources = new ArrayList<>();
+		}
+		return dataSources;
+	}
+
+	public Completeness withCompleteness() {
+		if (completeness == null) {
+			completeness = new Completeness();
+		}
+		return completeness;
+	}
+
+	public Validation withValidation() {
+		if (validation == null) {
+			validation = new Validation();
+		}
+		return validation;
+	}
+
+	public List<ComplianceDeclaration> withComplianceDeclarations() {
+		if (complianceDeclarations == null) {
+			complianceDeclarations = new ArrayList<>();
+		}
+		return complianceDeclarations;
+	}
+
+	public Other withOther() {
+		if (other == null) {
+			other = new Other();
+		}
+		return other;
+	}
+
+	public Map<QName, String> withOtherAttributes() {
+		if (otherAttributes == null) {
+			otherAttributes = new HashMap<>();
+		}
+		return otherAttributes;
+	}
+
+	// endregion
+
+	@Override
+	public Modelling copy() {
+		var copy = new Modelling();
+		Val.copy(useAdvice, copy::withUseAdvice);
+		Val.copy(normalisationAndWeighting, copy::withNormalisationAndWeighting);
+		Val.copy(dataSources, copy::withDataSources);
+		Val.copy(completeness, copy::withCompleteness);
+		Val.copy(validation, copy::withValidation);
+		Val.copy(complianceDeclarations, copy::withComplianceDeclarations);
+		Val.copy(other, copy::withOther);
+		Val.copy(otherAttributes, copy::withOtherAttributes);
+		return copy;
+	}
 
 }

@@ -58,7 +58,7 @@ public class CategoryList implements Copyable<CategoryList> {
 	@Override
 	public CategoryList copy() {
 		var copy = new CategoryList();
-		Val.copy(categories, this::withCategories);
+		Val.copy(categories, copy::withCategories);
 		copy.withType(type);
 		return copy;
 	}

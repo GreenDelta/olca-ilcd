@@ -126,11 +126,11 @@ public class DataEntry implements Copyable<DataEntry> {
 	@Override
 	public DataEntry copy() {
 		var copy = new DataEntry();
-		Val.copy(timeStamp, this::withTimeStamp);
-		Val.copy(formats, this::withFormats);
-		Val.copy(documentor, this::withDocumentor);
-		Val.copy(other, this::withOther);
-		Val.copy(otherAttributes, this::withOtherAttributes);
+		Val.copy(timeStamp, copy::withTimeStamp);
+		Val.copy(formats, copy::withFormats);
+		Val.copy(documentor, copy::withDocumentor);
+		Val.copy(other, copy::withOther);
+		Val.copy(otherAttributes, copy::withOtherAttributes);
 		return copy;
 	}
 

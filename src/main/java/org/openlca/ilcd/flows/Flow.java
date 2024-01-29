@@ -180,14 +180,14 @@ public class Flow implements IDataSet, Copyable<Flow> {
 	@Override
 	public Flow copy() {
 		var copy = new Flow();
-		Val.copy(flowInfo, this::withFlowInfo);
-		Val.copy(modelling, this::withModelling);
-		Val.copy(adminInfo, this::withAdminInfo);
-		Val.copy(flowProperties, this::withFlowProperties);
+		Val.copy(flowInfo, copy::withFlowInfo);
+		Val.copy(modelling, copy::withModelling);
+		Val.copy(adminInfo, copy::withAdminInfo);
+		Val.copy(flowProperties, copy::withFlowProperties);
 		copy.withVersion(version);
 		copy.withLocations(locations);
-		Val.copy(other, this::withOther);
-		Val.copy(otherAttributes, this::withOtherAttributes);
+		Val.copy(other, copy::withOther);
+		Val.copy(otherAttributes, copy::withOtherAttributes);
 		return copy;
 	}
 

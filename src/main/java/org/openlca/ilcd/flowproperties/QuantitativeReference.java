@@ -89,9 +89,9 @@ public class QuantitativeReference implements Copyable<QuantitativeReference> {
 	@Override
 	public QuantitativeReference copy() {
 		var copy = new QuantitativeReference();
-		Val.copy(unitGroup, this::withUnitGroup);
-		Val.copy(other, this::withOther);
-		Val.copy(otherAttributes, this::withOtherAttributes);
+		Val.copy(unitGroup, copy::withUnitGroup);
+		Val.copy(other, copy::withOther);
+		Val.copy(otherAttributes, copy::withOtherAttributes);
 		return copy;
 	}
 

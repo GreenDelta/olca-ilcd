@@ -113,10 +113,10 @@ public class Modelling implements Copyable<Modelling> {
 	@Override
 	public Modelling copy() {
 		var copy = new Modelling();
-		Val.copy(representativeness, this::withRepresentativeness);
-		Val.copy(complianceDeclarations, this::withComplianceDeclarations);
-		Val.copy(other, this::withOther);
-		Val.copy(otherAttributes, this::withOtherAttributes);
+		Val.copy(representativeness, copy::withRepresentativeness);
+		Val.copy(complianceDeclarations, copy::withComplianceDeclarations);
+		Val.copy(other, copy::withOther);
+		Val.copy(otherAttributes, copy::withOtherAttributes);
 		return copy;
 	}
 }

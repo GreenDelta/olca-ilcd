@@ -9,7 +9,7 @@ import java.util.Optional;
 
 @XmlType(name = "LCIAMethodPrincipleValues")
 @XmlEnum
-public enum LCIAMethodPrinciple {
+public enum ImpactMethodPrinciple {
 
 	@XmlEnumValue("Distance-to-target")
 	DISTANCE_TO_TARGET("Distance-to-target"),
@@ -34,7 +34,7 @@ public enum LCIAMethodPrinciple {
 
 	private final String value;
 
-	LCIAMethodPrinciple(String v) {
+	ImpactMethodPrinciple(String v) {
 		value = v;
 	}
 
@@ -42,10 +42,10 @@ public enum LCIAMethodPrinciple {
 		return value;
 	}
 
-	public static Optional<LCIAMethodPrinciple> fromValue(String v) {
+	public static Optional<ImpactMethodPrinciple> fromValue(String v) {
 		if (Strings.nullOrEmpty(v))
 			return Optional.empty();
-		for (LCIAMethodPrinciple c : LCIAMethodPrinciple.values()) {
+		for (ImpactMethodPrinciple c : ImpactMethodPrinciple.values()) {
 			if (c.value.equals(v)) {
 				return Optional.of(c);
 			}

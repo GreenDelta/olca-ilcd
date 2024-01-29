@@ -5,6 +5,7 @@ import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlAttribute;
 import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlType;
+import org.openlca.ilcd.commons.Copyable;
 import org.openlca.ilcd.commons.LangString;
 import org.openlca.ilcd.commons.Ref;
 import org.openlca.ilcd.commons.ReviewType;
@@ -45,13 +46,13 @@ public class Review {
 
 	@XmlAccessorType(XmlAccessType.FIELD)
 	@XmlType(name = "", propOrder = { "methods" })
-	public static class Scope {
+	public static class Scope implements Copyable<Scope> {
 
 		@XmlElement(name = "method")
-		public final List<Method> methods = new ArrayList<>();
+		private List<Method> methods;
 
 		@XmlAttribute(name = "name", required = true)
-		public ReviewScope name;
+		private ReviewScope name;
 
 		@XmlAccessorType(XmlAccessType.FIELD)
 		@XmlType(name = "")

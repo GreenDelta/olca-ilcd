@@ -1,5 +1,6 @@
 package org.openlca.ilcd.methods;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -8,6 +9,7 @@ import java.util.Map;
 import javax.xml.namespace.QName;
 
 import jakarta.xml.bind.JAXBElement;
+import jakarta.xml.bind.annotation.XmlElementWrapper;
 import org.openlca.ilcd.commons.Classification;
 import org.openlca.ilcd.commons.DataSetType;
 import org.openlca.ilcd.commons.IDataSet;
@@ -26,7 +28,7 @@ import jakarta.xml.bind.annotation.XmlType;
 	"methodInfo",
 	"modelling",
 	"adminInfo",
-	"characterisationFactors",
+	"factors",
 	"other"
 })
 public class ImpactMethod implements IDataSet {
@@ -40,7 +42,9 @@ public class ImpactMethod implements IDataSet {
 	@XmlElement(name = "administrativeInformation")
 	public AdminInfo adminInfo;
 
-	public FactorList characterisationFactors;
+	@XmlElementWrapper(name="characterisationFactors")
+	@XmlElement(name = "factor", required = true)
+	private List<Factor> factors;
 
 	@XmlElement(namespace = "http://lca.jrc.it/ILCD/Common")
 	public Other other;

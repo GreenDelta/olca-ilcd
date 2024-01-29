@@ -108,10 +108,10 @@ public class ComplianceDeclaration implements Copyable<ComplianceDeclaration> {
 	@Override
 	public ComplianceDeclaration copy() {
 		var copy = new ComplianceDeclaration();
-		Val.copy(system, this::withSystem);
+		Val.copy(system, copy::withSystem);
 		copy.withOverallCompliance(overallCompliance);
-		Val.copy(other, this::withOther);
-		Val.copy(otherAttributes, this::withOtherAttributes);
+		Val.copy(other, copy::withOther);
+		Val.copy(otherAttributes, copy::withOtherAttributes);
 		return copy;
 	}
 
