@@ -14,7 +14,31 @@ public class FileRef implements Copyable<FileRef> {
 
 	@XmlAttribute(name = "uri")
 	@XmlSchemaType(name = "anyURI")
-	public String uri;
+	private String uri;
+
+	// region getters
+
+	public String getUri() {
+		return uri;
+	}
+
+	// endregion
+
+	// region setters
+
+	public FileRef withUri(String uri) {
+		this.uri = uri;
+		return this;
+	}
+
+	// endregion
+
+	@Override
+	public FileRef copy() {
+		var copy = new FileRef();
+		copy.withUri(uri);
+		return copy;
+	}
 
 	@Override
 	public boolean equals(Object obj) {
@@ -36,10 +60,4 @@ public class FileRef implements Copyable<FileRef> {
 		return uri == null ? super.hashCode() : uri.hashCode();
 	}
 
-	@Override
-	public FileRef copy() {
-		FileRef clone = new FileRef();
-		clone.uri = uri;
-		return clone;
-	}
 }

@@ -1,25 +1,20 @@
 package org.openlca.ilcd.sources;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.xml.namespace.QName;
-
 import jakarta.xml.bind.JAXBElement;
-import org.openlca.ilcd.commons.Classification;
-import org.openlca.ilcd.commons.DataSetType;
-import org.openlca.ilcd.commons.IDataSet;
-import org.openlca.ilcd.commons.LangString;
-import org.openlca.ilcd.commons.Other;
-
 import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlAnyAttribute;
 import jakarta.xml.bind.annotation.XmlAttribute;
 import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlType;
+import org.openlca.ilcd.commons.Copyable;
+import org.openlca.ilcd.commons.IDataSet;
+import org.openlca.ilcd.commons.Other;
+import org.openlca.ilcd.util.Val;
+
+import javax.xml.namespace.QName;
+import java.util.HashMap;
+import java.util.Map;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "SourceDataSetType", propOrder = {
@@ -27,61 +22,113 @@ import jakarta.xml.bind.annotation.XmlType;
 		"adminInfo",
 		"other"
 })
-public class Source implements IDataSet {
+public class Source implements IDataSet, Copyable<Source> {
 
 	@XmlElement(required = true, name = "sourceInformation")
-	public SourceInfo sourceInfo;
+	private SourceInfo sourceInfo;
 
 	@XmlElement(name = "administrativeInformation")
-	public AdminInfo adminInfo;
+	private AdminInfo adminInfo;
 
 	@XmlAttribute(name = "version", required = true)
-	public String version;
+	private String version;
 
 	@XmlElement(namespace = "http://lca.jrc.it/ILCD/Common")
-	public Other other;
+	private Other other;
 
 	@XmlAnyAttribute
-	public final Map<QName, String> otherAttributes = new HashMap<>();
+	private Map<QName, String> otherAttributes;
 
-	@Override
-	public DataSetType getDataSetType() {
-		return DataSetType.SOURCE;
+	// region getters
+
+	public SourceInfo getSourceInfo() {
+		return sourceInfo;
 	}
 
-	@Override
-	public String getURI() {
-		if (adminInfo == null || adminInfo.publication == null)
-			return null;
-		return adminInfo.publication.uri;
+	public AdminInfo getAdminInfo() {
+		return adminInfo;
 	}
 
-	@Override
-	public String getUUID() {
-		if (sourceInfo == null || sourceInfo.dataSetInfo == null)
-			return null;
-		return sourceInfo.dataSetInfo.uuid;
-	}
-
-	@Override
 	public String getVersion() {
-		if (adminInfo == null || adminInfo.publication == null)
-			return null;
-		return adminInfo.publication.version;
+		return version;
 	}
 
-	@Override
-	public List<Classification> getClassifications() {
-		if (sourceInfo == null || sourceInfo.dataSetInfo == null)
-			return Collections.emptyList();
-		return sourceInfo.dataSetInfo.classifications;
+	public Other getOther() {
+		return other;
 	}
 
+	public Map<QName, String> getOtherAttributes() {
+		return otherAttributes != null ? otherAttributes : Map.of();
+	}
+
+	// endregion
+
+	// region setters
+
+	public Source withSourceInfo(SourceInfo sourceInfo) {
+		this.sourceInfo = sourceInfo;
+		return this;
+	}
+
+	public Source withAdminInfo(AdminInfo adminInfo) {
+		this.adminInfo = adminInfo;
+		return this;
+	}
+
+	public Source withVersion(String version) {
+		this.version = version;
+		return this;
+	}
+
+	public Source withOther(Other other) {
+		this.other = other;
+		return this;
+	}
+
+	public Source withOtherAttributes(Map<QName, String> otherAttributes) {
+		this.otherAttributes = otherAttributes;
+		return this;
+	}
+
+	public SourceInfo withSourceInfo() {
+		if (sourceInfo == null) {
+			sourceInfo = new SourceInfo();
+		}
+		return sourceInfo;
+	}
+
+	public AdminInfo withAdminInfo() {
+		if (adminInfo == null) {
+			adminInfo = new AdminInfo();
+		}
+		return adminInfo;
+	}
+
+	public Other withOther() {
+		if (other == null) {
+			other = new Other();
+		}
+		return other;
+	}
+
+	public Map<QName, String> withOtherAttributes() {
+		if (otherAttributes == null) {
+			otherAttributes = new HashMap<>();
+		}
+		return otherAttributes;
+	}
+
+	// endregion
+
 	@Override
-	public List<LangString> getName() {
-		if (sourceInfo == null || sourceInfo.dataSetInfo == null)
-			return Collections.emptyList();
-		return sourceInfo.dataSetInfo.name;
+	public Source copy() {
+		var copy = new Source();
+		Val.copy(sourceInfo, copy::withSourceInfo);
+		Val.copy(adminInfo, copy::withAdminInfo);
+		copy.withVersion(version);
+		Val.copy(other, copy::withOther);
+		Val.copy(otherAttributes, copy::withOtherAttributes);
+		return copy;
 	}
 
 	@Override
