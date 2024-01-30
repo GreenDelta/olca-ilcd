@@ -55,11 +55,12 @@ public class ProcessDescriptor extends Descriptor {
 
 	public Boolean hasResults;
 
-	public LciMethodInformation lciMethodInformation;
+	@XmlElement(name = "lciMethodInformation")
+	public InventoryMethod inventoryMethod;
 
 	public FlowCompleteness completenessProductModel;
 
-	public final List<ComplianceSystem> complianceSystem = new ArrayList<>();
+	public final List<ComplianceDeclaration> complianceSystem = new ArrayList<>();
 
 	public Review review;
 

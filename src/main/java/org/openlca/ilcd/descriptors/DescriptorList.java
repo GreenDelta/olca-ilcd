@@ -11,6 +11,7 @@ import jakarta.xml.bind.annotation.XmlAttribute;
 import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlElements;
 import jakarta.xml.bind.annotation.XmlType;
+import org.openlca.ilcd.commons.Copyable;
 import org.openlca.ilcd.commons.XmlRoot;
 
 import javax.xml.namespace.QName;
@@ -21,7 +22,7 @@ import javax.xml.namespace.QName;
 	namespace = "http://www.ilcd-network.org/ILCD/ServiceAPI",
 	propOrder = {"descriptors"}
 )
-public class DescriptorList implements XmlRoot {
+public class DescriptorList implements XmlRoot, Copyable<DescriptorList> {
 
 	@XmlElements({
 		@XmlElement(name = "LCIAMethod", type = ImpactMethodDescriptor.class,
@@ -39,22 +40,88 @@ public class DescriptorList implements XmlRoot {
 		@XmlElement(name = "flowProperty", type = FlowPropertyDescriptor.class,
 			namespace = "http://www.ilcd-network.org/ILCD/ServiceAPI/FlowProperty")
 	})
-	public final List<Descriptor> descriptors = new ArrayList<>();
+	private List<Descriptor<?>> descriptors;
 
 	@XmlAttribute(
 		name = "totalSize",
 		namespace = "http://www.ilcd-network.org/ILCD/ServiceAPI")
-	public int totalSize;
+	private int totalSize;
 
 	@XmlAttribute(
 		name = "startIndex",
 		namespace = "http://www.ilcd-network.org/ILCD/ServiceAPI")
-	public int startIndex;
+	private int startIndex;
 
 	@XmlAttribute(
 		name = "pageSize",
 		namespace = "http://www.ilcd-network.org/ILCD/ServiceAPI")
-	public int pageSize;
+	private int pageSize;
+
+	// region getters
+
+	public List<Descriptor<?>> getDescriptors() {
+		return descriptors != null ? descriptors : List.of();
+	}
+
+	public int getTotalSize() {
+		return totalSize;
+	}
+
+	public int getStartIndex() {
+		return startIndex;
+	}
+
+	public int getPageSize() {
+		return pageSize;
+	}
+
+	// endregion
+
+	// region setters
+
+	public DescriptorList withDescriptors(List<Descriptor<?>> descriptors) {
+		this.descriptors = descriptors;
+		return this;
+	}
+
+	public DescriptorList withTotalSize(int totalSize) {
+		this.totalSize = totalSize;
+		return this;
+	}
+
+	public DescriptorList withStartIndex(int startIndex) {
+		this.startIndex = startIndex;
+		return this;
+	}
+
+	public DescriptorList withPageSize(int pageSize) {
+		this.pageSize = pageSize;
+		return this;
+	}
+
+	public List<Descriptor<?>> withDescriptors() {
+		if (descriptors == null) {
+			descriptors = new ArrayList<>();
+		}
+		return descriptors;
+	}
+
+	// endregion
+
+	@Override
+	public DescriptorList copy() {
+		var copy = new DescriptorList();
+		if (descriptors != null) {
+			var target = copy.withDescriptors();
+			for (var d : descriptors) {
+				target.add(d.copy());
+			}
+		}
+		copy.withTotalSize(totalSize);
+		copy.withStartIndex(startIndex);
+		copy.withPageSize(pageSize);
+		return copy;
+	}
 
 	@Override
 	public JAXBElement<DescriptorList> toElement() {

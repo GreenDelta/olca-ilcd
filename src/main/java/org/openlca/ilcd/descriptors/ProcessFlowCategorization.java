@@ -16,6 +16,6 @@ import java.util.List;
 public class ProcessFlowCategorization {
 
 	@XmlElement(namespace = "http://www.ilcd-network.org/ILCD/ServiceAPI", required = true)
-	public final List<ClassType> category = new ArrayList<>();
+	public final List<Category> category = new ArrayList<>();
 
 }
