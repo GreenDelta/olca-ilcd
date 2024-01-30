@@ -45,7 +45,9 @@ public class Modelling implements Copyable<Modelling> {
 
 	private Completeness completeness;
 
-	private Validation validation;
+	@XmlElementWrapper(name="validation")
+	@XmlElement(name = "review", required = true)
+	private List<Review> reviews;
 
 	@XmlElementWrapper(name = "complianceDeclarations")
 	@XmlElement(name = "compliance")
@@ -75,8 +77,8 @@ public class Modelling implements Copyable<Modelling> {
 		return completeness;
 	}
 
-	public Validation getValidation() {
-		return validation;
+	public List<Review> getReviews() {
+		return reviews != null ? reviews : List.of();
 	}
 
 	public List<ComplianceDeclaration> getComplianceDeclarations() {
@@ -115,8 +117,8 @@ public class Modelling implements Copyable<Modelling> {
 		return this;
 	}
 
-	public Modelling withValidation(Validation validation) {
-		this.validation = validation;
+	public Modelling withReviews(List<Review> reviews) {
+		this.reviews = reviews;
 		return this;
 	}
 
@@ -163,11 +165,11 @@ public class Modelling implements Copyable<Modelling> {
 		return completeness;
 	}
 
-	public Validation withValidation() {
-		if (validation == null) {
-			validation = new Validation();
+	public List<Review> withReviews() {
+		if (reviews == null) {
+			reviews = new ArrayList<>();
 		}
-		return validation;
+		return reviews;
 	}
 
 	public List<ComplianceDeclaration> withComplianceDeclarations() {
@@ -200,7 +202,7 @@ public class Modelling implements Copyable<Modelling> {
 		Val.copy(normalisationAndWeighting, copy::withNormalisationAndWeighting);
 		Val.copy(dataSources, copy::withDataSources);
 		Val.copy(completeness, copy::withCompleteness);
-		Val.copy(validation, copy::withValidation);
+		Val.copy(reviews, copy::withReviews);
 		Val.copy(complianceDeclarations, copy::withComplianceDeclarations);
 		Val.copy(other, copy::withOther);
 		Val.copy(otherAttributes, copy::withOtherAttributes);

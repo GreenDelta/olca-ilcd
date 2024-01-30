@@ -250,8 +250,12 @@ public class DataSetInfo implements Copyable<DataSetInfo> {
 			copy.withMethods().addAll(methods);
 		}
 		Val.copy(classifications, copy::withClassifications);
-		Val.copy(impactCategories, copy::withImpactCategories);
-		Val.copy(areasOfProtection, copy::withAreasOfProtection);
+		if (impactCategories != null) {
+			copy.withImpactCategories().addAll(impactCategories);
+		}
+		if (areasOfProtection != null) {
+			copy.withAreasOfProtection().addAll(areasOfProtection);
+		}
 		copy.withIndicator(indicator);
 		Val.copy(comment, copy::withComment);
 		Val.copy(externalDocs, copy::withExternalDocs);

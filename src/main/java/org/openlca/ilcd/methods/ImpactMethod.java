@@ -1,27 +1,23 @@
 package org.openlca.ilcd.methods;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.xml.namespace.QName;
-
 import jakarta.xml.bind.JAXBElement;
-import jakarta.xml.bind.annotation.XmlElementWrapper;
-import org.openlca.ilcd.commons.Classification;
-import org.openlca.ilcd.commons.DataSetType;
-import org.openlca.ilcd.commons.IDataSet;
-import org.openlca.ilcd.commons.LangString;
-import org.openlca.ilcd.commons.Other;
-
 import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlAnyAttribute;
 import jakarta.xml.bind.annotation.XmlAttribute;
 import jakarta.xml.bind.annotation.XmlElement;
+import jakarta.xml.bind.annotation.XmlElementWrapper;
 import jakarta.xml.bind.annotation.XmlType;
+import org.openlca.ilcd.commons.Copyable;
+import org.openlca.ilcd.commons.IDataSet;
+import org.openlca.ilcd.commons.Other;
+import org.openlca.ilcd.util.Val;
+
+import javax.xml.namespace.QName;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "LCIAMethodDataSetType", propOrder = {
@@ -31,74 +27,180 @@ import jakarta.xml.bind.annotation.XmlType;
 	"factors",
 	"other"
 })
-public class ImpactMethod implements IDataSet {
+public class ImpactMethod implements IDataSet, Copyable<ImpactMethod> {
 
 	@XmlElement(name = "LCIAMethodInformation", required = true)
-	public MethodInfo methodInfo;
+	private MethodInfo methodInfo;
 
 	@XmlElement(name = "modellingAndValidation", required = true)
-	public Modelling modelling;
+	private Modelling modelling;
 
 	@XmlElement(name = "administrativeInformation")
-	public AdminInfo adminInfo;
+	private AdminInfo adminInfo;
 
 	@XmlElementWrapper(name="characterisationFactors")
 	@XmlElement(name = "factor", required = true)
 	private List<Factor> factors;
 
 	@XmlElement(namespace = "http://lca.jrc.it/ILCD/Common")
-	public Other other;
+	private Other other;
 
 	@XmlAttribute(name = "version", required = true)
-	public String version;
+	private String version;
 
 	@XmlAttribute(name = "locations")
-	public String locations;
+	private String locations;
 
 	@XmlAttribute(name = "LCIAMethodologies")
-	public String methodologies;
+	private String methodologies;
 
 	@XmlAnyAttribute
-	public final Map<QName, String> otherAttributes = new HashMap<>();
+	private Map<QName, String> otherAttributes;
 
-	@Override
-	public DataSetType getDataSetType() {
-		return DataSetType.IMPACT_METHOD;
+	// region getters
+
+	public MethodInfo getMethodInfo() {
+		return methodInfo;
 	}
 
-	@Override
-	public String getURI() {
-		if (adminInfo == null || adminInfo.publication == null)
-			return null;
-		return adminInfo.publication.uri;
+	public Modelling getModelling() {
+		return modelling;
 	}
 
-	@Override
-	public String getUUID() {
-		if (methodInfo == null || methodInfo.dataSetInfo == null)
-			return null;
-		return methodInfo.dataSetInfo.uuid;
+	public AdminInfo getAdminInfo() {
+		return adminInfo;
 	}
 
-	@Override
+	public List<Factor> getFactors() {
+		return factors != null ? factors : List.of();
+	}
+
+	public Other getOther() {
+		return other;
+	}
+
 	public String getVersion() {
-		if (adminInfo == null || adminInfo.publication == null)
-			return null;
-		return adminInfo.publication.version;
+		return version;
 	}
 
-	@Override
-	public List<Classification> getClassifications() {
-		if (methodInfo == null || methodInfo.dataSetInfo == null)
-			return Collections.emptyList();
-		return methodInfo.dataSetInfo.classifications;
+	public String getLocations() {
+		return locations;
 	}
 
+	public String getMethodologies() {
+		return methodologies;
+	}
+
+	public Map<QName, String> getOtherAttributes() {
+		return otherAttributes != null ? otherAttributes : Map.of();
+	}
+
+	// endregion
+
+	// region setters
+
+	public ImpactMethod withMethodInfo(MethodInfo methodInfo) {
+		this.methodInfo = methodInfo;
+		return this;
+	}
+
+	public ImpactMethod withModelling(Modelling modelling) {
+		this.modelling = modelling;
+		return this;
+	}
+
+	public ImpactMethod withAdminInfo(AdminInfo adminInfo) {
+		this.adminInfo = adminInfo;
+		return this;
+	}
+
+	public ImpactMethod withFactors(List<Factor> factors) {
+		this.factors = factors;
+		return this;
+	}
+
+	public ImpactMethod withOther(Other other) {
+		this.other = other;
+		return this;
+	}
+
+	public ImpactMethod withVersion(String version) {
+		this.version = version;
+		return this;
+	}
+
+	public ImpactMethod withLocations(String locations) {
+		this.locations = locations;
+		return this;
+	}
+
+	public ImpactMethod withMethodologies(String methodologies) {
+		this.methodologies = methodologies;
+		return this;
+	}
+
+	public ImpactMethod withOtherAttributes(Map<QName, String> otherAttributes) {
+		this.otherAttributes = otherAttributes;
+		return this;
+	}
+
+	public MethodInfo withMethodInfo() {
+		if (methodInfo == null) {
+			methodInfo = new MethodInfo();
+		}
+		return methodInfo;
+	}
+
+	public Modelling withModelling() {
+		if (modelling == null) {
+			modelling = new Modelling();
+		}
+		return modelling;
+	}
+
+	public AdminInfo withAdminInfo() {
+		if (adminInfo == null) {
+			adminInfo = new AdminInfo();
+		}
+		return adminInfo;
+	}
+
+	public List<Factor> withFactors() {
+		if (factors == null) {
+			factors = new ArrayList<>();
+		}
+		return factors;
+	}
+
+	public Other withOther() {
+		if (other == null) {
+			other = new Other();
+		}
+		return other;
+	}
+
+	public Map<QName, String> withOtherAttributes() {
+		if (otherAttributes == null) {
+			otherAttributes = new HashMap<>();
+		}
+		return otherAttributes;
+	}
+
+	// endregion
+
 	@Override
-	public List<LangString> getName() {
-		if (methodInfo == null || methodInfo.dataSetInfo == null)
-			return Collections.emptyList();
-		return methodInfo.dataSetInfo.name;
+	public ImpactMethod copy() {
+		var copy = new ImpactMethod();
+		Val.copy(methodInfo, copy::withMethodInfo);
+		Val.copy(modelling, copy::withModelling);
+		Val.copy(adminInfo, copy::withAdminInfo);
+		Val.copy(factors, copy::withFactors);
+		Val.copy(other, copy::withOther);
+		copy.withVersion(version);
+		copy.withLocations(locations);
+		copy.withMethodologies(methodologies);
+		Val.copy(otherAttributes, copy::withOtherAttributes);
+		return copy;
 	}
 
 	@Override
