@@ -4,6 +4,7 @@ import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlType;
+import org.openlca.ilcd.commons.Copyable;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(propOrder = {
@@ -11,15 +12,59 @@ import jakarta.xml.bind.annotation.XmlType;
 		"uri",
 		"copyright"
 })
-public class Publication {
+public class Publication implements Copyable<Publication> {
 
 	@XmlElement(namespace = "http://lca.jrc.it/ILCD/Common", name = "dataSetVersion")
-	public String version;
+	private String version;
 
 	@XmlElement(namespace = "http://lca.jrc.it/ILCD/Common", name = "permanentDataSetURI")
-	public String uri;
+	private String uri;
 
 	@XmlElement(namespace = "http://lca.jrc.it/ILCD/Common")
-	public Boolean copyright;
+	private Boolean copyright;
+
+	// region getters
+
+	public String getVersion() {
+		return version;
+	}
+
+	public String getUri() {
+		return uri;
+	}
+
+	public Boolean getCopyright() {
+		return copyright;
+	}
+
+	// endregion
+
+	// region setters
+
+	public Publication withVersion(String version) {
+		this.version = version;
+		return this;
+	}
+
+	public Publication withUri(String uri) {
+		this.uri = uri;
+		return this;
+	}
+
+	public Publication withCopyright(Boolean copyright) {
+		this.copyright = copyright;
+		return this;
+	}
+
+	// endregion
+
+	@Override
+	public Publication copy() {
+		var copy = new Publication();
+		copy.withVersion(version);
+		copy.withUri(uri);
+		copy.withCopyright(copyright);
+		return copy;
+	}
 
 }

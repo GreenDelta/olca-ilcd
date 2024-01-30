@@ -3,21 +3,22 @@ package org.openlca.ilcd.models;
 import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlAttribute;
+import org.openlca.ilcd.commons.Copyable;
 
 @XmlAccessorType(XmlAccessType.FIELD)
-public class DownstreamLink {
+public class DownstreamLink implements Copyable<DownstreamLink> {
 
 	@XmlAttribute(name = "id")
-	public int process;
+	private int process;
 
 	@XmlAttribute(name = "flowUUID")
-	public String inputFlow;
+	private String inputFlow;
 
 	@XmlAttribute(name = "location")
-	public String location;
+	private String location;
 
 	@XmlAttribute(name = "dominant")
-	public Boolean isDominant;
+	private Boolean dominant;
 
 	/**
 	 * This is an extension attribute to support linking of exchanges that have
@@ -28,6 +29,69 @@ public class DownstreamLink {
 	 * internal exchange ID of the linked exchange to the connection.
 	 */
 	@XmlAttribute(name = "linkedExchange", namespace = "http://openlca.org/ilcd-extensions")
-	public Integer linkedExchange;
+	private Integer linkedExchange;
 
+	// region getters
+
+	public int getProcess() {
+		return process;
+	}
+
+	public String getInputFlow() {
+		return inputFlow;
+	}
+
+	public String getLocation() {
+		return location;
+	}
+
+	public Boolean getDominant() {
+		return dominant;
+	}
+
+	public Integer getLinkedExchange() {
+		return linkedExchange;
+	}
+
+	// endregion
+
+	// region setters
+
+	public DownstreamLink withProcess(int process) {
+		this.process = process;
+		return this;
+	}
+
+	public DownstreamLink withInputFlow(String inputFlow) {
+		this.inputFlow = inputFlow;
+		return this;
+	}
+
+	public DownstreamLink withLocation(String location) {
+		this.location = location;
+		return this;
+	}
+
+	public DownstreamLink withDominant(Boolean dominant) {
+		this.dominant = dominant;
+		return this;
+	}
+
+	public DownstreamLink withLinkedExchange(Integer linkedExchange) {
+		this.linkedExchange = linkedExchange;
+		return this;
+	}
+
+	// endregion
+
+	@Override
+	public DownstreamLink copy() {
+		var copy = new DownstreamLink();
+		copy.withProcess(process);
+		copy.withInputFlow(inputFlow);
+		copy.withLocation(location);
+		copy.withDominant(dominant);
+		copy.withLinkedExchange(linkedExchange);
+		return copy;
+	}
 }
