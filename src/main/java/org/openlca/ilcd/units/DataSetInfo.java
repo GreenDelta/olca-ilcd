@@ -7,10 +7,12 @@ import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlElementWrapper;
 import jakarta.xml.bind.annotation.XmlType;
 import org.openlca.ilcd.commons.Classification;
+import org.openlca.ilcd.commons.Copyable;
 import org.openlca.ilcd.commons.LangString;
 import org.openlca.ilcd.commons.Other;
 import org.openlca.ilcd.commons.annotations.FreeText;
 import org.openlca.ilcd.commons.annotations.Label;
+import org.openlca.ilcd.util.Val;
 
 import javax.xml.namespace.QName;
 import java.util.ArrayList;
@@ -26,27 +28,135 @@ import java.util.Map;
 		"generalComment",
 		"other"
 })
-public class DataSetInfo {
+public class DataSetInfo implements Copyable<DataSetInfo> {
 
 	@XmlElement(name = "UUID", namespace = "http://lca.jrc.it/ILCD/Common", required = true)
-	public String uuid;
+	private String uuid;
 
 	@Label
 	@XmlElement(namespace = "http://lca.jrc.it/ILCD/Common")
-	public final List<LangString> name = new ArrayList<>();
+	private List<LangString> name;
 
 	@XmlElementWrapper(name = "classificationInformation")
 	@XmlElement(name = "classification", namespace = "http://lca.jrc.it/ILCD/Common")
-	public final List<Classification> classifications = new ArrayList<>();
+	private List<Classification> classifications;
 
 	@FreeText
 	@XmlElement(namespace = "http://lca.jrc.it/ILCD/Common")
-	public final List<LangString> generalComment = new ArrayList<>();
+	private List<LangString> generalComment;
 
 	@XmlElement(namespace = "http://lca.jrc.it/ILCD/Common")
-	public Other other;
+	private Other other;
 
 	@XmlAnyAttribute
-	public final Map<QName, String> otherAttributes = new HashMap<>();
+	private Map<QName, String> otherAttributes;
 
+	// region getters
+
+	public String getUuid() {
+		return uuid;
+	}
+
+	public List<LangString> getName() {
+		return name != null ? name : List.of();
+	}
+
+	public List<Classification> getClassifications() {
+		return classifications != null ? classifications : List.of();
+	}
+
+	public List<LangString> getGeneralComment() {
+		return generalComment != null ? generalComment : List.of();
+	}
+
+	public Other getOther() {
+		return other;
+	}
+
+	public Map<QName, String> getOtherAttributes() {
+		return otherAttributes != null ? otherAttributes : Map.of();
+	}
+
+	// endregion
+
+	// region setters
+
+	public DataSetInfo withUuid(String uuid) {
+		this.uuid = uuid;
+		return this;
+	}
+
+	public DataSetInfo withName(List<LangString> name) {
+		this.name = name;
+		return this;
+	}
+
+	public DataSetInfo withClassifications(List<Classification> classifications) {
+		this.classifications = classifications;
+		return this;
+	}
+
+	public DataSetInfo withGeneralComment(List<LangString> generalComment) {
+		this.generalComment = generalComment;
+		return this;
+	}
+
+	public DataSetInfo withOther(Other other) {
+		this.other = other;
+		return this;
+	}
+
+	public DataSetInfo withOtherAttributes(Map<QName, String> otherAttributes) {
+		this.otherAttributes = otherAttributes;
+		return this;
+	}
+
+	public List<LangString> withName() {
+		if (name == null) {
+			name = new ArrayList<>();
+		}
+		return name;
+	}
+
+	public List<Classification> withClassifications() {
+		if (classifications == null) {
+			classifications = new ArrayList<>();
+		}
+		return classifications;
+	}
+
+	public List<LangString> withGeneralComment() {
+		if (generalComment == null) {
+			generalComment = new ArrayList<>();
+		}
+		return generalComment;
+	}
+
+	public Other withOther() {
+		if (other == null) {
+			other = new Other();
+		}
+		return other;
+	}
+
+	public Map<QName, String> withOtherAttributes() {
+		if (otherAttributes == null) {
+			otherAttributes = new HashMap<>();
+		}
+		return otherAttributes;
+	}
+
+	// endregion
+
+	@Override
+	public DataSetInfo copy() {
+		var copy = new DataSetInfo();
+		copy.withUuid(uuid);
+		Val.copy(name, copy::withName);
+		Val.copy(classifications, copy::withClassifications);
+		Val.copy(generalComment, copy::withGeneralComment);
+		Val.copy(other, copy::withOther);
+		Val.copy(otherAttributes, copy::withOtherAttributes);
+		return copy;
+	}
 }

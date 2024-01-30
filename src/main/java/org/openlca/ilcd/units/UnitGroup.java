@@ -1,25 +1,23 @@
 package org.openlca.ilcd.units;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.xml.namespace.QName;
-
 import jakarta.xml.bind.JAXBElement;
-import org.openlca.ilcd.commons.Classification;
-import org.openlca.ilcd.commons.DataSetType;
-import org.openlca.ilcd.commons.IDataSet;
-import org.openlca.ilcd.commons.LangString;
-import org.openlca.ilcd.commons.Other;
-
 import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlAnyAttribute;
 import jakarta.xml.bind.annotation.XmlAttribute;
 import jakarta.xml.bind.annotation.XmlElement;
+import jakarta.xml.bind.annotation.XmlElementWrapper;
 import jakarta.xml.bind.annotation.XmlType;
+import org.openlca.ilcd.commons.Copyable;
+import org.openlca.ilcd.commons.IDataSet;
+import org.openlca.ilcd.commons.Other;
+import org.openlca.ilcd.util.Val;
+
+import javax.xml.namespace.QName;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "UnitGroupDataSetType", propOrder = {
@@ -29,67 +27,154 @@ import jakarta.xml.bind.annotation.XmlType;
 		"unitList",
 		"other"
 })
-public class UnitGroup implements IDataSet {
+public class UnitGroup implements IDataSet, Copyable<UnitGroup> {
 
 	@XmlElement(required = true, name = "unitGroupInformation")
-	public UnitGroupInfo unitGroupInfo;
+	private UnitGroupInfo unitGroupInfo;
 
 	@XmlElement(name = "modellingAndValidation")
-	public Modelling modelling;
+	private Modelling modelling;
 
 	@XmlElement(name = "administrativeInformation")
-	public AdminInfo adminInfo;
+	private AdminInfo adminInfo;
 
-	@XmlElement(name = "units")
-	public UnitList unitList;
+	@XmlElementWrapper(name="units")
+	@XmlElement(name = "unit")
+	private List<Unit> units;
 
 	@XmlElement(namespace = "http://lca.jrc.it/ILCD/Common")
-	public Other other;
+	private Other other;
 
 	@XmlAttribute(name = "version", required = true)
-	public String version;
+	private String version;
 
 	@XmlAnyAttribute
-	public final Map<QName, String> otherAttributes = new HashMap<>();
+	private Map<QName, String> otherAttributes;
 
-	@Override
-	public DataSetType getDataSetType() {
-		return DataSetType.UNIT_GROUP;
+	// region getters
+
+	public UnitGroupInfo getUnitGroupInfo() {
+		return unitGroupInfo;
 	}
 
-	@Override
-	public String getURI() {
-		if (adminInfo == null || adminInfo.publication == null)
-			return null;
-		return adminInfo.publication.uri;
+	public Modelling getModelling() {
+		return modelling;
 	}
 
-	@Override
-	public String getUUID() {
-		if (unitGroupInfo == null || unitGroupInfo.dataSetInfo == null)
-			return null;
-		return unitGroupInfo.dataSetInfo.uuid;
+	public AdminInfo getAdminInfo() {
+		return adminInfo;
 	}
 
-	@Override
+	public List<Unit> getUnits() {
+		return units != null ? units : List.of();
+	}
+
+	public Other getOther() {
+		return other;
+	}
+
 	public String getVersion() {
-		if (adminInfo == null || adminInfo.publication == null)
-			return null;
-		return adminInfo.publication.version;
+		return version;
 	}
 
-	@Override
-	public List<Classification> getClassifications() {
-		if (unitGroupInfo == null || unitGroupInfo.dataSetInfo == null)
-			return Collections.emptyList();
-		return unitGroupInfo.dataSetInfo.classifications;
+	public Map<QName, String> getOtherAttributes() {
+		return otherAttributes != null ? otherAttributes : Map.of();
 	}
 
+	// endregion
+
+	// region setters
+
+	public UnitGroup withUnitGroupInfo(UnitGroupInfo unitGroupInfo) {
+		this.unitGroupInfo = unitGroupInfo;
+		return this;
+	}
+
+	public UnitGroup withModelling(Modelling modelling) {
+		this.modelling = modelling;
+		return this;
+	}
+
+	public UnitGroup withAdminInfo(AdminInfo adminInfo) {
+		this.adminInfo = adminInfo;
+		return this;
+	}
+
+	public UnitGroup withUnits(List<Unit> units) {
+		this.units = units;
+		return this;
+	}
+
+	public UnitGroup withOther(Other other) {
+		this.other = other;
+		return this;
+	}
+
+	public UnitGroup withVersion(String version) {
+		this.version = version;
+		return this;
+	}
+
+	public UnitGroup withOtherAttributes(Map<QName, String> otherAttributes) {
+		this.otherAttributes = otherAttributes;
+		return this;
+	}
+
+	public UnitGroupInfo withUnitGroupInfo() {
+		if (unitGroupInfo == null) {
+			unitGroupInfo = new UnitGroupInfo();
+		}
+		return unitGroupInfo;
+	}
+
+	public Modelling withModelling() {
+		if (modelling == null) {
+			modelling = new Modelling();
+		}
+		return modelling;
+	}
+
+	public AdminInfo withAdminInfo() {
+		if (adminInfo == null) {
+			adminInfo = new AdminInfo();
+		}
+		return adminInfo;
+	}
+
+	public List<Unit> withUnits() {
+		if (units == null) {
+			units = new ArrayList<>();
+		}
+		return units;
+	}
+
+	public Other withOther() {
+		if (other == null) {
+			other = new Other();
+		}
+		return other;
+	}
+
+	public Map<QName, String> withOtherAttributes() {
+		if (otherAttributes == null) {
+			otherAttributes = new HashMap<>();
+		}
+		return otherAttributes;
+	}
+
+	// endregion
+
 	@Override
-	public List<LangString> getName() {
-		if (unitGroupInfo == null || unitGroupInfo.dataSetInfo == null)
-			return Collections.emptyList();
-		return unitGroupInfo.dataSetInfo.name;
+	public UnitGroup copy() {
+		var copy = new UnitGroup();
+		Val.copy(unitGroupInfo, copy::withUnitGroupInfo);
+		Val.copy(modelling, copy::withModelling);
+		Val.copy(adminInfo, copy::withAdminInfo);
+		Val.copy(units, copy::withUnits);
+		Val.copy(other, copy::withOther);
+		copy.withVersion(version);
+		Val.copy(otherAttributes, copy::withOtherAttributes);
+		return copy;
 	}
 
 	@Override
