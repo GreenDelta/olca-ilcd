@@ -3,6 +3,7 @@ package org.openlca.ilcd.descriptors;
 import java.util.ArrayList;
 import java.util.List;
 
+import jakarta.xml.bind.annotation.XmlAttribute;
 import org.openlca.ilcd.commons.Copyable;
 import org.openlca.ilcd.commons.DataSetType;
 import org.openlca.ilcd.commons.LangString;
@@ -37,6 +38,13 @@ public abstract class Descriptor<T extends Descriptor<T>> implements Copyable<T>
 
 	@XmlElement(name = "generalComment", namespace = "http://www.ilcd-network.org/ILCD/ServiceAPI")
 	private List<LangString> comment;
+
+	@XmlAttribute(name = "href", namespace = "http://www.w3.org/1999/xlink")
+	@XmlSchemaType(name = "anyURI")
+	private String href;
+
+	@XmlAttribute(name = "sourceId", namespace = "http://www.ilcd-network.org/ILCD/ServiceAPI")
+	private String sourceId;
 
 	protected abstract DataSetType getType();
 
@@ -76,6 +84,14 @@ public abstract class Descriptor<T extends Descriptor<T>> implements Copyable<T>
 		return comment != null ? comment : List.of();
 	}
 
+	public String getHref() {
+		return href;
+	}
+
+	public String getSourceId() {
+		return sourceId;
+	}
+
 	// endregion
 
 	// region setters
@@ -101,6 +117,18 @@ public abstract class Descriptor<T extends Descriptor<T>> implements Copyable<T>
 	@SuppressWarnings("unchecked")
 	public T withName(List<LangString> name) {
 		this.name = name;
+		return (T) this;
+	}
+
+	@SuppressWarnings("unchecked")
+	public T withHref(String href) {
+		this.href = href;
+		return (T) this;
+	}
+
+	@SuppressWarnings("unchecked")
+	public T withSourceId(String sourceId) {
+		this.sourceId = sourceId;
 		return (T) this;
 	}
 
@@ -143,6 +171,8 @@ public abstract class Descriptor<T extends Descriptor<T>> implements Copyable<T>
 		copy.withUuid(uuid);
 		copy.withUri(uri);
 		copy.withVersion(version);
+		copy.withHref(href);
+		copy.withSourceId(sourceId);
 		Val.copy(name, copy::withName);
 		Val.copy(classification, copy::withClassification);
 		Val.copy(comment, copy::withComment);

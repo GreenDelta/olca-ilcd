@@ -1,20 +1,16 @@
 package org.openlca.ilcd.descriptors;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.openlca.ilcd.commons.Copyable;
+import jakarta.xml.bind.annotation.XmlAccessType;
+import jakarta.xml.bind.annotation.XmlAccessorType;
+import jakarta.xml.bind.annotation.XmlElement;
+import jakarta.xml.bind.annotation.XmlType;
 import org.openlca.ilcd.commons.DataSetType;
 import org.openlca.ilcd.commons.LangString;
 import org.openlca.ilcd.sources.SourceType;
-
-import jakarta.xml.bind.annotation.XmlAccessType;
-import jakarta.xml.bind.annotation.XmlAccessorType;
-import jakarta.xml.bind.annotation.XmlAttribute;
-import jakarta.xml.bind.annotation.XmlElement;
-import jakarta.xml.bind.annotation.XmlSchemaType;
-import jakarta.xml.bind.annotation.XmlType;
 import org.openlca.ilcd.util.Val;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
@@ -29,8 +25,7 @@ import org.openlca.ilcd.util.Val;
 		"publicationType",
 		"file",
 		"belongsTo" })
-public class SourceDescriptor extends Descriptor
-	implements Copyable<SourceDescriptor> {
+public class SourceDescriptor extends Descriptor<SourceDescriptor> {
 
 	@XmlElement(namespace = "http://www.ilcd-network.org/ILCD/ServiceAPI")
 	private String shortName;
@@ -46,13 +41,6 @@ public class SourceDescriptor extends Descriptor
 
 	@XmlElement(namespace = "http://www.ilcd-network.org/ILCD/ServiceAPI/Source")
 	private DataSetReference belongsTo;
-
-	@XmlAttribute(name = "href", namespace = "http://www.w3.org/1999/xlink")
-	@XmlSchemaType(name = "anyURI")
-	private String href;
-
-	@XmlAttribute(name = "sourceId", namespace = "http://www.ilcd-network.org/ILCD/ServiceAPI")
-	private String sourceId;
 
 	@Override
 	protected DataSetType getType() {
@@ -79,14 +67,6 @@ public class SourceDescriptor extends Descriptor
 
 	public DataSetReference getBelongsTo() {
 		return belongsTo;
-	}
-
-	public String getHref() {
-		return href;
-	}
-
-	public String getSourceId() {
-		return sourceId;
 	}
 
 	// endregion
@@ -118,16 +98,6 @@ public class SourceDescriptor extends Descriptor
 		return this;
 	}
 
-	public SourceDescriptor withHref(String href) {
-		this.href = href;
-		return this;
-	}
-
-	public SourceDescriptor withSourceId(String sourceId) {
-		this.sourceId = sourceId;
-		return this;
-	}
-
 	public List<LangString> withCitation() {
 		if (citation == null) {
 			citation = new ArrayList<>();
@@ -154,13 +124,12 @@ public class SourceDescriptor extends Descriptor
 	@Override
 	public SourceDescriptor copy() {
 		var copy = new SourceDescriptor();
+		copyBase(copy);
 		copy.withShortName(shortName);
 		Val.copy(citation, copy::withCitation);
 		copy.withPublicationType(publicationType);
 		Val.copy(file, copy::withFile);
 		Val.copy(belongsTo, copy::withBelongsTo);
-		copy.withHref(href);
-		copy.withSourceId(sourceId);
 		return copy;
 	}
 

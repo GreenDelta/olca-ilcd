@@ -32,13 +32,6 @@ public class FlowPropertyDescriptor extends Descriptor<FlowPropertyDescriptor> {
 	@XmlElement(namespace = "http://www.ilcd-network.org/ILCD/ServiceAPI/FlowProperty")
 	private UnitGroupReference unitGroup;
 
-	@XmlAttribute(name = "href", namespace = "http://www.w3.org/1999/xlink")
-	@XmlSchemaType(name = "anyURI")
-	private String href;
-
-	@XmlAttribute(name = "sourceId", namespace = "http://www.ilcd-network.org/ILCD/ServiceAPI")
-	private String sourceId;
-
 	@Override
 	protected DataSetType getType() {
 		return DataSetType.FLOW_PROPERTY;
@@ -54,14 +47,6 @@ public class FlowPropertyDescriptor extends Descriptor<FlowPropertyDescriptor> {
 		return unitGroup;
 	}
 
-	public String getHref() {
-		return href;
-	}
-
-	public String getSourceId() {
-		return sourceId;
-	}
-
 	// endregion
 
 	// region setters
@@ -73,16 +58,6 @@ public class FlowPropertyDescriptor extends Descriptor<FlowPropertyDescriptor> {
 
 	public FlowPropertyDescriptor withUnitGroup(UnitGroupReference unitGroup) {
 		this.unitGroup = unitGroup;
-		return this;
-	}
-
-	public FlowPropertyDescriptor withHref(String href) {
-		this.href = href;
-		return this;
-	}
-
-	public FlowPropertyDescriptor withSourceId(String sourceId) {
-		this.sourceId = sourceId;
 		return this;
 	}
 
@@ -108,8 +83,6 @@ public class FlowPropertyDescriptor extends Descriptor<FlowPropertyDescriptor> {
 		copyBase(copy);
 		Val.copy(synonyms, copy::withSynonyms);
 		Val.copy(unitGroup, copy::withUnitGroup);
-		copy.withHref(href);
-		copy.withSourceId(sourceId);
 		return copy;
 	}
 

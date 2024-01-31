@@ -1,15 +1,12 @@
 
 package org.openlca.ilcd.descriptors;
 
-import org.openlca.ilcd.commons.Copyable;
-import org.openlca.ilcd.commons.DataSetType;
-
 import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
-import jakarta.xml.bind.annotation.XmlAttribute;
 import jakarta.xml.bind.annotation.XmlElement;
-import jakarta.xml.bind.annotation.XmlSchemaType;
 import jakarta.xml.bind.annotation.XmlType;
+import org.openlca.ilcd.commons.Copyable;
+import org.openlca.ilcd.commons.DataSetType;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
@@ -26,7 +23,8 @@ import jakarta.xml.bind.annotation.XmlType;
 		"email",
 		"www"
 })
-public class ContactDescriptor extends Descriptor implements Copyable<ContactDescriptor> {
+public class ContactDescriptor extends Descriptor<ContactDescriptor>
+	implements Copyable<ContactDescriptor> {
 
 	@XmlElement(namespace = "http://www.ilcd-network.org/ILCD/ServiceAPI")
 	private String shortName;
@@ -45,13 +43,6 @@ public class ContactDescriptor extends Descriptor implements Copyable<ContactDes
 
 	@XmlElement(namespace = "http://www.ilcd-network.org/ILCD/ServiceAPI/Contact")
 	private String www;
-
-	@XmlAttribute(name = "href", namespace = "http://www.w3.org/1999/xlink")
-	@XmlSchemaType(name = "anyURI")
-	private String href;
-
-	@XmlAttribute(name = "sourceId", namespace = "http://www.ilcd-network.org/ILCD/ServiceAPI")
-	private String sourceId;
 
 	@Override
 	protected DataSetType getType() {
@@ -82,14 +73,6 @@ public class ContactDescriptor extends Descriptor implements Copyable<ContactDes
 
 	public String getWww() {
 		return www;
-	}
-
-	public String getHref() {
-		return href;
-	}
-
-	public String getSourceId() {
-		return sourceId;
 	}
 
 	// endregion
@@ -126,16 +109,6 @@ public class ContactDescriptor extends Descriptor implements Copyable<ContactDes
 		return this;
 	}
 
-	public ContactDescriptor withHref(String href) {
-		this.href = href;
-		return this;
-	}
-
-	public ContactDescriptor withSourceId(String sourceId) {
-		this.sourceId = sourceId;
-		return this;
-	}
-
 	// endregion
 
 	@Override
@@ -148,8 +121,6 @@ public class ContactDescriptor extends Descriptor implements Copyable<ContactDes
 		copy.withFax(fax);
 		copy.withEmail(email);
 		copy.withWww(www);
-		copy.withHref(href);
-		copy.withSourceId(sourceId);
 		return copy;
 	}
 }

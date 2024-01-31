@@ -32,7 +32,8 @@ import org.openlca.ilcd.util.Val;
 	"sumFormula",
 	"referenceFlowProperty"
 })
-public class FlowDescriptor extends Descriptor implements Copyable<FlowDescriptor> {
+public class FlowDescriptor extends Descriptor<FlowDescriptor>
+	implements Copyable<FlowDescriptor> {
 
 	@XmlElement(namespace = "http://www.ilcd-network.org/ILCD/ServiceAPI")
 	private List<LangString> synonyms;
