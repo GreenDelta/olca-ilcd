@@ -1,18 +1,16 @@
 package org.openlca.ilcd.util;
 
-import java.util.Collections;
-import java.util.List;
-
 import org.openlca.ilcd.methods.AdminInfo;
 import org.openlca.ilcd.methods.DataEntry;
 import org.openlca.ilcd.methods.DataSetInfo;
 import org.openlca.ilcd.methods.Factor;
-import org.openlca.ilcd.methods.FactorList;
 import org.openlca.ilcd.methods.ImpactMethod;
 import org.openlca.ilcd.methods.MethodInfo;
 import org.openlca.ilcd.methods.Publication;
 import org.openlca.ilcd.methods.QuantitativeReference;
 import org.openlca.ilcd.methods.Time;
+
+import java.util.List;
 
 public final class Methods {
 
@@ -21,115 +19,85 @@ public final class Methods {
 
 	public static MethodInfo getMethodInfo(ImpactMethod m) {
 		return m != null
-			? m.methodInfo
+			? m.getMethodInfo()
 			: null;
 	}
 
-	public static MethodInfo forceMethodInfo(ImpactMethod m) {
-		if (m.methodInfo == null)
-			m.methodInfo = new MethodInfo();
-		return m.methodInfo;
+	public static MethodInfo withMethodInfo(ImpactMethod m) {
+		return m.withMethodInfo();
 	}
 
 	public static Time getTime(ImpactMethod m) {
 		var info = getMethodInfo(m);
 		return info == null
 			? null
-			: info.time;
+			: info.getTime();
 	}
 
-	public static Time forceTime(ImpactMethod m) {
-		var info = forceMethodInfo(m);
-		if (info.time == null) {
-			info.time = new Time();
-		}
-		return info.time;
+	public static Time withTime(ImpactMethod m) {
+		return m.withMethodInfo().withTime();
 	}
 
 	public static QuantitativeReference getQuantitativeReference(ImpactMethod m) {
 		var info = getMethodInfo(m);
 		return info != null
-			? info.quantitativeReference
+			? info.getQuantitativeReference()
 			: null;
 	}
 
-	public static QuantitativeReference forceQuantitativeReference(ImpactMethod m) {
-		var info = forceMethodInfo(m);
-		if (info.quantitativeReference == null) {
-			info.quantitativeReference = new QuantitativeReference();
-		}
-		return info.quantitativeReference;
+	public static QuantitativeReference withQuantitativeReference(ImpactMethod m) {
+		return m.withMethodInfo().withQuantitativeReference();
 	}
 
 	public static DataSetInfo getDataSetInfo(ImpactMethod m) {
 		var info = getMethodInfo(m);
 		return info != null
-			? info.dataSetInfo
+			? info.getDataSetInfo()
 			: null;
 	}
 
-	public static DataSetInfo forceDataSetInfo(ImpactMethod m) {
-		var info = forceMethodInfo(m);
-		if (info.dataSetInfo == null) {
-			info.dataSetInfo = new DataSetInfo();
-		}
-		return info.dataSetInfo;
+	public static DataSetInfo withDataSetInfo(ImpactMethod m) {
+		return m.withMethodInfo().withDataSetInfo();
 	}
 
 	public static AdminInfo getAdminInfo(ImpactMethod m) {
 		return m != null
-			? m.adminInfo
+			? m.getAdminInfo()
 			: null;
 	}
 
-	public static AdminInfo forceAdminInfo(ImpactMethod m) {
-		if (m.adminInfo == null) {
-			m.adminInfo = new AdminInfo();
-		}
-		return m.adminInfo;
+	public static AdminInfo withAdminInfo(ImpactMethod m) {
+		return m.withAdminInfo();
 	}
 
 	public static DataEntry getDataEntry(ImpactMethod m) {
 		var info = getAdminInfo(m);
 		return info != null
-			? info.dataEntry
+			? info.getDataEntry()
 			: null;
 	}
 
-	public static DataEntry forceDataEntry(ImpactMethod m) {
-		var info = forceAdminInfo(m);
-		if (info.dataEntry == null) {
-			info.dataEntry = new DataEntry();
-		}
-		return info.dataEntry;
+	public static DataEntry withDataEntry(ImpactMethod m) {
+		return m.withAdminInfo().withDataEntry();
 	}
 
 	public static Publication getPublication(ImpactMethod m) {
 		var info = getAdminInfo(m);
 		return info != null
-			? info.publication
+			? info.getPublication()
 			: null;
 	}
 
-	public static Publication forcePublication(ImpactMethod m) {
-		var info = forceAdminInfo(m);
-		if (info.publication == null) {
-			info.publication = new Publication();
-		}
-		return info.publication;
+	public static Publication withPublication(ImpactMethod m) {
+		return m.withAdminInfo().withPublication();
 	}
 
 	public static List<Factor> getFactors(ImpactMethod m) {
-		return m == null || m.characterisationFactors == null
-			? Collections.emptyList()
-			: m.characterisationFactors.factors;
+		return m.getFactors();
 	}
 
-	public static List<Factor> forceFactors(ImpactMethod m) {
-		if (m.characterisationFactors == null) {
-			m.characterisationFactors = new FactorList();
-		}
-		return m.characterisationFactors.factors;
+	public static List<Factor> withFactors(ImpactMethod m) {
+		return m.withFactors();
 	}
 
 }

@@ -25,7 +25,7 @@ public class Other implements Copyable<Other> {
 	// region getters
 
 	public List<Object> getAny() {
-		return any;
+		return any != null ? any : List.of();
 	}
 
 	// endregion

@@ -4,7 +4,7 @@ import org.openlca.ilcd.contacts.Contact;
 import org.openlca.ilcd.descriptors.ContactDescriptor;
 import org.openlca.ilcd.descriptors.FlowDescriptor;
 import org.openlca.ilcd.descriptors.FlowPropertyDescriptor;
-import org.openlca.ilcd.descriptors.MethodDescriptor;
+import org.openlca.ilcd.descriptors.ImpactMethodDescriptor;
 import org.openlca.ilcd.descriptors.ProcessDescriptor;
 import org.openlca.ilcd.descriptors.SourceDescriptor;
 import org.openlca.ilcd.descriptors.UnitGroupDescriptor;
@@ -34,7 +34,7 @@ class Dir {
 			return "flowproperties";
 		if (c.equals(UnitGroup.class) || c.equals(UnitGroupDescriptor.class))
 			return "unitgroups";
-		if (c.equals(ImpactMethod.class) || c.equals(MethodDescriptor.class))
+		if (c.equals(ImpactMethod.class) || c.equals(ImpactMethodDescriptor.class))
 			return "lciamethods";
 		if (c.equals(Source.class) || c.equals(SourceDescriptor.class))
 			return "sources";

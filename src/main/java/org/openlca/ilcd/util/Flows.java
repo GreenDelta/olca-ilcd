@@ -18,74 +18,41 @@ public final class Flows {
 
 	public static AdminInfo getAdminInfo(Flow f) {
 		return f != null
-			? f.adminInfo
+			? f.getAdminInfo()
 			: null;
-	}
-
-	public static AdminInfo forceAdminInfo(Flow f) {
-		if (f.adminInfo == null)
-			f.adminInfo = new AdminInfo();
-		return f.adminInfo;
 	}
 
 	public static DataEntry getDataEntry(Flow f) {
 		AdminInfo ai = getAdminInfo(f);
 		return ai != null
-			? ai.dataEntry
+			? ai.getDataEntry()
 			: null;
-	}
-
-	public static DataEntry forceDataEntry(Flow f) {
-		AdminInfo ai = forceAdminInfo(f);
-		if (ai.dataEntry == null)
-			ai.dataEntry = new DataEntry();
-		return ai.dataEntry;
 	}
 
 	public static Publication getPublication(Flow f) {
 		AdminInfo ai = getAdminInfo(f);
 		return ai != null
-			? ai.publication
+			? ai.getPublication()
 			: null;
-	}
-
-	public static Publication forcePublication(Flow f) {
-		AdminInfo ai = forceAdminInfo(f);
-		if (ai.publication == null)
-			ai.publication = new Publication();
-		return ai.publication;
 	}
 
 	public static FlowInfo getFlowInfo(Flow f) {
 		return f != null
-			? f.flowInfo
+			? f.getFlowInfo()
 			: null;
-	}
-
-	public static FlowInfo forceFlowInfo(Flow f) {
-		if (f.flowInfo == null)
-			f.flowInfo = new FlowInfo();
-		return f.flowInfo;
 	}
 
 	public static DataSetInfo getDataSetInfo(Flow f) {
 		FlowInfo fi = getFlowInfo(f);
 		return fi != null
-			? fi.dataSetInfo
+			? fi.getDataSetInfo()
 			: null;
-	}
-
-	public static DataSetInfo forceDataSetInfo(Flow f) {
-		FlowInfo fi = forceFlowInfo(f);
-		if (fi.dataSetInfo == null)
-			fi.dataSetInfo = new DataSetInfo();
-		return fi.dataSetInfo;
 	}
 
 	public static FlowName getFlowName(Flow f) {
 		DataSetInfo dsi = getDataSetInfo(f);
 		return dsi != null
-			? dsi.name
+			? dsi.getName()
 			: null;
 	}
 
@@ -94,34 +61,20 @@ public final class Flows {
 		if (name == null)
 			return null;
 		return Stream.of(
-				name.baseName,
-				name.flowProperties,
-				name.mixAndLocationTypes,
-				name.treatmentStandardsRoutes)
+				name.getBaseName(),
+				name.getFlowProperties(),
+				name.getMixAndLocationTypes(),
+				name.getTreatmentStandardsRoutes())
 			.map(strings -> LangString.getFirst(strings, langs))
 			.filter(Strings::notEmpty)
 			.collect(Collectors.joining(", "));
 	}
 
-	public static FlowName forceFlowName(Flow f) {
-		DataSetInfo dsi = forceDataSetInfo(f);
-		if (dsi.name == null)
-			dsi.name = new FlowName();
-		return dsi.name;
-	}
-
 	public static QuantitativeReference getQuantitativeReference(Flow f) {
 		FlowInfo fi = getFlowInfo(f);
 		return fi != null
-			? fi.quantitativeReference
+			? fi.getQuantitativeReference()
 			: null;
-	}
-
-	public static QuantitativeReference forceQuantitativeReference(Flow f) {
-		FlowInfo fi = forceFlowInfo(f);
-		if (fi.quantitativeReference == null)
-			fi.quantitativeReference = new QuantitativeReference();
-		return fi.quantitativeReference;
 	}
 
 	/**
@@ -131,95 +84,55 @@ public final class Flows {
 	public static Integer getReferenceFlowPropertyID(Flow f) {
 		QuantitativeReference qref = getQuantitativeReference(f);
 		return qref != null
-			? qref.referenceFlowProperty
+			? qref.getReferenceFlowProperty()
 			: null;
 	}
 
 	public static Geography getGeography(Flow f) {
 		FlowInfo fi = getFlowInfo(f);
 		return fi != null
-			? fi.geography
+			? fi.getGeography()
 			: null;
-	}
-
-	public static Geography forceGeography(Flow f) {
-		FlowInfo fi = forceFlowInfo(f);
-		if (fi.geography == null)
-			fi.geography = new Geography();
-		return fi.geography;
 	}
 
 	public static Technology getTechnology(Flow f) {
 		FlowInfo fi = getFlowInfo(f);
 		return fi != null
-			? fi.technology
+			? fi.getTechnology()
 			: null;
-	}
-
-	public static Technology forceTechnology(Flow f) {
-		FlowInfo fi = forceFlowInfo(f);
-		if (fi.technology == null)
-			fi.technology = new Technology();
-		return fi.technology;
 	}
 
 	public static List<Classification> getClassifications(Flow f) {
 		DataSetInfo info = getDataSetInfo(f);
-		if (info == null || info.classificationInformation == null)
+		if (info == null || info.getClassificationInformation() == null)
 			return Collections.emptyList();
-		return info.classificationInformation.classifications;
-	}
-
-	public static List<Classification> forceClassifications(Flow f) {
-		DataSetInfo info = forceDataSetInfo(f);
-		if (info.classificationInformation == null)
-			info.classificationInformation = new FlowCategoryInfo();
-		return info.classificationInformation.classifications;
+		return info.getClassificationInformation().getClassifications();
 	}
 
 	public static Modelling getModelling(Flow f) {
 		return f != null
-			? f.modelling
+			? f.getModelling()
 			: null;
-	}
-
-	public static Modelling forceModelling(Flow f) {
-		if (f.modelling == null)
-			f.modelling = new Modelling();
-		return f.modelling;
 	}
 
 	public static InventoryMethod getInventoryMethod(Flow f) {
 		Modelling m = getModelling(f);
 		return m != null
-			? m.inventoryMethod
+			? m.getInventoryMethod()
 			: null;
-	}
-
-	public static InventoryMethod forceInventoryMethod(Flow f) {
-		Modelling m = forceModelling(f);
-		if (m.inventoryMethod == null)
-			m.inventoryMethod = new InventoryMethod();
-		return m.inventoryMethod;
 	}
 
 	public static FlowType getType(Flow f) {
 		InventoryMethod m = getInventoryMethod(f);
 		return m != null
-			? m.flowType
+			? m.getFlowType()
 			: null;
 	}
 
 	public static List<FlowPropertyRef> getFlowProperties(Flow f) {
-		if (f == null || f.flowPropertyList == null)
-			return Collections.emptyList();
-		return f.flowPropertyList.flowProperties;
-	}
-
-	public static List<FlowPropertyRef> forceFlowProperties(Flow f) {
-		if (f.flowPropertyList == null)
-			f.flowPropertyList = new FlowPropertyList();
-		return f.flowPropertyList.flowProperties;
+		return f != null
+			? f.getFlowProperties()
+			: List.of();
 	}
 
 	public static FlowPropertyRef getReferenceFlowProperty(Flow f) {
@@ -227,9 +140,8 @@ public final class Flows {
 		if (qref == null)
 			return null;
 		for (FlowPropertyRef ref : getFlowProperties(f)) {
-			if (ref.dataSetInternalID == null)
-				continue;
-			if (ref.dataSetInternalID.intValue() == qref.intValue())
+			var id = ref.getDataSetInternalID();
+			if (id != null && id.intValue() == qref.intValue())
 				return ref;
 		}
 		return null;

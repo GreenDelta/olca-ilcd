@@ -184,16 +184,4 @@ public class Ref implements Copyable<Ref> {
 			case EXTERNAL_FILE -> null;
 		};
 	}
-
-	public static Ref of(IDataSet dataSet) {
-		if (dataSet == null)
-			return new Ref();
-		Ref ref = new Ref();
-		ref.uri = dataSet.getURI();
-		ref.uuid = dataSet.getUUID();
-		ref.type = dataSet.getDataSetType();
-		ref.version = dataSet.getVersion();
-		LangString.copy(dataSet.getName(), ref.name);
-		return ref;
-	}
 }

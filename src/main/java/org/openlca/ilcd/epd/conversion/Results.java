@@ -1,9 +1,5 @@
 package org.openlca.ilcd.epd.conversion;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
 import org.openlca.ilcd.commons.ExchangeDirection;
 import org.openlca.ilcd.commons.ExchangeFunction;
 import org.openlca.ilcd.commons.Other;
@@ -18,6 +14,10 @@ import org.openlca.ilcd.processes.Process;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 class Results {
 
 	static List<IndicatorResult> readResults(
@@ -28,28 +28,26 @@ class Results {
 		List<IndicatorResult> results = new ArrayList<>();
 
 		// LCI indicator results
-		for (var e : process.exchanges) {
-			if (e.exchangeFunction != ExchangeFunction.GENERAL_REMINDER_FLOW)
+		for (var e : process.getExchanges()) {
+			if (e.getExchangeFunction() != ExchangeFunction.GENERAL_REMINDER_FLOW)
 				continue;
 			var indicator = profile.indicatorOf(e);
 			if (indicator == null)
 				continue;
 			var result = new IndicatorResult();
 			result.indicator = indicator;
-			result.amounts.addAll(Amounts.readFrom(e.other, profile));
+			result.amounts.addAll(Amounts.readFrom(e.getOther(), profile));
 			results.add(result);
 		}
 
 		// LCIA indicator results
-		if (process.lciaResults == null)
-			return results;
-		for (var impact : process.lciaResults) {
+		for (var impact : process.getImpactResults()) {
 			var indicator = profile.indicatorOf(impact);
 			if (indicator == null)
 				continue;
 			var result = new IndicatorResult();
 			result.indicator = indicator;
-			result.amounts.addAll(Amounts.readFrom(impact.other, profile));
+			result.amounts.addAll(Amounts.readFrom(impact.getOther(), profile));
 			results.add(result);
 		}
 
@@ -74,32 +72,28 @@ class Results {
 
 	private static Other initFlow(Process p, Indicator indicator) {
 		int nextId = 1;
-		for (var e : p.exchanges) {
-			if (e.id >= nextId) {
-				nextId = e.id + 1;
+		for (var e : p.getExchanges()) {
+			if (e.getId() >= nextId) {
+				nextId = e.getId() + 1;
 			}
 		}
-		var e = new Exchange();
-		e.id = nextId;
-		p.exchanges.add(e);
-		e.flow = refOf(indicator);
-		e.exchangeFunction = ExchangeFunction.GENERAL_REMINDER_FLOW;
-		e.direction = indicator.isInput != null && indicator.isInput
-			? ExchangeDirection.INPUT
-			: ExchangeDirection.OUTPUT;
-
-		Other other = new Other();
-		e.other = other;
-		return other;
+		var e = new Exchange()
+			.withId(nextId)
+			.withFlow(refOf(indicator))
+			.withExchangeFunction(ExchangeFunction.GENERAL_REMINDER_FLOW)
+			.withDirection(
+				indicator.isInput != null && indicator.isInput
+					? ExchangeDirection.INPUT
+					: ExchangeDirection.OUTPUT);
+		p.withExchanges().add(e);
+		return e.withOther();
 	}
 
 	private static Other initImpact(Process process, Indicator indicator) {
-		var r = new ImpactResult();
-		process.add(r);
-		r.method = refOf(indicator);
-		Other other = new Other();
-		r.other = other;
-		return other;
+		var r = new ImpactResult()
+			.withMethod(refOf(indicator));
+		process.withImpactResults().add(r);
+		return r.withOther();
 	}
 
 	private static Ref refOf(Indicator indicator) {
@@ -122,6 +116,6 @@ class Results {
 			"http://lca.jrc.it/ILCD/Common", "common:shortDescription");
 		description.setTextContent(indicator.unit);
 		root.appendChild(description);
-		other.any.add(root);
+		other.withAny().add(root);
 	}
 }
