@@ -10,6 +10,7 @@ import org.openlca.ilcd.commons.Copyable;
 import org.openlca.ilcd.commons.LangString;
 import org.openlca.ilcd.commons.Other;
 import org.openlca.ilcd.commons.annotations.Label;
+import org.openlca.ilcd.util.Val;
 
 import javax.xml.namespace.QName;
 import java.util.ArrayList;
@@ -33,7 +34,7 @@ public class ProcessName implements Copyable<ProcessName> {
 	 */
 	@Label
 	@XmlElement(name = "baseName", required = true)
-	public final List<LangString> name = new ArrayList<>();
+	private List<LangString> name;
 
 	/**
 	 * Specifying information on the good, service, or process in technical
@@ -43,7 +44,7 @@ public class ProcessName implements Copyable<ProcessName> {
 	 */
 	@Label
 	@XmlElement(name = "treatmentStandardsRoutes")
-	public final List<LangString> technicalDetails = new ArrayList<>();
+	private List<LangString> technicalDetails;
 
 	/**
 	 * Specifying information on the good, service, or process whether being a
@@ -52,7 +53,7 @@ public class ProcessName implements Copyable<ProcessName> {
 	 */
 	@Label
 	@XmlElement(name = "mixAndLocationTypes")
-	public final List<LangString> mixAndLocation = new ArrayList<>();
+	private List<LangString> mixAndLocation;
 
 	/**
 	 * Further, quantitative specifying information on the good, service or
@@ -63,24 +64,127 @@ public class ProcessName implements Copyable<ProcessName> {
 	 */
 	@Label
 	@XmlElement(name = "functionalUnitFlowProperties")
-	public final List<LangString> flowProperties = new ArrayList<>();
+	private List<LangString> flowProperties;
 
 	@XmlElement(namespace = "http://lca.jrc.it/ILCD/Common")
-	public Other other;
+	private Other other;
 
 	@XmlAnyAttribute
-	public final Map<QName, String> otherAttributes = new HashMap<>();
+	private Map<QName, String> otherAttributes;
+
+	// region getters
+
+	public List<LangString> getName() {
+		return name != null ? name : List.of();
+	}
+
+	public List<LangString> getTechnicalDetails() {
+		return technicalDetails != null ? technicalDetails : List.of();
+	}
+
+	public List<LangString> getMixAndLocation() {
+		return mixAndLocation != null ? mixAndLocation : List.of();
+	}
+
+	public List<LangString> getFlowProperties() {
+		return flowProperties != null ? flowProperties : List.of();
+	}
+
+	public Other getOther() {
+		return other;
+	}
+
+	public Map<QName, String> getOtherAttributes() {
+		return otherAttributes != null ? otherAttributes : Map.of();
+	}
+
+	// endregion
+
+	// region setters
+
+	public ProcessName withName(List<LangString> name) {
+		this.name = name;
+		return this;
+	}
+
+	public ProcessName withTechnicalDetails(List<LangString> technicalDetails) {
+		this.technicalDetails = technicalDetails;
+		return this;
+	}
+
+	public ProcessName withMixAndLocation(List<LangString> mixAndLocation) {
+		this.mixAndLocation = mixAndLocation;
+		return this;
+	}
+
+	public ProcessName withFlowProperties(List<LangString> flowProperties) {
+		this.flowProperties = flowProperties;
+		return this;
+	}
+
+	public ProcessName withOther(Other other) {
+		this.other = other;
+		return this;
+	}
+
+	public ProcessName withOtherAttributes(Map<QName, String> otherAttributes) {
+		this.otherAttributes = otherAttributes;
+		return this;
+	}
+
+	public List<LangString> withName() {
+		if (name == null) {
+			name = new ArrayList<>();
+		}
+		return name;
+	}
+
+	public List<LangString> withTechnicalDetails() {
+		if (technicalDetails == null) {
+			technicalDetails = new ArrayList<>();
+		}
+		return technicalDetails;
+	}
+
+	public List<LangString> withMixAndLocation() {
+		if (mixAndLocation == null) {
+			mixAndLocation = new ArrayList<>();
+		}
+		return mixAndLocation;
+	}
+
+	public List<LangString> withFlowProperties() {
+		if (flowProperties == null) {
+			flowProperties = new ArrayList<>();
+		}
+		return flowProperties;
+	}
+
+	public Other withOther() {
+		if (other == null) {
+			other = new Other();
+		}
+		return other;
+	}
+
+	public Map<QName, String> withOtherAttributes() {
+		if (otherAttributes == null) {
+			otherAttributes = new HashMap<>();
+		}
+		return otherAttributes;
+	}
+
+	// endregion
 
 	@Override
 	public ProcessName copy() {
-		var clone = new ProcessName();
-		LangString.copy(name, clone.name);
-		LangString.copy(technicalDetails, clone.technicalDetails);
-		LangString.copy(mixAndLocation, clone.mixAndLocation);
-		LangString.copy(flowProperties, clone.flowProperties);
-		if (other != null)
-			clone.other = other.copy();
-		clone.otherAttributes.putAll(otherAttributes);
-		return clone;
+		var copy = new ProcessName();
+		Val.copy(name, copy::withName);
+		Val.copy(technicalDetails, copy::withTechnicalDetails);
+		Val.copy(mixAndLocation, copy::withMixAndLocation);
+		Val.copy(flowProperties, copy::withFlowProperties);
+		Val.copy(other, copy::withOther);
+		Val.copy(otherAttributes, copy::withOtherAttributes);
+		return copy;
 	}
 }

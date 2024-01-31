@@ -8,6 +8,7 @@ import jakarta.xml.bind.annotation.XmlType;
 import org.openlca.ilcd.commons.Copyable;
 import org.openlca.ilcd.commons.Other;
 import org.openlca.ilcd.commons.Ref;
+import org.openlca.ilcd.util.Val;
 
 import javax.xml.namespace.QName;
 import java.util.ArrayList;
@@ -23,21 +24,77 @@ import java.util.Map;
 public class DataGenerator implements Copyable<DataGenerator> {
 
 	@XmlElement(namespace = "http://lca.jrc.it/ILCD/Common", name = "referenceToPersonOrEntityGeneratingTheDataSet")
-	public final List<Ref> contacts = new ArrayList<>();
+	private List<Ref> contacts;
 
 	@XmlElement(namespace = "http://lca.jrc.it/ILCD/Common")
-	public Other other;
+	private Other other;
 
 	@XmlAnyAttribute
-	public final Map<QName, String> otherAttributes = new HashMap<>();
+	private Map<QName, String> otherAttributes;
+
+	// region getters
+
+	public List<Ref> getContacts() {
+		return contacts != null ? contacts : List.of();
+	}
+
+	public Other getOther() {
+		return other;
+	}
+
+	public Map<QName, String> getOtherAttributes() {
+		return otherAttributes != null ? otherAttributes : Map.of();
+	}
+
+	// endregion
+
+	// region setters
+
+	public DataGenerator withContacts(List<Ref> contacts) {
+		this.contacts = contacts;
+		return this;
+	}
+
+	public DataGenerator withOther(Other other) {
+		this.other = other;
+		return this;
+	}
+
+	public DataGenerator withOtherAttributes(Map<QName, String> otherAttributes) {
+		this.otherAttributes = otherAttributes;
+		return this;
+	}
+
+	public List<Ref> withContacts() {
+		if (contacts == null) {
+			contacts = new ArrayList<>();
+		}
+		return contacts;
+	}
+
+	public Other withOther() {
+		if (other == null) {
+			other = new Other();
+		}
+		return other;
+	}
+
+	public Map<QName, String> withOtherAttributes() {
+		if (otherAttributes == null) {
+			otherAttributes = new HashMap<>();
+		}
+		return otherAttributes;
+	}
+
+	// endregion
 
 	@Override
 	public DataGenerator copy() {
-		var clone = new DataGenerator();
-		Ref.copy(contacts, clone.contacts);
-		if (other != null)
-			clone.other = other.copy();
-		clone.otherAttributes.putAll(otherAttributes);
-		return clone;
+		var copy = new DataGenerator();
+		Val.copy(contacts, copy::withContacts);
+		Val.copy(other, copy::withOther);
+		Val.copy(otherAttributes, copy::withOtherAttributes);
+		return copy;
 	}
+
 }

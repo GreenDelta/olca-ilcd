@@ -21,7 +21,7 @@ import org.openlca.ilcd.processes.ComplianceDeclaration;
 import org.openlca.ilcd.processes.DataEntry;
 import org.openlca.ilcd.processes.DataSetInfo;
 import org.openlca.ilcd.processes.Exchange;
-import org.openlca.ilcd.processes.LCIAResult;
+import org.openlca.ilcd.processes.ImpactResult;
 import org.openlca.ilcd.processes.Location;
 import org.openlca.ilcd.processes.InventoryMethod;
 import org.openlca.ilcd.processes.Parameter;
@@ -166,7 +166,7 @@ public class ProcessSampleTest {
 	public void testLCIAResults() {
 		with(p -> {
 			assertEquals(2, p.lciaResults.length);
-			LCIAResult r1 = p.lciaResults[0];
+			ImpactResult r1 = p.lciaResults[0];
 			assertTrue(r1.method.isValid());
 			assertEquals(DataSetType.IMPACT_METHOD, r1.method.type);
 		});

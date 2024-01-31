@@ -13,7 +13,7 @@ import org.openlca.ilcd.epd.model.EpdProfile;
 import org.openlca.ilcd.epd.model.Indicator;
 import org.openlca.ilcd.epd.model.IndicatorResult;
 import org.openlca.ilcd.processes.Exchange;
-import org.openlca.ilcd.processes.LCIAResult;
+import org.openlca.ilcd.processes.ImpactResult;
 import org.openlca.ilcd.processes.Process;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -94,7 +94,7 @@ class Results {
 	}
 
 	private static Other initImpact(Process process, Indicator indicator) {
-		var r = new LCIAResult();
+		var r = new ImpactResult();
 		process.add(r);
 		r.method = refOf(indicator);
 		Other other = new Other();

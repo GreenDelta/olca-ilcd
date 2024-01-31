@@ -13,7 +13,7 @@ import org.openlca.ilcd.commons.Ref;
 import org.openlca.ilcd.epd.conversion.RefExtension;
 import org.openlca.ilcd.util.Strings;
 import org.openlca.ilcd.processes.Exchange;
-import org.openlca.ilcd.processes.LCIAResult;
+import org.openlca.ilcd.processes.ImpactResult;
 
 public class EpdProfile {
 
@@ -39,7 +39,7 @@ public class EpdProfile {
 		});
 	}
 
-	public Indicator indicatorOf(LCIAResult result) {
+	public Indicator indicatorOf(ImpactResult result) {
 		if (result == null || result.method == null)
 			return null;
 		return indicator(result.method, result.other,

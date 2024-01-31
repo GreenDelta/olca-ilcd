@@ -12,6 +12,7 @@ import org.openlca.ilcd.commons.LangString;
 import org.openlca.ilcd.commons.Other;
 import org.openlca.ilcd.commons.Ref;
 import org.openlca.ilcd.commons.annotations.FreeText;
+import org.openlca.ilcd.util.Val;
 
 import javax.xml.namespace.QName;
 import java.util.ArrayList;
@@ -34,12 +35,12 @@ import java.util.Map;
 public class DataSetInfo implements Copyable<DataSetInfo> {
 
 	@XmlElement(name = "UUID", namespace = "http://lca.jrc.it/ILCD/Common", required = true)
-	public String uuid;
+	private String uuid;
 
 	/**
 	 * General descriptive and specifying name of the process.
 	 */
-	public ProcessName name;
+	private ProcessName name;
 
 	/**
 	 * Identifier of a sub-set of a complete process data set. This can be the
@@ -55,60 +56,200 @@ public class DataSetInfo implements Copyable<DataSetInfo> {
 	 * when naming the reference flow, to avoid misinterpretation.
 	 */
 	@XmlElement(name = "identifierOfSubDataSet")
-	public String subIdentifier;
+	private String subIdentifier;
 
 	@FreeText
 	@XmlElement(namespace = "http://lca.jrc.it/ILCD/Common")
-	public final List<LangString> synonyms = new ArrayList<>();
+	private List<LangString> synonyms;
 
 	@XmlElementWrapper(name = "complementingProcesses")
 	@XmlElement(name = "referenceToComplementingProcess", required = true)
-	public Ref[] complementingProcesses;
+	private List<Ref> complementingProcesses;
 
 	@XmlElementWrapper(name = "classificationInformation")
 	@XmlElement(name = "classification", namespace = "http://lca.jrc.it/ILCD/Common")
-	public final List<Classification> classifications = new ArrayList<>();
+	private List<Classification> classifications;
 
 	@FreeText
 	@XmlElement(name = "generalComment", namespace = "http://lca.jrc.it/ILCD/Common")
-	public final List<LangString> comment = new ArrayList<>();
+	private List<LangString> comment;
 
 	@XmlElement(name = "referenceToExternalDocumentation")
-	public final List<Ref> externalDocs = new ArrayList<>();
+	private List<Ref> externalDocs;
 
 	@XmlElement(namespace = "http://lca.jrc.it/ILCD/Common")
-	public Other other;
+	private Other other;
 
 	@XmlAnyAttribute
-	public final Map<QName, String> otherAttributes = new HashMap<>();
+	private Map<QName, String> otherAttributes;
+
+	// region getters
+
+	public String getUuid() {
+		return uuid;
+	}
+
+	public ProcessName getName() {
+		return name;
+	}
+
+	public String getSubIdentifier() {
+		return subIdentifier;
+	}
+
+	public List<LangString> getSynonyms() {
+		return synonyms != null ? synonyms : List.of();
+	}
+
+	public List<Ref> getComplementingProcesses() {
+		return complementingProcesses != null ? complementingProcesses : List.of();
+	}
+
+	public List<Classification> getClassifications() {
+		return classifications != null ? classifications : List.of();
+	}
+
+	public List<LangString> getComment() {
+		return comment != null ? comment : List.of();
+	}
+
+	public List<Ref> getExternalDocs() {
+		return externalDocs != null ? externalDocs : List.of();
+	}
+
+	public Other getOther() {
+		return other;
+	}
+
+	public Map<QName, String> getOtherAttributes() {
+		return otherAttributes != null ? otherAttributes : Map.of();
+	}
+
+	// endregion
+
+	// region setters
+
+	public DataSetInfo withUuid(String uuid) {
+		this.uuid = uuid;
+		return this;
+	}
+
+	public DataSetInfo withName(ProcessName name) {
+		this.name = name;
+		return this;
+	}
+
+	public DataSetInfo withSubIdentifier(String subIdentifier) {
+		this.subIdentifier = subIdentifier;
+		return this;
+	}
+
+	public DataSetInfo withSynonyms(List<LangString> synonyms) {
+		this.synonyms = synonyms;
+		return this;
+	}
+
+	public DataSetInfo withComplementingProcesses(List<Ref> complementingProcesses) {
+		this.complementingProcesses = complementingProcesses;
+		return this;
+	}
+
+	public DataSetInfo withClassifications(List<Classification> classifications) {
+		this.classifications = classifications;
+		return this;
+	}
+
+	public DataSetInfo withComment(List<LangString> comment) {
+		this.comment = comment;
+		return this;
+	}
+
+	public DataSetInfo withExternalDocs(List<Ref> externalDocs) {
+		this.externalDocs = externalDocs;
+		return this;
+	}
+
+	public DataSetInfo withOther(Other other) {
+		this.other = other;
+		return this;
+	}
+
+	public DataSetInfo withOtherAttributes(Map<QName, String> otherAttributes) {
+		this.otherAttributes = otherAttributes;
+		return this;
+	}
+
+	public ProcessName withName() {
+		if (name == null) {
+			name = new ProcessName();
+		}
+		return name;
+	}
+
+	public List<LangString> withSynonyms() {
+		if (synonyms == null) {
+			synonyms = new ArrayList<>();
+		}
+		return synonyms;
+	}
+
+	public List<Ref> withComplementingProcesses() {
+		if (complementingProcesses == null) {
+			complementingProcesses = new ArrayList<>();
+		}
+		return complementingProcesses;
+	}
+
+	public List<Classification> withClassifications() {
+		if (classifications == null) {
+			classifications = new ArrayList<>();
+		}
+		return classifications;
+	}
+
+	public List<LangString> withComment() {
+		if (comment == null) {
+			comment = new ArrayList<>();
+		}
+		return comment;
+	}
+
+	public List<Ref> withExternalDocs() {
+		if (externalDocs == null) {
+			externalDocs = new ArrayList<>();
+		}
+		return externalDocs;
+	}
+
+	public Other withOther() {
+		if (other == null) {
+			other = new Other();
+		}
+		return other;
+	}
+
+	public Map<QName, String> withOtherAttributes() {
+		if (otherAttributes == null) {
+			otherAttributes = new HashMap<>();
+		}
+		return otherAttributes;
+	}
+
+	// endregion
 
 	@Override
 	public DataSetInfo copy() {
-		var clone = new DataSetInfo();
-		clone.uuid = uuid;
-		if (name != null)
-			clone.name = name.copy();
-		clone.subIdentifier = subIdentifier;
-		LangString.copy(synonyms, clone.synonyms);
-		if (complementingProcesses != null) {
-			clone.complementingProcesses = new Ref[complementingProcesses.length];
-			for (int i = 0; i < complementingProcesses.length; i++) {
-				Ref p = complementingProcesses[i];
-				if (p == null)
-					continue;
-				clone.complementingProcesses[i] = p.copy();
-			}
-		}
-		for (Classification c : classifications) {
-			if (c == null)
-				continue;
-			clone.classifications.add(c.copy());
-		}
-		LangString.copy(comment, clone.comment);
-		Ref.copy(externalDocs, clone.externalDocs);
-		if (other != null)
-			clone.other = other.copy();
-		clone.otherAttributes.putAll(otherAttributes);
-		return clone;
-	}
+		var copy = new DataSetInfo();
+		copy.withUuid(uuid);
+		Val.copy(name, copy::withName);
+		copy.withSubIdentifier(subIdentifier);
+		Val.copy(synonyms, copy::withSynonyms);
+		Val.copy(complementingProcesses, copy::withComplementingProcesses);
+		Val.copy(classifications, copy::withClassifications);
+		Val.copy(comment, copy::withComment);
+		Val.copy(externalDocs, copy::withExternalDocs);
+		Val.copy(other, copy::withOther);
+		Val.copy(otherAttributes, copy::withOtherAttributes);
+		return copy;	}
+
 }

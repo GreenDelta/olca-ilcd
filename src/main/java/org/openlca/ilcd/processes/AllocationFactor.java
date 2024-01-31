@@ -11,16 +11,43 @@ import org.openlca.ilcd.commons.Copyable;
 public class AllocationFactor implements Copyable<AllocationFactor> {
 
 	@XmlAttribute(name = "internalReferenceToCoProduct")
-	public int productExchangeId;
+	private int productExchangeId;
 
 	@XmlAttribute(name = "allocatedFraction")
-	public double fraction;
+	private double fraction;
+
+	// region getters
+
+	public int getProductExchangeId() {
+		return productExchangeId;
+	}
+
+	public double getFraction() {
+		return fraction;
+	}
+
+	// endregion
+
+	// region setters
+
+	public AllocationFactor withProductExchangeId(int productExchangeId) {
+		this.productExchangeId = productExchangeId;
+		return this;
+	}
+
+	public AllocationFactor withFraction(double fraction) {
+		this.fraction = fraction;
+		return this;
+	}
+
+	// endregion
 
 	@Override
 	public AllocationFactor copy() {
-		var clone = new AllocationFactor();
-		clone.productExchangeId = productExchangeId;
-		clone.fraction = fraction;
-		return clone;
+		var copy = new AllocationFactor();
+		copy.withProductExchangeId(productExchangeId);
+		copy.withFraction(fraction);
+		return copy;
 	}
+
 }

@@ -8,17 +8,13 @@ import jakarta.xml.bind.annotation.XmlAttribute;
 import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlElementWrapper;
 import jakarta.xml.bind.annotation.XmlType;
-import org.openlca.ilcd.commons.Classification;
 import org.openlca.ilcd.commons.Copyable;
-import org.openlca.ilcd.commons.DataSetType;
 import org.openlca.ilcd.commons.IDataSet;
-import org.openlca.ilcd.commons.LangString;
 import org.openlca.ilcd.commons.Other;
-import org.openlca.ilcd.util.Processes;
+import org.openlca.ilcd.util.Val;
 
 import javax.xml.namespace.QName;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -30,128 +26,198 @@ import java.util.Map;
 public class Process implements IDataSet, Copyable<Process> {
 
 	@XmlElement(required = true, name = "processInformation")
-	public ProcessInfo processInfo;
+	private ProcessInfo processInfo;
 
 	@XmlElement(name = "modellingAndValidation")
-	public Modelling modelling;
+	private Modelling modelling;
 
 	@XmlElement(name = "administrativeInformation")
-	public AdminInfo adminInfo;
+	private AdminInfo adminInfo;
 
 	@XmlElementWrapper(name = "exchanges")
 	@XmlElement(name = "exchange")
-	public final List<Exchange> exchanges = new ArrayList<>();
+	private List<Exchange> exchanges;
 
 	@XmlElementWrapper(name = "LCIAResults")
 	@XmlElement(name = "LCIAResult")
-	public LCIAResult[] lciaResults;
+	private List<ImpactResult> impactResults;
 
 	@XmlElement(namespace = "http://lca.jrc.it/ILCD/Common")
-	public Other other;
+	private Other other;
 
 	@XmlAttribute(name = "version", required = true)
-	public String version;
+	private String version;
 
 	@XmlAttribute(name = "locations")
-	public String locations;
+	private String locations;
 
 	@XmlAttribute(name = "metaDataOnly")
-	public Boolean metaDataOnly;
+	private Boolean metaDataOnly;
 
 	@XmlAnyAttribute
-	public final Map<QName, String> otherAttributes = new HashMap<>();
+	private Map<QName, String> otherAttributes;
 
-	@Override
-	public DataSetType getDataSetType() {
-		return DataSetType.PROCESS;
+	// region getters
+
+	public ProcessInfo getProcessInfo() {
+		return processInfo;
 	}
 
-	@Override
-	public String getURI() {
-		Publication pub = Processes.getPublication(this);
-		if (pub == null)
-			return null;
-		return pub.uri;
+	public Modelling getModelling() {
+		return modelling;
 	}
 
-	@Override
-	public String getUUID() {
-		DataSetInfo info = Processes.getDataSetInfo(this);
-		if (info == null)
-			return null;
-		return info.uuid;
+	public AdminInfo getAdminInfo() {
+		return adminInfo;
 	}
 
-	@Override
+	public List<Exchange> getExchanges() {
+		return exchanges != null ? exchanges : List.of();
+	}
+
+	public List<ImpactResult> getImpactResults() {
+		return impactResults != null ? impactResults : List.of();
+	}
+
+	public Other getOther() {
+		return other;
+	}
+
 	public String getVersion() {
-		Publication pub = Processes.getPublication(this);
-		if (pub == null)
-			return null;
-		return pub.version;
+		return version;
 	}
 
-	@Override
-	public List<Classification> getClassifications() {
-		DataSetInfo info = Processes.getDataSetInfo(this);
-		if (info == null)
-			return Collections.emptyList();
-		return info.classifications;
+	public String getLocations() {
+		return locations;
 	}
 
-	@Override
-	public List<LangString> getName() {
-		ProcessName name = Processes.getProcessName(this);
-		if (name == null)
-			return Collections.emptyList();
-		return name.name;
+	public Boolean getMetaDataOnly() {
+		return metaDataOnly;
 	}
+
+	public Map<QName, String> getOtherAttributes() {
+		return otherAttributes != null ? otherAttributes : Map.of();
+	}
+
+	// endregion
+
+	// region setters
+
+	public Process withProcessInfo(ProcessInfo processInfo) {
+		this.processInfo = processInfo;
+		return this;
+	}
+
+	public Process withModelling(Modelling modelling) {
+		this.modelling = modelling;
+		return this;
+	}
+
+	public Process withAdminInfo(AdminInfo adminInfo) {
+		this.adminInfo = adminInfo;
+		return this;
+	}
+
+	public Process withExchanges(List<Exchange> exchanges) {
+		this.exchanges = exchanges;
+		return this;
+	}
+
+	public Process withImpactResults(List<ImpactResult> impactResults) {
+		this.impactResults = impactResults;
+		return this;
+	}
+
+	public Process withOther(Other other) {
+		this.other = other;
+		return this;
+	}
+
+	public Process withVersion(String version) {
+		this.version = version;
+		return this;
+	}
+
+	public Process withLocations(String locations) {
+		this.locations = locations;
+		return this;
+	}
+
+	public Process withMetaDataOnly(Boolean metaDataOnly) {
+		this.metaDataOnly = metaDataOnly;
+		return this;
+	}
+
+	public Process withOtherAttributes(Map<QName, String> otherAttributes) {
+		this.otherAttributes = otherAttributes;
+		return this;
+	}
+
+	public ProcessInfo withProcessInfo() {
+		if (processInfo == null) {
+			processInfo = new ProcessInfo();
+		}
+		return processInfo;
+	}
+
+	public Modelling withModelling() {
+		if (modelling == null) {
+			modelling = new Modelling();
+		}
+		return modelling;
+	}
+
+	public AdminInfo withAdminInfo() {
+		if (adminInfo == null) {
+			adminInfo = new AdminInfo();
+		}
+		return adminInfo;
+	}
+
+	public List<Exchange> withExchanges() {
+		if (exchanges == null) {
+			exchanges = new ArrayList<>();
+		}
+		return exchanges;
+	}
+
+	public List<ImpactResult> withImpactResults() {
+		if (impactResults == null) {
+			impactResults = new ArrayList<>();
+		}
+		return impactResults;
+	}
+
+	public Other withOther() {
+		if (other == null) {
+			other = new Other();
+		}
+		return other;
+	}
+
+	public Map<QName, String> withOtherAttributes() {
+		if (otherAttributes == null) {
+			otherAttributes = new HashMap<>();
+		}
+		return otherAttributes;
+	}
+
+	// endregion
 
 	@Override
 	public Process copy() {
-		var clone = new Process();
-		if (processInfo != null)
-			clone.processInfo = processInfo.copy();
-		if (modelling != null)
-			clone.modelling = modelling.copy();
-		if (adminInfo != null)
-			clone.adminInfo = adminInfo.copy();
-		for (Exchange e : exchanges) {
-			if (e == null)
-				continue;
-			clone.exchanges.add(e.copy());
-		}
-		cloneResults(clone);
-		if (other != null)
-			clone.other = other.copy();
-		clone.version = version;
-		clone.locations = locations;
-		clone.metaDataOnly = metaDataOnly;
-		clone.otherAttributes.putAll(otherAttributes);
-		return clone;
-	}
-
-	private void cloneResults(Process clone) {
-		if (lciaResults == null)
-			return;
-		clone.lciaResults = new LCIAResult[lciaResults.length];
-		for (int i = 0; i < lciaResults.length; i++) {
-			if (lciaResults[i] == null)
-				continue;
-			clone.lciaResults[i] = lciaResults[i].copy();
-		}
-	}
-
-	public void add(LCIAResult r) {
-		if (r == null)
-			return;
-		if (lciaResults == null) {
-			lciaResults = new LCIAResult[]{r};
-			return;
-		}
-		LCIAResult[] next = new LCIAResult[lciaResults.length + 1];
-		System.arraycopy(lciaResults, 0, next, 0, lciaResults.length);
-		next[lciaResults.length] = r;
-		lciaResults = next;
+		var copy = new Process();
+		Val.copy(processInfo, copy::withProcessInfo);
+		Val.copy(modelling, copy::withModelling);
+		Val.copy(adminInfo, copy::withAdminInfo);
+		Val.copy(exchanges, copy::withExchanges);
+		Val.copy(impactResults, copy::withImpactResults);
+		Val.copy(other, copy::withOther);
+		copy.withVersion(version);
+		copy.withLocations(locations);
+		copy.withMetaDataOnly(metaDataOnly);
+		Val.copy(otherAttributes, copy::withOtherAttributes);
+		return copy;
 	}
 
 	@Override

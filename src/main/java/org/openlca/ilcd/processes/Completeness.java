@@ -11,6 +11,7 @@ import org.openlca.ilcd.commons.LangString;
 import org.openlca.ilcd.commons.Other;
 import org.openlca.ilcd.commons.Ref;
 import org.openlca.ilcd.commons.annotations.FreeText;
+import org.openlca.ilcd.util.Val;
 
 import javax.xml.namespace.QName;
 import java.util.ArrayList;
@@ -28,38 +29,131 @@ import java.util.Map;
 public class Completeness implements Copyable<Completeness> {
 
 	@XmlElement(name = "completenessProductModel")
-	public FlowCompleteness productCompleteness;
+	private FlowCompleteness productCompleteness;
 
 	@XmlElement(name = "referenceToSupportedImpactAssessmentMethods")
-	public final List<Ref> supportedImpactMethods = new ArrayList<>();
+	private List<Ref> supportedImpactMethods;
 
 	@XmlElement(name = "completenessElementaryFlows")
-	public final List<FlowCompletenessEntry> entries = new ArrayList<>();
+	private List<FlowCompletenessEntry> entries;
 
 	@FreeText
 	@XmlElement(name = "completenessOtherProblemField")
-	public final List<LangString> otherDetails = new ArrayList<>();
+	private List<LangString> otherDetails;
 
 	@XmlElement(namespace = "http://lca.jrc.it/ILCD/Common")
-	public Other other;
+	private Other other;
 
 	@XmlAnyAttribute
-	public final Map<QName, String> otherAttributes = new HashMap<>();
+	private Map<QName, String> otherAttributes;
+
+	// region getters
+
+	public FlowCompleteness getProductCompleteness() {
+		return productCompleteness;
+	}
+
+	public List<Ref> getSupportedImpactMethods() {
+		return supportedImpactMethods != null ? supportedImpactMethods : List.of();
+	}
+
+	public List<FlowCompletenessEntry> getEntries() {
+		return entries != null ? entries : List.of();
+	}
+
+	public List<LangString> getOtherDetails() {
+		return otherDetails != null ? otherDetails : List.of();
+	}
+
+	public Other getOther() {
+		return other;
+	}
+
+	public Map<QName, String> getOtherAttributes() {
+		return otherAttributes != null ? otherAttributes : Map.of();
+	}
+
+	// endregion
+
+	// region setters
+
+	public Completeness withProductCompleteness(FlowCompleteness productCompleteness) {
+		this.productCompleteness = productCompleteness;
+		return this;
+	}
+
+	public Completeness withSupportedImpactMethods(List<Ref> supportedImpactMethods) {
+		this.supportedImpactMethods = supportedImpactMethods;
+		return this;
+	}
+
+	public Completeness withEntries(List<FlowCompletenessEntry> entries) {
+		this.entries = entries;
+		return this;
+	}
+
+	public Completeness withOtherDetails(List<LangString> otherDetails) {
+		this.otherDetails = otherDetails;
+		return this;
+	}
+
+	public Completeness withOther(Other other) {
+		this.other = other;
+		return this;
+	}
+
+	public Completeness withOtherAttributes(Map<QName, String> otherAttributes) {
+		this.otherAttributes = otherAttributes;
+		return this;
+	}
+
+	public List<Ref> withSupportedImpactMethods() {
+		if (supportedImpactMethods == null) {
+			supportedImpactMethods = new ArrayList<>();
+		}
+		return supportedImpactMethods;
+	}
+
+	public List<FlowCompletenessEntry> withEntries() {
+		if (entries == null) {
+			entries = new ArrayList<>();
+		}
+		return entries;
+	}
+
+	public List<LangString> withOtherDetails() {
+		if (otherDetails == null) {
+			otherDetails = new ArrayList<>();
+		}
+		return otherDetails;
+	}
+
+	public Other withOther() {
+		if (other == null) {
+			other = new Other();
+		}
+		return other;
+	}
+
+	public Map<QName, String> withOtherAttributes() {
+		if (otherAttributes == null) {
+			otherAttributes = new HashMap<>();
+		}
+		return otherAttributes;
+	}
+
+	// endregion
 
 	@Override
 	public Completeness copy() {
-		var clone = new Completeness();
-		clone.productCompleteness = productCompleteness;
-		Ref.copy(supportedImpactMethods, clone.supportedImpactMethods);
-		for (FlowCompletenessEntry e : entries) {
-			if (e == null)
-				continue;
-			clone.entries.add(e.copy());
-		}
-		LangString.copy(otherDetails, clone.otherDetails);
-		if (other != null)
-			clone.other = other.copy();
-		clone.otherAttributes.putAll(otherAttributes);
-		return clone;
+		var copy = new Completeness();
+		copy.withProductCompleteness(productCompleteness);
+		Val.copy(supportedImpactMethods, copy::withSupportedImpactMethods);
+		Val.copy(entries, copy::withEntries);
+		Val.copy(otherDetails, copy::withOtherDetails);
+		Val.copy(other, copy::withOther);
+		Val.copy(otherAttributes, copy::withOtherAttributes);
+		return copy;
 	}
+
 }

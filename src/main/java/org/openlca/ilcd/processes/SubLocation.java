@@ -10,6 +10,7 @@ import org.openlca.ilcd.commons.Copyable;
 import org.openlca.ilcd.commons.LangString;
 import org.openlca.ilcd.commons.Other;
 import org.openlca.ilcd.commons.annotations.FreeText;
+import org.openlca.ilcd.util.Val;
 
 import javax.xml.namespace.QName;
 import java.util.ArrayList;
@@ -26,30 +27,103 @@ public class SubLocation implements Copyable<SubLocation> {
 
 	@FreeText
 	@XmlElement(name = "descriptionOfRestrictions")
-	public final List<LangString> description = new ArrayList<>();
+	private List<LangString> description;
 
 	@XmlElement(namespace = "http://lca.jrc.it/ILCD/Common")
-	public Other other;
+	private Other other;
 
 	@XmlAttribute(name = "subLocation")
-	public String subLocation;
+	private String subLocation;
 
 	@XmlAttribute(name = "latitudeAndLongitude")
-	public String latitudeAndLongitude;
+	private String latitudeAndLongitude;
 
 	@XmlAnyAttribute
-	public final Map<QName, String> otherAttributes = new HashMap<>();
+	private Map<QName, String> otherAttributes;
+
+	// region getters
+
+	public List<LangString> getDescription() {
+		return description != null ? description : List.of();
+	}
+
+	public Other getOther() {
+		return other;
+	}
+
+	public String getSubLocation() {
+		return subLocation;
+	}
+
+	public String getLatitudeAndLongitude() {
+		return latitudeAndLongitude;
+	}
+
+	public Map<QName, String> getOtherAttributes() {
+		return otherAttributes != null ? otherAttributes : Map.of();
+	}
+
+	// endregion
+
+	// region setters
+
+	public SubLocation withDescription(List<LangString> description) {
+		this.description = description;
+		return this;
+	}
+
+	public SubLocation withOther(Other other) {
+		this.other = other;
+		return this;
+	}
+
+	public SubLocation withSubLocation(String subLocation) {
+		this.subLocation = subLocation;
+		return this;
+	}
+
+	public SubLocation withLatitudeAndLongitude(String latitudeAndLongitude) {
+		this.latitudeAndLongitude = latitudeAndLongitude;
+		return this;
+	}
+
+	public SubLocation withOtherAttributes(Map<QName, String> otherAttributes) {
+		this.otherAttributes = otherAttributes;
+		return this;
+	}
+
+	public List<LangString> withDescription() {
+		if (description == null) {
+			description = new ArrayList<>();
+		}
+		return description;
+	}
+
+	public Other withOther() {
+		if (other == null) {
+			other = new Other();
+		}
+		return other;
+	}
+
+	public Map<QName, String> withOtherAttributes() {
+		if (otherAttributes == null) {
+			otherAttributes = new HashMap<>();
+		}
+		return otherAttributes;
+	}
+
+	// endregion
 
 	@Override
 	public SubLocation copy() {
-		var clone = new SubLocation();
-		LangString.copy(description, clone.description);
-		if (other != null)
-			clone.other = other.copy();
-		clone.subLocation = subLocation;
-		clone.latitudeAndLongitude = latitudeAndLongitude;
-		clone.otherAttributes.putAll(otherAttributes);
-		return clone;
+		var copy = new SubLocation();
+		Val.copy(description, copy::withDescription);
+		Val.copy(other, copy::withOther);
+		copy.withSubLocation(subLocation);
+		copy.withLatitudeAndLongitude(latitudeAndLongitude);
+		Val.copy(otherAttributes, copy::withOtherAttributes);
+		return copy;
 	}
 
 }

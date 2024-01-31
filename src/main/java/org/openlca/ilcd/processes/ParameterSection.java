@@ -9,6 +9,7 @@ import org.openlca.ilcd.commons.Copyable;
 import org.openlca.ilcd.commons.LangString;
 import org.openlca.ilcd.commons.Other;
 import org.openlca.ilcd.commons.annotations.FreeText;
+import org.openlca.ilcd.util.Val;
 
 import javax.xml.namespace.QName;
 import java.util.ArrayList;
@@ -23,29 +24,97 @@ public class ParameterSection implements Copyable<ParameterSection> {
 
 	@FreeText
 	@XmlElement(name = "modelDescription")
-	public final List<LangString> description = new ArrayList<>();
+	private List<LangString> description;
 
 	@XmlElement(name = "variableParameter")
-	public final List<Parameter> parameters = new ArrayList<>();
+	private List<Parameter> parameters;
 
 	@XmlElement(namespace = "http://lca.jrc.it/ILCD/Common")
-	public Other other;
+	private Other other;
 
 	@XmlAnyAttribute
-	public final Map<QName, String> otherAttributes = new HashMap<>();
+	private Map<QName, String> otherAttributes;
+
+	// region getters
+
+	public List<LangString> getDescription() {
+		return description != null ? description : List.of();
+	}
+
+	public List<Parameter> getParameters() {
+		return parameters != null ? parameters : List.of();
+	}
+
+	public Other getOther() {
+		return other;
+	}
+
+	public Map<QName, String> getOtherAttributes() {
+		return otherAttributes != null ? otherAttributes : Map.of();
+	}
+
+	// endregion
+
+	// region setters
+
+	public ParameterSection withDescription(List<LangString> description) {
+		this.description = description;
+		return this;
+	}
+
+	public ParameterSection withParameters(List<Parameter> parameters) {
+		this.parameters = parameters;
+		return this;
+	}
+
+	public ParameterSection withOther(Other other) {
+		this.other = other;
+		return this;
+	}
+
+	public ParameterSection withOtherAttributes(Map<QName, String> otherAttributes) {
+		this.otherAttributes = otherAttributes;
+		return this;
+	}
+
+	public List<LangString> withDescription() {
+		if (description == null) {
+			description = new ArrayList<>();
+		}
+		return description;
+	}
+
+	public List<Parameter> withParameters() {
+		if (parameters == null) {
+			parameters = new ArrayList<>();
+		}
+		return parameters;
+	}
+
+	public Other withOther() {
+		if (other == null) {
+			other = new Other();
+		}
+		return other;
+	}
+
+	public Map<QName, String> withOtherAttributes() {
+		if (otherAttributes == null) {
+			otherAttributes = new HashMap<>();
+		}
+		return otherAttributes;
+	}
+
+	// endregion
 
 	@Override
 	public ParameterSection copy() {
-		var clone = new ParameterSection();
-		LangString.copy(description, clone.description);
-		for (Parameter p : parameters) {
-			if (p == null)
-				continue;
-			clone.parameters.add(p.copy());
-		}
-		if (other != null)
-			clone.other = other.copy();
-		clone.otherAttributes.putAll(otherAttributes);
-		return clone;
+		var copy = new ParameterSection();
+		Val.copy(description, copy::withDescription);
+		Val.copy(parameters, copy::withParameters);
+		Val.copy(other, copy::withOther);
+		Val.copy(otherAttributes, copy::withOtherAttributes);
+		return copy;
 	}
+
 }

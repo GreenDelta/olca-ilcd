@@ -8,6 +8,7 @@ import jakarta.xml.bind.annotation.XmlType;
 import org.openlca.ilcd.commons.Copyable;
 import org.openlca.ilcd.commons.Other;
 import org.openlca.ilcd.commons.Ref;
+import org.openlca.ilcd.util.Val;
 
 import javax.xml.datatype.XMLGregorianCalendar;
 import javax.xml.namespace.QName;
@@ -28,41 +29,150 @@ import java.util.Map;
 public class DataEntry implements Copyable<DataEntry> {
 
 	@XmlElement(namespace = "http://lca.jrc.it/ILCD/Common")
-	public XMLGregorianCalendar timeStamp;
+	private XMLGregorianCalendar timeStamp;
 
 	/** Describes the format of the data set. */
 	@XmlElement(namespace = "http://lca.jrc.it/ILCD/Common", name = "referenceToDataSetFormat")
-	public final List<Ref> formats = new ArrayList<>();
+	private List<Ref> formats ;
 
 	@XmlElement(namespace = "http://lca.jrc.it/ILCD/Common", name = "referenceToConvertedOriginalDataSetFrom")
-	public Ref originalDataSet;
+	private Ref originalDataSet;
 
 	@XmlElement(namespace = "http://lca.jrc.it/ILCD/Common", name = "referenceToPersonOrEntityEnteringTheData")
-	public Ref documentor;
+	private Ref documentor;
 
 	@XmlElement(namespace = "http://lca.jrc.it/ILCD/Common", name = "referenceToDataSetUseApproval")
-	public final List<Ref> useApprovals = new ArrayList<>();
+	private List<Ref> useApprovals;
 
 	@XmlElement(namespace = "http://lca.jrc.it/ILCD/Common")
-	public Other other;
+	private Other other;
 
 	@XmlAnyAttribute
-	public final Map<QName, String> otherAttributes = new HashMap<>();
+	private Map<QName, String> otherAttributes;
+
+	// region getters
+
+	public XMLGregorianCalendar getTimeStamp() {
+		return timeStamp;
+	}
+
+	public List<Ref> getFormats() {
+		return formats != null ? formats : List.of();
+	}
+
+	public Ref getOriginalDataSet() {
+		return originalDataSet;
+	}
+
+	public Ref getDocumentor() {
+		return documentor;
+	}
+
+	public List<Ref> getUseApprovals() {
+		return useApprovals != null ? useApprovals : List.of();
+	}
+
+	public Other getOther() {
+		return other;
+	}
+
+	public Map<QName, String> getOtherAttributes() {
+		return otherAttributes != null ? otherAttributes : Map.of();
+	}
+
+	// endregion
+
+	// region setters
+
+	public DataEntry withTimeStamp(XMLGregorianCalendar timeStamp) {
+		this.timeStamp = timeStamp;
+		return this;
+	}
+
+	public DataEntry withFormats(List<Ref> formats) {
+		this.formats = formats;
+		return this;
+	}
+
+	public DataEntry withOriginalDataSet(Ref originalDataSet) {
+		this.originalDataSet = originalDataSet;
+		return this;
+	}
+
+	public DataEntry withDocumentor(Ref documentor) {
+		this.documentor = documentor;
+		return this;
+	}
+
+	public DataEntry withUseApprovals(List<Ref> useApprovals) {
+		this.useApprovals = useApprovals;
+		return this;
+	}
+
+	public DataEntry withOther(Other other) {
+		this.other = other;
+		return this;
+	}
+
+	public DataEntry withOtherAttributes(Map<QName, String> otherAttributes) {
+		this.otherAttributes = otherAttributes;
+		return this;
+	}
+
+	public List<Ref> withFormats() {
+		if (formats == null) {
+			formats = new ArrayList<>();
+		}
+		return formats;
+	}
+
+	public Ref withOriginalDataSet() {
+		if (originalDataSet == null) {
+			originalDataSet = new Ref();
+		}
+		return originalDataSet;
+	}
+
+	public Ref withDocumentor() {
+		if (documentor == null) {
+			documentor = new Ref();
+		}
+		return documentor;
+	}
+
+	public List<Ref> withUseApprovals() {
+		if (useApprovals == null) {
+			useApprovals = new ArrayList<>();
+		}
+		return useApprovals;
+	}
+
+	public Other withOther() {
+		if (other == null) {
+			other = new Other();
+		}
+		return other;
+	}
+
+	public Map<QName, String> withOtherAttributes() {
+		if (otherAttributes == null) {
+			otherAttributes = new HashMap<>();
+		}
+		return otherAttributes;
+	}
+
+	// endregion
 
 	@Override
 	public DataEntry copy() {
-		var clone = new DataEntry();
-		clone.timeStamp = timeStamp;
-		Ref.copy(formats, clone.formats);
-		if (originalDataSet != null)
-			clone.originalDataSet = originalDataSet.copy();
-		if (documentor != null)
-			clone.documentor = documentor.copy();
-		Ref.copy(useApprovals, clone.useApprovals);
-		if (other != null)
-			clone.other = other.copy();
-		clone.otherAttributes.putAll(otherAttributes);
-		return clone;
+		var copy = new DataEntry();
+		copy.withTimeStamp(timeStamp);
+		Val.copy(formats, copy::withFormats);
+		Val.copy(originalDataSet, copy::withOriginalDataSet);
+		Val.copy(documentor, copy::withDocumentor);
+		Val.copy(useApprovals, copy::withUseApprovals);
+		Val.copy(other, copy::withOther);
+		Val.copy(otherAttributes, copy::withOtherAttributes);
+		return copy;
 	}
-
 }

@@ -16,6 +16,7 @@ import org.openlca.ilcd.commons.Other;
 import org.openlca.ilcd.commons.Ref;
 import org.openlca.ilcd.commons.UncertaintyDistribution;
 import org.openlca.ilcd.commons.annotations.Label;
+import org.openlca.ilcd.util.Val;
 
 import javax.xml.namespace.QName;
 import java.util.ArrayList;
@@ -46,109 +47,304 @@ public class Exchange implements Copyable<Exchange> {
 
 	/** The data set internal ID (dataSetInternalID) of the exchange. */
 	@XmlAttribute(name = "dataSetInternalID", required = true)
-	public int id;
+	private int id;
 
 	@XmlElement(name = "referenceToFlowDataSet", required = true)
-	public Ref flow;
+	private Ref flow;
 
-	public String location;
+	private String location;
 
 	@XmlElement(name = "functionType")
-	public ExchangeFunction exchangeFunction;
+	private ExchangeFunction exchangeFunction;
 
 	@XmlElement(name = "exchangeDirection")
-	public ExchangeDirection direction;
+	private ExchangeDirection direction;
 
 	@XmlElement(name = "referenceToVariable")
-	public String variable;
+	private String variable;
 
 	@XmlElement(name = "meanAmount")
-	public double meanAmount;
+	private double meanAmount;
 
 	@XmlElement(name = "resultingAmount")
-	public Double resultingAmount;
+	private Double resultingAmount;
 
-	public Double minimumAmount;
+	private Double minimumAmount;
 
-	public Double maximumAmount;
+	private Double maximumAmount;
 
 	@XmlElement(name = "uncertaintyDistributionType")
-	public UncertaintyDistribution uncertaintyDistribution;
+	private UncertaintyDistribution uncertaintyDistribution;
 
-	public Double relativeStandardDeviation95In;
+	private Double relativeStandardDeviation95In;
 
 	@XmlElementWrapper(name = "allocations")
 	@XmlElement(name = "allocation", required = true)
-	public AllocationFactor[] allocations;
+	private List<AllocationFactor> allocations;
 
-	public String dataSourceType;
+	private String dataSourceType;
 
 	@XmlElement(name = "dataDerivationTypeStatus")
-	public DataDerivation dataDerivation;
+	private DataDerivation dataDerivation;
 
 	@XmlElementWrapper(name = "referencesToDataSource")
 	@XmlElement(name = "referenceToDataSource")
-	public Ref[] sources;
+	private List<Ref> sources;
 
 	@Label
 	@XmlElement(name = "generalComment")
-	public final List<LangString> comment = new ArrayList<>();
+	private List<LangString> comment;
 
 	@XmlElement(namespace = "http://lca.jrc.it/ILCD/Common")
-	public Other other;
+	private Other other;
 
 	@XmlAnyAttribute
-	public Map<QName, String> otherAttributes = new HashMap<>();
+	private Map<QName, String> otherAttributes;
+
+	// region getters
+
+	public int getId() {
+		return id;
+	}
+
+	public Ref getFlow() {
+		return flow;
+	}
+
+	public String getLocation() {
+		return location;
+	}
+
+	public ExchangeFunction getExchangeFunction() {
+		return exchangeFunction;
+	}
+
+	public ExchangeDirection getDirection() {
+		return direction;
+	}
+
+	public String getVariable() {
+		return variable;
+	}
+
+	public double getMeanAmount() {
+		return meanAmount;
+	}
+
+	public Double getResultingAmount() {
+		return resultingAmount;
+	}
+
+	public Double getMinimumAmount() {
+		return minimumAmount;
+	}
+
+	public Double getMaximumAmount() {
+		return maximumAmount;
+	}
+
+	public UncertaintyDistribution getUncertaintyDistribution() {
+		return uncertaintyDistribution;
+	}
+
+	public Double getRelativeStandardDeviation95In() {
+		return relativeStandardDeviation95In;
+	}
+
+	public List<AllocationFactor> getAllocations() {
+		return allocations != null ? allocations : List.of();
+	}
+
+	public String getDataSourceType() {
+		return dataSourceType;
+	}
+
+	public DataDerivation getDataDerivation() {
+		return dataDerivation;
+	}
+
+	public List<Ref> getSources() {
+		return sources != null ? sources : List.of();
+	}
+
+	public List<LangString> getComment() {
+		return comment != null ? comment : List.of();
+	}
+
+	public Other getOther() {
+		return other;
+	}
+
+	public Map<QName, String> getOtherAttributes() {
+		return otherAttributes != null ? otherAttributes : Map.of();
+	}
+
+	// endregion
+
+	// region setters
+
+	public Exchange withId(int id) {
+		this.id = id;
+		return this;
+	}
+
+	public Exchange withFlow(Ref flow) {
+		this.flow = flow;
+		return this;
+	}
+
+	public Exchange withLocation(String location) {
+		this.location = location;
+		return this;
+	}
+
+	public Exchange withExchangeFunction(ExchangeFunction exchangeFunction) {
+		this.exchangeFunction = exchangeFunction;
+		return this;
+	}
+
+	public Exchange withDirection(ExchangeDirection direction) {
+		this.direction = direction;
+		return this;
+	}
+
+	public Exchange withVariable(String variable) {
+		this.variable = variable;
+		return this;
+	}
+
+	public Exchange withMeanAmount(double meanAmount) {
+		this.meanAmount = meanAmount;
+		return this;
+	}
+
+	public Exchange withResultingAmount(Double resultingAmount) {
+		this.resultingAmount = resultingAmount;
+		return this;
+	}
+
+	public Exchange withMinimumAmount(Double minimumAmount) {
+		this.minimumAmount = minimumAmount;
+		return this;
+	}
+
+	public Exchange withMaximumAmount(Double maximumAmount) {
+		this.maximumAmount = maximumAmount;
+		return this;
+	}
+
+	public Exchange withUncertaintyDistribution(UncertaintyDistribution uncertaintyDistribution) {
+		this.uncertaintyDistribution = uncertaintyDistribution;
+		return this;
+	}
+
+	public Exchange withRelativeStandardDeviation95In(Double relativeStandardDeviation95In) {
+		this.relativeStandardDeviation95In = relativeStandardDeviation95In;
+		return this;
+	}
+
+	public Exchange withAllocations(List<AllocationFactor> allocations) {
+		this.allocations = allocations;
+		return this;
+	}
+
+	public Exchange withDataSourceType(String dataSourceType) {
+		this.dataSourceType = dataSourceType;
+		return this;
+	}
+
+	public Exchange withDataDerivation(DataDerivation dataDerivation) {
+		this.dataDerivation = dataDerivation;
+		return this;
+	}
+
+	public Exchange withSources(List<Ref> sources) {
+		this.sources = sources;
+		return this;
+	}
+
+	public Exchange withComment(List<LangString> comment) {
+		this.comment = comment;
+		return this;
+	}
+
+	public Exchange withOther(Other other) {
+		this.other = other;
+		return this;
+	}
+
+	public Exchange withOtherAttributes(Map<QName, String> otherAttributes) {
+		this.otherAttributes = otherAttributes;
+		return this;
+	}
+
+	public Ref withFlow() {
+		if (flow == null) {
+			flow = new Ref();
+		}
+		return flow;
+	}
+
+	public List<AllocationFactor> withAllocations() {
+		if (allocations == null) {
+			allocations = new ArrayList<>();
+		}
+		return allocations;
+	}
+
+	public List<Ref> withSources() {
+		if (sources == null) {
+			sources = new ArrayList<>();
+		}
+		return sources;
+	}
+
+	public List<LangString> withComment() {
+		if (comment == null) {
+			comment = new ArrayList<>();
+		}
+		return comment;
+	}
+
+	public Other withOther() {
+		if (other == null) {
+			other = new Other();
+		}
+		return other;
+	}
+
+	public Map<QName, String> withOtherAttributes() {
+		if (otherAttributes == null) {
+			otherAttributes = new HashMap<>();
+		}
+		return otherAttributes;
+	}
+
+	// endregion
 
 	@Override
 	public Exchange copy() {
-		var clone = new Exchange();
-		clone.id = id;
-		if (flow != null)
-			clone.flow = flow.copy();
-		clone.location = location;
-		clone.exchangeFunction = exchangeFunction;
-		clone.direction = direction;
-		clone.variable = variable;
-		clone.meanAmount = meanAmount;
-		clone.resultingAmount = resultingAmount;
-		clone.minimumAmount = minimumAmount;
-		clone.maximumAmount = maximumAmount;
-		clone.uncertaintyDistribution = uncertaintyDistribution;
-		clone.relativeStandardDeviation95In = relativeStandardDeviation95In;
-		clone.dataSourceType = dataSourceType;
-		clone.dataDerivation = dataDerivation;
-		clone.sources = Ref.copy(sources);
-		LangString.copy(comment, clone.comment);
-		cloneAllocations(clone);
-		if (other != null)
-			clone.other = other.copy();
-		clone.otherAttributes.putAll(otherAttributes);
-		return clone;
+		var copy = new Exchange();
+		copy.withId(id);
+		Val.copy(flow, copy::withFlow);
+		copy.withLocation(location);
+		copy.withExchangeFunction(exchangeFunction);
+		copy.withDirection(direction);
+		copy.withVariable(variable);
+		copy.withMeanAmount(meanAmount);
+		copy.withResultingAmount(resultingAmount);
+		copy.withMinimumAmount(minimumAmount);
+		copy.withMaximumAmount(maximumAmount);
+		copy.withUncertaintyDistribution(uncertaintyDistribution);
+		copy.withRelativeStandardDeviation95In(relativeStandardDeviation95In);
+		Val.copy(allocations, copy::withAllocations);
+		copy.withDataSourceType(dataSourceType);
+		copy.withDataDerivation(dataDerivation);
+		Val.copy(sources, copy::withSources);
+		Val.copy(comment, copy::withComment);
+		Val.copy(other, copy::withOther);
+		Val.copy(otherAttributes, copy::withOtherAttributes);
+		return copy;
 	}
 
-	private void cloneAllocations(Exchange clone) {
-		if (allocations == null)
-			return;
-		clone.allocations = new AllocationFactor[allocations.length];
-		for (int i = 0; i < allocations.length; i++) {
-			if (allocations[i] == null)
-				continue;
-			clone.allocations[i] = allocations[i].copy();
-		}
-	}
-
-	/** Adds the given allocation factor to this exchange. */
-	public void add(AllocationFactor f) {
-		if (f == null)
-			return;
-		if (allocations == null) {
-			allocations = new AllocationFactor[] { f };
-			return;
-		}
-		AllocationFactor[] next = new AllocationFactor[allocations.length + 1];
-		System.arraycopy(allocations, 0, next, 0, allocations.length);
-		next[allocations.length] = f;
-		allocations = next;
-	}
 }

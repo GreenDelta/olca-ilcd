@@ -10,6 +10,7 @@ import org.openlca.ilcd.commons.Copyable;
 import org.openlca.ilcd.commons.LangString;
 import org.openlca.ilcd.commons.Other;
 import org.openlca.ilcd.commons.annotations.FreeText;
+import org.openlca.ilcd.util.Val;
 
 import javax.xml.namespace.QName;
 import java.util.ArrayList;
@@ -34,10 +35,10 @@ public class Location implements Copyable<Location> {
 	 */
 	@FreeText
 	@XmlElement(name = "descriptionOfRestrictions")
-	public final List<LangString> description = new ArrayList<>();
+	private List<LangString> description;
 
 	@XmlElement(namespace = "http://lca.jrc.it/ILCD/Common")
-	public Other other;
+	private Other other;
 
 	/**
 	 * Location, country or region the data set represents. [Note 1: This field
@@ -53,7 +54,7 @@ public class Location implements Copyable<Location> {
 	 * as "Production mix".]
 	 */
 	@XmlAttribute(name = "location")
-	public String code;
+	private String code;
 
 	/**
 	 * Geographical latitude and longitude reference of "Location" /
@@ -61,20 +62,94 @@ public class Location implements Copyable<Location> {
 	 * field is empty.
 	 */
 	@XmlAttribute(name = "latitudeAndLongitude")
-	public String latitudeAndLongitude;
+	private String latitudeAndLongitude;
 
 	@XmlAnyAttribute
-	public final Map<QName, String> otherAttributes = new HashMap<>();
+	private Map<QName, String> otherAttributes;
+
+	// region getters
+
+	public List<LangString> getDescription() {
+		return description != null ? description : List.of();
+	}
+
+	public Other getOther() {
+		return other;
+	}
+
+	public String getCode() {
+		return code;
+	}
+
+	public String getLatitudeAndLongitude() {
+		return latitudeAndLongitude;
+	}
+
+	public Map<QName, String> getOtherAttributes() {
+		return otherAttributes != null ? otherAttributes : Map.of();
+	}
+
+	// endregion
+
+	// region setters
+
+	public Location withDescription(List<LangString> description) {
+		this.description = description;
+		return this;
+	}
+
+	public Location withOther(Other other) {
+		this.other = other;
+		return this;
+	}
+
+	public Location withCode(String code) {
+		this.code = code;
+		return this;
+	}
+
+	public Location withLatitudeAndLongitude(String latitudeAndLongitude) {
+		this.latitudeAndLongitude = latitudeAndLongitude;
+		return this;
+	}
+
+	public Location withOtherAttributes(Map<QName, String> otherAttributes) {
+		this.otherAttributes = otherAttributes;
+		return this;
+	}
+
+	public List<LangString> withDescription() {
+		if (description == null) {
+			description = new ArrayList<>();
+		}
+		return description;
+	}
+
+	public Other withOther() {
+		if (other == null) {
+			other = new Other();
+		}
+		return other;
+	}
+
+	public Map<QName, String> withOtherAttributes() {
+		if (otherAttributes == null) {
+			otherAttributes = new HashMap<>();
+		}
+		return otherAttributes;
+	}
+
+	// endregion
 
 	@Override
 	public Location copy() {
-		var clone = new Location();
-		LangString.copy(description, clone.description);
-		if (other != null)
-			clone.other = other.copy();
-		clone.code = code;
-		clone.latitudeAndLongitude = latitudeAndLongitude;
-		clone.otherAttributes.putAll(otherAttributes);
-		return clone;
+		var copy = new Location();
+		Val.copy(description, copy::withDescription);
+		Val.copy(other, copy::withOther);
+		copy.withCode(code);
+		copy.withLatitudeAndLongitude(latitudeAndLongitude);
+		Val.copy(otherAttributes, copy::withOtherAttributes);
+		return copy;
 	}
+
 }

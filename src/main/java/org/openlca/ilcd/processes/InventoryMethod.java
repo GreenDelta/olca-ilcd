@@ -13,6 +13,7 @@ import org.openlca.ilcd.commons.Other;
 import org.openlca.ilcd.commons.ProcessType;
 import org.openlca.ilcd.commons.Ref;
 import org.openlca.ilcd.commons.annotations.FreeText;
+import org.openlca.ilcd.util.Val;
 
 import javax.xml.namespace.QName;
 import java.util.ArrayList;
@@ -34,54 +35,209 @@ import java.util.Map;
 public class InventoryMethod implements Copyable<InventoryMethod> {
 
 	@XmlElement(name = "typeOfDataSet")
-	public ProcessType processType;
+	private ProcessType processType;
 
 	@XmlElement(name = "LCIMethodPrinciple")
-	public ModellingPrinciple principle;
+	private ModellingPrinciple principle;
 
 	@FreeText
 	@XmlElement(name = "deviationsFromLCIMethodPrinciple")
-	public final List<LangString> principleDeviations = new ArrayList<>();
+	private List<LangString> principleDeviations;
 
 	@XmlElement(name = "LCIMethodApproaches")
-	public final List<ModellingApproach> approaches = new ArrayList<>();
+	private List<ModellingApproach> approaches;
 
 	@FreeText
 	@XmlElement(name = "deviationsFromLCIMethodApproaches")
-	public final List<LangString> approachDeviations = new ArrayList<>();
+	private List<LangString> approachDeviations;
 
 	@FreeText
 	@XmlElement(name = "modellingConstants")
-	public final List<LangString> constants = new ArrayList<>();
+	private List<LangString> constants;
 
 	@FreeText
 	@XmlElement(name = "deviationsFromModellingConstants")
-	public final List<LangString> constantsDeviations = new ArrayList<>();
+	private List<LangString> constantsDeviations;
 
 	@XmlElement(name = "referenceToLCAMethodDetails")
-	public final List<Ref> sources = new ArrayList<>();
+	private List<Ref> sources;
 
 	@XmlElement(namespace = "http://lca.jrc.it/ILCD/Common")
-	public Other other;
+	private Other other;
 
 	@XmlAnyAttribute
-	public final Map<QName, String> otherAttributes = new HashMap<>();
+	private Map<QName, String> otherAttributes;
+
+	// region getters
+
+	public ProcessType getProcessType() {
+		return processType;
+	}
+
+	public ModellingPrinciple getPrinciple() {
+		return principle;
+	}
+
+	public List<LangString> getPrincipleDeviations() {
+		return principleDeviations != null ? principleDeviations : List.of();
+	}
+
+	public List<ModellingApproach> getApproaches() {
+		return approaches != null ? approaches : List.of();
+	}
+
+	public List<LangString> getApproachDeviations() {
+		return approachDeviations != null ? approachDeviations : List.of();
+	}
+
+	public List<LangString> getConstants() {
+		return constants != null ? constants : List.of();
+	}
+
+	public List<LangString> getConstantsDeviations() {
+		return constantsDeviations != null ? constantsDeviations : List.of();
+	}
+
+	public List<Ref> getSources() {
+		return sources != null ? sources : List.of();
+	}
+
+	public Other getOther() {
+		return other;
+	}
+
+	public Map<QName, String> getOtherAttributes() {
+		return otherAttributes != null ? otherAttributes : Map.of();
+	}
+
+	// endregion
+
+	// region setters
+
+	public InventoryMethod withProcessType(ProcessType processType) {
+		this.processType = processType;
+		return this;
+	}
+
+	public InventoryMethod withPrinciple(ModellingPrinciple principle) {
+		this.principle = principle;
+		return this;
+	}
+
+	public InventoryMethod withPrincipleDeviations(List<LangString> principleDeviations) {
+		this.principleDeviations = principleDeviations;
+		return this;
+	}
+
+	public InventoryMethod withApproaches(List<ModellingApproach> approaches) {
+		this.approaches = approaches;
+		return this;
+	}
+
+	public InventoryMethod withApproachDeviations(List<LangString> approachDeviations) {
+		this.approachDeviations = approachDeviations;
+		return this;
+	}
+
+	public InventoryMethod withConstants(List<LangString> constants) {
+		this.constants = constants;
+		return this;
+	}
+
+	public InventoryMethod withConstantsDeviations(List<LangString> constantsDeviations) {
+		this.constantsDeviations = constantsDeviations;
+		return this;
+	}
+
+	public InventoryMethod withSources(List<Ref> sources) {
+		this.sources = sources;
+		return this;
+	}
+
+	public InventoryMethod withOther(Other other) {
+		this.other = other;
+		return this;
+	}
+
+	public InventoryMethod withOtherAttributes(Map<QName, String> otherAttributes) {
+		this.otherAttributes = otherAttributes;
+		return this;
+	}
+
+	public List<LangString> withPrincipleDeviations() {
+		if (principleDeviations == null) {
+			principleDeviations = new ArrayList<>();
+		}
+		return principleDeviations;
+	}
+
+	public List<ModellingApproach> withApproaches() {
+		if (approaches == null) {
+			approaches = new ArrayList<>();
+		}
+		return approaches;
+	}
+
+	public List<LangString> withApproachDeviations() {
+		if (approachDeviations == null) {
+			approachDeviations = new ArrayList<>();
+		}
+		return approachDeviations;
+	}
+
+	public List<LangString> withConstants() {
+		if (constants == null) {
+			constants = new ArrayList<>();
+		}
+		return constants;
+	}
+
+	public List<LangString> withConstantsDeviations() {
+		if (constantsDeviations == null) {
+			constantsDeviations = new ArrayList<>();
+		}
+		return constantsDeviations;
+	}
+
+	public List<Ref> withSources() {
+		if (sources == null) {
+			sources = new ArrayList<>();
+		}
+		return sources;
+	}
+
+	public Other withOther() {
+		if (other == null) {
+			other = new Other();
+		}
+		return other;
+	}
+
+	public Map<QName, String> withOtherAttributes() {
+		if (otherAttributes == null) {
+			otherAttributes = new HashMap<>();
+		}
+		return otherAttributes;
+	}
+
+	// endregion
 
 	@Override
 	public InventoryMethod copy() {
-		var clone = new InventoryMethod();
-		clone.processType = processType;
-		clone.principle = principle;
-		LangString.copy(principleDeviations, clone.principleDeviations);
-		clone.approaches.addAll(approaches);
-		LangString.copy(approachDeviations, clone.approachDeviations);
-		LangString.copy(constants, clone.constants);
-		LangString.copy(constantsDeviations, clone.constantsDeviations);
-		Ref.copy(sources, clone.sources);
-		if (other != null) {
-			clone.other = other.copy();
+		var copy = new InventoryMethod();
+		copy.withProcessType(processType);
+		copy.withPrinciple(principle);
+		Val.copy(principleDeviations, copy::withPrincipleDeviations);
+		if (approaches != null) {
+			copy.withApproaches().addAll(approaches);
 		}
-		clone.otherAttributes.putAll(otherAttributes);
-		return clone;
+		Val.copy(approachDeviations, copy::withApproachDeviations);
+		Val.copy(constants, copy::withConstants);
+		Val.copy(constantsDeviations, copy::withConstantsDeviations);
+		Val.copy(sources, copy::withSources);
+		Val.copy(other, copy::withOther);
+		Val.copy(otherAttributes, copy::withOtherAttributes);
+		return copy;
 	}
+
 }
