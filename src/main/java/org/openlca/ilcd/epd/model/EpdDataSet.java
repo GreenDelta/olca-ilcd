@@ -56,10 +56,10 @@ public class EpdDataSet implements Copyable<EpdDataSet> {
 		EpdDescriptor d = new EpdDescriptor();
 		if (process == null)
 			return d;
-		d.refId = process.getUUID();
+		d.refId = Processes.getUUID(process);
 		ProcessName name = Processes.getProcessName(process);
 		if (name != null)
-			d.name = LangString.getFirst(name.name, lang, "en");
+			d.name = LangString.getFirst(name.getName(), lang, "en");
 		return d;
 	}
 
@@ -112,7 +112,8 @@ public class EpdDataSet implements Copyable<EpdDataSet> {
 	 * method is called.
 	 */
 	public Exchange productExchange() {
-		var qRef = Processes.forceQuantitativeReference(process);
+		var qRef = process.withProcessInfo()
+			.withQuantitativeReference();
 		qRef.type = QuantitativeReferenceType.REFERENCE_FLOWS;
 		if (qRef.referenceFlows.isEmpty())
 			qRef.referenceFlows.add(1);
@@ -121,10 +122,12 @@ public class EpdDataSet implements Copyable<EpdDataSet> {
 			if (id == exchange.id)
 				return exchange;
 		}
+
 		var e = Processes.createExchange(process);
 		e.meanAmount = 1d;
 		e.resultingAmount = 1d;
 		e.id = id;
+
 		return e;
 	}
 }

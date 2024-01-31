@@ -61,6 +61,13 @@ public final class Processes {
 			: List.of();
 	}
 
+	public static String getUUID(Process p) {
+		var info = getDataSetInfo(p);
+		return info != null
+			? info.getUUID()
+			: null;
+	}
+
 	public static Geography getGeography(Process p) {
 		var info = getProcessInfo(p);
 		if (info == null)
