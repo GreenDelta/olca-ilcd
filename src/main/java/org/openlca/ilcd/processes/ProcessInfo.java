@@ -39,7 +39,7 @@ public class ProcessInfo implements Copyable<ProcessInfo> {
 	private Technology technology;
 
 	@XmlElement(name = "mathematicalRelations")
-	private ParameterSection parameters;
+	private ParameterModel parameterModel;
 
 	@XmlElement(namespace = "http://lca.jrc.it/ILCD/Common")
 	private Other other;
@@ -69,8 +69,8 @@ public class ProcessInfo implements Copyable<ProcessInfo> {
 		return technology;
 	}
 
-	public ParameterSection getParameters() {
-		return parameters;
+	public ParameterModel getParameterModel() {
+		return parameterModel;
 	}
 
 	public Other getOther() {
@@ -110,8 +110,8 @@ public class ProcessInfo implements Copyable<ProcessInfo> {
 		return this;
 	}
 
-	public ProcessInfo withParameters(ParameterSection parameters) {
-		this.parameters = parameters;
+	public ProcessInfo withParameterModel(ParameterModel model) {
+		this.parameterModel = model;
 		return this;
 	}
 
@@ -160,11 +160,11 @@ public class ProcessInfo implements Copyable<ProcessInfo> {
 		return technology;
 	}
 
-	public ParameterSection withParameters() {
-		if (parameters == null) {
-			parameters = new ParameterSection();
+	public ParameterModel withParameterModel() {
+		if (parameterModel == null) {
+			parameterModel = new ParameterModel();
 		}
-		return parameters;
+		return parameterModel;
 	}
 
 	public Other withOther() {
@@ -191,7 +191,7 @@ public class ProcessInfo implements Copyable<ProcessInfo> {
 		Val.copy(time, copy::withTime);
 		Val.copy(geography, copy::withGeography);
 		Val.copy(technology, copy::withTechnology);
-		Val.copy(parameters, copy::withParameters);
+		Val.copy(parameterModel, copy::withParameterModel);
 		Val.copy(other, copy::withOther);
 		Val.copy(otherAttributes, copy::withOtherAttributes);
 		return copy;

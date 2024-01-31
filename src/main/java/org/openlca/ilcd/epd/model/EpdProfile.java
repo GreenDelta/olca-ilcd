@@ -31,34 +31,34 @@ public class EpdProfile {
 	}
 
 	public Indicator indicatorOf(Exchange exchange) {
-		if (exchange == null || exchange.flow == null)
+		if (exchange == null || exchange.getFlow() == null)
 			return null;
-		return indicator(exchange.flow, exchange.other, newIndicator -> {
+		return indicator(exchange.getFlow(), exchange.getOther(), newIndicator -> {
 			newIndicator.type = Indicator.Type.LCI;
-			newIndicator.isInput = exchange.direction == ExchangeDirection.INPUT;
+			newIndicator.isInput = exchange.getDirection() == ExchangeDirection.INPUT;
 		});
 	}
 
 	public Indicator indicatorOf(ImpactResult result) {
-		if (result == null || result.method == null)
+		if (result == null || result.getMethod() == null)
 			return null;
-		return indicator(result.method, result.other,
+		return indicator(result.getMethod(), result.getOther(),
 			newIndicator -> newIndicator.type = Indicator.Type.LCIA);
 	}
 
 	private Indicator indicator(Ref ref, Other ext, Consumer<Indicator> ifNew) {
 		for (var i : indicators) {
-			if (Objects.equals(i.uuid, ref.uuid))
+			if (Objects.equals(i.uuid, ref.getUUID()))
 				return i;
 		}
 		var indicator = new Indicator();
 		ifNew.accept(indicator);
-		indicator.uuid = ref.uuid;
-		indicator.name = LangString.getFirst(ref.name, "en");
+		indicator.uuid = ref.getUUID();
+		indicator.name = LangString.getFirst(ref.getName(), "en");
 		RefExtension.readFrom(ext, "referenceToUnitGroupDataSet")
 			.ifPresent(groupRef -> {
-				indicator.group = groupRef.uuid;
-				indicator.unit = LangString.getFirst(groupRef.name, "en");
+				indicator.group = groupRef.getUUID();
+				indicator.unit = LangString.getFirst(groupRef.getName(), "en");
 			});
 		indicators.add(indicator);
 		return indicator;

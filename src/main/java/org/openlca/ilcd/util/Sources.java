@@ -1,5 +1,6 @@
 package org.openlca.ilcd.util;
 
+import org.openlca.ilcd.commons.Classification;
 import org.openlca.ilcd.commons.DataEntry;
 import org.openlca.ilcd.commons.Publication;
 import org.openlca.ilcd.sources.AdminInfo;
@@ -11,7 +12,6 @@ import org.slf4j.LoggerFactory;
 
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
-import java.util.Collections;
 import java.util.List;
 
 public final class Sources {
@@ -21,81 +21,49 @@ public final class Sources {
 
 	public static SourceInfo getSourceInfo(Source s) {
 		return s != null
-			? s.sourceInfo
+			? s.getSourceInfo()
 			: null;
-	}
-
-	public static SourceInfo forceSourceInfo(Source s) {
-		if (s.sourceInfo == null) {
-			s.sourceInfo = new SourceInfo();
-		}
-		return s.sourceInfo;
 	}
 
 	public static DataSetInfo getDataSetInfo(Source s) {
 		var info = getSourceInfo(s);
 		return info != null
-			? info.dataSetInfo
+			? info.getDataSetInfo()
 			: null;
 	}
 
-	public static DataSetInfo forceDataSetInfo(Source s) {
-		var info = forceSourceInfo(s);
-		if (info.dataSetInfo == null) {
-			info.dataSetInfo = new DataSetInfo();
-		}
-		return info.dataSetInfo;
+	public static List<Classification> getClassifications(Source s) {
+		var info = getDataSetInfo(s);
+		return info != null
+			? info.getClassifications()
+			: List.of();
 	}
 
 	public static AdminInfo getAdminInfo(Source s) {
 		return s != null
-			? s.adminInfo
+			? s.getAdminInfo()
 			: null;
-	}
-
-	public static AdminInfo forceAdminInfo(Source s) {
-		if (s.adminInfo == null) {
-			s.adminInfo = new AdminInfo();
-		}
-		return s.adminInfo;
 	}
 
 	public static DataEntry getDataEntry(Source s) {
 		var info = getAdminInfo(s);
 		return info != null
-			? info.dataEntry
+			? info.getDataEntry()
 			: null;
 	}
 
-	public static DataEntry forceDataEntry(Source s) {
-		var info = forceAdminInfo(s);
-		if (info.dataEntry == null) {
-			info.dataEntry = new DataEntry();
-		}
-		return info.dataEntry;
-	}
-
 	public static List<FileRef> getFileRefs(Source s) {
-		if (s == null || s.sourceInfo == null)
-			return Collections.emptyList();
-		return s.sourceInfo.dataSetInfo == null
-			? Collections.emptyList()
-			: s.sourceInfo.dataSetInfo.files;
+		var info = getDataSetInfo(s);
+		return info != null
+			? info.getFiles()
+			: List.of();
 	}
 
 	public static Publication getPublication(Source s) {
 		var info = getAdminInfo(s);
 		return info != null
-			? info.publication
+			? info.getPublication()
 			: null;
-	}
-
-	public static Publication forcePublication(Source s) {
-		var info = forceAdminInfo(s);
-		if (info.publication == null) {
-			info.publication = new Publication();
-		}
-		return info.publication;
 	}
 
 	/**
@@ -103,10 +71,10 @@ public final class Sources {
 	 * last part of the URI in the given file reference).
 	 */
 	public static String getFileName(FileRef ref) {
-		if (ref == null || ref.uri == null)
+		if (ref == null || ref.getUri() == null)
 			return null;
 		try {
-			String s = ref.uri.trim().replace('\\', '/');
+			String s = ref.getUri().trim().replace('\\', '/');
 			if (s.isEmpty())
 				return null;
 			int pos = s.lastIndexOf('/');
@@ -116,7 +84,7 @@ public final class Sources {
 			return URLDecoder.decode(s, StandardCharsets.UTF_8);
 		} catch (Exception e) {
 			var log = LoggerFactory.getLogger(Sources.class);
-			log.error("could not get file name from " + ref.uri, e);
+			log.error("could not get file name from " + ref.getUri(), e);
 			return null;
 		}
 	}

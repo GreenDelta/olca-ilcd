@@ -1,5 +1,6 @@
 package org.openlca.ilcd.util;
 
+import org.openlca.ilcd.commons.Classification;
 import org.openlca.ilcd.commons.CommissionerAndGoal;
 import org.openlca.ilcd.commons.LangString;
 import org.openlca.ilcd.commons.ProcessType;
@@ -22,34 +23,21 @@ public final class Processes {
 	public static ProcessInfo getProcessInfo(Process p) {
 		if (p == null)
 			return null;
-		return p.processInfo;
-	}
-
-	public static ProcessInfo forceProcessInfo(Process p) {
-		if (p.processInfo == null)
-			p.processInfo = new ProcessInfo();
-		return p.processInfo;
+		return p.getProcessInfo();
 	}
 
 	public static DataSetInfo getDataSetInfo(Process p) {
 		var info = getProcessInfo(p);
 		if (info == null)
 			return null;
-		return info.dataSetInfo;
-	}
-
-	public static DataSetInfo forceDataSetInfo(Process p) {
-		var info = forceProcessInfo(p);
-		if (info.dataSetInfo == null)
-			info.dataSetInfo = new DataSetInfo();
-		return info.dataSetInfo;
+		return info.getDataSetInfo();
 	}
 
 	public static ProcessName getProcessName(Process p) {
 		var info = getDataSetInfo(p);
 		if (info == null)
 			return null;
-		return info.name;
+		return info.getName();
 	}
 
 	public static String getFullName(Process p, String... langs) {
@@ -57,311 +45,174 @@ public final class Processes {
 		if (name == null)
 			return null;
 		return Stream.of(
-				name.name,
-				name.mixAndLocation,
-				name.technicalDetails,
-				name.flowProperties)
+				name.getName(),
+				name.getMixAndLocation(),
+				name.getTechnicalDetails(),
+				name.getFlowProperties())
 			.map(strings -> LangString.getFirst(strings, langs))
 			.filter(s -> s != null && !s.trim().isEmpty())
 			.collect(Collectors.joining(", "));
 	}
 
-	public static ProcessName forceProcessName(Process p) {
-		var info = forceDataSetInfo(p);
-		if (info.name == null)
-			info.name = new ProcessName();
-		return info.name;
+	public static List<Classification> getClassifications(Process p) {
+		var info = getDataSetInfo(p);
+		return info != null
+			? info.getClassifications()
+			: List.of();
 	}
 
 	public static Geography getGeography(Process p) {
 		var info = getProcessInfo(p);
 		if (info == null)
 			return null;
-		return info.geography;
-	}
-
-	public static Geography forceGeography(Process p) {
-		var info = forceProcessInfo(p);
-		if (info.geography == null)
-			info.geography = new Geography();
-		return info.geography;
+		return info.getGeography();
 	}
 
 	public static Location getLocation(Process p) {
 		var geo = getGeography(p);
 		if (geo == null)
 			return null;
-		return geo.location;
-	}
-
-	public static Location forceLocation(Process p) {
-		var geo = forceGeography(p);
-		if (geo.location == null)
-			geo.location = new Location();
-		return geo.location;
+		return geo.getLocation();
 	}
 
 	public static QuantitativeReference getQuantitativeReference(Process p) {
 		var info = getProcessInfo(p);
 		if (info == null)
 			return null;
-		return info.quantitativeReference;
-	}
-
-	public static QuantitativeReference forceQuantitativeReference(Process p) {
-		var info = forceProcessInfo(p);
-		if (info.quantitativeReference == null)
-			info.quantitativeReference = new QuantitativeReference();
-		return info.quantitativeReference;
+		return info.getQuantitativeReference();
 	}
 
 	public static List<Integer> getReferenceFlows(Process p) {
 		var qref = getQuantitativeReference(p);
 		return qref != null
-			? qref.referenceFlows
+			? qref.getReferenceFlows()
 			: Collections.emptyList();
-	}
-
-	public static List<Integer> forceReferenceFlows(Process p) {
-		return forceQuantitativeReference(p).referenceFlows;
 	}
 
 	public static Technology getTechnology(Process p) {
 		var info = getProcessInfo(p);
 		if (info == null)
 			return null;
-		return info.technology;
-	}
-
-	public static Technology forceTechnology(Process p) {
-		var info = forceProcessInfo(p);
-		if (info.technology == null)
-			info.technology = new Technology();
-		return info.technology;
+		return info.getTechnology();
 	}
 
 	public static Time getTime(Process p) {
 		var info = getProcessInfo(p);
 		if (info == null)
 			return null;
-		return info.time;
-	}
-
-	public static Time forceTime(Process p) {
-		var info = forceProcessInfo(p);
-		if (info.time == null)
-			info.time = new Time();
-		return info.time;
+		return info.getTime();
 	}
 
 	public static List<Parameter> getParameters(Process p) {
 		var info = getProcessInfo(p);
-		if (info == null || info.parameters == null)
+		if (info == null || info.getParameterModel() == null)
 			return Collections.emptyList();
-		return info.parameters.parameters;
-	}
-
-	public static List<Parameter> forceParameters(Process p) {
-		var info = forceProcessInfo(p);
-		if (info.parameters == null) {
-			info.parameters = new ParameterSection();
-		}
-		return info.parameters.parameters;
+		return info.getParameterModel().getParameters();
 	}
 
 	public static Modelling getModelling(Process p) {
 		if (p == null)
 			return null;
-		return p.modelling;
-	}
-
-	public static Modelling forceModelling(Process p) {
-		if (p.modelling == null)
-			p.modelling = new Modelling();
-		return p.modelling;
+		return p.getModelling();
 	}
 
 	public static InventoryMethod getInventoryMethod(Process p) {
 		var modelling = getModelling(p);
 		if (modelling == null)
 			return null;
-		return modelling.inventoryMethod;
-	}
-
-	public static InventoryMethod forceInventoryMethod(Process p) {
-		var modelling = forceModelling(p);
-		if (modelling.inventoryMethod == null)
-			modelling.inventoryMethod = new InventoryMethod();
-		return modelling.inventoryMethod;
+		return modelling.getInventoryMethod();
 	}
 
 	public static ProcessType getProcessType(Process p) {
 		var method = getInventoryMethod(p);
 		return method != null
-			? method.processType
+			? method.getProcessType()
 			: null;
 	}
 
 	public static Completeness getCompleteness(Process p) {
 		var modelling = getModelling(p);
 		return modelling != null
-			? modelling.completeness
+			? modelling.getCompleteness()
 			: null;
-	}
-
-	public static Completeness forceCompleteness(Process p) {
-		var modelling = forceModelling(p);
-		if (modelling.completeness == null) {
-			modelling.completeness = new Completeness();
-		}
-		return modelling.completeness;
 	}
 
 	public static Representativeness getRepresentativeness(Process p) {
 		var modelling = getModelling(p);
 		if (modelling == null)
 			return null;
-		return modelling.representativeness;
-	}
-
-	public static Representativeness forceRepresentativeness(Process p) {
-		var modelling = forceModelling(p);
-		if (modelling.representativeness == null)
-			modelling.representativeness = new Representativeness();
-		return modelling.representativeness;
+		return modelling.getRepresentativeness();
 	}
 
 	public static Validation getValidation(Process p) {
 		var modelling = getModelling(p);
 		if (modelling == null)
 			return null;
-		return modelling.validation;
-	}
-
-	public static Validation forceValidation(Process p) {
-		var modelling = forceModelling(p);
-		if (modelling.validation == null)
-			modelling.validation = new Validation();
-		return modelling.validation;
+		return modelling.getValidation();
 	}
 
 	public static List<Review> getReviews(Process p) {
 		var v = getValidation(p);
 		return v != null
-			? v.reviews
+			? v.getReviews()
 			: Collections.emptyList();
-	}
-
-	public static List<Review> forceReviews(Process p) {
-		return forceValidation(p).reviews;
 	}
 
 	public static AdminInfo getAdminInfo(Process p) {
 		if (p == null)
 			return null;
-		return p.adminInfo;
-	}
-
-	public static AdminInfo forceAdminInfo(Process p) {
-		if (p.adminInfo == null) {
-			p.adminInfo = new AdminInfo();
-		}
-		return p.adminInfo;
+		return p.getAdminInfo();
 	}
 
 	public static CommissionerAndGoal getCommissionerAndGoal(Process p) {
 		var info = getAdminInfo(p);
 		return info == null
 			? null
-			: info.commissionerAndGoal;
-	}
-
-	public static CommissionerAndGoal forceCommissionerAndGoal(Process p) {
-		var info = forceAdminInfo(p);
-		if (info.commissionerAndGoal == null) {
-			info.commissionerAndGoal = new CommissionerAndGoal();
-		}
-		return info.commissionerAndGoal;
+			: info.getCommissionerAndGoal();
 	}
 
 	public static Publication getPublication(Process p) {
 		var info = getAdminInfo(p);
 		if (info == null)
 			return null;
-		return info.publication;
-	}
-
-	public static Publication forcePublication(Process p) {
-		var info = forceAdminInfo(p);
-		if (info.publication == null) {
-			info.publication = new Publication();
-		}
-		return info.publication;
+		return info.getPublication();
 	}
 
 	public static DataEntry getDataEntry(Process p) {
 		var info = getAdminInfo(p);
 		return info == null
 			? null
-			: info.dataEntry;
-	}
-
-	public static DataEntry forceDataEntry(Process p) {
-		AdminInfo ai = forceAdminInfo(p);
-		if (ai.dataEntry == null)
-			ai.dataEntry = new DataEntry();
-		return ai.dataEntry;
+			: info.getDataEntry();
 	}
 
 	public static DataGenerator getDataGenerator(Process p) {
 		AdminInfo ai = getAdminInfo(p);
 		if (ai == null)
 			return null;
-		return ai.dataGenerator;
-	}
-
-	public static DataGenerator forceDataGenerator(Process p) {
-		AdminInfo ai = forceAdminInfo(p);
-		if (ai.dataGenerator == null)
-			ai.dataGenerator = new DataGenerator();
-		return ai.dataGenerator;
+		return ai.getDataGenerator();
 	}
 
 	public static Exchange createExchange(Process p) {
 		Exchange e = new Exchange();
-		p.exchanges.add(e);
+		p.withExchanges().add(e);
 		return e;
 	}
 
 	public static List<ComplianceDeclaration> getComplianceDeclarations(
-		Process p) {
-		if (p == null || p.modelling == null
-			|| p.modelling.complianceDeclarations == null)
-			return Collections.emptyList();
-		return p.modelling.complianceDeclarations.entries;
+		Process p
+	) {
+		var mod = getModelling(p);
+		return mod != null
+			? mod.getComplianceDeclarations()
+			: List.of();
 	}
 
-	public static List<ComplianceDeclaration> forceComplianceDeclarations(
-		Process p) {
-		if (p.modelling == null)
-			p.modelling = new Modelling();
-		if (p.modelling.complianceDeclarations == null)
-			p.modelling.complianceDeclarations = new ComplianceList();
-		return p.modelling.complianceDeclarations.entries;
-	}
-
-	public static ComplianceDeclaration createComplianceDeclaration(Process p) {
-		List<ComplianceDeclaration> list = forceComplianceDeclarations(p);
-		ComplianceDeclaration cd = new ComplianceDeclaration();
-		list.add(cd);
-		return cd;
-	}
-
-	public static ComplianceDeclaration getComplianceDeclaration(Process p,
-																															 Ref system) {
+	public static ComplianceDeclaration getComplianceDeclaration(
+		Process p, Ref system
+	) {
 		List<ComplianceDeclaration> list = getComplianceDeclarations(p);
 		for (ComplianceDeclaration cd : list) {
-			if (Objects.equals(cd.system, system))
+			if (Objects.equals(cd.getSystem(), system))
 				return cd;
 		}
 		return null;

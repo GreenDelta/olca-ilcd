@@ -55,7 +55,7 @@ public class Ref implements Copyable<Ref> {
 		return type;
 	}
 
-	public String getUuid() {
+	public String getUUID() {
 		return uuid;
 	}
 
@@ -81,7 +81,7 @@ public class Ref implements Copyable<Ref> {
 		return this;
 	}
 
-	public Ref withUuid(String uuid) {
+	public Ref withUUID(String uuid) {
 		this.uuid = uuid;
 		return this;
 	}
@@ -136,7 +136,7 @@ public class Ref implements Copyable<Ref> {
 	public Ref copy() {
 		var copy = new Ref()
 			.withType(type)
-			.withUuid(uuid)
+			.withUUID(uuid)
 			.withVersion(version)
 			.withUri(uri);
 		Val.copy(name, copy::withName);

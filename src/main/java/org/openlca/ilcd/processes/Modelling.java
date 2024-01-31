@@ -39,7 +39,7 @@ public class Modelling implements Copyable<Modelling> {
 
 	@XmlElementWrapper(name = "complianceDeclarations")
 	@XmlElement(name = "compliance", required = true)
-	private List<ComplianceDeclaration> entries;
+	private List<ComplianceDeclaration> complianceDeclarations;
 
 	@XmlElement(namespace = "http://lca.jrc.it/ILCD/Common")
 	private Other other;
@@ -65,8 +65,8 @@ public class Modelling implements Copyable<Modelling> {
 		return validation;
 	}
 
-	public List<ComplianceDeclaration> getEntries() {
-		return entries != null ? entries : List.of();
+	public List<ComplianceDeclaration> getComplianceDeclarations() {
+		return complianceDeclarations != null ? complianceDeclarations : List.of();
 	}
 
 	public Other getOther() {
@@ -101,8 +101,8 @@ public class Modelling implements Copyable<Modelling> {
 		return this;
 	}
 
-	public Modelling withEntries(List<ComplianceDeclaration> entries) {
-		this.entries = entries;
+	public Modelling withComplianceDeclarations(List<ComplianceDeclaration> entries) {
+		this.complianceDeclarations = entries;
 		return this;
 	}
 
@@ -144,11 +144,11 @@ public class Modelling implements Copyable<Modelling> {
 		return validation;
 	}
 
-	public List<ComplianceDeclaration> withEntries() {
-		if (entries == null) {
-			entries = new ArrayList<>();
+	public List<ComplianceDeclaration> withComplianceDeclarations() {
+		if (complianceDeclarations == null) {
+			complianceDeclarations = new ArrayList<>();
 		}
-		return entries;
+		return complianceDeclarations;
 	}
 
 	public Other withOther() {
@@ -174,7 +174,7 @@ public class Modelling implements Copyable<Modelling> {
 		Val.copy(representativeness, copy::withRepresentativeness);
 		Val.copy(completeness, copy::withCompleteness);
 		Val.copy(validation, copy::withValidation);
-		Val.copy(entries, copy::withEntries);
+		Val.copy(complianceDeclarations, copy::withComplianceDeclarations);
 		Val.copy(other, copy::withOther);
 		Val.copy(otherAttributes, copy::withOtherAttributes);
 		return copy;

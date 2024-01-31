@@ -1,5 +1,23 @@
 package org.openlca.ilcd.util;
 
+import org.openlca.ilcd.commons.Category;
+import org.openlca.ilcd.commons.Classification;
+import org.openlca.ilcd.commons.IDataSet;
+import org.openlca.ilcd.contacts.Contact;
+import org.openlca.ilcd.flowproperties.FlowProperty;
+import org.openlca.ilcd.flows.Compartment;
+import org.openlca.ilcd.flows.Flow;
+import org.openlca.ilcd.methods.ImpactMethod;
+import org.openlca.ilcd.models.Model;
+import org.openlca.ilcd.processes.Process;
+import org.openlca.ilcd.sources.Source;
+import org.openlca.ilcd.units.UnitGroup;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import javax.xml.stream.XMLInputFactory;
+import javax.xml.stream.XMLStreamConstants;
+import javax.xml.stream.XMLStreamReader;
 import java.io.BufferedInputStream;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -7,18 +25,6 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.function.Consumer;
-
-import javax.xml.stream.XMLInputFactory;
-import javax.xml.stream.XMLStreamConstants;
-import javax.xml.stream.XMLStreamReader;
-
-import org.openlca.ilcd.commons.Category;
-import org.openlca.ilcd.commons.Classification;
-import org.openlca.ilcd.commons.IDataSet;
-import org.openlca.ilcd.flows.Compartment;
-import org.openlca.ilcd.flows.Flow;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public final class Categories {
 
@@ -43,7 +49,7 @@ public final class Categories {
 
 		if (ds instanceof Flow flow) {
 			compartments(flow).stream()
-				.map(c -> c.value)
+				.map(Compartment::getName)
 				.forEach(add);
 			if (!path.isEmpty())
 				return path.toArray(new String[0]);
@@ -55,26 +61,48 @@ public final class Categories {
 	}
 
 	private static List<Category> sorted(IDataSet ds) {
-		if (ds == null)
-			return Collections.emptyList();
-		var list = ds.getClassifications();
+		var list = classificationsOf(ds);
 		if (list.isEmpty())
 			return Collections.emptyList();
 		var classes = list.get(0).getCategories();
-		classes.sort(Comparator.comparingInt(Category::getLevel));
+		if (!classes.isEmpty()) {
+			classes.sort(Comparator.comparingInt(Category::getLevel));
+		}
 		return classes;
+	}
+
+	private static List<Classification> classificationsOf(IDataSet ds) {
+		if (ds instanceof Contact c)
+			return Contacts.getClassifications(c);
+		if (ds instanceof Flow f)
+			return Flows.getClassifications(f);
+		if (ds instanceof FlowProperty fp)
+			return FlowProperties.getClassifications(fp);
+		if (ds instanceof ImpactMethod method)
+			return ImpactMethods.getClassifications(method);
+		if (ds instanceof Model model)
+			return Models.getClassifications(model);
+		if (ds instanceof Process p)
+			return Processes.getClassifications(p);
+		if (ds instanceof Source s)
+			return Sources.getClassifications(s);
+		if (ds instanceof UnitGroup ug)
+			return UnitGroups.getClassifications(ug);
+		return Collections.emptyList();
 	}
 
 	private static List<Compartment> compartments(Flow flow) {
 		var info = Flows.getDataSetInfo(flow);
 		if (info == null)
 			return Collections.emptyList();
-		var ci = info.classificationInformation;
-		if (ci == null || ci.compartmentLists.isEmpty())
+		var ci = info.getClassificationInformation();
+		if (ci == null || ci.getCompartmentLists().isEmpty())
 			return Collections.emptyList();
-		var system = ci.compartmentLists.get(0);
-		var compartments = system.compartments;
-		compartments.sort(Comparator.comparingInt(c -> c.level));
+		var system = ci.getCompartmentLists().get(0);
+		var compartments = system.getCompartments();
+		if (!compartments.isEmpty()) {
+			compartments.sort(Comparator.comparingInt(Compartment::getLevel));
+		}
 		return compartments;
 	}
 

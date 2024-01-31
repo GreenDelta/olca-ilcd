@@ -1,10 +1,10 @@
 package org.openlca.ilcd.epd.model;
 
-import java.util.Objects;
-
 import org.openlca.ilcd.commons.DataSetType;
 import org.openlca.ilcd.commons.LangString;
 import org.openlca.ilcd.commons.Ref;
+
+import java.util.Objects;
 
 /**
  * Each indicator contains the field values that are necessary for serializing
@@ -38,7 +38,9 @@ public final class Indicator {
 
 	public String unit;
 
-	/** The UUID of the ILCD indicator data set. */
+	/**
+	 * The UUID of the ILCD indicator data set.
+	 */
 	public String uuid;
 
 	/**
@@ -47,28 +49,32 @@ public final class Indicator {
 	 */
 	public String unitGroupUUID;
 
-	/** Create a ILCD data set reference for this indicator. */
+	/**
+	 * Create a ILCD data set reference for this indicator.
+	 */
 	public Ref getRef(String lang) {
-		Ref ref = new Ref();
-		ref.uuid = uuid;
 		String path = type == Type.LCI
-				? "flows"
-				: "lciamethods";
-		ref.uri = "../" + path + "/" + uuid;
-		ref.type = type == Type.LCI
+			? "flows"
+			: "lciamethods";
+		Ref ref = new Ref()
+			.withUUID(uuid)
+			.withUri("../" + path + "/" + uuid)
+			.withType(type == Type.LCI
 				? DataSetType.FLOW
-				: DataSetType.IMPACT_METHOD;
-		LangString.set(ref.name, name, lang);
+				: DataSetType.IMPACT_METHOD);
+		ref.withName().add(LangString.of(name, lang));
 		return ref;
 	}
 
-	/** Create a ILCD data set reference to the unit group of this indicator. */
+	/**
+	 * Create a ILCD data set reference to the unit group of this indicator.
+	 */
 	public Ref getUnitGroupRef(String lang) {
-		Ref ref = new Ref();
-		ref.uuid = unitGroupUUID;
-		ref.type = DataSetType.UNIT_GROUP;
-		ref.uri = "../unitgroups/" + unitGroupUUID;
-		LangString.set(ref.name, unit, lang);
+		Ref ref = new Ref()
+			.withUUID(unitGroupUUID)
+			.withType(DataSetType.UNIT_GROUP)
+			.withUri("../unitgroups/" + unitGroupUUID);
+		ref.withName().add(LangString.of(unit, lang));
 		return ref;
 	}
 
@@ -93,7 +99,7 @@ public final class Indicator {
 	@Override
 	public String toString() {
 		return "Indicator [ name=\"" + name
-				+ "\" uuid =\"" + uuid + "\"]";
+			+ "\" uuid =\"" + uuid + "\"]";
 	}
 
 }

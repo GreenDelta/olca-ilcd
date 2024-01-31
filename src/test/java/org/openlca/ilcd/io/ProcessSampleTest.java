@@ -25,7 +25,7 @@ import org.openlca.ilcd.processes.ImpactResult;
 import org.openlca.ilcd.processes.Location;
 import org.openlca.ilcd.processes.InventoryMethod;
 import org.openlca.ilcd.processes.Parameter;
-import org.openlca.ilcd.processes.ParameterSection;
+import org.openlca.ilcd.processes.ParameterModel;
 import org.openlca.ilcd.processes.Process;
 import org.openlca.ilcd.processes.Publication;
 import org.openlca.ilcd.processes.Review;
@@ -92,7 +92,7 @@ public class ProcessSampleTest {
 	@Test
 	public void testParameters() {
 		with(p -> {
-			ParameterSection section = p.processInfo.parameters;
+			ParameterModel section = p.processInfo.parameters;
 			assertEquals(2, section.description.size());
 			assertEquals(2, section.parameters.size());
 			Parameter param = section.parameters.get(0);

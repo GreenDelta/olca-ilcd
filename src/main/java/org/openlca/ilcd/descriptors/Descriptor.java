@@ -52,7 +52,7 @@ public abstract class Descriptor<T extends Descriptor<T>> implements Copyable<T>
 		Ref ref = new Ref()
 			.withType(getType())
 			.withUri(uri)
-			.withUuid(uuid)
+			.withUUID(uuid)
 			.withVersion(version);
 		Val.copy(name, ref::withName);
 		return ref;

@@ -18,7 +18,7 @@ import java.util.Map;
 public class Compartment implements Copyable<Compartment> {
 
 	@XmlValue
-	private String value;
+	private String name;
 
 	@XmlAttribute(name = "level", required = true)
 	private int level;
@@ -31,8 +31,8 @@ public class Compartment implements Copyable<Compartment> {
 
 	// region getters
 
-	public String getValue() {
-		return value;
+	public String getName() {
+		return name;
 	}
 
 	public int getLevel() {
@@ -51,8 +51,8 @@ public class Compartment implements Copyable<Compartment> {
 
 	// region setters
 
-	public Compartment withValue(String value) {
-		this.value = value;
+	public Compartment withName(String value) {
+		this.name = value;
 		return this;
 	}
 
@@ -83,7 +83,7 @@ public class Compartment implements Copyable<Compartment> {
 	@Override
 	public Compartment copy() {
 		var copy = new Compartment();
-		copy.withValue(value);
+		copy.withName(name);
 		copy.withLevel(level);
 		copy.withCatId(catId);
 		Val.copy(otherAttributes, copy::withOtherAttributes);

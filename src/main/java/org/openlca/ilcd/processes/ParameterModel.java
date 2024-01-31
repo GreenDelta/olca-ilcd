@@ -20,7 +20,7 @@ import java.util.Map;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "MathematicalRelationsType", propOrder = { "description",
 		"parameters", "other" })
-public class ParameterSection implements Copyable<ParameterSection> {
+public class ParameterModel implements Copyable<ParameterModel> {
 
 	@FreeText
 	@XmlElement(name = "modelDescription")
@@ -57,22 +57,22 @@ public class ParameterSection implements Copyable<ParameterSection> {
 
 	// region setters
 
-	public ParameterSection withDescription(List<LangString> description) {
+	public ParameterModel withDescription(List<LangString> description) {
 		this.description = description;
 		return this;
 	}
 
-	public ParameterSection withParameters(List<Parameter> parameters) {
+	public ParameterModel withParameters(List<Parameter> parameters) {
 		this.parameters = parameters;
 		return this;
 	}
 
-	public ParameterSection withOther(Other other) {
+	public ParameterModel withOther(Other other) {
 		this.other = other;
 		return this;
 	}
 
-	public ParameterSection withOtherAttributes(Map<QName, String> otherAttributes) {
+	public ParameterModel withOtherAttributes(Map<QName, String> otherAttributes) {
 		this.otherAttributes = otherAttributes;
 		return this;
 	}
@@ -108,8 +108,8 @@ public class ParameterSection implements Copyable<ParameterSection> {
 	// endregion
 
 	@Override
-	public ParameterSection copy() {
-		var copy = new ParameterSection();
+	public ParameterModel copy() {
+		var copy = new ParameterModel();
 		Val.copy(description, copy::withDescription);
 		Val.copy(parameters, copy::withParameters);
 		Val.copy(other, copy::withOther);
