@@ -23,7 +23,7 @@ public class Val {
 	}
 
 	public static boolean isEmpty(Other other) {
-		return other == null || other.any.isEmpty();
+		return other == null || other.getAny().isEmpty();
 	}
 
 	public static <K, V> void copy(Map<K, V> source, Supplier<Map<K, V>> target) {
@@ -56,7 +56,7 @@ public class Val {
 			var copy = (XMLGregorianCalendar) cal.clone();
 			target.accept(copy);
 		} catch (Exception e) {
-			throw new RuntimeException("failed to clone calendar: " + col, e);
+			throw new RuntimeException("failed to clone calendar: " + cal, e);
 		}
 	}
 

@@ -35,7 +35,7 @@ public class ContentDeclaration implements Copyable<ContentDeclaration> {
 
 		// find the root element
 		Element root = null;
-		for (Object any : other.any) {
+		for (Object any : other.getAny()) {
 			if (!(any instanceof Element e))
 				continue;
 			if (Objects.equals(Vocab.NS_EPDv2, e.getNamespaceURI())
@@ -70,7 +70,7 @@ public class ContentDeclaration implements Copyable<ContentDeclaration> {
 			return;
 		Element root = doc.createElementNS(
 			Vocab.NS_EPDv2, "epd2:contentDeclaration");
-		other.any.add(root);
+		other.withAny().add(root);
 		for (ContentElement e : content) {
 			writeElement(root, e);
 		}

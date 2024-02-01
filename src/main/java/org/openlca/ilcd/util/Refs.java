@@ -19,14 +19,17 @@ public class Refs {
 	private Refs() {
 	}
 
-	/** Returns the data set reference of the ILCD format. */
+	/**
+	 * Returns the data set reference of the ILCD format.
+	 */
 	public static Ref ilcd() {
-		Ref ref = new Ref();
-		ref.type = DataSetType.SOURCE;
-		ref.uri = "../sources/a97a0155-0234-4b87-b4ce-a45da52f2a40_01.01.000.xml";
-		ref.uuid = "a97a0155-0234-4b87-b4ce-a45da52f2a40";
-		ref.version = "01.01.000";
-		LangString.set(ref.name, "ILCD format", "en");
+		Ref ref = new Ref()
+			.withType(DataSetType.SOURCE)
+			.withUri("../sources/a97a0155-0234-4b87-b4ce-a45da52f2a40_01.01.000.xml")
+			.withUUID("a97a0155-0234-4b87-b4ce-a45da52f2a40")
+			.withVersion("01.01.000");
+		ref.withName()
+			.add(LangString.of("ILCD format", "en"));
 		return ref;
 	}
 
@@ -63,26 +66,26 @@ public class Refs {
 		Ref fetch(InputStream is) throws Exception {
 			ref = new Ref();
 			reader = XMLInputFactory.newFactory()
-					.createXMLStreamReader(is);
+				.createXMLStreamReader(is);
 			boolean root = true;
 			boolean stop = false;
 			while (reader.hasNext()) {
 				reader.next();
 				switch (reader.getEventType()) {
-				case XMLStreamConstants.START_ELEMENT:
-					if (root) {
-						root = false;
-						ref.type = getType();
-					} else {
-						start();
-					}
-					break;
-				case XMLStreamConstants.CHARACTERS:
-					text();
-					break;
-				case XMLStreamConstants.END_ELEMENT:
-					stop = end();
-					break;
+					case XMLStreamConstants.START_ELEMENT:
+						if (root) {
+							root = false;
+							ref.withType(getType());
+						} else {
+							start();
+						}
+						break;
+					case XMLStreamConstants.CHARACTERS:
+						text();
+						break;
+					case XMLStreamConstants.END_ELEMENT:
+						stop = end();
+						break;
 				}
 				if (stop)
 					break;
@@ -111,15 +114,15 @@ public class Refs {
 			if (element == null)
 				return;
 			switch (element) {
-			case "UUID":
-			case "dataSetVersion":
-			case "permanentDataSetURI":
-				sb = new StringBuilder();
-				return;
+				case "UUID":
+				case "dataSetVersion":
+				case "permanentDataSetURI":
+					sb = new StringBuilder();
+					return;
 			}
 			if (matchName(element)) {
 				lang = reader.getAttributeValue(
-						"http://www.w3.org/XML/1998/namespace", "lang");
+					"http://www.w3.org/XML/1998/namespace", "lang");
 				sb = new StringBuilder();
 			}
 		}
@@ -145,31 +148,32 @@ public class Refs {
 			if (element == null)
 				return false;
 			switch (element) {
-			case "UUID":
-				ref.uuid = t;
-				return false;
-			case "dataSetVersion":
-				ref.version = t;
-				return false;
-			case "permanentDataSetURI":
-				ref.uri = t;
-				return true;
+				case "UUID":
+					ref.withUUID(t);
+					return false;
+				case "dataSetVersion":
+					ref.withVersion(t);
+					return false;
+				case "permanentDataSetURI":
+					ref.withUri(t);
+					return true;
 			}
 			if (matchName(element)) {
-				LangString.set(ref.name, t, lang);
+				ref.withName().add(LangString.of(t, lang));
 			}
 			return false;
 		}
 
 		private boolean matchName(String name) {
+			var type = ref.getType();
 			return switch (name) {
-				case "name" -> ref.type == DataSetType.CONTACT
-						|| ref.type == DataSetType.FLOW_PROPERTY
-						|| ref.type == DataSetType.UNIT_GROUP
-						|| ref.type == DataSetType.IMPACT_METHOD;
-				case "baseName" -> ref.type == DataSetType.FLOW
-						|| ref.type == DataSetType.PROCESS;
-				case "shortName" -> ref.type == DataSetType.SOURCE;
+				case "name" -> type == DataSetType.CONTACT
+					|| type == DataSetType.FLOW_PROPERTY
+					|| type == DataSetType.UNIT_GROUP
+					|| type == DataSetType.IMPACT_METHOD;
+				case "baseName" -> type == DataSetType.FLOW
+					|| type == DataSetType.PROCESS;
+				case "shortName" -> type == DataSetType.SOURCE;
 				default -> false;
 			};
 		}

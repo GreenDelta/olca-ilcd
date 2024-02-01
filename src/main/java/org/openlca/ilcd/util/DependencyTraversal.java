@@ -53,7 +53,7 @@ public class DependencyTraversal {
 		while (!deque.isEmpty()) {
 			Ref next = deque.poll();
 			try {
-				var dataSet = store.get(next.getDataSetClass(), next.uuid);
+				var dataSet = store.get(next.getDataSetClass(), next.getUUID());
 				if (dataSet == null) {
 					log.warn("could not get data set for {}", next);
 					continue;

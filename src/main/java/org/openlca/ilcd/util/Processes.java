@@ -199,12 +199,6 @@ public final class Processes {
 		return ai.getDataGenerator();
 	}
 
-	public static Exchange createExchange(Process p) {
-		Exchange e = new Exchange();
-		p.withExchanges().add(e);
-		return e;
-	}
-
 	public static List<ComplianceDeclaration> getComplianceDeclarations(
 		Process p
 	) {

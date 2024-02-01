@@ -71,20 +71,20 @@ public class EpdDataSet implements Copyable<EpdDataSet> {
 
 		if (publicationDate != null) {
 			clone.publicationDate = LocalDate.of(
-					publicationDate.getYear(),
-					publicationDate.getMonthValue(),
-					publicationDate.getDayOfMonth());
+				publicationDate.getYear(),
+				publicationDate.getMonthValue(),
+				publicationDate.getDayOfMonth());
 		}
 
 		clone.safetyMargins = safetyMargins != null
-				? safetyMargins.copy()
-				: null;
+			? safetyMargins.copy()
+			: null;
 		clone.contentDeclaration = contentDeclaration != null
-				? contentDeclaration.copy()
-				: null;
+			? contentDeclaration.copy()
+			: null;
 		clone.qMetaData = qMetaData != null
-				? qMetaData.copy()
-				: null;
+			? qMetaData.copy()
+			: null;
 
 		for (var result : results) {
 			clone.results.add(result.copy());
@@ -113,21 +113,23 @@ public class EpdDataSet implements Copyable<EpdDataSet> {
 	 */
 	public Exchange productExchange() {
 		var qRef = process.withProcessInfo()
-			.withQuantitativeReference();
-		qRef.type = QuantitativeReferenceType.REFERENCE_FLOWS;
-		if (qRef.referenceFlows.isEmpty())
-			qRef.referenceFlows.add(1);
-		int id = qRef.referenceFlows.get(0);
-		for (Exchange exchange : process.exchanges) {
-			if (id == exchange.id)
-				return exchange;
+			.withQuantitativeReference()
+			.withType(QuantitativeReferenceType.REFERENCE_FLOWS);
+
+		if (!qRef.getReferenceFlows().isEmpty()) {
+			int id = qRef.getReferenceFlows().get(0);
+			for (var e : process.getExchanges()) {
+				if (id == e.getId())
+					return e;
+			}
 		}
 
-		var e = Processes.createExchange(process);
-		e.meanAmount = 1d;
-		e.resultingAmount = 1d;
-		e.id = id;
-
+		qRef.withReferenceFlows().add(1);
+		var e = new Exchange()
+			.withId(1)
+			.withMeanAmount(1d)
+			.withResultingAmount(1d);
+		process.withExchanges().add(e);
 		return e;
 	}
 }

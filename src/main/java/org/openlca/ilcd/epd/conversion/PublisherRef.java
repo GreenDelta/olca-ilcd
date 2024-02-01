@@ -15,7 +15,7 @@ final class PublisherRef extends Ref {
 	private static PublisherRef wrap(Ref other) {
 		var ref = new PublisherRef();
 		JaxbRefs.copyFields(other, ref);
-		ref.type = DataSetType.CONTACT;
+		ref.withType(DataSetType.CONTACT);
 		return ref;
 	}
 
@@ -27,27 +27,26 @@ final class PublisherRef extends Ref {
 		if (epd == null)
 			return;
 
-		// remove possible DOM elements
 		if (epd.publishers.isEmpty()) {
+			// remove possible DOM elements
 			var pub = Processes.getPublication(epd.process);
-			if (pub == null || pub.other == null)
-				return;
-			// currently nothing else is written to this extension
-			// point; so we can just drop it
-			pub.other.any.clear();
-			pub.other = null;
+			if (pub != null) {
+				// currently nothing else is written to this extension
+				// point; so we can just drop it
+				pub.withOther(null);
+			}
 			return;
 		}
 
-		var pub = Processes.forcePublication(epd.process);
-		if (pub.other == null) {
-			pub.other = new Other();
-		}
-		pub.other.any.clear();
+		var other = new Other();
 		var pubRefs = epd.publishers.stream()
-				.map(PublisherRef::wrap)
-				.collect(Collectors.toList());
-		JaxbRefs.write(PublisherRef.class, pubRefs, pub.other);
+			.map(PublisherRef::wrap)
+			.collect(Collectors.toList());
+		JaxbRefs.write(PublisherRef.class, pubRefs, other);
+		epd.process
+			.withAdminInfo()
+			.withPublication()
+			.withOther(other);
 	}
 
 	/**
@@ -58,9 +57,9 @@ final class PublisherRef extends Ref {
 		if (epd == null)
 			return;
 		var pub = Processes.getPublication(epd.process);
-		if (pub == null || pub.other == null)
+		if (pub == null || pub.getOther() == null)
 			return;
-		var refs = JaxbRefs.read(PublisherRef.class, pub.other);
+		var refs = JaxbRefs.read(PublisherRef.class, pub.getOther());
 		if (refs.isEmpty())
 			return;
 		epd.publishers.addAll(refs);

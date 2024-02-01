@@ -17,14 +17,14 @@ public class ParameterExtension {
 		if (parameter == null || scope == null)
 			return;
 		QName qName = Extensions.getQName(SCOPE);
-		parameter.otherAttributes.put(qName, scope);
+		parameter.withOtherAttributes().put(qName, scope);
 	}
 
 	public String getScope() {
 		if (parameter == null)
 			return null;
 		QName qName = Extensions.getQName(SCOPE);
-		return parameter.otherAttributes.get(qName);
+		return parameter.getOtherAttributes().get(qName);
 	}
 
 }

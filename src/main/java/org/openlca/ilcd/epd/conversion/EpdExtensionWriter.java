@@ -1,15 +1,9 @@
 package org.openlca.ilcd.epd.conversion;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-
 import javax.xml.namespace.QName;
 
 import org.openlca.ilcd.commons.Other;
 import org.openlca.ilcd.epd.model.EpdDataSet;
-import org.openlca.ilcd.processes.InventoryMethod;
-import org.openlca.ilcd.processes.Modelling;
 import org.openlca.ilcd.processes.Process;
 import org.openlca.ilcd.util.Processes;
 
@@ -37,9 +31,9 @@ class EpdExtensionWriter {
 		Results.writeResults(epd);
 		writeExtensions();
 		// set the format version
-		process.otherAttributes.put(
-				new QName(Vocab.NS_EPDv2, "epd-version", "epd2"), "1.2");
-		process.version = "1.1";
+		process.withOtherAttributes().put(
+			new QName(Vocab.NS_EPDv2, "epd-version", "epd2"), "1.2");
+		process.withVersion("1.1");
 		Cleanup.on(epd);
 	}
 
@@ -49,12 +43,12 @@ class EpdExtensionWriter {
 	private void clearResults(Process p) {
 		if (p == null)
 			return;
-		var qRef = Processes.getQuantitativeReference(p);
-		List<Integer> refFlows = qRef == null
-				? Collections.emptyList()
-				: qRef.referenceFlows;
-		p.exchanges.removeIf(e -> !refFlows.contains(e.id));
-		p.lciaResults = null;
+		var refFlows = Processes.getReferenceFlows(p);
+		var exchanges = p.getExchanges();
+		if (!exchanges.isEmpty()) {
+			exchanges.removeIf(e -> !refFlows.contains(e.getId()));
+		}
+		p.withImpactResults(null);
 	}
 
 	private void writeExtensions() {
@@ -63,26 +57,26 @@ class EpdExtensionWriter {
 		// write the Q-Meta data
 		var qMeta = epd.qMetaData;
 		if (qMeta == null) {
-			Modelling mod = Processes.getModelling(epd.process);
+			var mod = Processes.getModelling(epd.process);
 			if (mod != null) {
 				// remove possible old data
-				mod.other = null;
+				mod.withOther(null);
 			}
 		} else {
-			Modelling mod = Processes.forceModelling(epd.process);
-			if (mod.other == null) {
-				mod.other = new Other();
-			}
-			epd.qMetaData.write(mod.other, doc);
+			var other = epd.process
+				.withModelling()
+				.withOther();
+			epd.qMetaData.write(other, doc);
 		}
 
 		// write info extensions
-		var info = Processes.forceDataSetInfo(epd.process);
-		Other infoOther = info.other;
-		if (infoOther == null) {
-			infoOther = new Other();
-			info.other = infoOther;
-		}
+		var info = epd.process
+			.withProcessInfo()
+			.withDataSetInfo();
+		var infoOther = info.getOther() != null
+			? info.getOther()
+			: info.withOther();
+
 		ModuleConverter.writeModules(epd, infoOther, doc);
 		ScenarioConverter.writeScenarios(epd, infoOther, doc);
 		SafetyMarginsConverter.write(epd, infoOther, doc);
@@ -90,7 +84,7 @@ class EpdExtensionWriter {
 			epd.contentDeclaration.write(infoOther, doc);
 		}
 		if (Dom.isEmpty(infoOther)) {
-			info.other = null;
+			info.withOther(null);
 		}
 
 		writeProfile();
@@ -102,40 +96,49 @@ class EpdExtensionWriter {
 
 	private void writeSubType() {
 		if (epd.subType == null) {
-			InventoryMethod m = Processes.getInventoryMethod(epd.process);
-			if (m == null)
+			var method = Processes.getInventoryMethod(epd.process);
+			if (method == null)
 				return;
-			m.other = null;
+			method.withOther(null);
 			return;
 		}
-		var method = Processes.forceInventoryMethod(epd.process);
-		method.other = new Other();
+
 		var elem = Dom.createElement(Vocab.NS_EPD, "subType");
 		if (elem != null) {
-			elem.setTextContent(epd.subType.getLabel());
-			method.other.any.add(elem);
+			epd.process.withModelling()
+				.withInventoryMethod()
+				.withOther()
+				.withAny()
+				.add(elem);
 		}
 	}
 
 	private void writeProfile() {
-		Map<QName, String> atts = epd.process.otherAttributes;
 		if (epd.profile != null) {
-			atts.put(Vocab.PROFILE_ATTR, epd.profile);
+			epd.process.withOtherAttributes()
+				.put(Vocab.PROFILE_ATTR, epd.profile);
 		} else {
-			atts.remove(Vocab.PROFILE_ATTR);
+			var atts = epd.process.getOtherAttributes();
+			if (!atts.isEmpty()) {
+				atts.remove(Vocab.PROFILE_ATTR);
+			}
 		}
 	}
 
 	private void writePublicationDate() {
+
+
+
 		var t = Processes.getTime(epd.process);
 		var pubDate = epd.publicationDate;
 		if (pubDate == null && t == null)
 			return;
 		var time = t == null
-			? Processes.forceTime(epd.process)
+			? epd.process.withProcessInfo().withTime()
 			: t;
 		if (pubDate == null && time.other == null)
 			return;
+
 		var tag = "publicationDateOfEPD";
 
 		// delete it if publication date is null

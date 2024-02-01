@@ -1,11 +1,5 @@
 package org.openlca.ilcd.epd.conversion;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.List;
-import java.util.Objects;
-
-import org.openlca.ilcd.commons.Other;
 import org.openlca.ilcd.epd.model.Amount;
 import org.openlca.ilcd.epd.model.EpdDataSet;
 import org.openlca.ilcd.epd.model.EpdProfile;
@@ -15,11 +9,15 @@ import org.openlca.ilcd.epd.model.Scenario;
 import org.openlca.ilcd.epd.model.SubType;
 import org.openlca.ilcd.epd.model.content.ContentDeclaration;
 import org.openlca.ilcd.epd.model.qmeta.QMetaData;
-import org.openlca.ilcd.util.Strings;
-import org.openlca.ilcd.processes.InventoryMethod;
 import org.openlca.ilcd.processes.Process;
 import org.openlca.ilcd.util.Processes;
+import org.openlca.ilcd.util.Strings;
 import org.slf4j.LoggerFactory;
+
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
+import java.util.Objects;
 
 /**
  * Converts an ILCD process data set to an EPD data set.
@@ -38,7 +36,7 @@ record EpdExtensionReader(Process process, EpdProfile profile) {
 	}
 
 	private void readExtensions(EpdDataSet epd) {
-		epd.profile = process.otherAttributes.get(Vocab.PROFILE_ATTR);
+		epd.profile = process.getOtherAttributes().get(Vocab.PROFILE_ATTR);
 		readSubType(epd);
 		readPublicationDate(epd);
 		PublisherRef.read(epd);
@@ -47,9 +45,9 @@ record EpdExtensionReader(Process process, EpdProfile profile) {
 
 		// read the extensions that are stored under `dataSetInformation`
 		var info = Processes.getDataSetInfo(process);
-		if (info == null || info.other == null)
+		if (info == null || info.getOther() == null)
 			return;
-		Other other = info.other;
+		var other = info.getOther();
 		List<Scenario> scenarios = ScenarioConverter.readScenarios(other);
 		epd.scenarios.addAll(scenarios);
 		List<ModuleEntry> modules = ModuleConverter.readModules(other, profile);
@@ -59,12 +57,10 @@ record EpdExtensionReader(Process process, EpdProfile profile) {
 	}
 
 	private void readSubType(EpdDataSet dataSet) {
-		if (process.modelling == null)
+		var method = Processes.getInventoryMethod(process);
+		if (method == null || method.getOther() == null)
 			return;
-		InventoryMethod method = process.modelling.inventoryMethod;
-		if (method == null || method.other == null)
-			return;
-		var elem = Dom.getElement(method.other, "subType");
+		var elem = Dom.getElement(method.getOther(), "subType");
 		if (elem != null) {
 			dataSet.subType = SubType.fromLabel(elem.getTextContent());
 		}
@@ -72,9 +68,9 @@ record EpdExtensionReader(Process process, EpdProfile profile) {
 
 	private void readPublicationDate(EpdDataSet epd) {
 		var time = Processes.getTime(epd.process);
-		if (time == null || time.other == null)
+		if (time == null || time.getOther() == null)
 			return;
-		var elem = Dom.getElement(time.other, "publicationDateOfEPD");
+		var elem = Dom.getElement(time.getOther(), "publicationDateOfEPD");
 		if (elem == null)
 			return;
 		var text = elem.getTextContent();
