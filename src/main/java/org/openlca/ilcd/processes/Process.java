@@ -8,6 +8,7 @@ import jakarta.xml.bind.annotation.XmlAttribute;
 import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlElementWrapper;
 import jakarta.xml.bind.annotation.XmlType;
+import org.openlca.ilcd.Vocab;
 import org.openlca.ilcd.commons.Copyable;
 import org.openlca.ilcd.commons.IDataSet;
 import org.openlca.ilcd.commons.Other;
@@ -62,6 +63,9 @@ public class Process implements IDataSet, Copyable<Process> {
 	@XmlAnyAttribute
 	private Map<QName, String> otherAttributes;
 
+	@XmlAttribute(name="epd-version", namespace = Vocab.EPD_2019)
+	private String epdVersion;
+
 	// region getters
 
 	public ProcessInfo getProcessInfo() {
@@ -102,6 +106,10 @@ public class Process implements IDataSet, Copyable<Process> {
 
 	public Map<QName, String> getOtherAttributes() {
 		return otherAttributes != null ? otherAttributes : Map.of();
+	}
+
+	public String getEpdVersion() {
+		return epdVersion;
 	}
 
 	// endregion
@@ -207,6 +215,11 @@ public class Process implements IDataSet, Copyable<Process> {
 		return otherAttributes;
 	}
 
+	public Process withEpdVersion(String epdVersion) {
+		this.epdVersion = epdVersion;
+		return this;
+	}
+
 	// endregion
 
 	@Override
@@ -222,6 +235,7 @@ public class Process implements IDataSet, Copyable<Process> {
 		copy.withLocations(locations);
 		copy.withMetaDataOnly(metaDataOnly);
 		Val.copy(otherAttributes, copy::withOtherAttributes);
+		copy.withEpdVersion(epdVersion);
 		return copy;
 	}
 
