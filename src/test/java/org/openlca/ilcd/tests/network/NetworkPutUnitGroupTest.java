@@ -26,22 +26,20 @@ public class NetworkPutUnitGroupTest {
 	}
 
 	@Test
-	public void testPutUnitGroup() throws Exception {
+	public void testPutUnitGroup() {
 		Assume.assumeTrue(TestServer.isAvailable());
-		String id = UUID.randomUUID().toString();
-		UnitGroup ug = new UnitGroup();
-		UnitGroupInfo info = new UnitGroupInfo();
-		ug.unitGroupInfo = info;
-		info.dataSetInfo = makeDataInfo(id);
-		ug.adminInfo = makeAdminInfo();
+		var id = UUID.randomUUID().toString();
+		var ug = new UnitGroup()
+			.withAdminInfo(makeAdminInfo());
+		ug.withUnitGroupInfo()
+			.withDataSetInfo(makeDataInfo(id));
 		client.put(ug);
 	}
 
 	private DataSetInfo makeDataInfo(String id) {
-		DataSetInfo info = new DataSetInfo();
+		var info = new DataSetInfo()			.withUUID(id);
 		String name = "xtest UnitGroup - " + new Random().nextInt(1000);
-		LangString.set(info.name, name, "en");
-		info.uuid = id;
+		info.withName().add(LangString.of(name, "en"));
 		return info;
 	}
 

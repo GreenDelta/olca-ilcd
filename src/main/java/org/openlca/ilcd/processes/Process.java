@@ -20,9 +20,14 @@ import java.util.List;
 import java.util.Map;
 
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "ProcessDataSetType", propOrder = {"processInfo",
-	"modelling", "adminInfo", "exchanges",
-	"lciaResults", "other"})
+@XmlType(name = "ProcessDataSetType", propOrder = {
+	"processInfo",
+	"modelling",
+	"adminInfo",
+	"exchanges",
+	"impactResults",
+	"other"
+})
 public class Process implements IDataSet, Copyable<Process> {
 
 	@XmlElement(required = true, name = "processInformation")

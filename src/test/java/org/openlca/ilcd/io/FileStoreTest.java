@@ -1,16 +1,5 @@
 package org.openlca.ilcd.io;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.util.UUID;
-
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Ignore;
@@ -18,10 +7,16 @@ import org.junit.Test;
 import org.openlca.ilcd.SampleSource;
 import org.openlca.ilcd.commons.LangString;
 import org.openlca.ilcd.contacts.Contact;
-import org.openlca.ilcd.sources.DataSetInfo;
 import org.openlca.ilcd.sources.Source;
-import org.openlca.ilcd.sources.SourceInfo;
 import org.openlca.ilcd.units.UnitGroup;
+import org.openlca.ilcd.util.UnitGroups;
+
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.util.UUID;
+
+import static org.junit.Assert.*;
 
 public class FileStoreTest {
 
@@ -59,17 +54,18 @@ public class FileStoreTest {
 		var group = fileStore.get(
 			UnitGroup.class, "93a60a57-a4c8-11da-a746-0800200c9a66");
 		assertNotNull(group);
-		assertEquals("Units of mass", LangString.getFirst(group.getName()));
+		assertEquals(
+			"Units of mass",
+			LangString.getFirst(UnitGroups.getName(group)));
 	}
 
 	@Test
 	public void testPut() {
-		DataSetInfo dataSetInfo = new DataSetInfo();
-		String id = UUID.randomUUID().toString();
-		dataSetInfo.uuid = id;
-		Source source = SampleSource.create();
-		source.sourceInfo = new SourceInfo();
-		source.sourceInfo.dataSetInfo = dataSetInfo;
+		var id = UUID.randomUUID().toString();
+		var source = SampleSource.create();
+		source.withSourceInfo()
+			.withDataSetInfo()
+			.withUUID(id);
 		fileStore.put(source);
 		assertTrue(fileStore.contains(Source.class, id));
 	}

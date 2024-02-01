@@ -14,7 +14,7 @@ public class ModelName implements Copyable<ModelName> {
 
 	@Label
 	@XmlElement(name = "baseName", required = true)
-	private List<LangString> name;
+	private List<LangString> baseName;
 
 	@Label
 	@XmlElement(name = "treatmentStandardsRoutes")
@@ -30,8 +30,8 @@ public class ModelName implements Copyable<ModelName> {
 
 	// region getters
 
-	public List<LangString> getName() {
-		return name != null ? name : List.of();
+	public List<LangString> getBaseName() {
+		return baseName != null ? baseName : List.of();
 	}
 
 	public List<LangString> getTechnicalDetails() {
@@ -50,8 +50,8 @@ public class ModelName implements Copyable<ModelName> {
 
 	// region setters
 
-	public ModelName withName(List<LangString> name) {
-		this.name = name;
+	public ModelName withBaseName(List<LangString> name) {
+		this.baseName = name;
 		return this;
 	}
 
@@ -70,11 +70,11 @@ public class ModelName implements Copyable<ModelName> {
 		return this;
 	}
 
-	public List<LangString> withName() {
-		if (name == null) {
-			name = new ArrayList<>();
+	public List<LangString> withBaseName() {
+		if (baseName == null) {
+			baseName = new ArrayList<>();
 		}
-		return name;
+		return baseName;
 	}
 
 	public List<LangString> withTechnicalDetails() {
@@ -103,7 +103,7 @@ public class ModelName implements Copyable<ModelName> {
 	@Override
 	public ModelName copy() {
 		var copy = new ModelName();
-		Val.copy(name, copy::withName);
+		Val.copy(baseName, copy::withBaseName);
 		Val.copy(technicalDetails, copy::withTechnicalDetails);
 		Val.copy(mixAndLocation, copy::withMixAndLocation);
 		Val.copy(flowProperties, copy::withFlowProperties);

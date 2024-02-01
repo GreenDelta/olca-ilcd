@@ -1,13 +1,11 @@
 package org.openlca.ilcd;
 
-import java.util.UUID;
-
 import org.openlca.ilcd.commons.LangString;
-import org.openlca.ilcd.commons.Publication;
 import org.openlca.ilcd.sources.AdminInfo;
 import org.openlca.ilcd.sources.DataSetInfo;
 import org.openlca.ilcd.sources.Source;
-import org.openlca.ilcd.sources.SourceInfo;
+
+import java.util.UUID;
 
 public final class SampleSource {
 
@@ -15,28 +13,25 @@ public final class SampleSource {
 	}
 
 	public static Source create() {
-		Source source = new Source();
-		SourceInfo info = new SourceInfo();
-		source.sourceInfo = info;
-		info.dataSetInfo = makeDataInfo();
-		source.adminInfo = makeAdminInfo();
+		Source source = new Source()
+			.withAdminInfo(makeAdminInfo());
+		source.withSourceInfo()
+			.withDataSetInfo(makeDataInfo());
 		return source;
 	}
 
 	private static DataSetInfo makeDataInfo() {
-		String id = UUID.randomUUID().toString();
-		DataSetInfo info = new DataSetInfo();
-		LangString.set(info.name, "test source", "en");
-		info.uuid = id;
+		var info = new DataSetInfo()
+			.withUUID(UUID.randomUUID().toString());
+		info.withName().add(LangString.of("test source", "en"));
 		return info;
 	}
 
 	private static AdminInfo makeAdminInfo() {
-		AdminInfo info = new AdminInfo();
-		Publication pub = new Publication();
-		info.publication = pub;
-		pub.version = "01.00.101";
-		pub.uri = "http://openlca.org/ilcd/resource/mytestsource";
+		var info = new AdminInfo();
+		info.withPublication()
+			.withVersion("01.00.101")
+			.withUri("http://openlca.org/ilcd/resource/mytestsource");
 		return info;
 	}
 

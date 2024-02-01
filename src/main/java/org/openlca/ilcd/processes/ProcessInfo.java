@@ -22,7 +22,7 @@ import java.util.Map;
 		"time",
 		"geography",
 		"technology",
-		"parameters",
+		"parameterModel",
 		"other"
 })
 public class ProcessInfo implements Copyable<ProcessInfo> {

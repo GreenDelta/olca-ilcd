@@ -27,7 +27,7 @@ public final class Flows {
 	}
 
 	public static List<LangString> getBaseName(Flow f) {
-		var name = getFlowName(c);
+		var name = getFlowName(f);
 		return name != null
 			? name.getBaseName()
 			: Collections.emptyList();

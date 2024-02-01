@@ -33,7 +33,7 @@ public class Models {
 	public static List<LangString> getBaseName(Model m) {
 		var name = getModelName(m);
 		return name != null
-			? name.getName()
+			? name.getBaseName()
 			: Collections.emptyList();
 	}
 
@@ -78,7 +78,7 @@ public class Models {
 		DataSetInfo di = getDataSetInfo(model);
 		if (di == null)
 			return null;
-		return di.getName();
+		return di.getModelName();
 	}
 
 	public static QuantitativeReference getQuantitativeReference(Model m) {

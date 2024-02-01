@@ -24,7 +24,7 @@ import java.util.Map;
 		"unitGroupInfo",
 		"modelling",
 		"adminInfo",
-		"unitList",
+		"units",
 		"other"
 })
 public class UnitGroup implements IDataSet, Copyable<UnitGroup> {

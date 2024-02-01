@@ -26,20 +26,20 @@ public class DataStockTest {
 
 	@Test
 	public void testSize() {
-		Assert.assertEquals(2, list.dataStocks.size());
+		Assert.assertEquals(2, list.getDataStocks().size());
 	}
 
 	@Test
 	public void testAttributes() {
-		for (DataStock stock : list.dataStocks) {
-			if (stock.root) {
+		for (DataStock stock : list.getDataStocks()) {
+			if (stock.isRoot()) {
 				Assert.assertEquals("8945a2f5-cdda-4ccd-b357-6debb3898ddd",
-						stock.uuid);
-				Assert.assertEquals("default", stock.shortName);
+						stock.getUUID());
+				Assert.assertEquals("default", stock.getShortName());
 			} else {
 				Assert.assertEquals("600695cc-24da-4f9d-b549-78d0c5e126d0",
-						stock.uuid);
-				Assert.assertEquals("other", stock.shortName);
+						stock.getUUID());
+				Assert.assertEquals("other", stock.getShortName());
 			}
 		}
 	}

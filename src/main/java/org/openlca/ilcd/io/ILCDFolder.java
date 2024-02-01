@@ -31,7 +31,7 @@ class ILCDFolder {
 	private void copyZip() throws IOException {
 		try (InputStream stream = this.getClass().getResourceAsStream(
 				"ilcd_folder.zip")) {
-			String zipName = UUID.randomUUID().toString() + ".zip";
+			String zipName = UUID.randomUUID() + ".zip";
 			zipFile = new File(rootDir, zipName);
 			transfer(stream, zipFile);
 		}

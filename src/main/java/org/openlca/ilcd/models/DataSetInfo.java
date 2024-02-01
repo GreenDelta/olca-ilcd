@@ -30,7 +30,7 @@ public class DataSetInfo implements Copyable<DataSetInfo> {
 	private String uuid;
 
 	@XmlElement(name = "name")
-	private ModelName name;
+	private ModelName modelName;
 
 	@XmlElementWrapper(name = "classificationInformation")
 	@XmlElement(name = "classification", namespace = "http://lca.jrc.it/ILCD/Common")
@@ -49,8 +49,8 @@ public class DataSetInfo implements Copyable<DataSetInfo> {
 		return uuid;
 	}
 
-	public ModelName getName() {
-		return name;
+	public ModelName getModelName() {
+		return modelName;
 	}
 
 	public List<Classification> getClassifications() {
@@ -74,8 +74,8 @@ public class DataSetInfo implements Copyable<DataSetInfo> {
 		return this;
 	}
 
-	public DataSetInfo withName(ModelName name) {
-		this.name = name;
+	public DataSetInfo withModelName(ModelName name) {
+		this.modelName = name;
 		return this;
 	}
 
@@ -94,11 +94,11 @@ public class DataSetInfo implements Copyable<DataSetInfo> {
 		return this;
 	}
 
-	public ModelName withName() {
-		if (name == null) {
-			name = new ModelName();
+	public ModelName withModelName() {
+		if (modelName == null) {
+			modelName = new ModelName();
 		}
-		return name;
+		return modelName;
 	}
 
 	public List<Classification> withClassifications() {
@@ -128,7 +128,7 @@ public class DataSetInfo implements Copyable<DataSetInfo> {
 	public DataSetInfo copy() {
 		var copy = new DataSetInfo();
 		copy.withUUID(uuid);
-		Val.copy(name, copy::withName);
+		Val.copy(modelName, copy::withModelName);
 		Val.copy(classifications, copy::withClassifications);
 		Val.copy(comment, copy::withComment);
 		Val.copy(externalDocs, copy::withExternalDocs);

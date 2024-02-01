@@ -24,24 +24,26 @@ public class SourceTest {
 
 	@Test
 	public void testUUID() {
-		assertEquals("2c699413-f88b-4cb5-a56d-98cb4068472f", source.getUUID());
+		assertEquals(
+			"2c699413-f88b-4cb5-a56d-98cb4068472f",
+			Sources.getUUID(source));
 	}
 
 	@Test
 	public void testName() {
-		assertEquals("IMA-Europe_Plastic_Clay_diagramme_"
-				+ "2c699413-f88b-4cb5-a56d-98cb4068472f.jpg",
-			LangString.getFirst(info.name));
+		assertEquals(
+			"IMA-Europe_Plastic_Clay_diagramme_2c699413-f88b-4cb5-a56d-98cb4068472f.jpg",
+			LangString.getFirst(info.getName()));
 	}
 
 	@Test
 	public void testDescription() {
-		assertNull(LangString.getFirst(info.description));
+		assertNull(LangString.getFirst(info.getDescription()));
 	}
 
 	@Test
 	public void testCitation() {
-		assertEquals("GaBi database", info.citation);
+		assertEquals("GaBi database", info.getCitation());
 	}
 
 	@Test

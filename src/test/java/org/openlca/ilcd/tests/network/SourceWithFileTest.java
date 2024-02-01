@@ -14,6 +14,7 @@ import org.openlca.ilcd.SampleSource;
 import org.openlca.ilcd.io.SodaClient;
 import org.openlca.ilcd.sources.FileRef;
 import org.openlca.ilcd.sources.Source;
+import org.openlca.ilcd.util.Sources;
 
 public class SourceWithFileTest {
 
@@ -33,7 +34,7 @@ public class SourceWithFileTest {
 		Source source = makeSource(id);
 		client.put(source);
 		Source fromServer = client.get(Source.class, id);
-		assertEquals(id, fromServer.sourceInfo.dataSetInfo.uuid);
+		assertEquals(id, Sources.getUUID(fromServer));
 	}
 
 	@Test
@@ -46,7 +47,7 @@ public class SourceWithFileTest {
 		Files.write(tempFile, content);
 		File file = tempFile.toFile();
 		addFileLink(source, file);
-		client.put(source, new File[] { file });
+		client.put(source, new File[]{file});
 
 		// try to get the file from the server
 		try (var stream = client.getExternalDocument(id, file.getName())) {
@@ -57,7 +58,7 @@ public class SourceWithFileTest {
 	}
 
 	@Test(expected = Exception.class)
-	public void testNoFile(){
+	public void testNoFile() {
 		Assume.assumeTrue(TestServer.isAvailable());
 		var randomID = UUID.randomUUID().toString();
 		client.getExternalDocument(randomID, "no_such_file.txt");
@@ -65,14 +66,15 @@ public class SourceWithFileTest {
 
 	private Source makeSource(String id) {
 		Source source = SampleSource.create();
-		source.sourceInfo.dataSetInfo.uuid = id;
+		source.withSourceInfo().withDataSetInfo().withUUID(id);
 		return source;
 	}
 
 	private void addFileLink(Source source, File file) {
-		FileRef ref = new FileRef();
-		ref.uri = "../external_docs/" + file.getName();
-		source.sourceInfo.dataSetInfo.files
-				.add(ref);
+		source.withSourceInfo()
+			.withDataSetInfo()
+			.withFiles()
+			.add(new FileRef()
+				.withUri("../external_docs/" + file.getName()));
 	}
 }

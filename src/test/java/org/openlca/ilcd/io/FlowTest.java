@@ -7,6 +7,7 @@ import org.openlca.ilcd.commons.LangString;
 import org.openlca.ilcd.flows.Flow;
 import org.openlca.ilcd.flows.FlowPropertyRef;
 import org.openlca.ilcd.util.Categories;
+import org.openlca.ilcd.util.DataSets;
 import org.openlca.ilcd.util.Flows;
 import org.openlca.ilcd.flows.DataSetInfo;
 
@@ -28,48 +29,50 @@ public class FlowTest {
 
 	@Test
 	public void testGetUUID() {
-		assertEquals("0d7a3ad1-6556-11dd-ad8b-0800200c9a66", flow.getUUID());
+		assertEquals("0d7a3ad1-6556-11dd-ad8b-0800200c9a66", info.getUUID());
 	}
 
 	@Test
 	public void testGetName() {
-		assertEquals("glycidol", LangString.getFirst(flow.getName()));
+		assertEquals("glycidol", LangString.getFirst(info.getName().getBaseName()));
 	}
 
 	@Test
 	public void testGetCasNumber() {
-		assertEquals("000556-52-5", info.casNumber);
+		assertEquals("000556-52-5", info.getCasNumber());
 	}
 
 	@Test
 	public void testGetSumFormula() {
-		assertEquals("C3H6O2", info.sumFormula);
+		assertEquals("C3H6O2", info.getSumFormula());
 	}
 
 	@Test
 	public void testGetReferenceFlowPropertyId() {
-		assertEquals(Integer.valueOf(0),
-			Flows.getQuantitativeReference(flow).referenceFlowProperty);
+		var ref = Flows.getReferenceFlowProperty(flow);
+		assertNotNull(ref);
+		assertEquals(Integer.valueOf(0), ref.getDataSetInternalID());
 	}
 
 	@Test
 	public void testGetDataSetType() {
-		assertEquals(DataSetType.FLOW, flow.getDataSetType());
+		assertEquals(DataSetType.FLOW, DataSets.getType(flow));
 	}
 
 	@Test
 	public void testLocation() {
-		List<LangString> location = Flows.getGeography(flow).location;
-		assertEquals("US", location.get(0).value);
+		var geo = Flows.getGeography(flow);
+		assertNotNull(geo);
+		assertEquals("US", geo.getLocation().get(0).value);
 	}
 
 	@Test
 	public void testGetFlowPropertyReferences() {
 		List<FlowPropertyRef> props = Flows.getFlowProperties(flow);
-		assertTrue(props.size() == 1);
+		assertEquals(1, props.size());
 		FlowPropertyRef ref = props.get(0);
 		assertEquals("93a60a56-a3c8-11da-a746-0800200b9a66",
-			ref.flowProperty.uuid);
+			ref.getFlowProperty().getUUID());
 	}
 
 	@Test

@@ -14,7 +14,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "CategoryType", propOrder = {"value"})
+@XmlType(name = "CategoryType", propOrder = {"name"})
 public class Compartment implements Copyable<Compartment> {
 
 	@XmlValue

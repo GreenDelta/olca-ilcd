@@ -10,6 +10,7 @@ import org.junit.Test;
 import org.openlca.ilcd.models.Model;
 
 import jakarta.xml.bind.JAXB;
+import org.openlca.ilcd.util.Models;
 
 public class ModelSampleTest {
 
@@ -22,7 +23,7 @@ public class ModelSampleTest {
 
 	@Test
 	public void testDataSetInfo() {
-		assertEquals("10062015-184a-41b8-8fa6-49e999cbd101", model.getUUID());
+		assertEquals("10062015-184a-41b8-8fa6-49e999cbd101", Models.getUUID(model));
 	}
 
 }

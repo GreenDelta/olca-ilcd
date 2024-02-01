@@ -20,7 +20,7 @@ public class StocksAndCategoryListsTest {
 		Assume.assumeTrue(TestServer.isAvailable());
 		try (var client = TestServer.newClient()) {
 			var stocks = client.getDataStockList();
-			assertFalse(stocks.dataStocks.isEmpty());
+			assertFalse(stocks.getDataStocks().isEmpty());
 		}
 	}
 
@@ -43,9 +43,9 @@ public class StocksAndCategoryListsTest {
 		try (SodaClient client = SodaClient.of(url)) {
 			CategorySystem system = client.getCategorySystem("OEKOBAU.DAT");
 			boolean processTypeFound = false;
-			for (CategoryList list : system.categories) {
-				if (list.type == ContentType.PROCESS) {
-					assertTrue(list.categories.size() > 5);
+			for (CategoryList list : system.getCategories()) {
+				if (list.getType() == ContentType.PROCESS) {
+					assertTrue(list.getCategories().size() > 5);
 					processTypeFound = true;
 				}
 			}

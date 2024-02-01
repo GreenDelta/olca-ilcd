@@ -1,6 +1,7 @@
 package org.openlca.ilcd.io;
 
 import static org.junit.Assert.assertEquals;
+import static org.openlca.ilcd.util.DataSets.*;
 
 import java.io.InputStream;
 import java.util.function.Consumer;
@@ -22,83 +23,83 @@ public class IDataSetTest {
 	@Test
 	public void testSource() throws Exception {
 		with("sdk_sample_source.xml", Source.class, ds -> {
-			assertEquals("00000000-0000-0000-0000-000000000000", ds.getUUID());
-			assertEquals("00.00", ds.getVersion());
-			assertEquals(DataSetType.SOURCE, ds.getDataSetType());
+			assertEquals("00000000-0000-0000-0000-000000000000", getUUID(ds));
+			assertEquals("00.00", getVersion(ds));
+			assertEquals(DataSetType.SOURCE, getType(ds));
 			assertEquals("http://www.ilcd-network.org/data/processes/sample_source.xml",
-					ds.getURI().trim());
-			assertEquals(2, ds.getClassifications().size());
+					getUri(ds).trim());
+			assertEquals(2, getClassifications(ds).size());
 		});
 	}
 
 	@Test
 	public void testContact() throws Exception {
 		with("sdk_sample_contact.xml", Contact.class, ds -> {
-			assertEquals("00000000-0000-0000-0000-000000000000", ds.getUUID());
-			assertEquals("00.00", ds.getVersion());
-			assertEquals(DataSetType.CONTACT, ds.getDataSetType());
+			assertEquals("00000000-0000-0000-0000-000000000000", getUUID(ds));
+			assertEquals("00.00", getVersion(ds));
+			assertEquals(DataSetType.CONTACT, getType(ds));
 			assertEquals("http://www.ilcd-network.org/data/processes/sample_contact.xml",
-					ds.getURI().trim());
-			assertEquals(2, ds.getClassifications().size());
+					getUri(ds).trim());
+			assertEquals(2, getClassifications(ds).size());
 		});
 	}
 
 	@Test
 	public void testUnitGroup() throws Exception {
 		with("sdk_sample_unitgroup.xml", UnitGroup.class, ds -> {
-			assertEquals("00000000-0000-0000-0000-000000000000", ds.getUUID());
-			assertEquals("00.00", ds.getVersion());
-			assertEquals(DataSetType.UNIT_GROUP, ds.getDataSetType());
+			assertEquals("00000000-0000-0000-0000-000000000000", getUUID(ds));
+			assertEquals("00.00", getVersion(ds));
+			assertEquals(DataSetType.UNIT_GROUP, getType(ds));
 			assertEquals("http://www.ilcd-network.org/data/processes/sample_unitgroup.xml",
-					ds.getURI().trim());
-			assertEquals(2, ds.getClassifications().size());
+					getUri(ds).trim());
+			assertEquals(2, getClassifications(ds).size());
 		});
 	}
 
 	@Test
 	public void testFlowProperty() throws Exception {
 		with("sdk_sample_flowproperty.xml", FlowProperty.class, ds -> {
-			assertEquals("00000000-0000-0000-0000-000000000000", ds.getUUID());
-			assertEquals("00.00", ds.getVersion());
-			assertEquals(DataSetType.FLOW_PROPERTY, ds.getDataSetType());
+			assertEquals("00000000-0000-0000-0000-000000000000", getUUID(ds));
+			assertEquals("00.00", getVersion(ds));
+			assertEquals(DataSetType.FLOW_PROPERTY, getType(ds));
 			assertEquals("http://www.ilcd-network.org/data/processes/sample_flowproperty.xml",
-					ds.getURI().trim());
-			assertEquals(2, ds.getClassifications().size());
+					getUri(ds).trim());
+			assertEquals(2, getClassifications(ds).size());
 		});
 	}
 
 	@Test
 	public void testFlow() throws Exception {
 		with("sdk_sample_flow.xml", Flow.class, ds -> {
-			assertEquals("00000000-0000-0000-0000-000000000000", ds.getUUID());
-			assertEquals("00.00", ds.getVersion());
-			assertEquals(DataSetType.FLOW, ds.getDataSetType());
+			assertEquals("00000000-0000-0000-0000-000000000000", getUUID(ds));
+			assertEquals("00.00", getVersion(ds));
+			assertEquals(DataSetType.FLOW, getType(ds));
 			assertEquals("http://www.ilcd-network.org/data/processes/sample_flow.xml",
-					ds.getURI().trim());
-			assertEquals(2, ds.getClassifications().size());
+					getUri(ds).trim());
+			assertEquals(2, getClassifications(ds).size());
 		});
 	}
 
 	@Test
 	public void testProcess() throws Exception {
 		with("sdk_sample_process.xml", org.openlca.ilcd.processes.Process.class, ds -> {
-			assertEquals("00000000-0000-0000-0000-000000000000", ds.getUUID());
-			assertEquals("00.00", ds.getVersion());
-			assertEquals(DataSetType.PROCESS, ds.getDataSetType());
+			assertEquals("00000000-0000-0000-0000-000000000000", getUUID(ds));
+			assertEquals("00.00", getVersion(ds));
+			assertEquals(DataSetType.PROCESS, getType(ds));
 			assertEquals("http://www.ilcd-network.org/data/processes/sample_process.xml",
-					ds.getURI().trim());
-			assertEquals(2, ds.getClassifications().size());
+					getUri(ds).trim());
+			assertEquals(2, getClassifications(ds).size());
 		});
 	}
 
 	@Test
 	public void testMethod() throws Exception {
 		with("sdk_sample_lciamethod.xml", ImpactMethod.class, ds -> {
-			assertEquals("00000000-0000-0000-0000-000000000000", ds.getUUID());
-			assertEquals("00.00", ds.getVersion());
-			assertEquals(DataSetType.IMPACT_METHOD, ds.getDataSetType());
-			assertEquals("http://www.ilcd-network.org/data/lciamethods/sample_lciamethod.xml", ds.getURI().trim());
-			assertEquals(1, ds.getClassifications().size());
+			assertEquals("00000000-0000-0000-0000-000000000000", getUUID(ds));
+			assertEquals("00.00", getVersion(ds));
+			assertEquals(DataSetType.IMPACT_METHOD, getType(ds));
+			assertEquals("http://www.ilcd-network.org/data/lciamethods/sample_lciamethod.xml", getUri(ds).trim());
+			assertEquals(1, getClassifications(ds).size());
 		});
 	}
 

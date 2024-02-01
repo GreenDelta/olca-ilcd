@@ -1,9 +1,6 @@
 package org.openlca.ilcd.io;
 
-import java.io.StringReader;
-import java.io.StringWriter;
-import java.util.UUID;
-
+import jakarta.xml.bind.JAXB;
 import org.junit.Test;
 import org.openlca.ilcd.commons.Category;
 import org.openlca.ilcd.commons.Classification;
@@ -15,10 +12,11 @@ import org.openlca.ilcd.models.GroupRef;
 import org.openlca.ilcd.models.Model;
 import org.openlca.ilcd.models.Parameter;
 import org.openlca.ilcd.models.ProcessInstance;
-import org.openlca.ilcd.models.Technology;
 import org.openlca.ilcd.util.Models;
 
-import jakarta.xml.bind.JAXB;
+import java.io.StringReader;
+import java.io.StringWriter;
+import java.util.UUID;
 
 import static org.junit.Assert.*;
 
@@ -26,51 +24,53 @@ public class ModelIOTest {
 
 	@Test
 	public void testSimpleModel() {
-		Model model = new Model();
-		Models.forceDataSetInfo(model).uuid = UUID.randomUUID().toString();
-		Models.forceModelName(model).name.add(LangString.of("Example model", "en"));
-		Models.forcePublication(model).version = "01.00.000";
+		var model = new Model();
 
-		Classification classification = new Classification();
+		var info = model.withInfo().withDataSetInfo();
+		info.withUUID(UUID.randomUUID().toString());
+		info.withModelName().withBaseName().add(LangString.of("Example model", "en"));
+		model.withAdminInfo().withPublication().withVersion("01.00.000");
+
+		var classification = new Classification();
 		var category = new Category()
 			.withLevel(0)
 			.withValue("Life cycle models");
 		classification.withCategories().add(category);
-		Models.forceClassifications(model).add(classification);
+		info.withClassifications().add(classification);
 
-		Models.forceQuantitativeReference(model).refProcess = 42;
+		model.withInfo()
+			.withQuantitativeReference()
+			.withRefProcess(42);
 
-		Technology tech = Models.forceTechnology(model);
-		Group group = new Group();
-		group.id = 42;
-		group.name.add(LangString.of("Use phase", "en"));
-		tech.groups.add(group);
+		var group = new Group().withId(42);
+		group.withName().add(LangString.of("Use phase", "en"));
+		var tech = model.withInfo().withTechnology();
+		tech.withGroups().add(group);
 
-		ProcessInstance pi = new ProcessInstance();
-		tech.processes.add(pi);
-		GroupRef groupRef = new GroupRef();
-		groupRef.groupID = 42;
-		pi.groupRefs.add(groupRef);
+		var pi = new ProcessInstance();
+		pi.withGroupRefs().add(
+			new GroupRef().withGroupID(42));
+		tech.withProcesses().add(pi);
 
-		Parameter param = new Parameter();
-		param.name = "distance";
-		param.value = 42.42;
-		pi.parameters.add(param);
+		pi.withParameters().add(
+			new Parameter()
+				.withName("distance")
+				.withValue(42.42));
 
-		Connection con = new Connection();
-		con.outputFlow = UUID.randomUUID().toString();
-		DownstreamLink link = new DownstreamLink();
-		link.inputFlow = UUID.randomUUID().toString();
-		link.process = 42;
-		con.downstreamLinks.add(link);
-		pi.connections.add(con);
+		var con = new Connection()
+			.withOutputFlow(UUID.randomUUID().toString());
+		var link = new DownstreamLink()
+			.withInputFlow(UUID.randomUUID().toString())
+			.withProcess(42);
+		con.withDownstreamLinks().add(link);
+		pi.withConnections().add(con);
 
 		StringWriter writer = new StringWriter();
 		Xml.write(model, writer);
 		StringReader reader = new StringReader(writer.toString());
 		model = JAXB.unmarshal(reader, Model.class);
 
-		assertEquals(1, model.info.technology.processes.size());
+		assertEquals(1, Models.getProcesses(model).size());
 	}
 
 	@Test

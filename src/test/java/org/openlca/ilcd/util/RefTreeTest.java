@@ -27,40 +27,38 @@ public class RefTreeTest {
 
 	@Test
 	public void testFlowRef() {
-		Process p = new Process();
-		Exchange e = new Exchange();
-		p.exchanges.add(e);
-		Ref flowRef = new Ref();
-		flowRef.uuid = "123";
-		e.flow = flowRef;
+		var e = new Exchange();
+		e.withFlow().withUUID("123");
+		var p = new Process();
+		p.withExchanges().add(e);
 		RefTree tree = RefTree.create(p);
 		assertEquals(1, tree.root.childs.size());
 		Ref ref = tree.getRefs().get(0);
-		assertEquals("123", ref.uuid);
+		assertEquals("123", ref.getUUID());
 	}
 
 	@Test
 	public void testProcessSample() {
 		InputStream is = ProcessSampleTest.class
-				.getResourceAsStream("sdk_sample_process.xml");
+			.getResourceAsStream("sdk_sample_process.xml");
 		Process p = JAXB.unmarshal(is, Process.class);
 		RefTree tree = RefTree.create(p);
 		assertTrue(tree.getRefs().size() > 2);
 		int lciaResultCount = 0;
 		for (Ref ref : tree.getRefs()) {
-			if (ref.type == DataSetType.IMPACT_METHOD) {
+			if (ref.getType() == DataSetType.IMPACT_METHOD) {
 				assertTrue(ref.isValid());
 				lciaResultCount++;
 			}
 		}
 		assertEquals(1, lciaResultCount); // two references but with same uuid
-											// and version
+		// and version
 	}
 
 	@Test
 	public void testFlowSample() {
 		InputStream is = ProcessSampleTest.class
-				.getResourceAsStream("sdk_sample_flow.xml");
+			.getResourceAsStream("sdk_sample_flow.xml");
 		Flow p = JAXB.unmarshal(is, Flow.class);
 		RefTree tree = RefTree.create(p);
 		assertTrue(tree.getRefs().size() > 2);

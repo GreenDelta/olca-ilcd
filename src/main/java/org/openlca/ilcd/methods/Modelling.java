@@ -26,7 +26,7 @@ import java.util.Map;
 		"normalisationAndWeighting",
 		"dataSources",
 		"completeness",
-		"validation",
+		"reviews",
 		"complianceDeclarations",
 		"other"
 })

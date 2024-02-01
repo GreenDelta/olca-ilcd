@@ -1,10 +1,5 @@
 package org.openlca.ilcd.io;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-
 import java.io.StringReader;
 import java.io.StringWriter;
 
@@ -14,14 +9,15 @@ import org.openlca.ilcd.util.ExchangeExtension;
 
 import jakarta.xml.bind.JAXB;
 
+import static org.junit.Assert.*;
+
 public class ExchangeExtensionTest {
 
 	@Test
 	public void testEmpty() {
-		Exchange raw = new Exchange();
-		raw.id = 1;
+		Exchange raw = new Exchange().withId(1);
 		Exchange exchange = io(raw);
-		assertTrue(exchange != raw);
+		assertNotSame(exchange, raw);
 		ExchangeExtension extension = new ExchangeExtension(exchange);
 		assertNull(extension.getAmount());
 		assertNull(extension.getFormula());
@@ -47,7 +43,7 @@ public class ExchangeExtensionTest {
 
 	@Test
 	public void testAmount() {
-		assertEquals(42d, extension().getAmount().doubleValue(), 1e-15);
+		assertEquals(42d, extension().getAmount(), 1e-15);
 	}
 
 	@Test
@@ -66,9 +62,9 @@ public class ExchangeExtensionTest {
 	}
 
 	private Exchange createExchange() {
-		Exchange exchange = new Exchange();
-		exchange.id = 1;
-		exchange.meanAmount = 500;
+		Exchange exchange = new Exchange()
+			.withId(1)
+			.withMeanAmount(500);
 		ExchangeExtension extension = new ExchangeExtension(exchange);
 		extension.setAmount(42);
 		extension.setFormula("2 * Pi * sqr(r)");

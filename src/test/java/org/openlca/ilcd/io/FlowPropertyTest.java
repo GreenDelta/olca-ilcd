@@ -24,12 +24,12 @@ public class FlowPropertyTest {
 
 	@Test
 	public void testUUID() {
-		assertEquals("93a60a56-a3c8-14da-a746-0800200c9a66", prop.getUUID());
+		assertEquals("93a60a56-a3c8-14da-a746-0800200c9a66", info.getUUID());
 	}
 
 	@Test
 	public void testName() {
-		assertEquals("Gross calorific value", LangString.getFirst(info.name));
+		assertEquals("Gross calorific value", LangString.getFirst(info.getName()));
 	}
 
 	@Test
@@ -43,7 +43,7 @@ public class FlowPropertyTest {
 	public void testUnitGroupReference() {
 		var ref = FlowProperties.getUnitGroupRef(prop);
 		assertNotNull(ref);
-		assertEquals("93a60a57-a3c8-11da-a746-0800200c9a66", ref.uuid);
+		assertEquals("93a60a57-a3c8-11da-a746-0800200c9a66", ref.getUUID());
 	}
 
 }

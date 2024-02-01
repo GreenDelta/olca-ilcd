@@ -10,8 +10,9 @@ import org.openlca.ilcd.methods.ImpactModel;
 import org.openlca.ilcd.methods.ImpactMethod;
 import org.openlca.ilcd.methods.QuantitativeReference;
 import org.openlca.ilcd.methods.Time;
+import org.openlca.ilcd.util.ImpactMethods;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 public class ImpactMethodTest {
 
@@ -24,34 +25,31 @@ public class ImpactMethodTest {
 
 	@Test
 	public void testDataSetInfo() {
-		DataSetInfo info = method.methodInfo.dataSetInfo;
-		assertEquals("00000000-0000-0000-0000-000000000000", info.uuid);
-		assertEquals(2, info.name.size());
-		assertEquals(2, info.methods.size());
-		assertEquals("ILCD", info.classifications.get(0).getName());
-		assertEquals("Acidification", info.impactCategories.get(1));
-		assertEquals(AreaOfProtection.NATURAL_RESOURCES, info.areasOfProtection.get(0));
-		assertEquals(2, info.comment.size());
-		assertEquals(2, info.externalDocs.size());
+		DataSetInfo info = ImpactMethods.getDataSetInfo(method);
+		assertEquals("00000000-0000-0000-0000-000000000000", info.getUUID());
+		assertEquals(2, info.getName().size());
+		assertEquals(2, info.getMethods().size());
+		assertEquals("ILCD", info.getClassifications().get(0).getName());
+		assertEquals("Acidification", info.getImpactCategories().get(1));
+		assertEquals(AreaOfProtection.NATURAL_RESOURCES, info.getAreasOfProtection().get(0));
+		assertEquals(2, info.getComment().size());
+		assertEquals(2, info.getExternalDocs().size());
 
 	}
 
 	@Test
 	public void testQuantitativeReference() {
-
-		QuantitativeReference qRef = method.methodInfo.quantitativeReference;
-		assertEquals(DataSetType.FLOW_PROPERTY, qRef.quantity.type);
-
+		var qRef = ImpactMethods.getQuantitativeReference(method);
+		assertNotNull(qRef);
+		assertEquals(DataSetType.FLOW_PROPERTY, qRef.getQuantity().getType());
 	}
 
 	@Test
 	public void testTime() {
-
-		Time time = method.methodInfo.time;
+	Time time = method.methodInfo.time;
 		assertEquals(1234, time.referenceYear.intValue());
 		assertEquals("duration1", time.duration.get(1).value);
 		assertEquals(2, time.description.size());
-
 	}
 
 	@Test
@@ -65,7 +63,6 @@ public class ImpactMethodTest {
 
 	@Test
 	public void testImpactModel() {
-
 		ImpactModel model = method.methodInfo.impactModel;
 		assertEquals("modelName0", model.name);
 		assertEquals(2, model.description.size());
@@ -73,7 +70,6 @@ public class ImpactMethodTest {
 		assertEquals(2, model.includedMethods.size());
 		assertEquals(2, model.consideredMechanisms.size());
 		assertEquals(2, model.flowCharts.size());
-
 	}
 
 	@Test
