@@ -33,7 +33,7 @@ public class Models {
 	public static void setOrigin(Model model, String value) {
 		if (model == null)
 			return;
-		Extensions.setString(model.getOtherAttributes(), "origin", value);
+		Extensions.setString(model::withOtherAttributes, "origin", value);
 	}
 
 	public static ModelInfo getModelInfo(Model model) {

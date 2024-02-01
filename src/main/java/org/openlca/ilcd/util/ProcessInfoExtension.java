@@ -21,7 +21,7 @@ public class ProcessInfoExtension {
 		if (info == null)
 			return;
 		QName qName = Extensions.getQName(MODEL_REF_PROCESS);
-		info.otherAttributes.put(qName, uuid);
+		info.withOtherAttributes().put(qName, uuid);
 	}
 
 	/**
@@ -32,7 +32,7 @@ public class ProcessInfoExtension {
 		if (info == null)
 			return null;
 		QName qName = Extensions.getQName(MODEL_REF_PROCESS);
-		return info.otherAttributes.get(qName);
+		return info.getOtherAttributes().get(qName);
 	}
 
 }

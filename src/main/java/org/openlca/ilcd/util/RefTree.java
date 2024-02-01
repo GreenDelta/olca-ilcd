@@ -82,7 +82,7 @@ public class RefTree {
 	private String key(Ref ref) {
 		if (ref == null)
 			return "/";
-		return "/" + ref.type + "/" + ref.uuid + "/" + ref.version;
+		return "/" + ref.getType() + "/" + ref.getUUID() + "/" + ref.getVersion();
 	}
 
 	public static RefTree create(IDataSet ds) {

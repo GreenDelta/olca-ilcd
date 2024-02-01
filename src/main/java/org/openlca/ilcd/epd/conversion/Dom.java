@@ -127,7 +127,7 @@ public final class Dom {
 	public static Element getChild(Other other, String name, String ns) {
 		if (other == null || name == null)
 			return null;
-		for (Object any : other.any) {
+		for (Object any : other.getAny()) {
 			if (!(any instanceof Element e))
 				continue;
 			if (matches(e, name, ns))
@@ -191,7 +191,7 @@ public final class Dom {
 	static Element getElement(Other extension, String tagName) {
 		if (extension == null || tagName == null)
 			return null;
-		for (var any : extension.any) {
+		for (var any : extension.getAny()) {
 			if (!(any instanceof Element e))
 				continue;
 			if (Objects.equals(tagName, e.getLocalName()))
@@ -203,17 +203,17 @@ public final class Dom {
 	/**
 	 * Removes all elements with the given tag-name from the extensions.
 	 */
-	public static void clear(Other extension, String tagName) {
-		if (extension == null || tagName == null)
+	public static void clear(Other ext, String tagName) {
+		if (ext == null || tagName == null || ext.getAny().isEmpty())
 			return;
 		List<Element> matches = new ArrayList<>();
-		for (Object any : extension.any) {
+		for (Object any : ext.getAny()) {
 			if (!(any instanceof Element e))
 				continue;
 			if (Objects.equals(tagName, e.getLocalName()))
 				matches.add(e);
 		}
-		extension.any.removeAll(matches);
+		ext.getAny().removeAll(matches);
 	}
 
 	/**
@@ -222,9 +222,9 @@ public final class Dom {
 	static boolean isEmpty(Other ext) {
 		if (ext == null)
 			return true;
-		if (ext.any.isEmpty())
+		if (ext.getAny().isEmpty())
 			return true;
-		for (Object o : ext.any) {
+		for (Object o : ext.getAny()) {
 			if (o != null)
 				return false;
 		}

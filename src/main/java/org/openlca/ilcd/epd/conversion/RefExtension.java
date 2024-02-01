@@ -17,16 +17,16 @@ public class RefExtension {
 		var elem = Dom.getElement(other, tagName);
 		if (elem == null)
 			return Optional.empty();
-		Ref ref = new Ref();
-		ref.type = DataSetType.fromValue(elem.getAttribute("type")).orElse(null);
-		ref.uuid = elem.getAttribute("refObjectId");
-		ref.version = elem.getAttribute("version");
-		ref.uri = elem.getAttribute("uri");
+		Ref ref = new Ref()
+			.withType(DataSetType.fromValue(elem.getAttribute("type")).orElse(null))
+			.withUUID(elem.getAttribute("refObjectId"))
+			.withVersion(elem.getAttribute("version"))
+			.withUri(elem.getAttribute("uri"));
 		var nameElement = Dom.findChild(elem, "shortDescription");
 		if (nameElement != null) {
 			String lang = nameElement.getAttribute("xml:lang");
 			String val = nameElement.getTextContent();
-			LangString.set(ref.name, val, lang);
+			ref.withName().add(LangString.of(val, lang));
 		}
 		return Optional.of(ref);
 	}
@@ -47,12 +47,12 @@ public class RefExtension {
 		if (doc == null)
 			return;
 		var elem = doc.createElementNS(Vocab.NS_EPD, "epd:" + tag);
-		elem.setAttribute("refObjectId", ref.uuid);
-		if (ref.type != null) {
-			elem.setAttribute("type", ref.type.value());
-			elem.setAttribute("uri", "../" + folder(ref.type) + "/" + ref.uuid);
+		elem.setAttribute("refObjectId", ref.getUUID());
+		if (ref.getType() != null) {
+			elem.setAttribute("type", ref.getType().value());
+			elem.setAttribute("uri", "../" + folder(ref.getType()) + "/" + ref.getUUID());
 		}
-		for (var name : ref.name) {
+		for (var name : ref.getName()) {
 			var nameElem = doc.createElementNS(
 				"http://lca.jrc.it/ILCD/Common",
 				"common:shortDescription");
@@ -60,7 +60,7 @@ public class RefExtension {
 			elem.setAttribute("xml:lang", name.lang);
 			nameElem.setTextContent(name.value);
 		}
-		extension.any.add(elem);
+		extension.withAny().add(elem);
 	}
 
 	private static String folder(DataSetType type) {

@@ -21,6 +21,7 @@ import org.openlca.ilcd.descriptors.Descriptor;
 import org.openlca.ilcd.descriptors.DescriptorList;
 import org.openlca.ilcd.lists.CategorySystem;
 import org.openlca.ilcd.sources.Source;
+import org.openlca.ilcd.util.DataSets;
 import org.openlca.ilcd.util.Strings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -126,8 +127,13 @@ public class SodaClient implements DataStore {
 
 	@Override
 	public void put(IDataSet ds) {
+		var uid = DataSets.getUUID(ds);
+		if (uid == null) {
+			log.error("failed to read UUID from dataset {}", ds);
+			return;
+		}
 		var r = resource(Dir.get(ds.getClass()));
-		log.info("Publish resource: {}/{}", r.getUri(), ds.getUUID());
+		log.info("Publish resource: {}/{}", r.getUri(), uid);
 		try {
 			byte[] bytes = Xml.toBytes(ds);
 			var builder = cookies(r).accept(MediaType.APPLICATION_XML);
@@ -225,12 +231,12 @@ public class SodaClient implements DataStore {
 	 * Includes also the version in the check.
 	 */
 	public boolean contains(Ref ref) {
-		if (ref == null || ref.type == null || ref.uuid == null)
+		if (ref == null || ref.getType() == null || ref.getUUID() == null)
 			return false;
-		var r = resource(Dir.get(ref.getDataSetClass()), ref.uuid)
+		var r = resource(Dir.get(ref.getDataSetClass()), ref.getUUID())
 			.queryParam("format", "xml");
-		if (ref.version != null)
-			r = r.queryParam("version", ref.version);
+		if (ref.getVersion() != null)
+			r = r.queryParam("version", ref.getVersion());
 		try (var response = cookies(r).head()) {
 			return response.getStatus() == Status.OK.getStatusCode();
 		}
@@ -251,25 +257,25 @@ public class SodaClient implements DataStore {
 		}
 	}
 
-	public List<Descriptor> getDescriptors(Class<?> type) {
+	public List<Descriptor<?>> getDescriptors(Class<?> type) {
 		log.debug("get descriptors for {}", type);
 		try {
 			var r = Strings.nullOrEmpty(dataStockId)
 				? resource(Dir.get(type))
 				: resource("datastocks", dataStockId, Dir.get(type));
 			r = r.queryParam("pageSize", "1000");
-			List<Descriptor> list = new ArrayList<>();
+			var list = new ArrayList<Descriptor<?>>();
 			int total;
 			int idx = 0;
 			do {
 				log.debug("get descriptors for {} @startIndex={}", type, idx);
 				r = r.queryParam("startIndex", Integer.toString(idx));
 				DescriptorList data = cookies(r).get(DescriptorList.class);
-				total = data.totalSize;
-				int fetched = data.descriptors.size();
+				total = data.getTotalSize();
+				int fetched = data.getDescriptors().size();
 				if (fetched == 0)
 					break;
-				list.addAll(data.descriptors);
+				list.addAll(data.getDescriptors());
 				idx += fetched;
 			} while (list.size() < total);
 			return list;
@@ -284,10 +290,10 @@ public class SodaClient implements DataStore {
 
 		// find the data-stock
 		String id = null;
-		for (var stock : getDataStockList().dataStocks) {
-			if (Strings.nullOrEqual(stock.uuid, idOrName)
-				|| Strings.nullOrEqual(stock.shortName, idOrName)) {
-				id = stock.uuid;
+		for (var stock : getDataStockList().getDataStocks()) {
+			if (Strings.nullOrEqual(stock.getUUID(), idOrName)
+				|| Strings.nullOrEqual(stock.getShortName(), idOrName)) {
+				id = stock.getUUID();
 				break;
 			}
 		}

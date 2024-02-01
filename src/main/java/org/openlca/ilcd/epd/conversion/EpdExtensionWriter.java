@@ -2,7 +2,6 @@ package org.openlca.ilcd.epd.conversion;
 
 import javax.xml.namespace.QName;
 
-import org.openlca.ilcd.commons.Other;
 import org.openlca.ilcd.epd.model.EpdDataSet;
 import org.openlca.ilcd.processes.Process;
 import org.openlca.ilcd.util.Processes;
@@ -127,31 +126,31 @@ class EpdExtensionWriter {
 
 	private void writePublicationDate() {
 
-
-
-		var t = Processes.getTime(epd.process);
 		var pubDate = epd.publicationDate;
-		if (pubDate == null && t == null)
-			return;
-		var time = t == null
-			? epd.process.withProcessInfo().withTime()
-			: t;
-		if (pubDate == null && time.other == null)
-			return;
-
 		var tag = "publicationDateOfEPD";
 
-		// delete it if publication date is null
 		if (pubDate == null) {
-			Dom.clear(time.other, tag);
-			if (Dom.isEmpty(time.other)) {
-				time.other = null;
+			// clear extension
+			var time = Processes.getTime(epd.process);
+			if (time == null)
+				return;
+			var other = time.getOther();
+			if (other == null)
+				return;
+			Dom.clear(other, tag);
+			if (Dom.isEmpty(other)) {
+				time.withOther(null);
 			}
 			return;
 		}
 
+		var other = epd.process
+			.withProcessInfo()
+			.withTime()
+			.withOther();
+
 		// create or update the element
-		var elem = Dom.getElement(time.other, tag);
+		var elem = Dom.getElement(other, tag);
 		if (elem != null) {
 			elem.setTextContent(pubDate.toString());
 			return;
@@ -160,9 +159,6 @@ class EpdExtensionWriter {
 		if (newElem == null)
 			return;
 		newElem.setTextContent(pubDate.toString());
-		if (time.other == null) {
-			time.other = new Other();
-		}
-		time.other.any.add(newElem);
+		other.withAny().add(newElem);
 	}
 }

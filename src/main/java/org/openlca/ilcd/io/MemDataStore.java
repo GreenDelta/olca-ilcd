@@ -10,6 +10,7 @@ import java.util.Iterator;
 
 import org.openlca.ilcd.commons.IDataSet;
 import org.openlca.ilcd.sources.Source;
+import org.openlca.ilcd.util.DataSets;
 
 /** An in memory implementation of the data store interface. */
 public class MemDataStore implements DataStore {
@@ -29,11 +30,12 @@ public class MemDataStore implements DataStore {
 
 	@Override
 	public void put(IDataSet ds) {
-		if (ds == null)
+		var uid = DataSets.getUUID(ds);
+		if (uid == null)
 			return;
 		Class<?> clazz = ds.getClass();
 		var map = content.computeIfAbsent(clazz, k -> new HashMap<>());
-		map.put(ds.getUUID(), ds);
+		map.put(uid, ds);
 	}
 
 	@Override
