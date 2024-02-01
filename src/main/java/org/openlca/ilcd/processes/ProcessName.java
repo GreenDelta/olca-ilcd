@@ -20,7 +20,7 @@ import java.util.Map;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "NameType", propOrder = {
-		"name",
+		"baseName",
 		"technicalDetails",
 		"mixAndLocation",
 		"flowProperties",
@@ -34,7 +34,7 @@ public class ProcessName implements Copyable<ProcessName> {
 	 */
 	@Label
 	@XmlElement(name = "baseName", required = true)
-	private List<LangString> name;
+	private List<LangString> baseName;
 
 	/**
 	 * Specifying information on the good, service, or process in technical
@@ -74,8 +74,8 @@ public class ProcessName implements Copyable<ProcessName> {
 
 	// region getters
 
-	public List<LangString> getName() {
-		return name != null ? name : List.of();
+	public List<LangString> getBaseName() {
+		return baseName != null ? baseName : List.of();
 	}
 
 	public List<LangString> getTechnicalDetails() {
@@ -102,8 +102,8 @@ public class ProcessName implements Copyable<ProcessName> {
 
 	// region setters
 
-	public ProcessName withName(List<LangString> name) {
-		this.name = name;
+	public ProcessName withBaseName(List<LangString> name) {
+		this.baseName = name;
 		return this;
 	}
 
@@ -132,11 +132,11 @@ public class ProcessName implements Copyable<ProcessName> {
 		return this;
 	}
 
-	public List<LangString> withName() {
-		if (name == null) {
-			name = new ArrayList<>();
+	public List<LangString> withBaseName() {
+		if (baseName == null) {
+			baseName = new ArrayList<>();
 		}
-		return name;
+		return baseName;
 	}
 
 	public List<LangString> withTechnicalDetails() {
@@ -179,7 +179,7 @@ public class ProcessName implements Copyable<ProcessName> {
 	@Override
 	public ProcessName copy() {
 		var copy = new ProcessName();
-		Val.copy(name, copy::withName);
+		Val.copy(baseName, copy::withBaseName);
 		Val.copy(technicalDetails, copy::withTechnicalDetails);
 		Val.copy(mixAndLocation, copy::withMixAndLocation);
 		Val.copy(flowProperties, copy::withFlowProperties);

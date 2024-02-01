@@ -59,7 +59,7 @@ public class EpdDataSet implements Copyable<EpdDataSet> {
 		d.refId = Processes.getUUID(process);
 		ProcessName name = Processes.getProcessName(process);
 		if (name != null)
-			d.name = LangString.getFirst(name.getName(), lang, "en");
+			d.name = LangString.getFirst(name.getBaseName(), lang, "en");
 		return d;
 	}
 

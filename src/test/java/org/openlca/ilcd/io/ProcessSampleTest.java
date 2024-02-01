@@ -1,12 +1,6 @@
 package org.openlca.ilcd.io;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-
-import java.util.List;
-import java.util.function.Consumer;
-
-import org.junit.Assert;
+import jakarta.xml.bind.JAXB;
 import org.junit.Test;
 import org.openlca.ilcd.commons.Compliance;
 import org.openlca.ilcd.commons.DataSetType;
@@ -17,136 +11,136 @@ import org.openlca.ilcd.commons.PublicationStatus;
 import org.openlca.ilcd.commons.Time;
 import org.openlca.ilcd.commons.UncertaintyDistribution;
 import org.openlca.ilcd.processes.AllocationFactor;
-import org.openlca.ilcd.processes.ComplianceDeclaration;
 import org.openlca.ilcd.processes.DataEntry;
 import org.openlca.ilcd.processes.DataSetInfo;
 import org.openlca.ilcd.processes.Exchange;
 import org.openlca.ilcd.processes.ImpactResult;
 import org.openlca.ilcd.processes.Location;
-import org.openlca.ilcd.processes.InventoryMethod;
 import org.openlca.ilcd.processes.Parameter;
 import org.openlca.ilcd.processes.ParameterModel;
 import org.openlca.ilcd.processes.Process;
-import org.openlca.ilcd.processes.Publication;
 import org.openlca.ilcd.processes.Review;
+import org.openlca.ilcd.util.Processes;
 
-import jakarta.xml.bind.JAXB;
+import java.util.List;
+import java.util.function.Consumer;
+
+import static org.junit.Assert.*;
 
 public class ProcessSampleTest {
 
 	@Test
 	public void testAdminInfo() {
 		with(p -> {
-			Publication pub = p.adminInfo.publication;
-			Assert.assertNotNull(pub.lastRevision);
-			assertEquals("00.00", pub.version);
-			assertEquals(2, pub.precedingVersions.size());
+			var pub = Processes.getPublication(p);
+			assertNotNull(pub);
+			assertEquals("00.00", pub.getVersion());
+			assertEquals(2, pub.getPrecedingVersions().size());
 			assertEquals(
-					"http://www.ilcd-network.org/data/processes/sample_process.xml",
-					pub.uri.trim());
-			assertEquals(PublicationStatus.WORKING_DRAFT, pub.status);
-			assertEquals(DataSetType.SOURCE, pub.republication.type);
-			assertEquals(DataSetType.CONTACT, pub.registrationAuthority.type);
-			assertEquals(DataSetType.CONTACT, pub.owner.type);
-			assertEquals(2, pub.accessRestrictions.size());
+				"http://www.ilcd-network.org/data/processes/sample_process.xml",
+				pub.getUri().trim());
+			assertEquals(PublicationStatus.WORKING_DRAFT, pub.getStatus());
+			assertEquals(DataSetType.SOURCE, pub.getRepublication().getType());
+			assertEquals(DataSetType.CONTACT, pub.getRegistrationAuthority().getType());
+			assertEquals(DataSetType.CONTACT, pub.getOwner().getType());
+			assertEquals(2, pub.getAccessRestrictions().size());
 
-			DataEntry e = p.adminInfo.dataEntry;
-			Assert.assertNotNull(e.timeStamp);
-			assertEquals(2, e.formats.size());
-			assertEquals(DataSetType.SOURCE, e.originalDataSet.type);
-			assertEquals(DataSetType.CONTACT, e.documentor.type);
-			assertEquals(2, e.useApprovals.size());
+			DataEntry e = p.getAdminInfo().getDataEntry();
+			assertNotNull(e.getTimeStamp());
+			assertEquals(2, e.getFormats().size());
+			assertEquals(DataSetType.SOURCE, e.getOriginalDataSet().getType());
+			assertEquals(DataSetType.CONTACT, e.getDocumentor().getType());
+			assertEquals(2, e.getUseApprovals().size());
 		});
 	}
 
 	@Test
 	public void testDataSetInfo() {
 		with(p -> {
-			DataSetInfo info = p.processInfo.dataSetInfo;
-			assertEquals(2, info.complementingProcesses.length);
-			assertEquals("identifierOfSubDataSet0", info.subIdentifier);
-			assertEquals(2, info.classifications.size());
-			assertEquals("baseName0", LangString.get(info.name.name, "en").value);
+			DataSetInfo info = p.getProcessInfo().getDataSetInfo();
+			assertEquals(2, info.getComplementingProcesses().size());
+			assertEquals("identifierOfSubDataSet0", info.getSubIdentifier());
+			assertEquals(2, info.getClassifications().size());
+			assertEquals("baseName0", LangString.get(info.getProcessName().getBaseName(), "en").value);
 		});
 	}
 
 	@Test
 	public void testTime() {
 		with(p -> {
-			Time time = p.processInfo.time;
-			assertEquals(1234, time.referenceYear.intValue());
-			assertEquals(1234, time.validUntil.intValue());
-			assertEquals(2, time.description.size());
+			Time time = p.getProcessInfo().getTime();
+			assertEquals(1234, time.getReferenceYear().intValue());
+			assertEquals(1234, time.getValidUntil().intValue());
+			assertEquals(2, time.getDescription().size());
 		});
 	}
 
 	@Test
 	public void testGeography() {
 		with(p -> {
-			Location loc = p.processInfo.geography.location;
-			assertEquals("EU-28", loc.code);
-			assertEquals(2, loc.description.size());
+			Location loc = p.getProcessInfo().getGeography().getLocation();
+			assertEquals("EU-28", loc.getCode());
+			assertEquals(2, loc.getDescription().size());
 		});
 	}
 
 	@Test
 	public void testParameters() {
 		with(p -> {
-			ParameterModel section = p.processInfo.parameters;
-			assertEquals(2, section.description.size());
-			assertEquals(2, section.parameters.size());
-			Parameter param = section.parameters.get(0);
-			assertEquals("formula0", param.formula);
-			assertEquals(0.0, param.mean, 0);
-			assertEquals(0.0, param.min, 0);
-			assertEquals(0.0, param.max, 0);
-			assertEquals(12.123, param.dispersion, 1e-16);
-			assertEquals(UncertaintyDistribution.UNDEFINED, param.distribution);
-			assertEquals(2, param.comment.size());
+			ParameterModel section = p.getProcessInfo().getParameterModel();
+			assertEquals(2, section.getDescription().size());
+			assertEquals(2, section.getParameters().size());
+			Parameter param = section.getParameters().get(0);
+			assertEquals("formula0", param.getFormula());
+			assertEquals(0.0, param.getMean(), 0);
+			assertEquals(0.0, param.getMin(), 0);
+			assertEquals(0.0, param.getMax(), 0);
+			assertEquals(12.123, param.getDispersion(), 1e-16);
+			assertEquals(UncertaintyDistribution.UNDEFINED, param.getDistribution());
+			assertEquals(2, param.getComment().size());
 		});
 	}
 
 	@Test
 	public void testCompliance() {
 		with(p -> {
-			assertEquals(2, p.modelling.complianceDeclarations.entries.size());
-			ComplianceDeclaration c = p.modelling.complianceDeclarations.entries
-					.get(0);
-			Assert.assertNotNull(c.system);
-			Compliance v = Compliance.FULLY_COMPLIANT;
-			assertEquals(v, c.approval);
-			assertEquals(v, c.nomenclature);
-			assertEquals(v, c.method);
-			assertEquals(v, c.review);
-			assertEquals(v, c.documentation);
-			assertEquals(v, c.quality);
+			assertEquals(2, p.getModelling().getComplianceDeclarations().size());
+			var c = p.getModelling().getComplianceDeclarations().get(0);
+			assertNotNull(c.getSystem());
+			var v = Compliance.FULLY_COMPLIANT;
+			assertEquals(v, c.getApproval());
+			assertEquals(v, c.getNomenclature());
+			assertEquals(v, c.getMethod());
+			assertEquals(v, c.getReview());
+			assertEquals(v, c.getDocumentation());
+			assertEquals(v, c.getQuality());
 		});
 	}
 
 	@Test
 	public void testMethod() {
 		with(p -> {
-			InventoryMethod method = p.modelling.inventoryMethod;
-			assertEquals(ProcessType.UNIT_PROCESS, method.processType);
-			assertEquals(ModellingPrinciple.ATTRIBUTIONAL, method.principle);
-			assertEquals(2, method.approaches.size());
-			assertEquals(2, method.approachDeviations.size());
-			assertEquals(2, method.constants.size());
-			assertEquals(2, method.constantsDeviations.size());
-			assertEquals(2, method.sources.size());
-			assertEquals(2, method.principleDeviations.size());
+			var method = p.getModelling().getInventoryMethod();
+			assertEquals(ProcessType.UNIT_PROCESS, method.getProcessType());
+			assertEquals(ModellingPrinciple.ATTRIBUTIONAL, method.getPrinciple());
+			assertEquals(2, method.getApproaches().size());
+			assertEquals(2, method.getApproachDeviations().size());
+			assertEquals(2, method.getConstants().size());
+			assertEquals(2, method.getConstantsDeviations().size());
+			assertEquals(2, method.getSources().size());
+			assertEquals(2, method.getPrincipleDeviations().size());
 		});
 	}
 
 	@Test
 	public void testReviews() {
 		with(p -> {
-			List<Review> reviews = p.modelling.validation.reviews;
+			List<Review> reviews = p.getModelling().getValidation().getReviews();
 			assertEquals(2, reviews.size());
 			for (Review r : reviews) {
-				assertEquals(2, r.scopes.size());
-				assertEquals(2, r.details.size());
-				assertEquals(2, r.indicators.length);
+				assertEquals(2, r.getScopes().size());
+				assertEquals(2, r.getDetails().size());
+				assertEquals(2, r.getIndicators().size());
 			}
 		});
 	}
@@ -154,21 +148,21 @@ public class ProcessSampleTest {
 	@Test
 	public void testAllocation() {
 		with(p -> {
-			Exchange e = p.exchanges.get(0);
-			assertEquals(2, e.allocations.length);
-			AllocationFactor f = e.allocations[1];
-			assertEquals(57.98, f.fraction, 1e-10);
-			assertEquals(1, f.productExchangeId);
+			Exchange e = p.getExchanges().get(0);
+			assertEquals(2, e.getAllocations().size());
+			AllocationFactor f = e.getAllocations().get(1);
+			assertEquals(57.98, f.getFraction(), 1e-10);
+			assertEquals(1, f.getProductExchangeId());
 		});
 	}
 
 	@Test
 	public void testLCIAResults() {
 		with(p -> {
-			assertEquals(2, p.lciaResults.length);
-			ImpactResult r1 = p.lciaResults[0];
-			assertTrue(r1.method.isValid());
-			assertEquals(DataSetType.IMPACT_METHOD, r1.method.type);
+			assertEquals(2, p.getImpactResults().size());
+			ImpactResult r1 = p.getImpactResults().get(0);
+			assertTrue(r1.getMethod().isValid());
+			assertEquals(DataSetType.IMPACT_METHOD, r1.getMethod().getType());
 		});
 	}
 

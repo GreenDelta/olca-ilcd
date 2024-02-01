@@ -19,7 +19,7 @@ import org.openlca.ilcd.util.Val;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "DataSetInformationType", propOrder = {
 		"uuid",
-		"name",
+		"modelName",
 		"classifications",
 		"comment",
 		"externalDocs"

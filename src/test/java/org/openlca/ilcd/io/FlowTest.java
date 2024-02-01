@@ -34,7 +34,7 @@ public class FlowTest {
 
 	@Test
 	public void testGetName() {
-		assertEquals("glycidol", LangString.getFirst(info.getName().getBaseName()));
+		assertEquals("glycidol", LangString.getFirst(info.getFlowName().getBaseName()));
 	}
 
 	@Test

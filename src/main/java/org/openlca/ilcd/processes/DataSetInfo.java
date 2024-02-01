@@ -23,7 +23,7 @@ import java.util.Map;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "DataSetInformationType", propOrder = {
 		"uuid",
-		"name",
+		"processName",
 		"subIdentifier",
 		"synonyms",
 		"complementingProcesses",
@@ -40,7 +40,8 @@ public class DataSetInfo implements Copyable<DataSetInfo> {
 	/**
 	 * General descriptive and specifying name of the process.
 	 */
-	private ProcessName name;
+	@XmlElement(name = "name")
+	private ProcessName processName;
 
 	/**
 	 * Identifier of a sub-set of a complete process data set. This can be the
@@ -89,8 +90,8 @@ public class DataSetInfo implements Copyable<DataSetInfo> {
 		return uuid;
 	}
 
-	public ProcessName getName() {
-		return name;
+	public ProcessName getProcessName() {
+		return processName;
 	}
 
 	public String getSubIdentifier() {
@@ -134,8 +135,8 @@ public class DataSetInfo implements Copyable<DataSetInfo> {
 		return this;
 	}
 
-	public DataSetInfo withName(ProcessName name) {
-		this.name = name;
+	public DataSetInfo withProcessName(ProcessName name) {
+		this.processName = name;
 		return this;
 	}
 
@@ -179,11 +180,11 @@ public class DataSetInfo implements Copyable<DataSetInfo> {
 		return this;
 	}
 
-	public ProcessName withName() {
-		if (name == null) {
-			name = new ProcessName();
+	public ProcessName withProcessName() {
+		if (processName == null) {
+			processName = new ProcessName();
 		}
-		return name;
+		return processName;
 	}
 
 	public List<LangString> withSynonyms() {
@@ -241,7 +242,7 @@ public class DataSetInfo implements Copyable<DataSetInfo> {
 	public DataSetInfo copy() {
 		var copy = new DataSetInfo();
 		copy.withUUID(uuid);
-		Val.copy(name, copy::withName);
+		Val.copy(processName, copy::withProcessName);
 		copy.withSubIdentifier(subIdentifier);
 		Val.copy(synonyms, copy::withSynonyms);
 		Val.copy(complementingProcesses, copy::withComplementingProcesses);

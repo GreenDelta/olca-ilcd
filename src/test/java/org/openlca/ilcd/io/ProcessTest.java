@@ -27,7 +27,7 @@ public class ProcessTest {
 
 	@Test
 	public void testUUID() {
-		assertEquals("76d6aaa4-37e2-40b2-994c-03292b600074", ds.getUUID());
+		assertEquals("76d6aaa4-37e2-40b2-994c-03292b600074", info.getUUID());
 	}
 
 	@Test
@@ -44,7 +44,7 @@ public class ProcessTest {
 				+ "Styrene, acrylonitrile, butadiene polymer; 2-Propenenitrile, "
 				+ "polymer with 1,3-butadiene and ethenylbenzene; Acrylonitrile, "
 				+ "polymer with 1,3-butadiene and styrene",
-			LangString.getFirst(info.synonyms));
+			LangString.getFirst(info.getSynonyms()));
 	}
 
 	@Test
@@ -59,14 +59,14 @@ public class ProcessTest {
 	public void testGetTime() {
 		var time = Processes.getTime(ds);
 		assertNotNull(time);
-		assertEquals(1996, time.referenceYear.intValue());
+		assertEquals(1996, time.getReferenceYear().intValue());
 	}
 
 	@Test
 	public void testGetGeography() {
 		var geography = Processes.getGeography(ds);
 		assertNotNull(geography);
-		assertEquals("RER", geography.location.code);
+		assertEquals("RER", geography.getLocation().getCode());
 	}
 
 	@Test
@@ -85,7 +85,7 @@ public class ProcessTest {
 
 	@Test
 	public void testGetExchanges() {
-		assertTrue(ds.exchanges.size() > 56);
+		assertTrue(ds.getExchanges().size() > 56);
 	}
 
 }

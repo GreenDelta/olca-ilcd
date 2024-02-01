@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "", propOrder = { "clazz" })
+@XmlType(name = "", propOrder = { "categories" })
 @XmlRootElement(name = "classification", namespace = "http://www.ilcd-network.org/ILCD/ServiceAPI")
 public class Classification implements Copyable<Classification> {
 

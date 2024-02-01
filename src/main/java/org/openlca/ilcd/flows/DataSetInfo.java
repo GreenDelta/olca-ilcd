@@ -21,7 +21,7 @@ import java.util.Map;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "DataSetInformationType", propOrder = {
 		"uuid",
-		"name",
+		"flowName",
 		"synonyms",
 		"classificationInformation",
 		"casNumber",
@@ -34,7 +34,8 @@ public class DataSetInfo implements Copyable<DataSetInfo> {
 	@XmlElement(name = "UUID", namespace = "http://lca.jrc.it/ILCD/Common", required = true)
 	private String uuid;
 
-	private FlowName name;
+	@XmlElement(name = "name")
+	private FlowName flowName;
 
 	@FreeText
 	@XmlElement(namespace = "http://lca.jrc.it/ILCD/Common")
@@ -64,8 +65,8 @@ public class DataSetInfo implements Copyable<DataSetInfo> {
 		return uuid;
 	}
 
-	public FlowName getName() {
-		return name;
+	public FlowName getFlowName() {
+		return flowName;
 	}
 
 	public List<LangString> getSynonyms() {
@@ -105,8 +106,8 @@ public class DataSetInfo implements Copyable<DataSetInfo> {
 		return this;
 	}
 
-	public DataSetInfo withName(FlowName name) {
-		this.name = name;
+	public DataSetInfo withFlowName(FlowName name) {
+		this.flowName = name;
 		return this;
 	}
 
@@ -145,11 +146,11 @@ public class DataSetInfo implements Copyable<DataSetInfo> {
 		return this;
 	}
 
-	public FlowName withName() {
-		if (name == null) {
-			name = new FlowName();
+	public FlowName withFlowName() {
+		if (flowName == null) {
+			flowName = new FlowName();
 		}
-		return name;
+		return flowName;
 	}
 
 	public List<LangString> withSynonyms() {
@@ -193,7 +194,7 @@ public class DataSetInfo implements Copyable<DataSetInfo> {
 	public DataSetInfo copy() {
 		var copy = new DataSetInfo();
 		copy.withUUID(uuid);
-		Val.copy(name, copy::withName);
+		Val.copy(flowName, copy::withFlowName);
 		Val.copy(synonyms, copy::withSynonyms);
 		Val.copy(classificationInformation, copy::withClassificationInformation);
 		copy.withCasNumber(casNumber);

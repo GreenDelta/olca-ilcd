@@ -1,7 +1,14 @@
 package org.openlca.ilcd.io;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import org.junit.Before;
+import org.junit.Test;
+import org.openlca.ilcd.commons.IDataSet;
+import org.openlca.ilcd.contacts.Contact;
+import org.openlca.ilcd.flowproperties.FlowProperty;
+import org.openlca.ilcd.flows.Flow;
+import org.openlca.ilcd.processes.Process;
+import org.openlca.ilcd.sources.Source;
+import org.openlca.ilcd.units.UnitGroup;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -14,17 +21,7 @@ import java.util.List;
 import java.util.UUID;
 import java.util.function.BiFunction;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.openlca.ilcd.commons.IDataSet;
-import org.openlca.ilcd.contacts.Contact;
-import org.openlca.ilcd.flowproperties.FlowProperty;
-import org.openlca.ilcd.flows.Flow;
-import org.openlca.ilcd.processes.DataSetInfo;
-import org.openlca.ilcd.processes.Process;
-import org.openlca.ilcd.processes.ProcessInfo;
-import org.openlca.ilcd.sources.Source;
-import org.openlca.ilcd.units.UnitGroup;
+import static org.junit.Assert.*;
 
 public class XmlTest {
 
@@ -77,7 +74,7 @@ public class XmlTest {
 			try (var reader = new FileReader(file)) {
 				return Xml.read(dataSet.getClass(), reader);
 			} catch (Exception e) {
-				throw  new RuntimeException(e);
+				throw new RuntimeException(e);
 			}
 		});
 	}
@@ -96,12 +93,10 @@ public class XmlTest {
 	}
 
 	private Process makeProcess() {
-		Process process = new Process();
-		ProcessInfo pi = new ProcessInfo();
-		DataSetInfo info = new DataSetInfo();
-		process.processInfo = pi;
-		pi.dataSetInfo = info;
-		info.uuid = UUID.randomUUID().toString();
+		var process = new Process();
+		process.withProcessInfo()
+			.withDataSetInfo()
+			.withUUID(UUID.randomUUID().toString());
 		return process;
 	}
 }

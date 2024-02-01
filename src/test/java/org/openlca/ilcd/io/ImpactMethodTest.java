@@ -4,11 +4,9 @@ import org.junit.Before;
 import org.junit.Test;
 import org.openlca.ilcd.commons.DataSetType;
 import org.openlca.ilcd.methods.AreaOfProtection;
-import org.openlca.ilcd.methods.DataSetInfo;
 import org.openlca.ilcd.methods.Geography;
-import org.openlca.ilcd.methods.ImpactModel;
 import org.openlca.ilcd.methods.ImpactMethod;
-import org.openlca.ilcd.methods.QuantitativeReference;
+import org.openlca.ilcd.methods.ImpactModel;
 import org.openlca.ilcd.methods.Time;
 import org.openlca.ilcd.util.ImpactMethods;
 
@@ -25,7 +23,8 @@ public class ImpactMethodTest {
 
 	@Test
 	public void testDataSetInfo() {
-		DataSetInfo info = ImpactMethods.getDataSetInfo(method);
+		var info = ImpactMethods.getDataSetInfo(method);
+		assertNotNull(info);
 		assertEquals("00000000-0000-0000-0000-000000000000", info.getUUID());
 		assertEquals(2, info.getName().size());
 		assertEquals(2, info.getMethods().size());
@@ -46,36 +45,37 @@ public class ImpactMethodTest {
 
 	@Test
 	public void testTime() {
-	Time time = method.methodInfo.time;
-		assertEquals(1234, time.referenceYear.intValue());
-		assertEquals("duration1", time.duration.get(1).value);
-		assertEquals(2, time.description.size());
+		Time time = ImpactMethods.getTime(method);
+		assertNotNull(time);
+		assertEquals(1234, time.getReferenceYear().intValue());
+		assertEquals("duration1", time.getDuration().get(1).value);
+		assertEquals(2, time.getDescription().size());
 	}
 
 	@Test
 	public void testGeography() {
-		Geography geo = method.methodInfo.geography;
-		assertEquals("RER", geo.interventionLocation.code);
-		assertEquals(2, geo.interventionSubLocations.size());
-		assertEquals("0;100", geo.impactLocation.latLong);
-		assertEquals(2, geo.description.size());
+		Geography geo = method.getMethodInfo().getGeography();
+		assertEquals("RER", geo.getInterventionLocation().getCode());
+		assertEquals(2, geo.getInterventionSubLocations().size());
+		assertEquals("0;100", geo.getImpactLocation().getLatLong());
+		assertEquals(2, geo.getDescription().size());
 	}
 
 	@Test
 	public void testImpactModel() {
-		ImpactModel model = method.methodInfo.impactModel;
-		assertEquals("modelName0", model.name);
-		assertEquals(2, model.description.size());
-		assertEquals(2, model.sources.size());
-		assertEquals(2, model.includedMethods.size());
-		assertEquals(2, model.consideredMechanisms.size());
-		assertEquals(2, model.flowCharts.size());
+		ImpactModel model = method.getMethodInfo().getImpactModel();
+		assertEquals("modelName0", model.getName());
+		assertEquals(2, model.getDescription().size());
+		assertEquals(2, model.getSources().size());
+		assertEquals(2, model.getIncludedMethods().size());
+		assertEquals(2, model.getConsideredMechanisms().size());
+		assertEquals(2, model.getFlowCharts().size());
 	}
 
 	@Test
 	public void testModelling() {
-		var modelling = method.modelling;
-		assertEquals(2, modelling.useAdvice.size());
-		assertEquals(2, modelling.dataSources.size());
+		var modelling = method.getModelling();
+		assertEquals(2, modelling.getUseAdvice().size());
+		assertEquals(2, modelling.getDataSources().size());
 	}
 }

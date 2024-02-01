@@ -81,7 +81,7 @@ public final class Flows {
 	public static FlowName getFlowName(Flow f) {
 		DataSetInfo dsi = getDataSetInfo(f);
 		return dsi != null
-			? dsi.getName()
+			? dsi.getFlowName()
 			: null;
 	}
 

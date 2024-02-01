@@ -3,11 +3,9 @@ package org.openlca.ilcd.io;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openlca.ilcd.commons.LangString;
-import org.openlca.ilcd.processes.DataSetInfo;
 import org.openlca.ilcd.processes.Exchange;
 import org.openlca.ilcd.processes.Process;
-import org.openlca.ilcd.processes.ProcessInfo;
-import org.openlca.ilcd.processes.ProcessName;
+import org.openlca.ilcd.util.Processes;
 
 public class ProcessReadWriteTest {
 
@@ -19,33 +17,24 @@ public class ProcessReadWriteTest {
 		byte[] bytes = Xml.toBytes(process);
 		process = Xml.read(Process.class, bytes);
 		Assert.assertEquals("process name",
-				process.processInfo.dataSetInfo.name.name.get(0).value);
+			Processes.getBaseName(process).get(0).value);
 		Assert.assertEquals("process description",
-				process.processInfo.dataSetInfo.comment.get(0).value);
-		Assert.assertEquals(1, process.exchanges.size());
+			process.getProcessInfo().getDataSetInfo().getComment().get(0).value);
+		Assert.assertEquals(1, process.getExchanges().size());
 	}
 
 	private void setNameAndComment(Process process) {
-		DataSetInfo info = makeDataSetInfo(process);
-		ProcessName name = new ProcessName();
-		LangString.set(name.name, "process name", "en");
-		info.name = name;
-		LangString.set(info.comment,
-				"process description", "en");
-	}
-
-	private DataSetInfo makeDataSetInfo(Process process) {
-		ProcessInfo information = new ProcessInfo();
-		process.processInfo = information;
-		DataSetInfo dataSetInformation = new DataSetInfo();
-		information.dataSetInfo = dataSetInformation;
-		return dataSetInformation;
+		var info = process.withProcessInfo().withDataSetInfo();
+		info.withProcessName()
+			.withBaseName()
+			.add(LangString.of("process name", "en"));
+		info.withComment()
+			.add(LangString.of("process description", "en"));
 	}
 
 	private void createExchange(Process process) {
-		Exchange exchange = new Exchange();
-		exchange.meanAmount = 1.5;
-		process.exchanges.add(exchange);
+		process.withExchanges()
+			.add(new Exchange().withMeanAmount(1.5));
 	}
 
 }

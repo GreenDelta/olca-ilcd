@@ -35,7 +35,7 @@ public final class Processes {
 	public static List<LangString> getBaseName(Process p) {
 		var name = getProcessName(p);
 		return name != null
-			? name.getName()
+			? name.getBaseName()
 			: Collections.emptyList();
 	}
 
@@ -68,7 +68,7 @@ public final class Processes {
 		var info = getDataSetInfo(p);
 		if (info == null)
 			return null;
-		return info.getName();
+		return info.getProcessName();
 	}
 
 	public static String getFullName(Process p, String... langs) {
@@ -76,7 +76,7 @@ public final class Processes {
 		if (name == null)
 			return null;
 		return Stream.of(
-				name.getName(),
+				name.getBaseName(),
 				name.getMixAndLocation(),
 				name.getTechnicalDetails(),
 				name.getFlowProperties())
