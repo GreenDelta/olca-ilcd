@@ -1,18 +1,16 @@
 package org.openlca.ilcd.tests.network;
 
-import java.util.Random;
-import java.util.UUID;
-
 import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
 import org.openlca.ilcd.commons.LangString;
-import org.openlca.ilcd.commons.Publication;
 import org.openlca.ilcd.flowproperties.AdminInfo;
 import org.openlca.ilcd.flowproperties.DataSetInfo;
 import org.openlca.ilcd.flowproperties.FlowProperty;
-import org.openlca.ilcd.flowproperties.FlowPropertyInfo;
 import org.openlca.ilcd.io.SodaClient;
+
+import java.util.Random;
+import java.util.UUID;
 
 public class NetworkPutFlowPropertyTest {
 
@@ -26,30 +24,26 @@ public class NetworkPutFlowPropertyTest {
 	}
 
 	@Test
-	public void testPutFlowProperty() throws Exception {
+	public void testPutFlowProperty() {
 		Assume.assumeTrue(TestServer.isAvailable());
 		String id = UUID.randomUUID().toString();
-		FlowProperty fp = new FlowProperty();
-		FlowPropertyInfo info = new FlowPropertyInfo();
-		fp.flowPropertyInfo = info;
-		info.dataSetInfo = makeDataInfo(id);
-		fp.adminInfo = makeAdminInfo();
+		FlowProperty fp = new FlowProperty()
+			.withAdminInfo(makeAdminInfo());
+		fp.withFlowPropertyInfo()
+			.withDataSetInfo(makeDataInfo(id));
 		client.put(fp);
 	}
 
 	private DataSetInfo makeDataInfo(String id) {
-		DataSetInfo info = new DataSetInfo();
-		String name = "xtest FlowProperty - " + new Random().nextInt(1000);
-		LangString.set(info.name, name, "en");
-		info.uuid = id;
+		var name = "xtest FlowProperty - " + new Random().nextInt(1000);
+		var info = new DataSetInfo().withUUID(id);
+		info.withName().add(LangString.of(name, "en"));
 		return info;
 	}
 
 	private AdminInfo makeAdminInfo() {
-		AdminInfo info = new AdminInfo();
-		Publication pub = new Publication();
-		info.publication = pub;
-		pub.version = "01.00.000";
+		var info = new AdminInfo();
+		info.withPublication().withVersion("01.00.000");
 		return info;
 	}
 }

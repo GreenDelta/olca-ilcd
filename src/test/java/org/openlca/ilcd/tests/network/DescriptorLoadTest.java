@@ -24,12 +24,12 @@ public class DescriptorLoadTest {
 
 		// check all UUIDs are unique
 		Set<String> ids = new HashSet<>();
-		for (Descriptor d : descriptors) {
+		for (var d : descriptors) {
 			assertTrue(d instanceof FlowDescriptor);
-			if (ids.contains(d.uuid)) {
-				fail("Duplicate UUID in descriptor list: " + d.uuid);
+			if (ids.contains(d.getUuid())) {
+				fail("Duplicate UUID in descriptor list: " + d.getUuid());
 			}
-			ids.add(d.uuid);
+			ids.add(d.getUuid());
 		}
 
 		client.close();

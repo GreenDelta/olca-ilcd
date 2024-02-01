@@ -1,22 +1,16 @@
 package org.openlca.ilcd.tests.network;
 
-import java.util.UUID;
-
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
 import org.openlca.ilcd.commons.FlowType;
 import org.openlca.ilcd.commons.LangString;
-import org.openlca.ilcd.commons.Publication;
-import org.openlca.ilcd.flows.AdminInfo;
-import org.openlca.ilcd.flows.DataSetInfo;
 import org.openlca.ilcd.flows.Flow;
-import org.openlca.ilcd.flows.FlowInfo;
-import org.openlca.ilcd.flows.FlowName;
-import org.openlca.ilcd.flows.InventoryMethod;
-import org.openlca.ilcd.flows.Modelling;
 import org.openlca.ilcd.io.SodaClient;
+import org.openlca.ilcd.util.Flows;
+
+import java.util.UUID;
 
 public class FlowUpdateTest {
 
@@ -36,32 +30,33 @@ public class FlowUpdateTest {
 		Flow flow = makeFlow(id);
 		client.put(flow);
 		Assert.assertTrue(client.contains(Flow.class, id));
-		flow.adminInfo.publication.version = "02.00.000";
+		flow.withAdminInfo()
+			.withPublication()
+			.withVersion("02.00.000");
 		client.put(flow);
 		flow = client.get(Flow.class, id);
-		Assert.assertEquals("02.00.000", flow.adminInfo.publication.version);
+		Assert.assertEquals("02.00.000", Flows.getVersion(flow));
 	}
 
 	private Flow makeFlow(String id) {
-		Flow flow = new Flow();
-		FlowInfo info = new FlowInfo();
-		flow.flowInfo = info;
-		DataSetInfo dataInfo = new DataSetInfo();
-		dataInfo.uuid = id;
-		info.dataSetInfo = dataInfo;
-		FlowName name = new FlowName();
-		dataInfo.name = name;
-		LangString.set(name.baseName, "test flow - " + id, "en");
-		AdminInfo adminInfo = new AdminInfo();
-		Publication pub = new Publication();
-		adminInfo.publication = pub;
-		pub.version = "01.00.000";
-		flow.adminInfo = adminInfo;
-		Modelling mav = new Modelling();
-		flow.modelling = mav;
-		InventoryMethod method = new InventoryMethod();
-		mav.inventoryMethod = method;
-		method.flowType = FlowType.ELEMENTARY_FLOW;
+		var flow = new Flow();
+
+		var info = flow.withFlowInfo()
+			.withDataSetInfo()
+			.withUUID(id);
+
+		info.withFlowName()
+			.withBaseName()
+			.add(LangString.of("test flow - " + id, "en"));
+
+		flow.withAdminInfo()
+			.withPublication()
+			.withVersion( "01.00.000");
+
+		flow.withModelling()
+			.withInventoryMethod()
+			.withFlowType( FlowType.ELEMENTARY_FLOW);
+
 		return flow;
 	}
 }

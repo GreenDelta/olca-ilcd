@@ -15,7 +15,7 @@ import org.openlca.ilcd.util.Val;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-		"isAuthenticated",
+		"authenticated",
 		"user",
 		"roles",
 		"dataStocks" })
@@ -36,7 +36,7 @@ public class AuthInfo implements Copyable<AuthInfo> {
 
 	// region getters
 
-	public boolean getAuthenticated() {
+	public boolean isAuthenticated() {
 		return authenticated;
 	}
 

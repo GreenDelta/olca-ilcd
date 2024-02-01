@@ -25,7 +25,7 @@ import static org.junit.Assert.*;
 
 /**
  * Run some search tests against the ELCD database. These tests are ignored by
- * default because they need some time and a valid natwork connection.
+ * default because they need some time and a valid network connection.
  */
 @Ignore
 public class SearchTest {

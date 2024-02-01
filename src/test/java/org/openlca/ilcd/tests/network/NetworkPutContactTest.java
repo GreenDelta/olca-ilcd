@@ -1,18 +1,16 @@
 package org.openlca.ilcd.tests.network;
 
-import java.util.Random;
-import java.util.UUID;
-
 import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
 import org.openlca.ilcd.commons.LangString;
-import org.openlca.ilcd.commons.Publication;
 import org.openlca.ilcd.contacts.AdminInfo;
 import org.openlca.ilcd.contacts.Contact;
-import org.openlca.ilcd.contacts.ContactInfo;
 import org.openlca.ilcd.contacts.DataSetInfo;
 import org.openlca.ilcd.io.SodaClient;
+
+import java.util.Random;
+import java.util.UUID;
 
 public class NetworkPutContactTest {
 
@@ -29,28 +27,23 @@ public class NetworkPutContactTest {
 	public void testPutContact() {
 		Assume.assumeTrue(TestServer.isAvailable());
 		String id = UUID.randomUUID().toString();
-		Contact contact = new Contact();
-		ContactInfo info = new ContactInfo();
-		contact.contactInfo = info;
-		info.dataSetInfo = makeDataInfo(id);
-		contact.adminInfo = makeAdminInfo();
+		var contact = new Contact()
+			.withAdminInfo(makeAdminInfo());
+		contact.withContactInfo().withDataSetInfo(makeDataInfo(id));
 		client.put(contact);
 	}
 
 	private DataSetInfo makeDataInfo(String id) {
-		DataSetInfo dataSetInfo = new DataSetInfo();
 		String name = "xtest contact - " + new Random().nextInt(1000);
-		LangString.set(dataSetInfo.name, name, "en");
-		LangString.set(dataSetInfo.shortName, name, "en");
-		dataSetInfo.uuid = id;
-		return dataSetInfo;
+		var info = new DataSetInfo().withUUID(id);
+		info.withName().add(LangString.of(name, "en"));
+		info.withShortName().add(LangString.of(name, "en"));
+		return info;
 	}
 
 	private AdminInfo makeAdminInfo() {
-		AdminInfo info = new AdminInfo();
-		Publication pub = new Publication();
-		info.publication = pub;
-		pub.version = "01.00.000";
+		var info = new AdminInfo();
+		info.withPublication().withVersion("01.00.000");
 		return info;
 	}
 }

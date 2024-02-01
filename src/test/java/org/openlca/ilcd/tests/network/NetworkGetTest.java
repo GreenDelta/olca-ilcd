@@ -12,6 +12,12 @@ import org.openlca.ilcd.io.SodaConnection;
 import org.openlca.ilcd.processes.Process;
 import org.openlca.ilcd.sources.Source;
 import org.openlca.ilcd.units.UnitGroup;
+import org.openlca.ilcd.util.Contacts;
+import org.openlca.ilcd.util.FlowProperties;
+import org.openlca.ilcd.util.Flows;
+import org.openlca.ilcd.util.Processes;
+import org.openlca.ilcd.util.Sources;
+import org.openlca.ilcd.util.UnitGroups;
 
 import java.util.UUID;
 
@@ -52,7 +58,7 @@ public class NetworkGetTest {
 		Assume.assumeTrue(TestServer.isAvailable());
 		String id = "76d6aaa4-37e2-40b2-994c-03292b600074";
 		Process process = client.get(Process.class, id);
-		assertEquals(id, process.processInfo.dataSetInfo.uuid);
+		assertEquals(id, Processes.getUUID(process));
 		testContains(Process.class, id);
 	}
 
@@ -61,7 +67,7 @@ public class NetworkGetTest {
 		Assume.assumeTrue(TestServer.isAvailable());
 		String id = "0d7a3ad1-6556-11dd-ad8b-0800200c9a66";
 		Flow flow = client.get(Flow.class, id);
-		assertEquals(id, flow.flowInfo.dataSetInfo.uuid);
+		assertEquals(id, Flows.getUUID(flow));
 		testContains(Flow.class, id);
 	}
 
@@ -70,7 +76,7 @@ public class NetworkGetTest {
 		Assume.assumeTrue(TestServer.isAvailable());
 		String id = "93a60a56-a3c8-14da-a746-0800200c9a66";
 		FlowProperty property = client.get(FlowProperty.class, id);
-		assertEquals(id, property.flowPropertyInfo.dataSetInfo.uuid);
+		assertEquals(id, FlowProperties.getUUID(property));
 		testContains(FlowProperty.class, id);
 	}
 
@@ -79,7 +85,7 @@ public class NetworkGetTest {
 		Assume.assumeTrue(TestServer.isAvailable());
 		String id = "59f191d6-5dd3-4553-af88-1a32accfe308";
 		UnitGroup group = client.get(UnitGroup.class, id);
-		assertEquals(id, group.unitGroupInfo.dataSetInfo.uuid);
+		assertEquals(id, UnitGroups.getUUID(group));
 		testContains(UnitGroup.class, id);
 	}
 
@@ -88,7 +94,7 @@ public class NetworkGetTest {
 		Assume.assumeTrue(TestServer.isAvailable());
 		String id = "177ca340-ffa2-11da-92e3-0800200c9a66";
 		Contact contact = client.get(Contact.class, id);
-		assertEquals(id, contact.contactInfo.dataSetInfo.uuid);
+		assertEquals(id, Contacts.getUUID(contact));
 		testContains(Contact.class, id);
 	}
 
@@ -97,7 +103,7 @@ public class NetworkGetTest {
 		Assume.assumeTrue(TestServer.isAvailable());
 		String id = "2c699413-f88b-4cb5-a56d-98cb4068472f";
 		Source source = client.get(Source.class, id);
-		assertEquals(id, source.sourceInfo.dataSetInfo.uuid);
+		assertEquals(id, Sources.getUUID(source));
 		testContains(Source.class, id);
 	}
 

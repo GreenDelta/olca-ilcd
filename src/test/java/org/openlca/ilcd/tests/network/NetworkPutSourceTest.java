@@ -1,18 +1,16 @@
 package org.openlca.ilcd.tests.network;
 
-import java.util.Random;
-import java.util.UUID;
-
 import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
 import org.openlca.ilcd.commons.LangString;
-import org.openlca.ilcd.commons.Publication;
 import org.openlca.ilcd.io.SodaClient;
 import org.openlca.ilcd.sources.AdminInfo;
 import org.openlca.ilcd.sources.DataSetInfo;
 import org.openlca.ilcd.sources.Source;
-import org.openlca.ilcd.sources.SourceInfo;
+
+import java.util.Random;
+import java.util.UUID;
 
 public class NetworkPutSourceTest {
 
@@ -26,30 +24,27 @@ public class NetworkPutSourceTest {
 	}
 
 	@Test
-	public void testPutSource() throws Exception {
+	public void testPutSource() {
 		Assume.assumeTrue(TestServer.isAvailable());
 		String id = UUID.randomUUID().toString();
-		Source source = new Source();
-		SourceInfo info = new SourceInfo();
-		source.sourceInfo = info;
-		info.dataSetInfo = makeDataInfo(id);
-		source.adminInfo = makeAdminInfo();
+		var source = new Source()
+			.withAdminInfo(makeAdminInfo());
+		source.withSourceInfo()
+			.withDataSetInfo(makeDataInfo(id));
 		client.put(source);
 	}
 
 	private DataSetInfo makeDataInfo(String id) {
-		DataSetInfo info = new DataSetInfo();
-		String name = "xtest Source - " + new Random().nextInt(1000);
-		LangString.set(info.name, name, "en");
-		info.uuid = id;
+		var info = new DataSetInfo().withUUID(id);
+		var name = "xtest Source - " + new Random().nextInt(1000);
+		info.withName()
+			.add(LangString.of(name, "en"));
 		return info;
 	}
 
 	private AdminInfo makeAdminInfo() {
-		AdminInfo info = new AdminInfo();
-		Publication pub = new Publication();
-		info.publication = pub;
-		pub.version = "01.00.000";
+		var info = new AdminInfo();
+		info.withPublication().withVersion("01.00.000");
 		return info;
 	}
 }

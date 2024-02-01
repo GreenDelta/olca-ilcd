@@ -9,7 +9,7 @@ import org.openlca.ilcd.commons.DataSetType;
 
 public class SchemaValidatorTest {
 
-	private SchemaValidator validator = new SchemaValidator();
+	private final SchemaValidator validator = new SchemaValidator();
 
 	@Test
 	@Ignore

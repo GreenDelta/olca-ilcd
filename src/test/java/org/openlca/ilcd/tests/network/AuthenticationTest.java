@@ -19,20 +19,20 @@ public class AuthenticationTest {
 	@Test
 	public void testReadAuthInfo() {
 		AuthInfo auth = readTestXml("auth_info.xml");
-		assertTrue(auth.isAuthenticated);
-		assertEquals("openlca", auth.user);
-		assertTrue(auth.roles.contains("ADMIN"));
-		assertTrue(auth.roles.contains("SUPER_ADMIN"));
-		assertTrue(auth.dataStocks.get(0).isReadAllowed());
-		assertTrue(auth.dataStocks.get(0).isExportAllowed());
+		assertTrue(auth.isAuthenticated());
+		assertEquals("openlca", auth.getUser());
+		assertTrue(auth.getRoles().contains("ADMIN"));
+		assertTrue(auth.getRoles().contains("SUPER_ADMIN"));
+		assertTrue(auth.getDataStocks().get(0).isReadAllowed());
+		assertTrue(auth.getDataStocks().get(0).isExportAllowed());
 	}
 
 	@Test
 	public void testIsNotAuthenticated() {
 		AuthInfo auth = readTestXml("auth_info_no_auth.xml");
-		assertFalse(auth.isAuthenticated);
-		assertNull(auth.user);
-		assertTrue(auth.dataStocks.isEmpty());
+		assertFalse(auth.isAuthenticated());
+		assertNull(auth.getUser());
+		assertTrue(auth.getDataStocks().isEmpty());
 	}
 
 	@Test
@@ -40,8 +40,8 @@ public class AuthenticationTest {
 		Assume.assumeTrue(TestServer.isAvailable());
 		try (var client = TestServer.newClient()) {
 			var info = client.getAuthInfo();
-			assertTrue(info.isAuthenticated);
-			assertEquals(TestServer.USER, info.user);
+			assertTrue(info.isAuthenticated());
+			assertEquals(TestServer.USER, info.getUser());
 		}
 	}
 

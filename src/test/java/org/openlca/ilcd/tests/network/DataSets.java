@@ -1,5 +1,7 @@
 package org.openlca.ilcd.tests.network;
 
+import static org.openlca.ilcd.util.DataSets.getUUID;
+
 import org.openlca.ilcd.contacts.Contact;
 import org.openlca.ilcd.flowproperties.FlowProperty;
 import org.openlca.ilcd.flows.Flow;
@@ -30,37 +32,37 @@ class DataSets {
 
 	private static void putContact(SodaClient client) {
 		var contact = load(Contact.class, "contact.xml");
-		if (!client.contains(Contact.class, contact.getUUID()))
+		if (!client.contains(Contact.class, getUUID(contact)))
 			client.put(contact);
 	}
 
 	private static void putFlowProperty(SodaClient client) {
 		var prop = load(FlowProperty.class, "flowproperty.xml");
-		if (!client.contains(FlowProperty.class, prop.getUUID()))
+		if (!client.contains(FlowProperty.class, getUUID(prop)))
 			client.put(prop);
 	}
 
 	private static void putFlow(SodaClient client) {
 		var flow = load(Flow.class, "flow.xml");
-		if (!client.contains(Flow.class, flow.getUUID()))
+		if (!client.contains(Flow.class, getUUID(flow)))
 			client.put(flow);
 	}
 
 	private static void putProcess(SodaClient client) {
 		var process = load(Process.class, "process.xml");
-		if (!client.contains(Process.class, process.getUUID()))
+		if (!client.contains(Process.class, getUUID(process)))
 			client.put(process);
 	}
 
 	private static void putSource(SodaClient client) {
 		var source = load(Source.class, "source.xml");
-		if (!client.contains(Source.class, source.getUUID()))
+		if (!client.contains(Source.class, getUUID(source)))
 			client.put(source);
 	}
 
 	private static void putUnitGroup(SodaClient client) {
 		var group = load(UnitGroup.class, "unit.xml");
-		if (!client.contains(UnitGroup.class, group.getUUID()))
+		if (!client.contains(UnitGroup.class, getUUID(group)))
 			client.put(group);
 	}
 
