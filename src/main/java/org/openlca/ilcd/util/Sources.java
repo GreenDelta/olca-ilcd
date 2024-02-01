@@ -19,6 +19,13 @@ public final class Sources {
 	private Sources() {
 	}
 
+	public static String getUUID(Source s) {
+		var info = getDataSetInfo(s);
+		return info != null
+			? info.getUUID()
+			: null;
+	}
+
 	public static SourceInfo getSourceInfo(Source s) {
 		return s != null
 			? s.getSourceInfo()

@@ -2,6 +2,7 @@ package org.openlca.ilcd.io;
 
 import org.openlca.ilcd.commons.IDataSet;
 import org.openlca.ilcd.sources.Source;
+import org.openlca.ilcd.util.DataSets;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -12,6 +13,7 @@ import java.net.URI;
 import java.nio.file.FileSystem;
 import java.nio.file.FileSystems;
 import java.nio.file.FileVisitResult;
+import java.nio.file.FileVisitor;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.SimpleFileVisitor;
@@ -87,11 +89,14 @@ public class ZipStore implements DataStore {
 
 	@Override
 	public void put(IDataSet ds) {
-		log.trace("Store {} in zip.", ds);
-		if (ds == null)
+		var uid = DataSets.getUUID(ds);
+		if (uid == null) {
+			log.error("failed to read UUID from dataset {}", ds);
 			return;
+		}
+		log.trace("Store {} in zip.", ds);
 		String dir = Dir.get(ds.getClass());
-		String entryName = "ILCD" + "/" + dir + "/" + ds.getUUID() + ".xml";
+		String entryName = "ILCD" + "/" + dir + "/" + uid + ".xml";
 		try {
 
 			var entry = zip.getPath(entryName);
@@ -108,7 +113,7 @@ public class ZipStore implements DataStore {
 			list.add(entry);
 			var ids = addedContent.computeIfAbsent(
 					ds.getClass(), k -> new HashSet<>());
-			ids.add(ds.getUUID());
+			ids.add(uid);
 		} catch (Exception e) {
 			throw new RuntimeException("Could not add file  " + entryName, e);
 		}

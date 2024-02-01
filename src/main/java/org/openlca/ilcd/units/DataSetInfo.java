@@ -53,7 +53,7 @@ public class DataSetInfo implements Copyable<DataSetInfo> {
 
 	// region getters
 
-	public String getUuid() {
+	public String getUUID() {
 		return uuid;
 	}
 
@@ -81,7 +81,7 @@ public class DataSetInfo implements Copyable<DataSetInfo> {
 
 	// region setters
 
-	public DataSetInfo withUuid(String uuid) {
+	public DataSetInfo withUUID(String uuid) {
 		this.uuid = uuid;
 		return this;
 	}
@@ -151,7 +151,7 @@ public class DataSetInfo implements Copyable<DataSetInfo> {
 	@Override
 	public DataSetInfo copy() {
 		var copy = new DataSetInfo();
-		copy.withUuid(uuid);
+		copy.withUUID(uuid);
 		Val.copy(name, copy::withName);
 		Val.copy(classifications, copy::withClassifications);
 		Val.copy(generalComment, copy::withGeneralComment);

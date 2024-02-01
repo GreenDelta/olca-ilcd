@@ -18,6 +18,13 @@ public final class ImpactMethods {
 	private ImpactMethods() {
 	}
 
+	public static String getUUID(ImpactMethod m) {
+		var info = getDataSetInfo(m);
+		return info != null
+			? info.getUUID()
+			: null;
+	}
+
 	public static MethodInfo getMethodInfo(ImpactMethod m) {
 		return m != null
 			? m.getMethodInfo()

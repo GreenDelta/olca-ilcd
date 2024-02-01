@@ -16,6 +16,13 @@ public final class Flows {
 	private Flows() {
 	}
 
+	public static String getUUID(Flow f) {
+		var info = getDataSetInfo(f);
+		return info != null
+			? info.getUUID()
+			: null;
+	}
+
 	public static AdminInfo getAdminInfo(Flow f) {
 		return f != null
 			? f.getAdminInfo()

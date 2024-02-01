@@ -3,15 +3,8 @@ package org.openlca.ilcd.util;
 import org.openlca.ilcd.commons.Category;
 import org.openlca.ilcd.commons.Classification;
 import org.openlca.ilcd.commons.IDataSet;
-import org.openlca.ilcd.contacts.Contact;
-import org.openlca.ilcd.flowproperties.FlowProperty;
 import org.openlca.ilcd.flows.Compartment;
 import org.openlca.ilcd.flows.Flow;
-import org.openlca.ilcd.methods.ImpactMethod;
-import org.openlca.ilcd.models.Model;
-import org.openlca.ilcd.processes.Process;
-import org.openlca.ilcd.sources.Source;
-import org.openlca.ilcd.units.UnitGroup;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -61,7 +54,7 @@ public final class Categories {
 	}
 
 	private static List<Category> sorted(IDataSet ds) {
-		var list = classificationsOf(ds);
+		var list = DataSets.getClassifications(ds);
 		if (list.isEmpty())
 			return Collections.emptyList();
 		var classes = list.get(0).getCategories();
@@ -69,26 +62,6 @@ public final class Categories {
 			classes.sort(Comparator.comparingInt(Category::getLevel));
 		}
 		return classes;
-	}
-
-	private static List<Classification> classificationsOf(IDataSet ds) {
-		if (ds instanceof Contact c)
-			return Contacts.getClassifications(c);
-		if (ds instanceof Flow f)
-			return Flows.getClassifications(f);
-		if (ds instanceof FlowProperty fp)
-			return FlowProperties.getClassifications(fp);
-		if (ds instanceof ImpactMethod method)
-			return ImpactMethods.getClassifications(method);
-		if (ds instanceof Model model)
-			return Models.getClassifications(model);
-		if (ds instanceof Process p)
-			return Processes.getClassifications(p);
-		if (ds instanceof Source s)
-			return Sources.getClassifications(s);
-		if (ds instanceof UnitGroup ug)
-			return UnitGroups.getClassifications(ug);
-		return Collections.emptyList();
 	}
 
 	private static List<Compartment> compartments(Flow flow) {

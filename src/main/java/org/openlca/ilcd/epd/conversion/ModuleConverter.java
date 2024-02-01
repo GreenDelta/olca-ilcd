@@ -23,7 +23,7 @@ class ModuleConverter {
 	static List<ModuleEntry> readModules(Other other, EpdProfile profile) {
 		if (other == null)
 			return Collections.emptyList();
-		for (Object any : other.any) {
+		for (Object any : other.getAny()) {
 			if (!(any instanceof Element element))
 				continue;
 			if (!isValid(element))
@@ -83,7 +83,7 @@ class ModuleConverter {
 			if (element != null)
 				root.appendChild(element);
 		}
-		other.any.add(root);
+		other.withAny().add(root);
 	}
 
 	private static boolean shouldWriteEntries(EpdDataSet dataSet) {

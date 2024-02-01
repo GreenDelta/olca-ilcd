@@ -17,6 +17,13 @@ public final class FlowProperties {
 	private FlowProperties() {
 	}
 
+	public static String getUUID(FlowProperty fp) {
+		var info = getDataSetInfo(fp);
+		return info != null
+			? info.getUUID()
+			: null;
+	}
+
 	public static FlowPropertyInfo getFlowPropertyInfo(FlowProperty fp) {
 		return fp != null
 			? fp.getFlowPropertyInfo()

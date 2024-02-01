@@ -11,6 +11,7 @@ import org.openlca.ilcd.commons.IDataSet;
 import org.openlca.ilcd.commons.Ref;
 import org.openlca.ilcd.sources.FileRef;
 import org.openlca.ilcd.sources.Source;
+import org.openlca.ilcd.util.DataSets;
 import org.openlca.ilcd.util.Sources;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -106,11 +107,14 @@ public class FileStore implements DataStore {
 
 	@Override
 	public void put(IDataSet ds) {
-		if (ds == null)
+		var uid = DataSets.getUUID(ds);
+		if (uid == null) {
+			log.error("Could not read UUID from dataset {}", ds);
 			return;
+		}
 		log.trace("Store {} in file.", ds);
 		try {
-			File file = newFile(ds.getClass(), ds.getUUID());
+			File file = newFile(ds.getClass(), uid);
 			Xml.write(ds, file);
 		} catch (Exception e) {
 			String message = "Cannot store in file";
@@ -176,9 +180,11 @@ public class FileStore implements DataStore {
 	}
 
 	public File getFile(Ref ref) {
-		if (ref == null || ref.type == null || ref.uuid == null)
+		if (ref == null
+			|| ref.getType() == null
+			|| ref.getUUID() == null)
 			return null;
-		return getFile(ref.getDataSetClass(), ref.uuid);
+		return getFile(ref.getDataSetClass(), ref.getUUID());
 	}
 
 	public File getFile(Class<?> clazz, String id) {
@@ -226,7 +232,7 @@ public class FileStore implements DataStore {
 	}
 
 	@Override
-	public void close() throws IOException {
+	public void close() {
 	}
 
 	private static class FileIterator<T> implements Iterator<T> {

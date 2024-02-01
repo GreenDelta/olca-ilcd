@@ -25,17 +25,18 @@ final class JaxbRefs {
 	static void copyFields(Ref from, Ref to) {
 		if (from == null || to == null || from == to)
 			return;
-		to.type = from.type;
-		to.uuid = from.uuid;
-		to.name.addAll(from.name);
-		to.uri = from.uri;
-		to.version = from.version;
+		to.withType(from.getType())
+			.withUUID(from.getUUID())
+			.withUri(from.getUri())
+			.withVersion(from.getVersion());
+		to.withName().addAll(from.getName());
 	}
 
 	static <T extends Ref> void write(Class<T> type, List<T> refs, Other ext) {
 		if (refs.isEmpty() || ext == null)
 			return;
-		ext.any.clear();
+		var any = ext.withAny();
+		any.clear();
 		try {
 			var context = JAXBContext.newInstance(type);
 			var marshaller = context.createMarshaller();
@@ -45,7 +46,7 @@ final class JaxbRefs {
 					continue;
 				marshaller.marshal(ref, doc);
 				var elem = doc.getDocumentElement();
-				ext.any.add(elem);
+				any.add(elem);
 			}
 		} catch (Exception e) {
 			var log = LoggerFactory.getLogger(JaxbRefs.class);
@@ -54,7 +55,7 @@ final class JaxbRefs {
 	}
 
 	static <T extends Ref> List<Ref> read(Class<T> type, Other ext) {
-		if (ext == null || type == null || ext.any.isEmpty())
+		if (ext == null || type == null || ext.getAny().isEmpty())
 			return Collections.emptyList();
 		var rootDef = type.getAnnotation(XmlRootElement.class);
 		if (rootDef == null)
@@ -63,7 +64,7 @@ final class JaxbRefs {
 		try {
 			var list = new ArrayList<Ref>();
 			Unmarshaller unmarshaller = null;
-			for (var obj : ext.any) {
+			for (var obj : ext.getAny()) {
 				if (!(obj instanceof Element elem))
 					continue;
 				if (!Strings.nullOrEqual(elem.getLocalName(), rootDef.name()))
@@ -90,12 +91,12 @@ final class JaxbRefs {
 			return null;
 		if (ref.getClass().equals(Ref.class))
 			return ref;
-		var raw = new Ref();
-		raw.name.addAll(ref.name);
-		raw.type = ref.type;
-		raw.uri = ref.uri;
-		raw.uuid = ref.uuid;
-		raw.version = ref.version;
+		var raw = new Ref()
+			.withType(ref.getType())
+			.withUri(ref.getUri())
+			.withUUID(ref.getUUID())
+			.withVersion(ref.getVersion());
+		raw.withName().addAll(ref.getName());
 		return raw;
 	}
 

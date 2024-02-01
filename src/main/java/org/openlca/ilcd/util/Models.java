@@ -17,6 +17,13 @@ import org.openlca.ilcd.models.Technology;
 
 public class Models {
 
+	public static String getUUID(Model model) {
+		var info = getDataSetInfo(model);
+		return info != null
+			? info.getUUID()
+			: null;
+	}
+
 	public static String getOrigin(Model model) {
 		return model != null
 			? Extensions.getString(model.getOtherAttributes(), "origin")

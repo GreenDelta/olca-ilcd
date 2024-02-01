@@ -18,6 +18,13 @@ public final class UnitGroups {
 	private UnitGroups() {
 	}
 
+	public static String getUUID(UnitGroup u) {
+		var info = getDataSetInfo(u);
+		return info != null
+			? info.getUUID()
+			: null;
+	}
+
 	public static UnitGroupInfo getUnitGroupInfo(UnitGroup u) {
 		return u != null
 			? u.getUnitGroupInfo()
