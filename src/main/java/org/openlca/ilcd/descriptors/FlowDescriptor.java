@@ -1,21 +1,18 @@
 package org.openlca.ilcd.descriptors;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import jakarta.xml.bind.annotation.XmlAccessType;
+import jakarta.xml.bind.annotation.XmlAccessorType;
+import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlElementWrapper;
+import jakarta.xml.bind.annotation.XmlType;
 import org.openlca.ilcd.commons.Copyable;
 import org.openlca.ilcd.commons.DataSetType;
 import org.openlca.ilcd.commons.FlowType;
 import org.openlca.ilcd.commons.LangString;
-
-import jakarta.xml.bind.annotation.XmlAccessType;
-import jakarta.xml.bind.annotation.XmlAccessorType;
-import jakarta.xml.bind.annotation.XmlAttribute;
-import jakarta.xml.bind.annotation.XmlElement;
-import jakarta.xml.bind.annotation.XmlSchemaType;
-import jakarta.xml.bind.annotation.XmlType;
 import org.openlca.ilcd.util.Val;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
@@ -26,8 +23,8 @@ import org.openlca.ilcd.util.Val;
 	"classification",
 	"comment",
 	"synonyms",
-	"flowCategorization",
-	"type",
+	"categories",
+	"flowType",
 	"casNumber",
 	"sumFormula",
 	"referenceFlowProperty"
@@ -61,13 +58,6 @@ public class FlowDescriptor extends Descriptor<FlowDescriptor>
 	@XmlElement(namespace = "http://www.ilcd-network.org/ILCD/ServiceAPI/Flow")
 	private ReferenceFlowProperty referenceFlowProperty;
 
-	@XmlAttribute(name = "href", namespace = "http://www.w3.org/1999/xlink")
-	@XmlSchemaType(name = "anyURI")
-	private String href;
-
-	@XmlAttribute(name = "sourceId", namespace = "http://www.ilcd-network.org/ILCD/ServiceAPI")
-	private String sourceId;
-
 	@Override
 	protected DataSetType getType() {
 		return DataSetType.FLOW;
@@ -97,14 +87,6 @@ public class FlowDescriptor extends Descriptor<FlowDescriptor>
 
 	public ReferenceFlowProperty getReferenceFlowProperty() {
 		return referenceFlowProperty;
-	}
-
-	public String getHref() {
-		return href;
-	}
-
-	public String getSourceId() {
-		return sourceId;
 	}
 
 	// endregion
@@ -141,16 +123,6 @@ public class FlowDescriptor extends Descriptor<FlowDescriptor>
 		return this;
 	}
 
-	public FlowDescriptor withHref(String href) {
-		this.href = href;
-		return this;
-	}
-
-	public FlowDescriptor withSourceId(String sourceId) {
-		this.sourceId = sourceId;
-		return this;
-	}
-
 	public List<LangString> withSynonyms() {
 		if (synonyms == null) {
 			synonyms = new ArrayList<>();
@@ -184,8 +156,6 @@ public class FlowDescriptor extends Descriptor<FlowDescriptor>
 		copy.withCasNumber(casNumber);
 		copy.withSumFormula(sumFormula);
 		Val.copy(referenceFlowProperty, copy::withReferenceFlowProperty);
-		copy.withHref(href);
-		copy.withSourceId(sourceId);
 		return copy;
 	}
 }

@@ -28,7 +28,7 @@ import java.util.List;
 		"time",
 		"parameterized",
 		"hasResults",
-		"lciMethodInformation",
+		"inventoryMethod",
 		"completenessProductModel",
 		"complianceSystem",
 		"review",

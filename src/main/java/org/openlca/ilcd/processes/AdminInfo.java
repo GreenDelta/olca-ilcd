@@ -32,7 +32,7 @@ public class AdminInfo implements Copyable<AdminInfo> {
 	@XmlElement(name = "dataEntryBy")
 	private DataEntry dataEntry;
 
-	@XmlElement(name = "privateationAndOwnership")
+	@XmlElement(name = "publicationAndOwnership")
 	private Publication publication;
 
 	@XmlElement(namespace = "http://lca.jrc.it/ILCD/Common")
