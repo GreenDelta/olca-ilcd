@@ -15,6 +15,7 @@ import org.openlca.ilcd.models.Model;
 import org.openlca.ilcd.processes.Process;
 import org.openlca.ilcd.sources.Source;
 import org.openlca.ilcd.units.UnitGroup;
+import org.openlca.ilcd.util.DataSets;
 import org.openlca.ilcd.util.Val;
 
 import java.util.ArrayList;
@@ -44,6 +45,19 @@ public class Ref implements Copyable<Ref> {
 	@XmlAttribute(name = "uri")
 	@XmlSchemaType(name = "anyURI")
 	private String uri;
+
+	public static Ref of(IDataSet ds) {
+		var ref = new Ref()
+			.withType(DataSets.getType(ds))
+			.withUUID(DataSets.getUUID(ds))
+			.withVersion(DataSets.getVersion(ds))
+			.withUri(DataSets.getUri(ds));
+		var names = DataSets.getBaseName(ds);
+		if (!names.isEmpty()) {
+			ref.withName().addAll(names);
+		}
+		return ref;
+	}
 
 	// region getters
 

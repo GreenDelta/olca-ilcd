@@ -1,6 +1,7 @@
 package org.openlca.ilcd.util;
 
 import org.openlca.ilcd.commons.Classification;
+import org.openlca.ilcd.commons.LangString;
 import org.openlca.ilcd.methods.AdminInfo;
 import org.openlca.ilcd.methods.DataEntry;
 import org.openlca.ilcd.methods.DataSetInfo;
@@ -11,6 +12,7 @@ import org.openlca.ilcd.methods.Publication;
 import org.openlca.ilcd.methods.QuantitativeReference;
 import org.openlca.ilcd.methods.Time;
 
+import java.util.Collections;
 import java.util.List;
 
 public final class ImpactMethods {
@@ -23,6 +25,31 @@ public final class ImpactMethods {
 		return info != null
 			? info.getUUID()
 			: null;
+	}
+
+	public static String getVersion(ImpactMethod m) {
+		var pub = getPublication(m);
+		return pub != null ? pub.getVersion() : null;
+	}
+
+	public static List<LangString> getName(ImpactMethod m) {
+		var info = getDataSetInfo(m);
+		return info != null
+			? info.getName()
+			: Collections.emptyList();
+	}
+
+	public static String getUri(ImpactMethod m) {
+		var pub =	getPublication(m);
+		return pub != null ? pub.getUri() : null;
+	}
+
+
+	public static List<Classification> getClassifications(ImpactMethod m) {
+		var info = getDataSetInfo(m);
+		return info != null
+			? info.getClassifications()
+			: List.of();
 	}
 
 	public static MethodInfo getMethodInfo(ImpactMethod m) {
@@ -43,13 +70,6 @@ public final class ImpactMethods {
 		return info != null
 			? info.getQuantitativeReference()
 			: null;
-	}
-
-	public static List<Classification> getClassifications(ImpactMethod m) {
-		var info = getDataSetInfo(m);
-		return info != null
-			? info.getClassifications()
-			: List.of();
 	}
 
 	public static DataSetInfo getDataSetInfo(ImpactMethod m) {

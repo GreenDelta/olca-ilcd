@@ -4,6 +4,7 @@ import java.util.Collections;
 import java.util.List;
 
 import org.openlca.ilcd.commons.Classification;
+import org.openlca.ilcd.commons.LangString;
 import org.openlca.ilcd.models.AdminInfo;
 import org.openlca.ilcd.models.DataEntry;
 import org.openlca.ilcd.models.DataSetInfo;
@@ -22,6 +23,30 @@ public class Models {
 		return info != null
 			? info.getUUID()
 			: null;
+	}
+
+	public static String getVersion(Model m) {
+		var pub = getPublication(m);
+		return pub != null ? pub.getVersion() : null;
+	}
+
+	public static List<LangString> getBaseName(Model m) {
+		var name = getModelName(m);
+		return name != null
+			? name.getName()
+			: Collections.emptyList();
+	}
+
+	public static String getUri(Model m) {
+		var pub =	getPublication(m);
+		return pub != null ? pub.getUri() : null;
+	}
+
+	public static List<Classification> getClassifications(Model model) {
+		DataSetInfo di = getDataSetInfo(model);
+		return di != null
+			? di.getClassifications()
+			: List.of();
 	}
 
 	public static String getOrigin(Model model) {
@@ -54,13 +79,6 @@ public class Models {
 		if (di == null)
 			return null;
 		return di.getName();
-	}
-
-	public static List<Classification> getClassifications(Model model) {
-		DataSetInfo di = getDataSetInfo(model);
-		return di != null
-			? di.getClassifications()
-			: List.of();
 	}
 
 	public static QuantitativeReference getQuantitativeReference(Model m) {

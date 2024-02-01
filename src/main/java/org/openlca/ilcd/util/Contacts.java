@@ -17,34 +17,32 @@ public final class Contacts {
 	private Contacts() {
 	}
 
-	public static String getUri(Contact c) {
-		var pub = Contacts.getPublication(c);
-		return pub != null ? pub.getUri() : null;
-	}
-
 	public static String getUUID(Contact c) {
 		var info = getDataSetInfo(c);
-		return info != null
-			? info.getUUID()
-			: null;
+		return info != null ? info.getUUID() : null;
 	}
 
 	public static String getVersion(Contact c) {
-		var pub = Contacts.getPublication(c);
+		var pub = getPublication(c);
 		return pub != null ? pub.getVersion() : null;
-	}
-
-	public static List<Classification> getClassifications(Contact c) {
-		var info = getDataSetInfo(c);
-		return info != null
-			? info.getClassifications()
-			: Collections.emptyList();
 	}
 
 	public static List<LangString> getName(Contact c) {
 		var info = getDataSetInfo(c);
 		return info != null
 			? info.getName()
+			: Collections.emptyList();
+	}
+
+	public static String getUri(Contact c) {
+		var pub =	getPublication(c);
+		return pub != null ? pub.getUri() : null;
+	}
+
+	public static List<Classification> getClassifications(Contact c) {
+		var info = getDataSetInfo(c);
+		return info != null
+			? info.getClassifications()
 			: Collections.emptyList();
 	}
 

@@ -2,6 +2,7 @@ package org.openlca.ilcd.util;
 
 import org.openlca.ilcd.commons.Classification;
 import org.openlca.ilcd.commons.DataEntry;
+import org.openlca.ilcd.commons.LangString;
 import org.openlca.ilcd.commons.Publication;
 import org.openlca.ilcd.sources.AdminInfo;
 import org.openlca.ilcd.sources.DataSetInfo;
@@ -12,6 +13,7 @@ import org.slf4j.LoggerFactory;
 
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
+import java.util.Collections;
 import java.util.List;
 
 public final class Sources {
@@ -26,6 +28,30 @@ public final class Sources {
 			: null;
 	}
 
+	public static String getVersion(Source s) {
+		var pub = getPublication(s);
+		return pub != null ? pub.getVersion() : null;
+	}
+
+	public static List<LangString> getName(Source s) {
+		var info = getDataSetInfo(s);
+		return info != null
+			? info.getName()
+			: Collections.emptyList();
+	}
+
+	public static String getUri(Source s) {
+		var pub =	getPublication(s);
+		return pub != null ? pub.getUri() : null;
+	}
+
+	public static List<Classification> getClassifications(Source s) {
+		var info = getDataSetInfo(s);
+		return info != null
+			? info.getClassifications()
+			: Collections.emptyList();
+	}
+
 	public static SourceInfo getSourceInfo(Source s) {
 		return s != null
 			? s.getSourceInfo()
@@ -37,13 +63,6 @@ public final class Sources {
 		return info != null
 			? info.getDataSetInfo()
 			: null;
-	}
-
-	public static List<Classification> getClassifications(Source s) {
-		var info = getDataSetInfo(s);
-		return info != null
-			? info.getClassifications()
-			: List.of();
 	}
 
 	public static AdminInfo getAdminInfo(Source s) {

@@ -2,6 +2,7 @@ package org.openlca.ilcd.util;
 
 import org.openlca.ilcd.commons.Classification;
 import org.openlca.ilcd.commons.DataEntry;
+import org.openlca.ilcd.commons.LangString;
 import org.openlca.ilcd.commons.Publication;
 import org.openlca.ilcd.units.AdminInfo;
 import org.openlca.ilcd.units.DataSetInfo;
@@ -25,6 +26,30 @@ public final class UnitGroups {
 			: null;
 	}
 
+	public static String getVersion(UnitGroup u) {
+		var pub = getPublication(u);
+		return pub != null ? pub.getVersion() : null;
+	}
+
+	public static List<LangString> getName(UnitGroup u) {
+		var info = getDataSetInfo(u);
+		return info != null
+			? info.getName()
+			: Collections.emptyList();
+	}
+
+	public static String getUri(UnitGroup u) {
+		var pub =	getPublication(u);
+		return pub != null ? pub.getUri() : null;
+	}
+
+	public static List<Classification> getClassifications(UnitGroup u) {
+		var info = getDataSetInfo(u);
+		return info != null
+			? info.getClassifications()
+			: Collections.emptyList();
+	}
+
 	public static UnitGroupInfo getUnitGroupInfo(UnitGroup u) {
 		return u != null
 			? u.getUnitGroupInfo()
@@ -40,13 +65,6 @@ public final class UnitGroups {
 		return info != null
 			? info.getDataSetInfo()
 			: null;
-	}
-
-	public static List<Classification> getClassifications(UnitGroup u) {
-		var info = getDataSetInfo(u);
-		return info != null
-			? info.getClassifications()
-			: Collections.emptyList();
 	}
 
 	public static QuantitativeReference getQuantitativeReference(UnitGroup u) {

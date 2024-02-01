@@ -18,9 +18,31 @@ public final class Flows {
 
 	public static String getUUID(Flow f) {
 		var info = getDataSetInfo(f);
-		return info != null
-			? info.getUUID()
-			: null;
+		return info != null ? info.getUUID() : null;
+	}
+
+	public static String getVersion(Flow f) {
+		var pub = getPublication(f);
+		return pub != null ? pub.getVersion() : null;
+	}
+
+	public static List<LangString> getBaseName(Flow f) {
+		var name = getFlowName(c);
+		return name != null
+			? name.getBaseName()
+			: Collections.emptyList();
+	}
+
+	public static String getUri(Flow f) {
+		var pub =	getPublication(f);
+		return pub != null ? pub.getUri() : null;
+	}
+
+	public static List<Classification> getClassifications(Flow f) {
+		DataSetInfo info = getDataSetInfo(f);
+		if (info == null || info.getClassificationInformation() == null)
+			return Collections.emptyList();
+		return info.getClassificationInformation().getClassifications();
 	}
 
 	public static AdminInfo getAdminInfo(Flow f) {
@@ -107,13 +129,6 @@ public final class Flows {
 		return fi != null
 			? fi.getTechnology()
 			: null;
-	}
-
-	public static List<Classification> getClassifications(Flow f) {
-		DataSetInfo info = getDataSetInfo(f);
-		if (info == null || info.getClassificationInformation() == null)
-			return Collections.emptyList();
-		return info.getClassificationInformation().getClassifications();
 	}
 
 	public static Modelling getModelling(Flow f) {

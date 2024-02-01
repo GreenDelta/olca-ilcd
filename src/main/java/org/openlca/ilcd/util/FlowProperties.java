@@ -2,6 +2,7 @@ package org.openlca.ilcd.util;
 
 import org.openlca.ilcd.commons.Classification;
 import org.openlca.ilcd.commons.DataEntry;
+import org.openlca.ilcd.commons.LangString;
 import org.openlca.ilcd.commons.Publication;
 import org.openlca.ilcd.commons.Ref;
 import org.openlca.ilcd.flowproperties.AdminInfo;
@@ -10,6 +11,7 @@ import org.openlca.ilcd.flowproperties.FlowProperty;
 import org.openlca.ilcd.flowproperties.FlowPropertyInfo;
 import org.openlca.ilcd.flowproperties.QuantitativeReference;
 
+import java.util.Collections;
 import java.util.List;
 
 public final class FlowProperties {
@@ -19,9 +21,31 @@ public final class FlowProperties {
 
 	public static String getUUID(FlowProperty fp) {
 		var info = getDataSetInfo(fp);
+		return info != null ? info.getUUID() : null;
+	}
+
+	public static String getVersion(FlowProperty fp) {
+		var pub = getPublication(fp);
+		return pub != null ? pub.getVersion() : null;
+	}
+
+	public static List<LangString> getName(FlowProperty fp) {
+		var info = getDataSetInfo(fp);
 		return info != null
-			? info.getUUID()
-			: null;
+			? info.getName()
+			: Collections.emptyList();
+	}
+
+	public static String getUri(FlowProperty fp) {
+		var pub = getPublication(fp);
+		return pub != null ? pub.getUri() : null;
+	}
+
+	public static List<Classification> getClassifications(FlowProperty fp) {
+		var info = getDataSetInfo(fp);
+		return info != null
+			? info.getClassifications()
+			: List.of();
 	}
 
 	public static FlowPropertyInfo getFlowPropertyInfo(FlowProperty fp) {
@@ -50,13 +74,6 @@ public final class FlowProperties {
 		return info != null
 			? info.getDataSetInfo()
 			: null;
-	}
-
-	public static List<Classification> getClassifications(FlowProperty fp) {
-		var info = getDataSetInfo(fp);
-		return info != null
-			? info.getClassifications()
-			: List.of();
 	}
 
 	public static AdminInfo getAdminInfo(FlowProperty fp) {

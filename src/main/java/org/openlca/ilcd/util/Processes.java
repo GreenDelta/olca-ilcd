@@ -20,6 +20,37 @@ public final class Processes {
 	private Processes() {
 	}
 
+	public static String getUUID(Process p) {
+		var info = getDataSetInfo(p);
+		return info != null
+			? info.getUUID()
+			: null;
+	}
+
+	public static String getVersion(Process p) {
+		var pub = getPublication(p);
+		return pub != null ? pub.getVersion() : null;
+	}
+
+	public static List<LangString> getBaseName(Process p) {
+		var name = getProcessName(p);
+		return name != null
+			? name.getName()
+			: Collections.emptyList();
+	}
+
+	public static String getUri(Process p) {
+		var pub =	getPublication(p);
+		return pub != null ? pub.getUri() : null;
+	}
+
+	public static List<Classification> getClassifications(Process p) {
+		var info = getDataSetInfo(p);
+		return info != null
+			? info.getClassifications()
+			: List.of();
+	}
+
 	public static ProcessInfo getProcessInfo(Process p) {
 		if (p == null)
 			return null;
@@ -52,20 +83,6 @@ public final class Processes {
 			.map(strings -> LangString.getFirst(strings, langs))
 			.filter(s -> s != null && !s.trim().isEmpty())
 			.collect(Collectors.joining(", "));
-	}
-
-	public static List<Classification> getClassifications(Process p) {
-		var info = getDataSetInfo(p);
-		return info != null
-			? info.getClassifications()
-			: List.of();
-	}
-
-	public static String getUUID(Process p) {
-		var info = getDataSetInfo(p);
-		return info != null
-			? info.getUUID()
-			: null;
 	}
 
 	public static Geography getGeography(Process p) {

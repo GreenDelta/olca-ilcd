@@ -23,83 +23,83 @@ public class IDataSetRefTest {
 	@Test
 	public void testSource() throws Exception {
 		with("sdk_sample_source.xml", Source.class, ref -> {
-			assertEquals("00000000-0000-0000-0000-000000000000", ref.uuid);
-			assertEquals("00.00", ref.version);
-			assertEquals(DataSetType.SOURCE, ref.type);
-			assertEquals("shortName0", ref.name.get(0).value.trim());
+			assertEquals("00000000-0000-0000-0000-000000000000", ref.getUUID());
+			assertEquals("00.00", ref.getVersion());
+			assertEquals(DataSetType.SOURCE, ref.getType());
+			assertEquals("shortName0", ref.getName().get(0).value.trim());
 			assertEquals("http://www.ilcd-network.org/data/processes/sample_source.xml",
-					ref.uri.trim());
+					ref.getUri().trim());
 		});
 	}
 
 	@Test
 	public void testContact() throws Exception {
 		with("sdk_sample_contact.xml", Contact.class, ref -> {
-			assertEquals("00000000-0000-0000-0000-000000000000", ref.uuid);
-			assertEquals("00.00", ref.version);
-			assertEquals("name0", ref.name.get(0).value.trim());
-			assertEquals(DataSetType.CONTACT, ref.type);
+			assertEquals("00000000-0000-0000-0000-000000000000", ref.getUUID());
+			assertEquals("00.00", ref.getVersion());
+			assertEquals("name0", ref.getName().get(0).value.trim());
+			assertEquals(DataSetType.CONTACT, ref.getType());
 			assertEquals("http://www.ilcd-network.org/data/processes/sample_contact.xml",
-					ref.uri.trim());
+					ref.getUri().trim());
 		});
 	}
 
 	@Test
 	public void testUnitGroup() throws Exception {
 		with("sdk_sample_unitgroup.xml", UnitGroup.class, ref -> {
-			assertEquals("00000000-0000-0000-0000-000000000000", ref.uuid);
-			assertEquals("00.00", ref.version);
-			assertEquals("name0", ref.name.get(0).value.trim());
-			assertEquals(DataSetType.UNIT_GROUP, ref.type);
+			assertEquals("00000000-0000-0000-0000-000000000000", ref.getUUID());
+			assertEquals("00.00", ref.getVersion());
+			assertEquals("name0", ref.getName().get(0).value.trim());
+			assertEquals(DataSetType.UNIT_GROUP, ref.getType());
 			assertEquals("http://www.ilcd-network.org/data/processes/sample_unitgroup.xml",
-					ref.uri.trim());
+					ref.getUri().trim());
 		});
 	}
 
 	@Test
 	public void testFlowProperty() throws Exception {
 		with("sdk_sample_flowproperty.xml", FlowProperty.class, ref -> {
-			assertEquals("00000000-0000-0000-0000-000000000000", ref.uuid);
-			assertEquals("00.00", ref.version);
-			assertEquals("name0", ref.name.get(0).value.trim());
-			assertEquals(DataSetType.FLOW_PROPERTY, ref.type);
+			assertEquals("00000000-0000-0000-0000-000000000000", ref.getUUID());
+			assertEquals("00.00", ref.getVersion());
+			assertEquals("name0", ref.getName().get(0).value.trim());
+			assertEquals(DataSetType.FLOW_PROPERTY, ref.getType());
 			assertEquals("http://www.ilcd-network.org/data/processes/sample_flowproperty.xml",
-					ref.uri.trim());
+					ref.getUri().trim());
 		});
 	}
 
 	@Test
 	public void testFlow() throws Exception {
 		with("sdk_sample_flow.xml", Flow.class, ref -> {
-			assertEquals("00000000-0000-0000-0000-000000000000", ref.uuid);
-			assertEquals("00.00", ref.version);
-			assertEquals("baseName0", ref.name.get(0).value.trim());
-			assertEquals(DataSetType.FLOW, ref.type);
+			assertEquals("00000000-0000-0000-0000-000000000000", ref.getUUID());
+			assertEquals("00.00", ref.getVersion());
+			assertEquals("baseName0", ref.getName().get(0).value.trim());
+			assertEquals(DataSetType.FLOW, ref.getType());
 			assertEquals("http://www.ilcd-network.org/data/processes/sample_flow.xml",
-					ref.uri.trim());
+					ref.getUri().trim());
 		});
 	}
 
 	@Test
 	public void testProcess() throws Exception {
 		with("sdk_sample_process.xml", org.openlca.ilcd.processes.Process.class, ref -> {
-			assertEquals("00000000-0000-0000-0000-000000000000", ref.uuid);
-			assertEquals("00.00", ref.version);
-			assertEquals("baseName0", ref.name.get(0).value.trim());
-			assertEquals(DataSetType.PROCESS, ref.type);
+			assertEquals("00000000-0000-0000-0000-000000000000", ref.getUUID());
+			assertEquals("00.00", ref.getVersion());
+			assertEquals("baseName0", ref.getName().get(0).value.trim());
+			assertEquals(DataSetType.PROCESS, ref.getType());
 			assertEquals("http://www.ilcd-network.org/data/processes/sample_process.xml",
-					ref.uri.trim());
+					ref.getUri().trim());
 		});
 	}
 
 	@Test
 	public void testMethod() throws Exception {
 		with("sdk_sample_lciamethod.xml", ImpactMethod.class, ref -> {
-			assertEquals("00000000-0000-0000-0000-000000000000", ref.uuid);
-			assertEquals("00.00", ref.version);
-			assertEquals("name0", ref.name.get(0).value.trim());
-			assertEquals(DataSetType.IMPACT_METHOD, ref.type);
-			assertEquals("http://www.ilcd-network.org/data/lciamethods/sample_lciamethod.xml", ref.uri.trim());
+			assertEquals("00000000-0000-0000-0000-000000000000", ref.getUUID());
+			assertEquals("00.00", ref.getVersion());
+			assertEquals("name0", ref.getName().get(0).value.trim());
+			assertEquals(DataSetType.IMPACT_METHOD, ref.getType());
+			assertEquals("http://www.ilcd-network.org/data/lciamethods/sample_lciamethod.xml", ref.getUri().trim());
 		});
 	}
 
