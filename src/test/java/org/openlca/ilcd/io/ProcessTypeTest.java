@@ -3,6 +3,7 @@ package org.openlca.ilcd.io;
 import static org.junit.Assert.*;
 
 import org.junit.Test;
+import org.openlca.ilcd.Tests;
 import org.openlca.ilcd.commons.ProcessType;
 import org.openlca.ilcd.commons.QuantitativeReferenceType;
 import org.openlca.ilcd.descriptors.DescriptorList;

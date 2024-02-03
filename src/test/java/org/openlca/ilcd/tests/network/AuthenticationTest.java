@@ -7,9 +7,11 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import java.io.IOException;
+import java.util.concurrent.atomic.AtomicReference;
 
 import org.junit.Assume;
 import org.junit.Test;
+import org.openlca.ilcd.Tests;
 import org.openlca.ilcd.io.AuthInfo;
 
 import jakarta.xml.bind.JAXB;
@@ -46,11 +48,9 @@ public class AuthenticationTest {
 	}
 
 	private AuthInfo readTestXml(String res) {
-		try (var stream = this.getClass().getResourceAsStream(res)) {
-			assertNotNull(stream);
-			return JAXB.unmarshal(stream, AuthInfo.class);
-		} catch (IOException e) {
-			throw new RuntimeException(e);
-		}
+		var ref = new AtomicReference<AuthInfo>();
+		Tests.withResources(
+			res, stream -> ref.set(JAXB.unmarshal(stream, AuthInfo.class)));
+		return ref.get();
 	}
 }

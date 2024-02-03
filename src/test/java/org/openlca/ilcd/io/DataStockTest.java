@@ -1,16 +1,15 @@
 package org.openlca.ilcd.io;
 
-import java.io.InputStream;
-import java.io.StringReader;
-import java.io.StringWriter;
-
+import jakarta.xml.bind.JAXB;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.openlca.ilcd.Tests;
 import org.openlca.ilcd.descriptors.DataStock;
 import org.openlca.ilcd.descriptors.DataStockList;
 
-import jakarta.xml.bind.JAXB;
+import java.io.StringReader;
+import java.io.StringWriter;
 
 public class DataStockTest {
 
@@ -18,10 +17,7 @@ public class DataStockTest {
 
 	@Before
 	public void setUp() throws Exception {
-		try (InputStream xml = getClass()
-				.getResourceAsStream("sapi_sample_datastocks.xml")) {
-			list = JAXB.unmarshal(xml, DataStockList.class);
-		}
+		list = Tests.read(DataStockList.class, "sapi_sample_datastocks.xml");
 	}
 
 	@Test
