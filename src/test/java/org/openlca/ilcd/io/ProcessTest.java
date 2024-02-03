@@ -2,6 +2,7 @@ package org.openlca.ilcd.io;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.openlca.ilcd.Tests;
 import org.openlca.ilcd.commons.LangString;
 import org.openlca.ilcd.commons.ProcessType;
 import org.openlca.ilcd.processes.DataSetInfo;

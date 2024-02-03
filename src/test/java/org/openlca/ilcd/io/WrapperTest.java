@@ -2,6 +2,7 @@ package org.openlca.ilcd.io;
 
 import org.junit.Assert;
 import org.junit.Test;
+import org.openlca.ilcd.Tests;
 import org.openlca.ilcd.processes.Process;
 
 public class WrapperTest {
