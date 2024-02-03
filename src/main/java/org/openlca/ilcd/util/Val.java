@@ -2,6 +2,7 @@ package org.openlca.ilcd.util;
 
 import org.openlca.ilcd.commons.Copyable;
 import org.openlca.ilcd.commons.Other;
+import org.w3c.dom.Element;
 
 import javax.xml.datatype.XMLGregorianCalendar;
 import java.util.List;
@@ -57,6 +58,20 @@ public class Val {
 			target.accept(copy);
 		} catch (Exception e) {
 			throw new RuntimeException("failed to clone calendar: " + cal, e);
+		}
+	}
+
+	public static void copyAny(
+		List<Object> source, Supplier<List<Object>> target) {
+		if (source == null || source.isEmpty())
+			return;
+		var t = target.get();
+		for (var o : source) {
+			if (o instanceof Element e) {
+				t.add(e.cloneNode(true));
+			} else if (o instanceof Copyable<?> cc) {
+				t.add(cc.copy());
+			}
 		}
 	}
 

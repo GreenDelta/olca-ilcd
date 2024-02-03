@@ -45,6 +45,7 @@ record EpdExtensionReader(Process process, EpdProfile profile) {
 
 		// read the extensions that are stored under `dataSetInformation`
 		var info = Processes.getDataSetInfo(process);
+		/*
 		if (info == null || info.getOther() == null)
 			return;
 		var other = info.getOther();
@@ -54,6 +55,8 @@ record EpdExtensionReader(Process process, EpdProfile profile) {
 		epd.moduleEntries.addAll(modules);
 		epd.safetyMargins = SafetyMarginsConverter.read(other);
 		epd.contentDeclaration = ContentDeclaration.read(other);
+
+		 */
 	}
 
 	private void readSubType(EpdDataSet dataSet) {

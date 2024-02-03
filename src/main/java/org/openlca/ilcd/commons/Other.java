@@ -5,6 +5,7 @@ import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlAnyElement;
 import jakarta.xml.bind.annotation.XmlRootElement;
 import jakarta.xml.bind.annotation.XmlType;
+import org.openlca.ilcd.util.Val;
 import org.w3c.dom.Element;
 
 import java.util.ArrayList;
@@ -49,14 +50,7 @@ public class Other implements Copyable<Other> {
 	@Override
 	public Other copy() {
 		var copy = new Other();
-		if (any == null)
-			return copy;
-		var target = copy.withAny();
-		for (var o : any) {
-			if (o instanceof Element e) {
-				target.add(e.cloneNode(true));
-			}
-		}
+		Val.copyAny(any, copy::withAny);
 		return copy;
 	}
 

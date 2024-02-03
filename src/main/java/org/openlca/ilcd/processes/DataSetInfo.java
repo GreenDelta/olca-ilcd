@@ -6,12 +6,13 @@ import jakarta.xml.bind.annotation.XmlAnyAttribute;
 import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlElementWrapper;
 import jakarta.xml.bind.annotation.XmlType;
+import org.openlca.ilcd.Vocab;
 import org.openlca.ilcd.commons.Classification;
 import org.openlca.ilcd.commons.Copyable;
 import org.openlca.ilcd.commons.LangString;
-import org.openlca.ilcd.commons.Other;
 import org.openlca.ilcd.commons.Ref;
 import org.openlca.ilcd.commons.annotations.FreeText;
+import org.openlca.ilcd.processes.epd.EpdInfoExtension;
 import org.openlca.ilcd.util.Val;
 
 import javax.xml.namespace.QName;
@@ -30,11 +31,11 @@ import java.util.Map;
 		"classifications",
 		"comment",
 		"externalDocs",
-		"other"
+		"epdExtension"
 })
 public class DataSetInfo implements Copyable<DataSetInfo> {
 
-	@XmlElement(name = "UUID", namespace = "http://lca.jrc.it/ILCD/Common", required = true)
+	@XmlElement(name = "UUID", namespace = Vocab.COMMON, required = true)
 	private String uuid;
 
 	/**
@@ -60,7 +61,7 @@ public class DataSetInfo implements Copyable<DataSetInfo> {
 	private String subIdentifier;
 
 	@FreeText
-	@XmlElement(namespace = "http://lca.jrc.it/ILCD/Common")
+	@XmlElement(namespace = Vocab.COMMON)
 	private List<LangString> synonyms;
 
 	@XmlElementWrapper(name = "complementingProcesses")
@@ -68,18 +69,18 @@ public class DataSetInfo implements Copyable<DataSetInfo> {
 	private List<Ref> complementingProcesses;
 
 	@XmlElementWrapper(name = "classificationInformation")
-	@XmlElement(name = "classification", namespace = "http://lca.jrc.it/ILCD/Common")
+	@XmlElement(name = "classification", namespace = Vocab.COMMON)
 	private List<Classification> classifications;
 
 	@FreeText
-	@XmlElement(name = "generalComment", namespace = "http://lca.jrc.it/ILCD/Common")
+	@XmlElement(name = "generalComment", namespace = Vocab.COMMON)
 	private List<LangString> comment;
 
 	@XmlElement(name = "referenceToExternalDocumentation")
 	private List<Ref> externalDocs;
 
-	@XmlElement(namespace = "http://lca.jrc.it/ILCD/Common")
-	private Other other;
+	@XmlElement(name = "other", namespace = Vocab.COMMON)
+	private EpdInfoExtension epdExtension;
 
 	@XmlAnyAttribute
 	private Map<QName, String> otherAttributes;
@@ -118,8 +119,8 @@ public class DataSetInfo implements Copyable<DataSetInfo> {
 		return externalDocs != null ? externalDocs : List.of();
 	}
 
-	public Other getOther() {
-		return other;
+	public EpdInfoExtension getEpdExtension() {
+		return epdExtension;
 	}
 
 	public Map<QName, String> getOtherAttributes() {
@@ -170,8 +171,8 @@ public class DataSetInfo implements Copyable<DataSetInfo> {
 		return this;
 	}
 
-	public DataSetInfo withOther(Other other) {
-		this.other = other;
+	public DataSetInfo withEpdExtension(EpdInfoExtension extension) {
+		this.epdExtension = extension;
 		return this;
 	}
 
@@ -222,11 +223,11 @@ public class DataSetInfo implements Copyable<DataSetInfo> {
 		return externalDocs;
 	}
 
-	public Other withOther() {
-		if (other == null) {
-			other = new Other();
+	public EpdInfoExtension withEpdExtension() {
+		if (epdExtension == null) {
+			epdExtension = new EpdInfoExtension();
 		}
-		return other;
+		return epdExtension;
 	}
 
 	public Map<QName, String> withOtherAttributes() {
@@ -249,7 +250,7 @@ public class DataSetInfo implements Copyable<DataSetInfo> {
 		Val.copy(classifications, copy::withClassifications);
 		Val.copy(comment, copy::withComment);
 		Val.copy(externalDocs, copy::withExternalDocs);
-		Val.copy(other, copy::withOther);
+		Val.copy(epdExtension, copy::withEpdExtension);
 		Val.copy(otherAttributes, copy::withOtherAttributes);
 		return copy;	}
 

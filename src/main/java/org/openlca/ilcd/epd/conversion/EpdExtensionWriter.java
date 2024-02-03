@@ -72,11 +72,12 @@ class EpdExtensionWriter {
 		var info = epd.process
 			.withProcessInfo()
 			.withDataSetInfo();
-		var infoOther = info.getOther() != null
-			? info.getOther()
-			: info.withOther();
+		var ext = info.getEpdExtension() != null
+			? info.getEpdExtension()
+			: info.withEpdExtension();
 
-		ModuleConverter.writeModules(epd, infoOther, doc);
+		/*
+		ModuleConverter.writeModules(epd, ext, doc);
 		ScenarioConverter.writeScenarios(epd, infoOther, doc);
 		SafetyMarginsConverter.write(epd, infoOther, doc);
 		if (epd.contentDeclaration != null) {
@@ -85,6 +86,7 @@ class EpdExtensionWriter {
 		if (Dom.isEmpty(infoOther)) {
 			info.withOther(null);
 		}
+		*/
 
 		writeProfile();
 		writeSubType();
