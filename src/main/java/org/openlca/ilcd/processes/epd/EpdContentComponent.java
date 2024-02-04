@@ -5,19 +5,15 @@ import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlElements;
 import org.openlca.ilcd.Vocab;
-import org.openlca.ilcd.commons.Copyable;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @XmlAccessorType(XmlAccessType.FIELD)
-public class EpdContentDeclaration implements Copyable<EpdContentDeclaration> {
+public class EpdContentComponent extends
+	EpdContentElement<EpdContentComponent> {
 
 	@XmlElements({
-		@XmlElement(
-			name = "component",
-			type = EpdContentComponent.class,
-			namespace = Vocab.EPD_2019),
 		@XmlElement(
 			name = "material",
 			type = EpdContentMaterial.class,
@@ -27,11 +23,12 @@ public class EpdContentDeclaration implements Copyable<EpdContentDeclaration> {
 			type = EpdContentSubstance.class,
 			namespace = Vocab.EPD_2019),
 	})
-	private List<EpdContentElement<?>> elements;
+	private List<EpdInnerContentElement<?>> elements;
+
 
 	// region getters
 
-	public List<? extends EpdContentElement<?>> getElements() {
+	public List<EpdInnerContentElement<?>> getElements() {
 		return elements != null ? elements : List.of();
 	}
 
@@ -39,12 +36,12 @@ public class EpdContentDeclaration implements Copyable<EpdContentDeclaration> {
 
 	// region setters
 
-	public EpdContentDeclaration withElements(List<EpdContentElement<?>> elements) {
+	public EpdContentComponent withElements(List<EpdInnerContentElement<?>> elements) {
 		this.elements = elements;
 		return this;
 	}
 
-	public List<EpdContentElement<?>> withElements() {
+	public List<EpdInnerContentElement<?>> withElements() {
 		if (elements == null) {
 			elements = new ArrayList<>();
 		}
@@ -54,8 +51,9 @@ public class EpdContentDeclaration implements Copyable<EpdContentDeclaration> {
 	// endregion
 
 	@Override
-	public EpdContentDeclaration copy() {
-		var copy = new EpdContentDeclaration();
+	public EpdContentComponent copy() {
+		var copy = new EpdContentComponent();
+		copyBase(copy);
 		if (elements != null && !elements.isEmpty()) {
 			var target = copy.withElements();
 			for (var e : elements) {
@@ -64,4 +62,5 @@ public class EpdContentDeclaration implements Copyable<EpdContentDeclaration> {
 		}
 		return copy;
 	}
+
 }

@@ -36,6 +36,10 @@ public final class LangString implements Copyable<LangString> {
 		return new LangString(value, lang);
 	}
 
+	public static LangString of(String value) {
+		return new LangString(value, "en");
+	}
+
 	@Override
 	public String toString() {
 		String v = value != null ? value : "";

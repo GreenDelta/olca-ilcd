@@ -136,10 +136,14 @@ def isprim(field_type):
 
 def extract_class(text: str) -> str:
     for line in text.splitlines():
-        l = line.strip()
-        if not l.startswith("public class "):
-            continue
-        return l.split(" ")[2]
+        parts = line.strip().split(" ")
+        is_class = False
+        for word in parts:
+            if word == "class":
+                is_class = True
+                continue
+            if is_class:
+                return word
     return "UNKNOWN"
 
 
