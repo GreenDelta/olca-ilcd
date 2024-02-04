@@ -6,9 +6,15 @@ import org.junit.Test;
 import org.openlca.ilcd.Tests;
 import org.openlca.ilcd.commons.LangString;
 import org.openlca.ilcd.commons.ProcessType;
+import org.openlca.ilcd.epd.model.Scenario;
 import org.openlca.ilcd.io.Xml;
 import org.openlca.ilcd.processes.Process;
+import org.openlca.ilcd.processes.epd.EpdScenario;
+import org.openlca.ilcd.util.Epds;
 import org.openlca.ilcd.util.Processes;
+
+import java.util.function.Function;
+import java.util.function.Supplier;
 
 public class EpdExtensionTest {
 
@@ -16,14 +22,38 @@ public class EpdExtensionTest {
 
 	@Test
 	public void testSafetyMargins() {
-		var info = Processes.getDataSetInfo(ds);
-		assertNotNull(info);
-		var m = info.getEpdExtension().getSafetyMargins();
-		assertEquals(10, m.getMargins(), 1e-16);
+		var margins = Epds.getSafetyMargins(ds);
+		assertNotNull(margins);
+		assertEquals(10, margins.getValue(), 1e-16);
 		assertEquals(
 			"Reasons for choice of safety margins",
-			LangString.getFirst(m.getDescription())
+			LangString.getFirst(margins.getDescription())
 		);
+	}
+
+	@Test
+	public void testScenarios() {
+		var scenarios = Epds.getScenarios(ds);
+		assertEquals(4, scenarios.size());
+		Function<String, EpdScenario> s = name ->
+			scenarios.stream()
+				.filter(si -> si.getName().equals(name))
+				.findAny()
+				.orElseThrow();
+
+		assertTrue(s.apply("Sc1").isDefaultScenario());
+		assertFalse(s.apply("Sc2").isDefaultScenario());
+		assertFalse(s.apply("S1").isDefaultScenario());
+		assertTrue(s.apply("S2").isDefaultScenario());
+
+		assertEquals("1", s.apply("Sc1").getGroup());
+		assertEquals("1", s.apply("Sc2").getGroup());
+		assertEquals("2", s.apply("S1").getGroup());
+		assertEquals("2", s.apply("S2").getGroup());
+
+		assertEquals(
+			"description of scenario S1",
+			LangString.getFirst(s.apply("S1").getDescription()));
 	}
 
 	@Test

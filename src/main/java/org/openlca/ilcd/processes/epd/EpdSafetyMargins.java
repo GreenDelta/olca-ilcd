@@ -15,15 +15,15 @@ import java.util.List;
 public class EpdSafetyMargins implements Copyable<EpdSafetyMargins> {
 
 	@XmlElement(name="margins", namespace = Vocab.EPD_2013)
-	private Double margins;
+	private Double value;
 
 	@XmlElement(name="description", namespace = Vocab.EPD_2013)
 	private List<LangString> description;
 
 	// region getters
 
-	public Double getMargins() {
-		return margins;
+	public Double getValue() {
+		return value;
 	}
 
 	public List<LangString> getDescription() {
@@ -34,8 +34,8 @@ public class EpdSafetyMargins implements Copyable<EpdSafetyMargins> {
 
 	// region setters
 
-	public EpdSafetyMargins withMargins(Double margins) {
-		this.margins = margins;
+	public EpdSafetyMargins withValue(Double margins) {
+		this.value = margins;
 		return this;
 	}
 
@@ -56,7 +56,7 @@ public class EpdSafetyMargins implements Copyable<EpdSafetyMargins> {
 	@Override
 	public EpdSafetyMargins copy() {
 		var copy = new EpdSafetyMargins();
-		copy.withMargins(margins);
+		copy.withValue(value);
 		Val.copy(description, copy::withDescription);
 		return copy;
 	}

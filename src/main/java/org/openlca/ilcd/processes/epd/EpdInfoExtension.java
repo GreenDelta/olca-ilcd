@@ -4,6 +4,7 @@ import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlAnyElement;
 import jakarta.xml.bind.annotation.XmlElement;
+import jakarta.xml.bind.annotation.XmlElementWrapper;
 import org.openlca.ilcd.Vocab;
 import org.openlca.ilcd.commons.Copyable;
 import org.openlca.ilcd.util.Val;
@@ -17,7 +18,8 @@ public class EpdInfoExtension implements Copyable<EpdInfoExtension> {
 	@XmlElement(name = "safetyMargins", namespace = Vocab.EPD_2013)
 	private EpdSafetyMargins safetyMargins;
 
-	@XmlElement(name = "scenarios", namespace = Vocab.EPD_2013)
+	@XmlElementWrapper(name = "scenarios", namespace = Vocab.EPD_2013)
+	@XmlElement(name = "scenario", namespace = Vocab.EPD_2013)
 	private List<EpdScenario> scenarios;
 
 	@XmlElement(name = "modules", namespace = Vocab.EPD_2013)
