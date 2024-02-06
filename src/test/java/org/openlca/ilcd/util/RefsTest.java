@@ -1,16 +1,14 @@
 package org.openlca.ilcd.util;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-
-import java.io.InputStream;
-import java.util.function.Consumer;
-
 import org.junit.Test;
+import org.openlca.ilcd.Tests;
 import org.openlca.ilcd.commons.DataSetType;
 import org.openlca.ilcd.commons.LangString;
 import org.openlca.ilcd.commons.Ref;
-import org.openlca.ilcd.io.ProcessSampleTest;
+
+import java.util.function.Consumer;
+
+import static org.junit.Assert.*;
 
 public class RefsTest {
 
@@ -78,16 +76,14 @@ public class RefsTest {
 	}
 
 	private void with(String file, Consumer<Ref> fn) {
-		try (InputStream is = ProcessSampleTest.class
-				.getResourceAsStream(file)) {
-			Ref ref = Refs.fetch(is);
+		Tests.withResources(file, stream -> {
+			Ref ref = Refs.fetch(stream);
+			assertNotNull(ref);
 			assertEquals("00000000-0000-0000-0000-000000000000", ref.getUUID());
 			assertEquals("00.00", ref.getVersion());
 			assertTrue(ref.getUri().startsWith("http://www.ilcd-network.org/data/"));
 			fn.accept(ref);
-		} catch (Exception e) {
-			new RuntimeException(e);
-		}
+		});
 	}
 
 }
