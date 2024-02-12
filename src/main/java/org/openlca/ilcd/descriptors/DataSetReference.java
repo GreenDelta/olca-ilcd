@@ -12,6 +12,7 @@ import org.openlca.ilcd.commons.LangString;
 import org.openlca.ilcd.util.Val;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -42,7 +43,7 @@ public class DataSetReference implements Copyable<DataSetReference> {
 	// region getters
 
 	public List<LangString> getShortDescription() {
-		return shortDescription != null ? shortDescription : List.of();
+		return shortDescription != null ? shortDescription : Collections.emptyList();
 	}
 
 	public DataSetType getType() {

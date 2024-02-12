@@ -60,7 +60,7 @@ public class SearchTest {
 		for (Object obj : list.getDescriptors()) {
 			assertTrue(obj instanceof ProcessDescriptor);
 			ProcessDescriptor descriptor = (ProcessDescriptor) obj;
-			log.debug("process found: id={}", descriptor.getUuid());
+			log.debug("process found: id={}", descriptor.getUUID());
 		}
 		client.close();
 	}
@@ -74,7 +74,7 @@ public class SearchTest {
 		for (Object obj : list.getDescriptors()) {
 			assertTrue(obj instanceof FlowDescriptor);
 			FlowDescriptor descriptor = (FlowDescriptor) obj;
-			log.debug("flow found: id={}", descriptor.getUuid());
+			log.debug("flow found: id={}", descriptor.getUUID());
 		}
 	}
 
@@ -87,7 +87,7 @@ public class SearchTest {
 		for (Object obj : list.getDescriptors()) {
 			assertTrue(obj instanceof FlowPropertyDescriptor);
 			FlowPropertyDescriptor descriptor = (FlowPropertyDescriptor) obj;
-			log.debug("flow property found: id={}", descriptor.getUuid());
+			log.debug("flow property found: id={}", descriptor.getUUID());
 		}
 	}
 
@@ -100,7 +100,7 @@ public class SearchTest {
 		for (Object obj : list.getDescriptors()) {
 			assertTrue(obj instanceof UnitGroupDescriptor);
 			UnitGroupDescriptor descriptor = (UnitGroupDescriptor) obj;
-			log.debug("unit group found: id={}", descriptor.getUuid());
+			log.debug("unit group found: id={}", descriptor.getUUID());
 		}
 	}
 
@@ -113,7 +113,7 @@ public class SearchTest {
 		for (Object obj : list.getDescriptors()) {
 			assertTrue(obj instanceof ContactDescriptor);
 			ContactDescriptor descriptor = (ContactDescriptor) obj;
-			log.debug("contact found: id={}", descriptor.getUuid());
+			log.debug("contact found: id={}", descriptor.getUUID());
 		}
 	}
 
@@ -126,7 +126,7 @@ public class SearchTest {
 		for (Object obj : list.getDescriptors()) {
 			assertTrue(obj instanceof SourceDescriptor);
 			SourceDescriptor descriptor = (SourceDescriptor) obj;
-			log.debug("contact found: id={}", descriptor.getUuid());
+			log.debug("contact found: id={}", descriptor.getUUID());
 		}
 	}
 

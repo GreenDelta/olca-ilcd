@@ -1,6 +1,7 @@
 package org.openlca.ilcd.descriptors;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.openlca.ilcd.commons.Copyable;
@@ -52,15 +53,15 @@ public class DataStock implements Copyable<DataStock> {
 	}
 
 	public List<LangString> getName() {
-		return name != null ? name : List.of();
+		return name != null ? name : Collections.emptyList();
 	}
 
 	public List<LangString> getDescription() {
-		return description != null ? description : List.of();
+		return description != null ? description : Collections.emptyList();
 	}
 
 	public List<String> getRoles() {
-		return roles != null ? roles : List.of();
+		return roles != null ? roles : Collections.emptyList();
 	}
 
 	// endregion

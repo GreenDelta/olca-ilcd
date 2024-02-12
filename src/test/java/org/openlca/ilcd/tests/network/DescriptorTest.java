@@ -52,7 +52,7 @@ public class DescriptorTest {
 		for (Object obj : result.getDescriptors()) {
 			assertTrue(obj instanceof UnitGroupDescriptor);
 			var descriptor = (UnitGroupDescriptor) obj;
-			log.trace("Unit group '{}' found.", descriptor.getUuid());
+			log.trace("Unit group '{}' found.", descriptor.getUUID());
 		}
 		var descriptorFromList = (UnitGroupDescriptor) result.getDescriptors().get(0);
 		compareFirst(descriptorFromList);
@@ -61,23 +61,23 @@ public class DescriptorTest {
 
 	private void compareFirst(UnitGroupDescriptor fromList) {
 		var resource = client.target(unitUrl)
-			.path(fromList.getUuid())
+			.path(fromList.getUUID())
 			.queryParam("view", "overview");
 		log.trace("Get unit group descriptor: {}", resource.getUri());
 		var descriptor = resource.request().get(UnitGroupDescriptor.class);
 		assertEquals(fromList.getName().get(0), descriptor.getName().get(0));
-		assertEquals(fromList.getUuid(), descriptor.getUuid());
+		assertEquals(fromList.getUUID(), descriptor.getUUID());
 	}
 
 	private void loadFull(UnitGroupDescriptor d) {
 		var resource = client.target(unitUrl)
-			.path(d.getUuid()).queryParam("format", "xml");
+			.path(d.getUUID()).queryParam("format", "xml");
 		log.trace("Get full unit group: {}", resource.getUri());
 		var group = resource.request().get(UnitGroup.class);
 		var info = UnitGroups.getDataSetInfo(group);
 		assertNotNull(info);
 		assertEquals(LangString.getFirst(d.getName()), info.getName().get(0).value);
-		assertEquals(d.getUuid(), info.getUUID());
+		assertEquals(d.getUUID(), info.getUUID());
 	}
 
 }

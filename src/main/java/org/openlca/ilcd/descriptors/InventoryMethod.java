@@ -7,9 +7,9 @@ import jakarta.xml.bind.annotation.XmlType;
 import org.openlca.ilcd.commons.Copyable;
 import org.openlca.ilcd.commons.ModellingApproach;
 import org.openlca.ilcd.commons.ModellingPrinciple;
-import org.openlca.ilcd.util.Val;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -27,7 +27,7 @@ public class InventoryMethod implements Copyable<InventoryMethod> {
 	}
 
 	public List<ModellingApproach> getApproach() {
-		return approach != null ? approach : List.of();
+		return approach != null ? approach : Collections.emptyList();
 	}
 
 	// endregion

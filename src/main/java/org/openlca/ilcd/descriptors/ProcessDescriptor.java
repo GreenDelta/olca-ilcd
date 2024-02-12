@@ -12,6 +12,7 @@ import org.openlca.ilcd.commons.ProcessType;
 import org.openlca.ilcd.util.Val;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -88,7 +89,7 @@ public class ProcessDescriptor extends Descriptor<ProcessDescriptor> {
 	// region getters
 
 	public List<LangString> getSynonyms() {
-		return synonyms != null ? synonyms : List.of();
+		return synonyms != null ? synonyms : Collections.emptyList();
 	}
 
 	public ProcessType getProcessType() {
@@ -120,7 +121,7 @@ public class ProcessDescriptor extends Descriptor<ProcessDescriptor> {
 	}
 
 	public List<ComplianceDeclaration> getComplianceSystem() {
-		return complianceSystem != null ? complianceSystem : List.of();
+		return complianceSystem != null ? complianceSystem : Collections.emptyList();
 	}
 
 	public Review getReview() {
@@ -132,7 +133,7 @@ public class ProcessDescriptor extends Descriptor<ProcessDescriptor> {
 	}
 
 	public List<LangString> getUseAdvice() {
-		return useAdvice != null ? useAdvice : List.of();
+		return useAdvice != null ? useAdvice : Collections.emptyList();
 	}
 
 	public String getTechnicalPurpose() {

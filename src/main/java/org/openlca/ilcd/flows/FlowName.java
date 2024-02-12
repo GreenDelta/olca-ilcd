@@ -14,6 +14,7 @@ import org.openlca.ilcd.util.Val;
 
 import javax.xml.namespace.QName;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -50,19 +51,25 @@ public class FlowName implements Copyable<FlowName> {
 	// region getters
 
 	public List<LangString> getBaseName() {
-		return baseName != null ? baseName : List.of();
+		return baseName != null ? baseName : Collections.emptyList();
 	}
 
 	public List<LangString> getTreatmentStandardsRoutes() {
-		return treatmentStandardsRoutes != null ? treatmentStandardsRoutes : List.of();
+		return treatmentStandardsRoutes != null
+			? treatmentStandardsRoutes
+			: Collections.emptyList();
 	}
 
 	public List<LangString> getMixAndLocationTypes() {
-		return mixAndLocationTypes != null ? mixAndLocationTypes : List.of();
+		return mixAndLocationTypes != null
+			? mixAndLocationTypes
+			: Collections.emptyList();
 	}
 
 	public List<LangString> getFlowProperties() {
-		return flowProperties != null ? flowProperties : List.of();
+		return flowProperties != null
+			? flowProperties
+			: Collections.emptyList();
 	}
 
 	public Other getOther() {

@@ -1,6 +1,7 @@
 package org.openlca.ilcd.io;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.openlca.ilcd.commons.Copyable;
@@ -45,11 +46,11 @@ public class AuthInfo implements Copyable<AuthInfo> {
 	}
 
 	public List<String> getRoles() {
-		return roles != null ? roles : List.of();
+		return roles != null ? roles : Collections.emptyList();
 	}
 
 	public List<DataStock> getDataStocks() {
-		return dataStocks != null ? dataStocks : List.of();
+		return dataStocks != null ? dataStocks : Collections.emptyList();
 	}
 
 	// endregion

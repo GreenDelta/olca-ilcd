@@ -2,6 +2,7 @@
 package org.openlca.ilcd.descriptors;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import jakarta.xml.bind.JAXBElement;
@@ -60,7 +61,7 @@ public class DescriptorList implements XmlRoot, Copyable<DescriptorList> {
 	// region getters
 
 	public List<Descriptor<?>> getDescriptors() {
-		return descriptors != null ? descriptors : List.of();
+		return descriptors != null ? descriptors : Collections.emptyList();
 	}
 
 	public int getTotalSize() {

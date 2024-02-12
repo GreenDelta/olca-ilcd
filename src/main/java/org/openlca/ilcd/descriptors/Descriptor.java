@@ -1,6 +1,7 @@
 package org.openlca.ilcd.descriptors;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import jakarta.xml.bind.annotation.XmlAttribute;
@@ -60,7 +61,7 @@ public abstract class Descriptor<T extends Descriptor<T>> implements Copyable<T>
 
 	// region getters
 
-	public String getUuid() {
+	public String getUUID() {
 		return uuid;
 	}
 
@@ -73,15 +74,15 @@ public abstract class Descriptor<T extends Descriptor<T>> implements Copyable<T>
 	}
 
 	public List<LangString> getName() {
-		return name != null ? name : List.of();
+		return name != null ? name : Collections.emptyList();
 	}
 
 	public List<Classification> getClassification() {
-		return classification != null ? classification : List.of();
+		return classification != null ? classification : Collections.emptyList();
 	}
 
 	public List<LangString> getComment() {
-		return comment != null ? comment : List.of();
+		return comment != null ? comment : Collections.emptyList();
 	}
 
 	public String getHref() {
@@ -97,7 +98,7 @@ public abstract class Descriptor<T extends Descriptor<T>> implements Copyable<T>
 	// region setters
 
 	@SuppressWarnings("unchecked")
-	public T withUuid(String uuid) {
+	public T withUUID(String uuid) {
 		this.uuid = uuid;
 		return (T) this;
 	}
@@ -168,7 +169,7 @@ public abstract class Descriptor<T extends Descriptor<T>> implements Copyable<T>
 	// endregion
 
 	protected void copyBase(T copy) {
-		copy.withUuid(uuid);
+		copy.withUUID(uuid);
 		copy.withUri(uri);
 		copy.withVersion(version);
 		copy.withHref(href);

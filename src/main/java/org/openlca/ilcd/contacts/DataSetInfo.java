@@ -17,6 +17,7 @@ import org.openlca.ilcd.util.Val;
 
 import javax.xml.namespace.QName;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -94,19 +95,19 @@ public class DataSetInfo implements Copyable<DataSetInfo> {
 	}
 
 	public List<LangString> getShortName() {
-		return shortName != null ? shortName : List.of();
+		return shortName != null ? shortName : Collections.emptyList();
 	}
 
 	public List<LangString> getName() {
-		return name != null ? name : List.of();
+		return name != null ? name : Collections.emptyList();
 	}
 
 	public List<Classification> getClassifications() {
-		return classifications != null ? classifications : List.of();
+		return classifications != null ? classifications : Collections.emptyList();
 	}
 
 	public List<LangString> getContactAddress() {
-		return contactAddress != null ? contactAddress : List.of();
+		return contactAddress != null ? contactAddress : Collections.emptyList();
 	}
 
 	public String getTelephone() {
@@ -126,15 +127,15 @@ public class DataSetInfo implements Copyable<DataSetInfo> {
 	}
 
 	public List<LangString> getCentralContactPoint() {
-		return centralContactPoint != null ? centralContactPoint : List.of();
+		return centralContactPoint != null ? centralContactPoint : Collections.emptyList();
 	}
 
 	public List<LangString> getDescription() {
-		return description != null ? description : List.of();
+		return description != null ? description : Collections.emptyList();
 	}
 
 	public List<Ref> getBelongsTo() {
-		return belongsTo != null ? belongsTo : List.of();
+		return belongsTo != null ? belongsTo : Collections.emptyList();
 	}
 
 	public Ref getLogo() {
@@ -146,7 +147,7 @@ public class DataSetInfo implements Copyable<DataSetInfo> {
 	}
 
 	public Map<QName, String> getOtherAttributes() {
-		return otherAttributes != null ? otherAttributes : Map.of();
+		return otherAttributes != null ? otherAttributes : Collections.emptyMap();
 	}
 
 	// endregion

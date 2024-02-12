@@ -12,6 +12,7 @@ import org.openlca.ilcd.commons.LangString;
 import org.openlca.ilcd.util.Val;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -66,11 +67,11 @@ public class FlowDescriptor extends Descriptor<FlowDescriptor>
 	// region getters
 
 	public List<LangString> getSynonyms() {
-		return synonyms != null ? synonyms : List.of();
+		return synonyms != null ? synonyms : Collections.emptyList();
 	}
 
 	public List<Category> getCategories() {
-		return categories != null ? categories : List.of();
+		return categories != null ? categories : Collections.emptyList();
 	}
 
 	public FlowType getFlowType() {

@@ -11,6 +11,7 @@ import org.openlca.ilcd.util.Val;
 
 import javax.xml.namespace.QName;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -34,7 +35,7 @@ public class Category implements Copyable<Category> {
 	// region getters
 
 	public List<Category> getCategories() {
-		return categories != null ? categories : List.of();
+		return categories != null ? categories : Collections.emptyList();
 	}
 
 	public String getId() {
