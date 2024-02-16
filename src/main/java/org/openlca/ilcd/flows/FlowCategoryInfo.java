@@ -9,6 +9,7 @@ import org.openlca.ilcd.commons.Copyable;
 import org.openlca.ilcd.util.Val;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -25,11 +26,11 @@ public class FlowCategoryInfo implements Copyable<FlowCategoryInfo> {
 	// region getters
 
 	public List<CompartmentList> getCompartmentLists() {
-		return compartmentLists != null ? compartmentLists : List.of();
+		return compartmentLists != null ? compartmentLists : Collections.emptyList();
 	}
 
 	public List<Classification> getClassifications() {
-		return classifications != null ? classifications : List.of();
+		return classifications != null ? classifications : Collections.emptyList();
 	}
 
 	// endregion

@@ -1,6 +1,7 @@
 package org.openlca.ilcd.models;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.xml.datatype.XMLGregorianCalendar;
@@ -35,7 +36,7 @@ public class DataEntry implements Copyable<DataEntry> {
 	}
 
 	public List<Ref> getFormats() {
-		return formats != null ? formats : List.of();
+		return formats != null ? formats : Collections.emptyList();
 	}
 
 	// endregion

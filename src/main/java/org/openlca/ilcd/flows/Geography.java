@@ -39,7 +39,7 @@ public class Geography implements Copyable<Geography> {
 	// region getters
 
 	public List<LangString> getLocation() {
-		return location != null ? location : List.of();
+		return location != null ? location : Collections.emptyList();
 	}
 
 	public Other getOther() {

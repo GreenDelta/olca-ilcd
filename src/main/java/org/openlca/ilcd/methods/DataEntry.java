@@ -10,6 +10,7 @@ import org.openlca.ilcd.util.Val;
 
 import javax.xml.datatype.XMLGregorianCalendar;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -44,7 +45,7 @@ public class DataEntry implements Copyable<DataEntry> {
 	}
 
 	public List<Ref> getFormats() {
-		return formats != null ? formats : List.of();
+		return formats != null ? formats : Collections.emptyList();
 	}
 
 	public Ref getOriginalDataSet() {

@@ -32,7 +32,7 @@ public class Validation implements Copyable<Validation> {
 	// region getters
 
 	public List<Review> getReviews() {
-		return reviews != null ? reviews : List.of();
+		return reviews != null ? reviews : Collections.emptyList();
 	}
 
 	public Other getOther() {

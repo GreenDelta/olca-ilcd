@@ -8,6 +8,7 @@ import org.openlca.ilcd.commons.Copyable;
 import org.openlca.ilcd.util.Val;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -20,7 +21,7 @@ public class LocationList implements Copyable<LocationList> {
 	// region getters
 
 	public List<Location> getLocations() {
-		return locations != null ? locations : List.of();
+		return locations != null ? locations : Collections.emptyList();
 	}
 
 	// endregion

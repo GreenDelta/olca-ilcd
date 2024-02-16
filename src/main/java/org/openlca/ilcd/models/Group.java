@@ -1,6 +1,7 @@
 package org.openlca.ilcd.models;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.openlca.ilcd.commons.Copyable;
@@ -30,7 +31,7 @@ public class Group implements Copyable<Group> {
 	}
 
 	public List<LangString> getName() {
-		return name != null ? name : List.of();
+		return name != null ? name : Collections.emptyList();
 	}
 
 	// endregion

@@ -97,7 +97,7 @@ public class FlowPropertyRef implements Copyable<FlowPropertyRef> {
 	}
 
 	public List<LangString> getGeneralComment() {
-		return generalComment != null ? generalComment : List.of();
+		return generalComment != null ? generalComment : Collections.emptyList();
 	}
 
 	public Other getOther() {

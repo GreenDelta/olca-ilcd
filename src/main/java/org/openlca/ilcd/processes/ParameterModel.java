@@ -39,11 +39,11 @@ public class ParameterModel implements Copyable<ParameterModel> {
 	// region getters
 
 	public List<LangString> getDescription() {
-		return description != null ? description : List.of();
+		return description != null ? description : Collections.emptyList();
 	}
 
 	public List<Parameter> getParameters() {
-		return parameters != null ? parameters : List.of();
+		return parameters != null ? parameters : Collections.emptyList();
 	}
 
 	public Other getOther() {

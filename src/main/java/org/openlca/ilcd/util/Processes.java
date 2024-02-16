@@ -48,7 +48,7 @@ public final class Processes {
 		var info = getDataSetInfo(p);
 		return info != null
 			? info.getClassifications()
-			: List.of();
+			: Collections.emptyList();
 	}
 
 	public static ProcessInfo getProcessInfo(Process p) {
@@ -222,7 +222,7 @@ public final class Processes {
 		var mod = getModelling(p);
 		return mod != null
 			? mod.getComplianceDeclarations()
-			: List.of();
+			: Collections.emptyList();
 	}
 
 	public static ComplianceDeclaration getComplianceDeclaration(

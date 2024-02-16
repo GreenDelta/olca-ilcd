@@ -13,6 +13,7 @@ import org.openlca.ilcd.util.Val;
 
 import javax.xml.namespace.QName;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -35,7 +36,7 @@ public class CategorySystem implements XmlRoot, Copyable<CategorySystem> {
 	}
 
 	public List<CategoryList> getCategories() {
-		return categories != null ? categories : List.of();
+		return categories != null ? categories : Collections.emptyList();
 	}
 
 	public String getName() {

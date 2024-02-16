@@ -67,7 +67,7 @@ public class UnitGroup implements IDataSet, Copyable<UnitGroup> {
 	}
 
 	public List<Unit> getUnits() {
-		return units != null ? units : List.of();
+		return units != null ? units : Collections.emptyList();
 	}
 
 	public Other getOther() {

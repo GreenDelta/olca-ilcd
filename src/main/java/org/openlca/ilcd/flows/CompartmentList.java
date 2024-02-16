@@ -40,7 +40,7 @@ public class CompartmentList implements Copyable<CompartmentList> {
 	// region getters
 
 	public List<Compartment> getCompartments() {
-		return compartments != null ? compartments : List.of();
+		return compartments != null ? compartments : Collections.emptyList();
 	}
 
 	public Other getOther() {

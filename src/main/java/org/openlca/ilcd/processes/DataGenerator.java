@@ -36,7 +36,7 @@ public class DataGenerator implements Copyable<DataGenerator> {
 	// region getters
 
 	public List<Ref> getContacts() {
-		return contacts != null ? contacts : List.of();
+		return contacts != null ? contacts : Collections.emptyList();
 	}
 
 	public Other getOther() {

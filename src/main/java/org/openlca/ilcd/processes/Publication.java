@@ -100,7 +100,7 @@ public class Publication implements Copyable<Publication> {
 	}
 
 	public List<Ref> getPrecedingVersions() {
-		return precedingVersions != null ? precedingVersions : List.of();
+		return precedingVersions != null ? precedingVersions : Collections.emptyList();
 	}
 
 	public String getUri() {
@@ -132,7 +132,7 @@ public class Publication implements Copyable<Publication> {
 	}
 
 	public List<Ref> getEntitiesWithExclusiveAccess() {
-		return entitiesWithExclusiveAccess != null ? entitiesWithExclusiveAccess : List.of();
+		return entitiesWithExclusiveAccess != null ? entitiesWithExclusiveAccess : Collections.emptyList();
 	}
 
 	public LicenseType getLicense() {
@@ -140,7 +140,7 @@ public class Publication implements Copyable<Publication> {
 	}
 
 	public List<LangString> getAccessRestrictions() {
-		return accessRestrictions != null ? accessRestrictions : List.of();
+		return accessRestrictions != null ? accessRestrictions : Collections.emptyList();
 	}
 
 	public Other getOther() {

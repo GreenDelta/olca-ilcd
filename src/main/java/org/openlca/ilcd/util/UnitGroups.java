@@ -95,7 +95,7 @@ public final class UnitGroups {
 	}
 
 	public static List<Unit> getUnits(UnitGroup u) {
-		return u != null ? u.getUnits() : List.of();
+		return u != null ? u.getUnits() : Collections.emptyList();
 	}
 
 	public static Unit getReferenceUnit(UnitGroup u) {

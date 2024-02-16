@@ -13,6 +13,7 @@ import org.openlca.ilcd.commons.annotations.FreeText;
 import org.openlca.ilcd.util.Val;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -56,19 +57,19 @@ public class Review implements Copyable<Review> {
 	// region getters
 
 	public List<Scope> getScopes() {
-		return scopes != null ? scopes : List.of();
+		return scopes != null ? scopes : Collections.emptyList();
 	}
 
 	public List<LangString> getDetails() {
-		return details != null ? details : List.of();
+		return details != null ? details : Collections.emptyList();
 	}
 
 	public List<Ref> getReviewers() {
-		return reviewers != null ? reviewers : List.of();
+		return reviewers != null ? reviewers : Collections.emptyList();
 	}
 
 	public List<LangString> getOtherDetails() {
-		return otherDetails != null ? otherDetails : List.of();
+		return otherDetails != null ? otherDetails : Collections.emptyList();
 	}
 
 	public Ref getReport() {
@@ -175,7 +176,7 @@ public class Review implements Copyable<Review> {
 		// region getters
 
 		public List<Method> getMethods() {
-			return methods != null ? methods : List.of();
+			return methods != null ? methods : Collections.emptyList();
 		}
 
 		public ReviewScope getName() {

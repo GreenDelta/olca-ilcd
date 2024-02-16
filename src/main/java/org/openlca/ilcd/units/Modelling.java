@@ -37,7 +37,7 @@ public class Modelling implements Copyable<Modelling> {
 	// region getters
 
 	public List<ComplianceDeclaration> getComplianceDeclarations() {
-		return complianceDeclarations != null ? complianceDeclarations : List.of();
+		return complianceDeclarations != null ? complianceDeclarations : Collections.emptyList();
 	}
 
 	public Other getOther() {

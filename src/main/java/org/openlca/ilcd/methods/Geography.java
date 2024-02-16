@@ -51,7 +51,7 @@ public class Geography implements Copyable<Geography> {
 	}
 
 	public List<Location> getInterventionSubLocations() {
-		return interventionSubLocations != null ? interventionSubLocations : List.of();
+		return interventionSubLocations != null ? interventionSubLocations : Collections.emptyList();
 	}
 
 	public Location getImpactLocation() {
@@ -59,7 +59,7 @@ public class Geography implements Copyable<Geography> {
 	}
 
 	public List<LangString> getDescription() {
-		return description != null ? description : List.of();
+		return description != null ? description : Collections.emptyList();
 	}
 
 	public Other getOther() {

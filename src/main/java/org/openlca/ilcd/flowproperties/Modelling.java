@@ -46,7 +46,7 @@ public class Modelling implements Copyable<Modelling> {
 	}
 
 	public List<ComplianceDeclaration> getComplianceDeclarations() {
-		return complianceDeclarations != null ? complianceDeclarations : List.of();
+		return complianceDeclarations != null ? complianceDeclarations : Collections.emptyList();
 	}
 
 	public Other getOther() {

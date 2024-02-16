@@ -1,6 +1,7 @@
 package org.openlca.ilcd.models;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import jakarta.xml.bind.annotation.XmlAccessType;
@@ -35,7 +36,7 @@ public class Connection implements Copyable<Connection> {
 	}
 
 	public List<DownstreamLink> getDownstreamLinks() {
-		return downstreamLinks != null ? downstreamLinks : List.of();
+		return downstreamLinks != null ? downstreamLinks : Collections.emptyList();
 	}
 
 	// endregion

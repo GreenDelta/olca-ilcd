@@ -45,7 +45,7 @@ public class SubLocation implements Copyable<SubLocation> {
 	// region getters
 
 	public List<LangString> getDescription() {
-		return description != null ? description : List.of();
+		return description != null ? description : Collections.emptyList();
 	}
 
 	public Other getOther() {
