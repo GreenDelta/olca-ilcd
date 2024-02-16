@@ -71,7 +71,7 @@ public class ImpactResult implements Copyable<ImpactResult> {
 	}
 
 	public List<LangString> getComment() {
-		return comment != null ? comment : List.of();
+		return comment != null ? comment : Collections.emptyList();
 	}
 
 	public Other getOther() {

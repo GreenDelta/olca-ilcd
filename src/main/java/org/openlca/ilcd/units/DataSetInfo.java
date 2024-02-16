@@ -59,15 +59,15 @@ public class DataSetInfo implements Copyable<DataSetInfo> {
 	}
 
 	public List<LangString> getName() {
-		return name != null ? name : List.of();
+		return name != null ? name : Collections.emptyList();
 	}
 
 	public List<Classification> getClassifications() {
-		return classifications != null ? classifications : List.of();
+		return classifications != null ? classifications : Collections.emptyList();
 	}
 
 	public List<LangString> getGeneralComment() {
-		return generalComment != null ? generalComment : List.of();
+		return generalComment != null ? generalComment : Collections.emptyList();
 	}
 
 	public Other getOther() {

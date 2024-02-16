@@ -34,7 +34,7 @@ public class Representativeness implements Copyable<Representativeness> {
 	// region getters
 
 	public List<Ref> getDataSource() {
-		return dataSource != null ? dataSource : List.of();
+		return dataSource != null ? dataSource : Collections.emptyList();
 	}
 
 	public Other getOther() {

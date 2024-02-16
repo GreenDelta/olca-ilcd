@@ -40,7 +40,7 @@ public class Classification implements Copyable<Classification> {
 	public List<Category> getCategories() {
 		return categories != null
 			? categories
-			: List.of();
+			: Collections.emptyList();
 	}
 
 	public String getName() {

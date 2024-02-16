@@ -71,7 +71,7 @@ public class Location implements Copyable<Location> {
 	// region getters
 
 	public List<LangString> getDescription() {
-		return description != null ? description : List.of();
+		return description != null ? description : Collections.emptyList();
 	}
 
 	public Other getOther() {

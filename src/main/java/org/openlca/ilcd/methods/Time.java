@@ -11,6 +11,7 @@ import org.openlca.ilcd.commons.annotations.Label;
 import org.openlca.ilcd.util.Val;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -37,11 +38,11 @@ public class Time implements Copyable<Time> {
 	}
 
 	public List<LangString> getDuration() {
-		return duration != null ? duration : List.of();
+		return duration != null ? duration : Collections.emptyList();
 	}
 
 	public List<LangString> getDescription() {
-		return description != null ? description : List.of();
+		return description != null ? description : Collections.emptyList();
 	}
 
 	// endregion

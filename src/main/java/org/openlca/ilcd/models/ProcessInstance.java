@@ -1,6 +1,7 @@
 package org.openlca.ilcd.models;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.openlca.ilcd.commons.Copyable;
@@ -66,15 +67,15 @@ public class ProcessInstance implements Copyable<ProcessInstance> {
 	}
 
 	public List<GroupRef> getGroupRefs() {
-		return groupRefs != null ? groupRefs : List.of();
+		return groupRefs != null ? groupRefs : Collections.emptyList();
 	}
 
 	public List<Parameter> getParameters() {
-		return parameters != null ? parameters : List.of();
+		return parameters != null ? parameters : Collections.emptyList();
 	}
 
 	public List<Connection> getConnections() {
-		return connections != null ? connections : List.of();
+		return connections != null ? connections : Collections.emptyList();
 	}
 
 	// endregion

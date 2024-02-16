@@ -1,6 +1,7 @@
 package org.openlca.ilcd.models;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import jakarta.xml.bind.annotation.XmlAccessType;
@@ -26,11 +27,11 @@ public class Technology implements Copyable<Technology> {
 	// region getters
 
 	public List<Group> getGroups() {
-		return groups != null ? groups : List.of();
+		return groups != null ? groups : Collections.emptyList();
 	}
 
 	public List<ProcessInstance> getProcesses() {
-		return processes != null ? processes : List.of();
+		return processes != null ? processes : Collections.emptyList();
 	}
 
 	// endregion

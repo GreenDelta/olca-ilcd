@@ -1,6 +1,7 @@
 package org.openlca.ilcd.models;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import jakarta.xml.bind.annotation.XmlElementWrapper;
@@ -54,15 +55,15 @@ public class DataSetInfo implements Copyable<DataSetInfo> {
 	}
 
 	public List<Classification> getClassifications() {
-		return classifications != null ? classifications : List.of();
+		return classifications != null ? classifications : Collections.emptyList();
 	}
 
 	public List<LangString> getComment() {
-		return comment != null ? comment : List.of();
+		return comment != null ? comment : Collections.emptyList();
 	}
 
 	public List<Ref> getExternalDocs() {
-		return externalDocs != null ? externalDocs : List.of();
+		return externalDocs != null ? externalDocs : Collections.emptyList();
 	}
 
 	// endregion

@@ -56,15 +56,15 @@ public class Technology implements Copyable<Technology> {
 	// region getters
 
 	public List<LangString> getDescription() {
-		return description != null ? description : List.of();
+		return description != null ? description : Collections.emptyList();
 	}
 
 	public List<Ref> getIncludedProcesses() {
-		return includedProcesses != null ? includedProcesses : List.of();
+		return includedProcesses != null ? includedProcesses : Collections.emptyList();
 	}
 
 	public List<LangString> getApplicability() {
-		return applicability != null ? applicability : List.of();
+		return applicability != null ? applicability : Collections.emptyList();
 	}
 
 	public Ref getPictogram() {
@@ -72,7 +72,7 @@ public class Technology implements Copyable<Technology> {
 	}
 
 	public List<Ref> getPictures() {
-		return pictures != null ? pictures : List.of();
+		return pictures != null ? pictures : Collections.emptyList();
 	}
 
 	public Other getOther() {

@@ -12,6 +12,7 @@ import org.openlca.ilcd.commons.annotations.FreeText;
 import org.openlca.ilcd.util.Val;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -35,11 +36,11 @@ public class Technology implements Copyable<Technology> {
 	// region getters
 
 	public List<LangString> getApplicability() {
-		return applicability != null ? applicability : List.of();
+		return applicability != null ? applicability : Collections.emptyList();
 	}
 
 	public List<Ref> getSpecifications() {
-		return specifications != null ? specifications : List.of();
+		return specifications != null ? specifications : Collections.emptyList();
 	}
 
 	public Other getOther() {

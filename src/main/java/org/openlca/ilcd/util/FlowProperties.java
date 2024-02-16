@@ -45,7 +45,7 @@ public final class FlowProperties {
 		var info = getDataSetInfo(fp);
 		return info != null
 			? info.getClassifications()
-			: List.of();
+			: Collections.emptyList();
 	}
 
 	public static FlowPropertyInfo getFlowPropertyInfo(FlowProperty fp) {

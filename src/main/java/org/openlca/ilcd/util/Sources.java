@@ -82,7 +82,7 @@ public final class Sources {
 		var info = getDataSetInfo(s);
 		return info != null
 			? info.getFiles()
-			: List.of();
+			: Collections.emptyList();
 	}
 
 	public static Publication getPublication(Source s) {

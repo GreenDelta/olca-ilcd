@@ -56,7 +56,7 @@ public class Unit implements Copyable<Unit> {
 	}
 
 	public List<LangString> getComment() {
-		return comment != null ? comment : List.of();
+		return comment != null ? comment : Collections.emptyList();
 	}
 
 	public Other getOther() {

@@ -63,7 +63,7 @@ public class Modelling implements Copyable<Modelling> {
 	// region getters
 
 	public List<LangString> getUseAdvice() {
-		return useAdvice != null ? useAdvice : List.of();
+		return useAdvice != null ? useAdvice : Collections.emptyList();
 	}
 
 	public NormalisationAndWeighting getNormalisationAndWeighting() {
@@ -71,7 +71,7 @@ public class Modelling implements Copyable<Modelling> {
 	}
 
 	public List<Ref> getDataSources() {
-		return dataSources != null ? dataSources : List.of();
+		return dataSources != null ? dataSources : Collections.emptyList();
 	}
 
 	public Completeness getCompleteness() {
@@ -79,11 +79,11 @@ public class Modelling implements Copyable<Modelling> {
 	}
 
 	public List<Review> getReviews() {
-		return reviews != null ? reviews : List.of();
+		return reviews != null ? reviews : Collections.emptyList();
 	}
 
 	public List<ComplianceDeclaration> getComplianceDeclarations() {
-		return complianceDeclarations != null ? complianceDeclarations : List.of();
+		return complianceDeclarations != null ? complianceDeclarations : Collections.emptyList();
 	}
 
 	public Other getOther() {

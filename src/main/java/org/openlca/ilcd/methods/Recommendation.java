@@ -12,6 +12,7 @@ import org.openlca.ilcd.commons.annotations.FreeText;
 import org.openlca.ilcd.util.Val;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -33,7 +34,7 @@ public class Recommendation implements Copyable<Recommendation> {
 	// region getters
 
 	public List<Ref> getEntities() {
-		return entities != null ? entities : List.of();
+		return entities != null ? entities : Collections.emptyList();
 	}
 
 	public RecommendationLevel getLevel() {
@@ -41,7 +42,7 @@ public class Recommendation implements Copyable<Recommendation> {
 	}
 
 	public List<LangString> getMeaning() {
-		return meaning != null ? meaning : List.of();
+		return meaning != null ? meaning : Collections.emptyList();
 	}
 
 	// endregion

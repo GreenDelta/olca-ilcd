@@ -40,7 +40,7 @@ public class Geography implements Copyable<Geography> {
 	}
 
 	public List<SubLocation> getSubLocations() {
-		return subLocations != null ? subLocations : List.of();
+		return subLocations != null ? subLocations : Collections.emptyList();
 	}
 
 	public Other getOther() {

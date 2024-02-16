@@ -78,11 +78,11 @@ public class Process implements IDataSet, Copyable<Process> {
 	}
 
 	public List<Exchange> getExchanges() {
-		return exchanges != null ? exchanges : List.of();
+		return exchanges != null ? exchanges : Collections.emptyList();
 	}
 
 	public List<ImpactResult> getImpactResults() {
-		return impactResults != null ? impactResults : List.of();
+		return impactResults != null ? impactResults : Collections.emptyList();
 	}
 
 	public Other getOther() {

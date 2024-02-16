@@ -58,7 +58,7 @@ public class DataEntry implements Copyable<DataEntry> {
 	}
 
 	public List<Ref> getFormats() {
-		return formats != null ? formats : List.of();
+		return formats != null ? formats : Collections.emptyList();
 	}
 
 	public Ref getOriginalDataSet() {
@@ -70,7 +70,7 @@ public class DataEntry implements Copyable<DataEntry> {
 	}
 
 	public List<Ref> getUseApprovals() {
-		return useApprovals != null ? useApprovals : List.of();
+		return useApprovals != null ? useApprovals : Collections.emptyList();
 	}
 
 	public Other getOther() {

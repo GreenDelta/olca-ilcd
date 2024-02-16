@@ -50,7 +50,7 @@ public class DataEntry implements Copyable<DataEntry> {
 	}
 
 	public List<Ref> getFormats() {
-		return formats != null ? formats : List.of();
+		return formats != null ? formats : Collections.emptyList();
 	}
 
 	public Ref getDocumentor() {

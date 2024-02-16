@@ -73,7 +73,7 @@ public class ImpactMethod implements IDataSet, Copyable<ImpactMethod> {
 	}
 
 	public List<Factor> getFactors() {
-		return factors != null ? factors : List.of();
+		return factors != null ? factors : Collections.emptyList();
 	}
 
 	public Other getOther() {
