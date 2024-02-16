@@ -13,6 +13,8 @@ import org.openlca.ilcd.commons.IDataSet;
 import org.openlca.ilcd.util.Val;
 
 import javax.xml.namespace.QName;
+
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -62,7 +64,7 @@ public class Model implements IDataSet, Copyable<Model> {
 	}
 
 	public Map<QName, String> getOtherAttributes() {
-		return otherAttributes != null ? otherAttributes : Map.of();
+		return otherAttributes != null ? otherAttributes : Collections.emptyMap();
 	}
 
 	// endregion
