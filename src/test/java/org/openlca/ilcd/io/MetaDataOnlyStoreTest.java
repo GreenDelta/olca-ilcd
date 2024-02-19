@@ -44,6 +44,15 @@ public class MetaDataOnlyStoreTest {
 	}
 
 	@Test
+	public void testKeepRefFlows() {
+		var meta = MetaDataOnlyStore.of(store)
+			.keepReferenceFlows(true);
+		var pi = meta.get(Process.class, UID);
+		assertTrue(pi.getImpactResults().isEmpty());
+		assertEquals(2, pi.getExchanges().size());
+	}
+
+	@Test
 	public void testImpactMethod() {
 		var i = store.get(ImpactMethod.class, UID);
 		assertEquals(2, i.getFactors().size());

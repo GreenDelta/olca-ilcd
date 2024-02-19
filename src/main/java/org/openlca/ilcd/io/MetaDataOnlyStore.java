@@ -5,6 +5,7 @@ import org.openlca.ilcd.commons.IDataSet;
 import org.openlca.ilcd.methods.ImpactMethod;
 import org.openlca.ilcd.processes.Process;
 import org.openlca.ilcd.sources.Source;
+import org.openlca.ilcd.util.Processes;
 
 import java.io.File;
 import java.io.IOException;
@@ -19,6 +20,7 @@ import java.util.Objects;
 public class MetaDataOnlyStore implements DataStore {
 
 	private final DataStore store;
+	private boolean keepRefFlows = false;
 
 	private MetaDataOnlyStore(DataStore store) {
 		this.store = Objects.requireNonNull(store);
@@ -26,6 +28,11 @@ public class MetaDataOnlyStore implements DataStore {
 
 	public static MetaDataOnlyStore of(DataStore store) {
 		return new MetaDataOnlyStore(store);
+	}
+
+	public MetaDataOnlyStore keepReferenceFlows(boolean b) {
+		this.keepRefFlows = b;
+		return this;
 	}
 
 	@Override
@@ -84,11 +91,28 @@ public class MetaDataOnlyStore implements DataStore {
 	private <T extends IDataSet> T strip(T ds) {
 		if (ds instanceof Process p) {
 			p.withMetaDataOnly(true);
-			p.withExchanges(null);
 			p.withImpactResults(null);
-		} else if (ds instanceof ImpactMethod m) {
+			stripExchanges(p);
+			return ds;
+		}
+		if (ds instanceof ImpactMethod m) {
 			m.withFactors(null);
 		}
 		return ds;
+	}
+
+	private void stripExchanges(Process p) {
+		if (p.getExchanges().isEmpty())
+			return;
+		if (!keepRefFlows) {
+			p.withExchanges(null);
+			return;
+		}
+		var qRefs = Processes.getReferenceFlows(p);
+		if (qRefs.isEmpty()) {
+			p.withExchanges(null);
+			return;
+		}
+		p.getExchanges().removeIf(e -> !qRefs.contains(e.getId()));
 	}
 }
