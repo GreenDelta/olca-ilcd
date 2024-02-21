@@ -27,6 +27,10 @@ public interface DataStore extends Closeable {
 
 	<T extends IDataSet> boolean contains(Class<T> type, String id);
 
+	default <T extends IDataSet> Iterable<T> iter(Class<T> type) {
+		return () -> DataStore.this.iterator(type);
+	}
+
 	default <T extends IDataSet> void each(Class<T> type, Consumer<T> fn) {
 		try {
 			Iterator<T> it = iterator(type);
