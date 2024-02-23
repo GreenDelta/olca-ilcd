@@ -8,8 +8,8 @@ import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlType;
 import org.openlca.ilcd.commons.Copyable;
 import org.openlca.ilcd.commons.LangString;
-import org.openlca.ilcd.commons.Other;
 import org.openlca.ilcd.commons.annotations.FreeText;
+import org.openlca.ilcd.flows.epd.EpdInfoExtension;
 import org.openlca.ilcd.util.Val;
 
 import javax.xml.namespace.QName;
@@ -28,7 +28,7 @@ import java.util.Map;
 		"casNumber",
 		"sumFormula",
 		"generalComment",
-		"other"
+		"epdExtension"
 })
 public class DataSetInfo implements Copyable<DataSetInfo> {
 
@@ -54,8 +54,8 @@ public class DataSetInfo implements Copyable<DataSetInfo> {
 	@XmlElement(namespace = "http://lca.jrc.it/ILCD/Common")
 	private List<LangString> generalComment;
 
-	@XmlElement(namespace = "http://lca.jrc.it/ILCD/Common")
-	private Other other;
+	@XmlElement(name= "other", namespace = "http://lca.jrc.it/ILCD/Common")
+	private EpdInfoExtension epdExtension;
 
 	@XmlAnyAttribute
 	private Map<QName, String> otherAttributes;
@@ -90,8 +90,8 @@ public class DataSetInfo implements Copyable<DataSetInfo> {
 		return generalComment != null ? generalComment : Collections.emptyList();
 	}
 
-	public Other getOther() {
-		return other;
+	public EpdInfoExtension getEpdExtension() {
+		return epdExtension;
 	}
 
 	public Map<QName, String> getOtherAttributes() {
@@ -137,8 +137,8 @@ public class DataSetInfo implements Copyable<DataSetInfo> {
 		return this;
 	}
 
-	public DataSetInfo withOther(Other other) {
-		this.other = other;
+	public DataSetInfo withEpdExtension(EpdInfoExtension extension) {
+		this.epdExtension = extension;
 		return this;
 	}
 
@@ -175,11 +175,11 @@ public class DataSetInfo implements Copyable<DataSetInfo> {
 		return generalComment;
 	}
 
-	public Other withOther() {
-		if (other == null) {
-			other = new Other();
+	public EpdInfoExtension withEpdExtension() {
+		if (epdExtension == null) {
+			epdExtension = new EpdInfoExtension();
 		}
-		return other;
+		return epdExtension;
 	}
 
 	public Map<QName, String> withOtherAttributes() {
@@ -201,7 +201,7 @@ public class DataSetInfo implements Copyable<DataSetInfo> {
 		copy.withCasNumber(casNumber);
 		copy.withSumFormula(sumFormula);
 		Val.copy(generalComment, copy::withGeneralComment);
-		Val.copy(other, copy::withOther);
+		Val.copy(epdExtension, copy::withEpdExtension);
 		Val.copy(otherAttributes, copy::withOtherAttributes);
 		return copy;
 	}

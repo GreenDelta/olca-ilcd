@@ -3,6 +3,7 @@ package org.openlca.ilcd.epd.conversion;
 import java.util.Optional;
 
 import org.openlca.ilcd.commons.DataSetType;
+import org.openlca.ilcd.commons.Extension;
 import org.openlca.ilcd.commons.LangString;
 import org.openlca.ilcd.commons.Other;
 import org.openlca.ilcd.commons.Ref;
@@ -13,7 +14,7 @@ import org.openlca.ilcd.commons.Ref;
  */
 public class RefExtension {
 
-	public static Optional<Ref> readFrom(Other other, String tagName) {
+	public static Optional<Ref> readFrom(Extension other, String tagName) {
 		var elem = Dom.getElement(other, tagName);
 		if (elem == null)
 			return Optional.empty();
@@ -36,7 +37,7 @@ public class RefExtension {
 	 * extension point. If the data set reference is null, it just drops a
 	 * possible old data set reference from that extension.
 	 */
-	public static void writeTo(Other extension, String tag, Ref ref) {
+	public static void writeTo(Extension extension, String tag, Ref ref) {
 		if (tag == null || extension == null)
 			return;
 		Dom.clear(extension, tag);

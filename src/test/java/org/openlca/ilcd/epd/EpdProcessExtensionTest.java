@@ -6,7 +6,6 @@ import org.junit.Test;
 import org.openlca.ilcd.Tests;
 import org.openlca.ilcd.commons.LangString;
 import org.openlca.ilcd.commons.ProcessType;
-import org.openlca.ilcd.epd.model.Scenario;
 import org.openlca.ilcd.io.Xml;
 import org.openlca.ilcd.processes.Process;
 import org.openlca.ilcd.processes.epd.EpdScenario;
@@ -14,9 +13,8 @@ import org.openlca.ilcd.util.Epds;
 import org.openlca.ilcd.util.Processes;
 
 import java.util.function.Function;
-import java.util.function.Supplier;
 
-public class EpdExtensionTest {
+public class EpdProcessExtensionTest {
 
 	private final Process ds = Tests.read(Process.class, "sdk_sample_epd.xml");
 

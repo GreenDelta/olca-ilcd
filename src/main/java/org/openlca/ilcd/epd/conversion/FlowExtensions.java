@@ -1,5 +1,6 @@
 package org.openlca.ilcd.epd.conversion;
 
+import org.openlca.ilcd.commons.Extension;
 import org.openlca.ilcd.commons.LangString;
 import org.openlca.ilcd.commons.Other;
 import org.openlca.ilcd.epd.model.EpdProduct;
@@ -25,7 +26,7 @@ public class FlowExtensions {
 	}
 
 	private static void readInfoExtension(EpdProduct p) {
-		Other extension = getInfoExtension(p.flow, false);
+		var extension = getInfoExtension(p.flow, false);
 		if (extension == null)
 			return;
 		MatML matML = new MatML(extension);
@@ -72,10 +73,11 @@ public class FlowExtensions {
 
 	private static void writeInfoExtension(EpdProduct p) {
 
-		Other ext = getInfoExtension(p.flow, true);
+		var ext = getInfoExtension(p.flow, true);
 		p.flow.withFlowInfo()
 			.withDataSetInfo()
-			.withOther(ext);
+			.withEpdExtension()
+			.withAny();
 		RefExtension.writeTo(ext, "isA", p.genericFlow);
 		var matML = new MatML(ext);
 		if (p.properties.isEmpty()) {
@@ -109,7 +111,7 @@ public class FlowExtensions {
 		e.setTextContent(Boolean.toString(p.vendorSpecific));
 	}
 
-	private static Other getInfoExtension(Flow flow, boolean create) {
+	private static Extension getInfoExtension(Flow flow, boolean create) {
 
 		var flowInfo = create
 			? flow.withFlowInfo()
@@ -124,8 +126,8 @@ public class FlowExtensions {
 			return null;
 
 		return create
-			? dataInfo.withOther()
-			: dataInfo.getOther();
+			? dataInfo.withEpdExtension()
+			: dataInfo.getEpdExtension();
 	}
 
 	private static Other getMethodExtension(Flow flow, boolean create) {

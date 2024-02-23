@@ -9,6 +9,7 @@ import java.util.function.Consumer;
 
 import javax.xml.parsers.DocumentBuilderFactory;
 
+import org.openlca.ilcd.commons.Extension;
 import org.openlca.ilcd.commons.LangString;
 import org.openlca.ilcd.commons.Other;
 import org.openlca.ilcd.util.Strings;
@@ -188,7 +189,7 @@ public final class Dom {
 		return s.toString();
 	}
 
-	static Element getElement(Other extension, String tagName) {
+	static Element getElement(Extension extension, String tagName) {
 		if (extension == null || tagName == null)
 			return null;
 		for (var any : extension.getAny()) {
@@ -203,7 +204,7 @@ public final class Dom {
 	/**
 	 * Removes all elements with the given tag-name from the extensions.
 	 */
-	public static void clear(Other ext, String tagName) {
+	public static void clear(Extension ext, String tagName) {
 		if (ext == null || tagName == null || ext.getAny().isEmpty())
 			return;
 		List<Element> matches = new ArrayList<>();

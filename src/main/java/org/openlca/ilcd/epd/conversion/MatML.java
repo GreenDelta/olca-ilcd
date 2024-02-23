@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-import org.openlca.ilcd.commons.Other;
+import org.openlca.ilcd.commons.Extension;
 import org.openlca.ilcd.epd.model.MaterialProperty;
 import org.openlca.ilcd.epd.model.MaterialPropertyValue;
 import org.slf4j.Logger;
@@ -23,12 +23,12 @@ class MatML {
 
 	private final Logger log = LoggerFactory.getLogger(getClass());
 
-	private final Other extension;
+	private final Extension extension;
 	private Document doc;
 	private Element bulkDetails;
 	private Element metaData;
 
-	MatML(Other extension) {
+	MatML(Extension extension) {
 		this.extension = extension;
 	}
 

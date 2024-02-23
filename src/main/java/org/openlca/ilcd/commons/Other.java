@@ -15,7 +15,7 @@ import java.util.List;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = { "any" })
 @XmlRootElement(name = "other")
-public class Other implements Copyable<Other> {
+public class Other implements Copyable<Other>, Extension {
 
 	/**
 	 * Objects of the following type(s) are allowed in the list {@link Element }
