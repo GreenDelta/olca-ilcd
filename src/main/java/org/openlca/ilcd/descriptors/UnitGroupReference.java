@@ -12,6 +12,7 @@ import org.openlca.ilcd.commons.LangString;
 import org.openlca.ilcd.util.Val;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -38,7 +39,7 @@ public class UnitGroupReference implements Copyable<UnitGroupReference> {
 	// region getters
 
 	public List<LangString> getName() {
-		return name != null ? name : List.of();
+		return name != null ? name : Collections.emptyList();
 	}
 
 	public String getDefaultUnit() {

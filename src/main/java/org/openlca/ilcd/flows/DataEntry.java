@@ -14,6 +14,7 @@ import org.openlca.ilcd.util.Val;
 import javax.xml.datatype.XMLGregorianCalendar;
 import javax.xml.namespace.QName;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -49,7 +50,7 @@ public class DataEntry implements Copyable<DataEntry> {
 	}
 
 	public List<Ref> getFormats() {
-		return formats != null ? formats : List.of();
+		return formats != null ? formats : Collections.emptyList();
 	}
 
 	public Ref getDocumentor() {
@@ -61,7 +62,7 @@ public class DataEntry implements Copyable<DataEntry> {
 	}
 
 	public Map<QName, String> getOtherAttributes() {
-		return otherAttributes != null ? otherAttributes : Map.of();
+		return otherAttributes != null ? otherAttributes : Collections.emptyMap();
 	}
 
 	// endregion

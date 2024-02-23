@@ -17,6 +17,7 @@ import org.openlca.ilcd.util.Val;
 
 import javax.xml.namespace.QName;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -100,23 +101,23 @@ public class DataSetInfo implements Copyable<DataSetInfo> {
 	}
 
 	public List<LangString> getSynonyms() {
-		return synonyms != null ? synonyms : List.of();
+		return synonyms != null ? synonyms : Collections.emptyList();
 	}
 
 	public List<Ref> getComplementingProcesses() {
-		return complementingProcesses != null ? complementingProcesses : List.of();
+		return complementingProcesses != null ? complementingProcesses : Collections.emptyList();
 	}
 
 	public List<Classification> getClassifications() {
-		return classifications != null ? classifications : List.of();
+		return classifications != null ? classifications : Collections.emptyList();
 	}
 
 	public List<LangString> getComment() {
-		return comment != null ? comment : List.of();
+		return comment != null ? comment : Collections.emptyList();
 	}
 
 	public List<Ref> getExternalDocs() {
-		return externalDocs != null ? externalDocs : List.of();
+		return externalDocs != null ? externalDocs : Collections.emptyList();
 	}
 
 	public EpdInfoExtension getEpdExtension() {
@@ -124,7 +125,7 @@ public class DataSetInfo implements Copyable<DataSetInfo> {
 	}
 
 	public Map<QName, String> getOtherAttributes() {
-		return otherAttributes != null ? otherAttributes : Map.of();
+		return otherAttributes != null ? otherAttributes : Collections.emptyMap();
 	}
 
 	// endregion

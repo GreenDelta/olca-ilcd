@@ -12,6 +12,7 @@ import org.openlca.ilcd.commons.LangString;
 import org.openlca.ilcd.util.Val;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -45,11 +46,11 @@ public class ReferenceFlowType implements Copyable<ReferenceFlowType> {
 	// region getters
 
 	public List<LangString> getName() {
-		return name != null ? name : List.of();
+		return name != null ? name : Collections.emptyList();
 	}
 
 	public List<LangString> getFlowProperty() {
-		return flowProperty != null ? flowProperty : List.of();
+		return flowProperty != null ? flowProperty : Collections.emptyList();
 	}
 
 	public String getUnit() {

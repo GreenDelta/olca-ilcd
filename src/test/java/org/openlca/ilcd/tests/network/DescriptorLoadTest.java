@@ -8,7 +8,6 @@ import java.util.Set;
 
 import org.junit.Ignore;
 import org.junit.Test;
-import org.openlca.ilcd.descriptors.Descriptor;
 import org.openlca.ilcd.descriptors.FlowDescriptor;
 import org.openlca.ilcd.flows.Flow;
 import org.openlca.ilcd.io.SodaClient;
@@ -26,10 +25,10 @@ public class DescriptorLoadTest {
 		Set<String> ids = new HashSet<>();
 		for (var d : descriptors) {
 			assertTrue(d instanceof FlowDescriptor);
-			if (ids.contains(d.getUuid())) {
-				fail("Duplicate UUID in descriptor list: " + d.getUuid());
+			if (ids.contains(d.getUUID())) {
+				fail("Duplicate UUID in descriptor list: " + d.getUUID());
 			}
-			ids.add(d.getUuid());
+			ids.add(d.getUUID());
 		}
 
 		client.close();

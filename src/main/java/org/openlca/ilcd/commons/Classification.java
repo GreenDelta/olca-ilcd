@@ -11,6 +11,7 @@ import org.openlca.ilcd.util.Val;
 
 import javax.xml.namespace.QName;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -39,7 +40,7 @@ public class Classification implements Copyable<Classification> {
 	public List<Category> getCategories() {
 		return categories != null
 			? categories
-			: List.of();
+			: Collections.emptyList();
 	}
 
 	public String getName() {
@@ -57,7 +58,7 @@ public class Classification implements Copyable<Classification> {
 	public Map<QName, String> getOtherAttributes() {
 		return otherAttributes != null
 			? otherAttributes
-			: Map.of();
+			: Collections.emptyMap();
 	}
 
 	// endregion

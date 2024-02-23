@@ -16,6 +16,7 @@ import org.openlca.ilcd.util.Val;
 
 import javax.xml.namespace.QName;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -81,11 +82,11 @@ public class Process implements IDataSet, Copyable<Process> {
 	}
 
 	public List<Exchange> getExchanges() {
-		return exchanges != null ? exchanges : List.of();
+		return exchanges != null ? exchanges : Collections.emptyList();
 	}
 
 	public List<ImpactResult> getImpactResults() {
-		return impactResults != null ? impactResults : List.of();
+		return impactResults != null ? impactResults : Collections.emptyList();
 	}
 
 	public Other getOther() {
@@ -105,7 +106,7 @@ public class Process implements IDataSet, Copyable<Process> {
 	}
 
 	public Map<QName, String> getOtherAttributes() {
-		return otherAttributes != null ? otherAttributes : Map.of();
+		return otherAttributes != null ? otherAttributes : Collections.emptyMap();
 	}
 
 	public String getEpdVersion() {

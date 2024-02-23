@@ -17,6 +17,7 @@ import org.openlca.ilcd.util.Val;
 
 import javax.xml.namespace.QName;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -78,23 +79,23 @@ public class DataSetInfo implements Copyable<DataSetInfo> {
 	}
 
 	public List<LangString> getName() {
-		return name != null ? name : List.of();
+		return name != null ? name : Collections.emptyList();
 	}
 
 	public List<String> getMethods() {
-		return methods != null ? methods : List.of();
+		return methods != null ? methods : Collections.emptyList();
 	}
 
 	public List<Classification> getClassifications() {
-		return classifications != null ? classifications : List.of();
+		return classifications != null ? classifications : Collections.emptyList();
 	}
 
 	public List<String> getImpactCategories() {
-		return impactCategories != null ? impactCategories : List.of();
+		return impactCategories != null ? impactCategories : Collections.emptyList();
 	}
 
 	public List<AreaOfProtection> getAreasOfProtection() {
-		return areasOfProtection != null ? areasOfProtection : List.of();
+		return areasOfProtection != null ? areasOfProtection : Collections.emptyList();
 	}
 
 	public String getIndicator() {
@@ -102,11 +103,11 @@ public class DataSetInfo implements Copyable<DataSetInfo> {
 	}
 
 	public List<LangString> getComment() {
-		return comment != null ? comment : List.of();
+		return comment != null ? comment : Collections.emptyList();
 	}
 
 	public List<Ref> getExternalDocs() {
-		return externalDocs != null ? externalDocs : List.of();
+		return externalDocs != null ? externalDocs : Collections.emptyList();
 	}
 
 	public Other getOther() {
@@ -114,7 +115,7 @@ public class DataSetInfo implements Copyable<DataSetInfo> {
 	}
 
 	public Map<QName, String> getOtherAttributes() {
-		return otherAttributes != null ? otherAttributes : Map.of();
+		return otherAttributes != null ? otherAttributes : Collections.emptyMap();
 	}
 
 	// endregion

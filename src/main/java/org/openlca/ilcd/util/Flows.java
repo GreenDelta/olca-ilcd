@@ -154,7 +154,7 @@ public final class Flows {
 	public static List<FlowPropertyRef> getFlowProperties(Flow f) {
 		return f != null
 			? f.getFlowProperties()
-			: List.of();
+			: Collections.emptyList();
 	}
 
 	public static FlowPropertyRef getReferenceFlowProperty(Flow f) {

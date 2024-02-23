@@ -1,6 +1,7 @@
 package org.openlca.ilcd.descriptors;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import jakarta.xml.bind.JAXBElement;
@@ -24,7 +25,7 @@ public class DataStockList implements XmlRoot, Copyable<DataStockList> {
 	// region getters
 
 	public List<DataStock> getDataStocks() {
-		return dataStocks != null ? dataStocks : List.of();
+		return dataStocks != null ? dataStocks : Collections.emptyList();
 	}
 
 	// endregion

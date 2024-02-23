@@ -18,6 +18,7 @@ import org.openlca.ilcd.util.Val;
 
 import javax.xml.namespace.QName;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -96,7 +97,7 @@ public class FlowPropertyRef implements Copyable<FlowPropertyRef> {
 	}
 
 	public List<LangString> getGeneralComment() {
-		return generalComment != null ? generalComment : List.of();
+		return generalComment != null ? generalComment : Collections.emptyList();
 	}
 
 	public Other getOther() {
@@ -108,7 +109,7 @@ public class FlowPropertyRef implements Copyable<FlowPropertyRef> {
 	}
 
 	public Map<QName, String> getOtherAttributes() {
-		return otherAttributes != null ? otherAttributes : Map.of();
+		return otherAttributes != null ? otherAttributes : Collections.emptyMap();
 	}
 
 	// endregion

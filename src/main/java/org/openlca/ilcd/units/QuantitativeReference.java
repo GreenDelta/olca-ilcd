@@ -10,6 +10,8 @@ import org.openlca.ilcd.commons.Other;
 import org.openlca.ilcd.util.Val;
 
 import javax.xml.namespace.QName;
+
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -40,7 +42,7 @@ public class QuantitativeReference implements Copyable<QuantitativeReference> {
 	}
 
 	public Map<QName, String> getOtherAttributes() {
-		return otherAttributes != null ? otherAttributes : Map.of();
+		return otherAttributes != null ? otherAttributes : Collections.emptyMap();
 	}
 
 	// endregion

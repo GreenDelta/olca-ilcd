@@ -9,6 +9,7 @@ import org.openlca.ilcd.commons.Copyable;
 import org.openlca.ilcd.util.Val;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -22,7 +23,7 @@ public class Classification implements Copyable<Classification> {
 	// region getters
 
 	public List<Category> getCategories() {
-		return categories != null ? categories : List.of();
+		return categories != null ? categories : Collections.emptyList();
 	}
 
 	// endregion

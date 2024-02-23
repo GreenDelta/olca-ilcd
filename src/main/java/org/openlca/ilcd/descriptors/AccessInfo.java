@@ -9,6 +9,7 @@ import org.openlca.ilcd.commons.LangString;
 import org.openlca.ilcd.util.Val;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -35,7 +36,7 @@ public class AccessInfo implements Copyable<AccessInfo> {
 	}
 
 	public List<LangString> getUseRestrictions() {
-		return useRestrictions != null ? useRestrictions : List.of();
+		return useRestrictions != null ? useRestrictions : Collections.emptyList();
 	}
 
 	// endregion

@@ -20,6 +20,7 @@ import org.openlca.ilcd.util.Val;
 
 import javax.xml.namespace.QName;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -152,7 +153,7 @@ public class Exchange implements Copyable<Exchange> {
 	}
 
 	public List<AllocationFactor> getAllocations() {
-		return allocations != null ? allocations : List.of();
+		return allocations != null ? allocations : Collections.emptyList();
 	}
 
 	public String getDataSourceType() {
@@ -164,11 +165,11 @@ public class Exchange implements Copyable<Exchange> {
 	}
 
 	public List<Ref> getSources() {
-		return sources != null ? sources : List.of();
+		return sources != null ? sources : Collections.emptyList();
 	}
 
 	public List<LangString> getComment() {
-		return comment != null ? comment : List.of();
+		return comment != null ? comment : Collections.emptyList();
 	}
 
 	public Other getOther() {
@@ -176,7 +177,7 @@ public class Exchange implements Copyable<Exchange> {
 	}
 
 	public Map<QName, String> getOtherAttributes() {
-		return otherAttributes != null ? otherAttributes : Map.of();
+		return otherAttributes != null ? otherAttributes : Collections.emptyMap();
 	}
 
 	// endregion

@@ -12,6 +12,7 @@ import org.openlca.ilcd.commons.annotations.ShortText;
 import org.openlca.ilcd.util.Val;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -68,11 +69,11 @@ public class NormalisationAndWeighting implements Copyable<NormalisationAndWeigh
 	}
 
 	public List<ImpactMethodPrinciple> getPrinciples() {
-		return principles != null ? principles : List.of();
+		return principles != null ? principles : Collections.emptyList();
 	}
 
 	public List<LangString> getDeviationsFromPrinciples() {
-		return deviationsFromPrinciples != null ? deviationsFromPrinciples : List.of();
+		return deviationsFromPrinciples != null ? deviationsFromPrinciples : Collections.emptyList();
 	}
 
 	public Boolean getNormalisation() {
@@ -80,15 +81,15 @@ public class NormalisationAndWeighting implements Copyable<NormalisationAndWeigh
 	}
 
 	public List<Ref> getUsableNormalisationDataSets() {
-		return usableNormalisationDataSets != null ? usableNormalisationDataSets : List.of();
+		return usableNormalisationDataSets != null ? usableNormalisationDataSets : Collections.emptyList();
 	}
 
 	public List<LangString> getNormalisationDescription() {
-		return normalisationDescription != null ? normalisationDescription : List.of();
+		return normalisationDescription != null ? normalisationDescription : Collections.emptyList();
 	}
 
 	public List<Ref> getIncludedNormalisationDataSets() {
-		return includedNormalisationDataSets != null ? includedNormalisationDataSets : List.of();
+		return includedNormalisationDataSets != null ? includedNormalisationDataSets : Collections.emptyList();
 	}
 
 	public Boolean getWeighting() {
@@ -96,15 +97,15 @@ public class NormalisationAndWeighting implements Copyable<NormalisationAndWeigh
 	}
 
 	public List<Ref> getUsableWeightingDataSets() {
-		return usableWeightingDataSets != null ? usableWeightingDataSets : List.of();
+		return usableWeightingDataSets != null ? usableWeightingDataSets : Collections.emptyList();
 	}
 
 	public List<LangString> getWeightingDescription() {
-		return weightingDescription != null ? weightingDescription : List.of();
+		return weightingDescription != null ? weightingDescription : Collections.emptyList();
 	}
 
 	public List<Ref> getIncludedWeightingDataSets() {
-		return includedWeightingDataSets != null ? includedWeightingDataSets : List.of();
+		return includedWeightingDataSets != null ? includedWeightingDataSets : Collections.emptyList();
 	}
 
 	// endregion

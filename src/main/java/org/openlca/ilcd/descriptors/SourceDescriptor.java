@@ -10,6 +10,7 @@ import org.openlca.ilcd.sources.SourceType;
 import org.openlca.ilcd.util.Val;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -54,7 +55,7 @@ public class SourceDescriptor extends Descriptor<SourceDescriptor> {
 	}
 
 	public List<LangString> getCitation() {
-		return citation != null ? citation : List.of();
+		return citation != null ? citation : Collections.emptyList();
 	}
 
 	public SourceType getPublicationType() {
@@ -62,7 +63,7 @@ public class SourceDescriptor extends Descriptor<SourceDescriptor> {
 	}
 
 	public List<DataSetReference> getFile() {
-		return file != null ? file : List.of();
+		return file != null ? file : Collections.emptyList();
 	}
 
 	public DataSetReference getBelongsTo() {

@@ -17,6 +17,7 @@ import org.openlca.ilcd.util.Val;
 import javax.xml.datatype.XMLGregorianCalendar;
 import javax.xml.namespace.QName;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -82,7 +83,7 @@ public class Publication implements Copyable<Publication> {
 	}
 
 	public List<Ref> getPrecedingVersions() {
-		return precedingVersions != null ? precedingVersions : List.of();
+		return precedingVersions != null ? precedingVersions : Collections.emptyList();
 	}
 
 	public String getUri() {
@@ -106,7 +107,7 @@ public class Publication implements Copyable<Publication> {
 	}
 
 	public List<LangString> getAccessRestrictions() {
-		return accessRestrictions != null ? accessRestrictions : List.of();
+		return accessRestrictions != null ? accessRestrictions : Collections.emptyList();
 	}
 
 	public Other getOther() {
@@ -114,7 +115,7 @@ public class Publication implements Copyable<Publication> {
 	}
 
 	public Map<QName, String> getOtherAttributes() {
-		return otherAttributes != null ? otherAttributes : Map.of();
+		return otherAttributes != null ? otherAttributes : Collections.emptyMap();
 	}
 
 	// endregion

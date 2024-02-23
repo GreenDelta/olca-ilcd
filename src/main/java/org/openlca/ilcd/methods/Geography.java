@@ -13,6 +13,7 @@ import org.openlca.ilcd.util.Val;
 
 import javax.xml.namespace.QName;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -50,7 +51,7 @@ public class Geography implements Copyable<Geography> {
 	}
 
 	public List<Location> getInterventionSubLocations() {
-		return interventionSubLocations != null ? interventionSubLocations : List.of();
+		return interventionSubLocations != null ? interventionSubLocations : Collections.emptyList();
 	}
 
 	public Location getImpactLocation() {
@@ -58,7 +59,7 @@ public class Geography implements Copyable<Geography> {
 	}
 
 	public List<LangString> getDescription() {
-		return description != null ? description : List.of();
+		return description != null ? description : Collections.emptyList();
 	}
 
 	public Other getOther() {
@@ -66,7 +67,7 @@ public class Geography implements Copyable<Geography> {
 	}
 
 	public Map<QName, String> getOtherAttributes() {
-		return otherAttributes != null ? otherAttributes : Map.of();
+		return otherAttributes != null ? otherAttributes : Collections.emptyMap();
 	}
 
 	// endregion

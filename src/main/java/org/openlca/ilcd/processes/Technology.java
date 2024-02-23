@@ -14,6 +14,7 @@ import org.openlca.ilcd.util.Val;
 
 import javax.xml.namespace.QName;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -55,15 +56,15 @@ public class Technology implements Copyable<Technology> {
 	// region getters
 
 	public List<LangString> getDescription() {
-		return description != null ? description : List.of();
+		return description != null ? description : Collections.emptyList();
 	}
 
 	public List<Ref> getIncludedProcesses() {
-		return includedProcesses != null ? includedProcesses : List.of();
+		return includedProcesses != null ? includedProcesses : Collections.emptyList();
 	}
 
 	public List<LangString> getApplicability() {
-		return applicability != null ? applicability : List.of();
+		return applicability != null ? applicability : Collections.emptyList();
 	}
 
 	public Ref getPictogram() {
@@ -71,7 +72,7 @@ public class Technology implements Copyable<Technology> {
 	}
 
 	public List<Ref> getPictures() {
-		return pictures != null ? pictures : List.of();
+		return pictures != null ? pictures : Collections.emptyList();
 	}
 
 	public Other getOther() {
@@ -79,7 +80,7 @@ public class Technology implements Copyable<Technology> {
 	}
 
 	public Map<QName, String> getOtherAttributes() {
-		return otherAttributes != null ? otherAttributes : Map.of();
+		return otherAttributes != null ? otherAttributes : Collections.emptyMap();
 	}
 
 	// endregion

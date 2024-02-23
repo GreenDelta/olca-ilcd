@@ -17,6 +17,7 @@ import org.openlca.ilcd.util.Val;
 
 import javax.xml.namespace.QName;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -78,11 +79,11 @@ public class DataSetInfo implements Copyable<DataSetInfo> {
 	}
 
 	public List<LangString> getName() {
-		return name != null ? name : List.of();
+		return name != null ? name : Collections.emptyList();
 	}
 
 	public List<Classification> getClassifications() {
-		return classifications != null ? classifications : List.of();
+		return classifications != null ? classifications : Collections.emptyList();
 	}
 
 	public String getCitation() {
@@ -94,15 +95,15 @@ public class DataSetInfo implements Copyable<DataSetInfo> {
 	}
 
 	public List<LangString> getDescription() {
-		return description != null ? description : List.of();
+		return description != null ? description : Collections.emptyList();
 	}
 
 	public List<FileRef> getFiles() {
-		return files != null ? files : List.of();
+		return files != null ? files : Collections.emptyList();
 	}
 
 	public List<Ref> getContacts() {
-		return contacts != null ? contacts : List.of();
+		return contacts != null ? contacts : Collections.emptyList();
 	}
 
 	public Ref getLogo() {
@@ -114,7 +115,7 @@ public class DataSetInfo implements Copyable<DataSetInfo> {
 	}
 
 	public Map<QName, String> getOtherAttributes() {
-		return otherAttributes != null ? otherAttributes : Map.of();
+		return otherAttributes != null ? otherAttributes : Collections.emptyMap();
 	}
 
 	// endregion

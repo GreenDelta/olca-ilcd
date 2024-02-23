@@ -17,6 +17,7 @@ import org.openlca.ilcd.util.Val;
 
 import javax.xml.namespace.QName;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -79,27 +80,27 @@ public class InventoryMethod implements Copyable<InventoryMethod> {
 	}
 
 	public List<LangString> getPrincipleDeviations() {
-		return principleDeviations != null ? principleDeviations : List.of();
+		return principleDeviations != null ? principleDeviations : Collections.emptyList();
 	}
 
 	public List<ModellingApproach> getApproaches() {
-		return approaches != null ? approaches : List.of();
+		return approaches != null ? approaches : Collections.emptyList();
 	}
 
 	public List<LangString> getApproachDeviations() {
-		return approachDeviations != null ? approachDeviations : List.of();
+		return approachDeviations != null ? approachDeviations : Collections.emptyList();
 	}
 
 	public List<LangString> getConstants() {
-		return constants != null ? constants : List.of();
+		return constants != null ? constants : Collections.emptyList();
 	}
 
 	public List<LangString> getConstantsDeviations() {
-		return constantsDeviations != null ? constantsDeviations : List.of();
+		return constantsDeviations != null ? constantsDeviations : Collections.emptyList();
 	}
 
 	public List<Ref> getSources() {
-		return sources != null ? sources : List.of();
+		return sources != null ? sources : Collections.emptyList();
 	}
 
 	public Other getOther() {
@@ -107,7 +108,7 @@ public class InventoryMethod implements Copyable<InventoryMethod> {
 	}
 
 	public Map<QName, String> getOtherAttributes() {
-		return otherAttributes != null ? otherAttributes : Map.of();
+		return otherAttributes != null ? otherAttributes : Collections.emptyMap();
 	}
 
 	// endregion

@@ -15,6 +15,7 @@ import org.openlca.ilcd.util.Val;
 
 import javax.xml.namespace.QName;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -101,35 +102,35 @@ public class Representativeness implements Copyable<Representativeness> {
 	// region getters
 
 	public List<LangString> getCompleteness() {
-		return completeness != null ? completeness : List.of();
+		return completeness != null ? completeness : Collections.emptyList();
 	}
 
 	public List<LangString> getCompletenessComment() {
-		return completenessComment != null ? completenessComment : List.of();
+		return completenessComment != null ? completenessComment : Collections.emptyList();
 	}
 
 	public List<LangString> getDataSelection() {
-		return dataSelection != null ? dataSelection : List.of();
+		return dataSelection != null ? dataSelection : Collections.emptyList();
 	}
 
 	public List<LangString> getDataSelectionComment() {
-		return dataSelectionComment != null ? dataSelectionComment : List.of();
+		return dataSelectionComment != null ? dataSelectionComment : Collections.emptyList();
 	}
 
 	public List<LangString> getDataTreatment() {
-		return dataTreatment != null ? dataTreatment : List.of();
+		return dataTreatment != null ? dataTreatment : Collections.emptyList();
 	}
 
 	public List<LangString> getDatatTreatmentComment() {
-		return datatTreatmentComment != null ? datatTreatmentComment : List.of();
+		return datatTreatmentComment != null ? datatTreatmentComment : Collections.emptyList();
 	}
 
 	public List<Ref> getDataHandlingSources() {
-		return dataHandlingSources != null ? dataHandlingSources : List.of();
+		return dataHandlingSources != null ? dataHandlingSources : Collections.emptyList();
 	}
 
 	public List<Ref> getSources() {
-		return sources != null ? sources : List.of();
+		return sources != null ? sources : Collections.emptyList();
 	}
 
 	public Double getCoveredProduction() {
@@ -137,23 +138,23 @@ public class Representativeness implements Copyable<Representativeness> {
 	}
 
 	public List<LangString> getProductionVolume() {
-		return productionVolume != null ? productionVolume : List.of();
+		return productionVolume != null ? productionVolume : Collections.emptyList();
 	}
 
 	public List<LangString> getSamplingProcedure() {
-		return samplingProcedure != null ? samplingProcedure : List.of();
+		return samplingProcedure != null ? samplingProcedure : Collections.emptyList();
 	}
 
 	public List<LangString> getDataCollectionPeriod() {
-		return dataCollectionPeriod != null ? dataCollectionPeriod : List.of();
+		return dataCollectionPeriod != null ? dataCollectionPeriod : Collections.emptyList();
 	}
 
 	public List<LangString> getUncertaintyAdjustments() {
-		return uncertaintyAdjustments != null ? uncertaintyAdjustments : List.of();
+		return uncertaintyAdjustments != null ? uncertaintyAdjustments : Collections.emptyList();
 	}
 
 	public List<LangString> getUseAdvice() {
-		return useAdvice != null ? useAdvice : List.of();
+		return useAdvice != null ? useAdvice : Collections.emptyList();
 	}
 
 	public Other getOther() {
@@ -161,7 +162,7 @@ public class Representativeness implements Copyable<Representativeness> {
 	}
 
 	public Map<QName, String> getOtherAttributes() {
-		return otherAttributes != null ? otherAttributes : Map.of();
+		return otherAttributes != null ? otherAttributes : Collections.emptyMap();
 	}
 
 	// endregion

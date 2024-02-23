@@ -49,7 +49,7 @@ public final class ImpactMethods {
 		var info = getDataSetInfo(m);
 		return info != null
 			? info.getClassifications()
-			: List.of();
+			: Collections.emptyList();
 	}
 
 	public static MethodInfo getMethodInfo(ImpactMethod m) {

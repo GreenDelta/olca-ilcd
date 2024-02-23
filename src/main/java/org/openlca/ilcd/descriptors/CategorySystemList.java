@@ -1,6 +1,7 @@
 package org.openlca.ilcd.descriptors;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import jakarta.xml.bind.annotation.XmlAccessType;
@@ -26,7 +27,7 @@ public class CategorySystemList implements Copyable<CategorySystemList> {
 	// region getters
 
 	public List<Entry> getSystems() {
-		return systems != null ? systems : List.of();
+		return systems != null ? systems : Collections.emptyList();
 	}
 
 	// endregion

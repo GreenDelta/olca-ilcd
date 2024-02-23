@@ -1,6 +1,7 @@
 package org.openlca.ilcd.models;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.openlca.ilcd.commons.Copyable;
@@ -31,19 +32,19 @@ public class ModelName implements Copyable<ModelName> {
 	// region getters
 
 	public List<LangString> getBaseName() {
-		return baseName != null ? baseName : List.of();
+		return baseName != null ? baseName : Collections.emptyList();
 	}
 
 	public List<LangString> getTechnicalDetails() {
-		return technicalDetails != null ? technicalDetails : List.of();
+		return technicalDetails != null ? technicalDetails : Collections.emptyList();
 	}
 
 	public List<LangString> getMixAndLocation() {
-		return mixAndLocation != null ? mixAndLocation : List.of();
+		return mixAndLocation != null ? mixAndLocation : Collections.emptyList();
 	}
 
 	public List<LangString> getFlowProperties() {
-		return flowProperties != null ? flowProperties : List.of();
+		return flowProperties != null ? flowProperties : Collections.emptyList();
 	}
 
 	// endregion

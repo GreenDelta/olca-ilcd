@@ -16,6 +16,7 @@ import org.openlca.ilcd.commons.annotations.Label;
 import org.openlca.ilcd.util.Val;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -110,11 +111,11 @@ public class Factor implements Copyable<Factor> {
 	}
 
 	public List<Ref> getDataSources() {
-		return dataSources != null ? dataSources : List.of();
+		return dataSources != null ? dataSources : Collections.emptyList();
 	}
 
 	public List<LangString> getComment() {
-		return comment != null ? comment : List.of();
+		return comment != null ? comment : Collections.emptyList();
 	}
 
 	// endregion

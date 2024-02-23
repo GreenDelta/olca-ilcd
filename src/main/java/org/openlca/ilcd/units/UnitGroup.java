@@ -15,6 +15,7 @@ import org.openlca.ilcd.util.Val;
 
 import javax.xml.namespace.QName;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -66,7 +67,7 @@ public class UnitGroup implements IDataSet, Copyable<UnitGroup> {
 	}
 
 	public List<Unit> getUnits() {
-		return units != null ? units : List.of();
+		return units != null ? units : Collections.emptyList();
 	}
 
 	public Other getOther() {
@@ -78,7 +79,7 @@ public class UnitGroup implements IDataSet, Copyable<UnitGroup> {
 	}
 
 	public Map<QName, String> getOtherAttributes() {
-		return otherAttributes != null ? otherAttributes : Map.of();
+		return otherAttributes != null ? otherAttributes : Collections.emptyMap();
 	}
 
 	// endregion

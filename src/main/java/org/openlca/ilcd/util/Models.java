@@ -46,7 +46,7 @@ public class Models {
 		DataSetInfo di = getDataSetInfo(model);
 		return di != null
 			? di.getClassifications()
-			: List.of();
+			: Collections.emptyList();
 	}
 
 	public static String getOrigin(Model model) {

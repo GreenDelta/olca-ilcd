@@ -13,6 +13,7 @@ import org.openlca.ilcd.util.Val;
 
 import javax.xml.namespace.QName;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -38,11 +39,11 @@ public class ParameterModel implements Copyable<ParameterModel> {
 	// region getters
 
 	public List<LangString> getDescription() {
-		return description != null ? description : List.of();
+		return description != null ? description : Collections.emptyList();
 	}
 
 	public List<Parameter> getParameters() {
-		return parameters != null ? parameters : List.of();
+		return parameters != null ? parameters : Collections.emptyList();
 	}
 
 	public Other getOther() {
@@ -50,7 +51,7 @@ public class ParameterModel implements Copyable<ParameterModel> {
 	}
 
 	public Map<QName, String> getOtherAttributes() {
-		return otherAttributes != null ? otherAttributes : Map.of();
+		return otherAttributes != null ? otherAttributes : Collections.emptyMap();
 	}
 
 	// endregion

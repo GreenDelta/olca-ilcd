@@ -9,6 +9,7 @@ import org.openlca.ilcd.util.Val;
 import org.w3c.dom.Element;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -26,7 +27,7 @@ public class Other implements Copyable<Other> {
 	// region getters
 
 	public List<Object> getAny() {
-		return any != null ? any : List.of();
+		return any != null ? any : Collections.emptyList();
 	}
 
 	// endregion

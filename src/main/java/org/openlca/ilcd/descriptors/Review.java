@@ -14,6 +14,7 @@ import org.openlca.ilcd.commons.ReviewType;
 import org.openlca.ilcd.util.Val;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -40,19 +41,19 @@ public class Review implements Copyable<Review> {
 	// region getters
 
 	public List<Scope> getScope() {
-		return scope != null ? scope : List.of();
+		return scope != null ? scope : Collections.emptyList();
 	}
 
 	public List<DataQualityIndicator> getDataQualityIndicators() {
-		return dataQualityIndicators != null ? dataQualityIndicators : List.of();
+		return dataQualityIndicators != null ? dataQualityIndicators : Collections.emptyList();
 	}
 
 	public List<LangString> getReviewDetails() {
-		return reviewDetails != null ? reviewDetails : List.of();
+		return reviewDetails != null ? reviewDetails : Collections.emptyList();
 	}
 
 	public List<LangString> getOtherReviewDetails() {
-		return otherReviewDetails != null ? otherReviewDetails : List.of();
+		return otherReviewDetails != null ? otherReviewDetails : Collections.emptyList();
 	}
 
 	public DataSetReference getReviewer() {

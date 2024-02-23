@@ -10,6 +10,7 @@ import org.openlca.ilcd.processes.ReviewScope;
 import org.openlca.ilcd.util.Val;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -25,7 +26,7 @@ public class Scope implements Copyable<Scope> {
 	// region getters
 
 	public List<Method> getMethod() {
-		return method != null ? method : List.of();
+		return method != null ? method : Collections.emptyList();
 	}
 
 	public ReviewScope getName() {

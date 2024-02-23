@@ -14,6 +14,7 @@ import org.openlca.ilcd.util.Val;
 
 import javax.xml.namespace.QName;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -75,19 +76,19 @@ public class ProcessName implements Copyable<ProcessName> {
 	// region getters
 
 	public List<LangString> getBaseName() {
-		return baseName != null ? baseName : List.of();
+		return baseName != null ? baseName : Collections.emptyList();
 	}
 
 	public List<LangString> getTechnicalDetails() {
-		return technicalDetails != null ? technicalDetails : List.of();
+		return technicalDetails != null ? technicalDetails : Collections.emptyList();
 	}
 
 	public List<LangString> getMixAndLocation() {
-		return mixAndLocation != null ? mixAndLocation : List.of();
+		return mixAndLocation != null ? mixAndLocation : Collections.emptyList();
 	}
 
 	public List<LangString> getFlowProperties() {
-		return flowProperties != null ? flowProperties : List.of();
+		return flowProperties != null ? flowProperties : Collections.emptyList();
 	}
 
 	public Other getOther() {
@@ -95,7 +96,7 @@ public class ProcessName implements Copyable<ProcessName> {
 	}
 
 	public Map<QName, String> getOtherAttributes() {
-		return otherAttributes != null ? otherAttributes : Map.of();
+		return otherAttributes != null ? otherAttributes : Collections.emptyMap();
 	}
 
 	// endregion

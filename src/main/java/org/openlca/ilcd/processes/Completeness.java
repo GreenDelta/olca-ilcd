@@ -15,6 +15,7 @@ import org.openlca.ilcd.util.Val;
 
 import javax.xml.namespace.QName;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -54,15 +55,15 @@ public class Completeness implements Copyable<Completeness> {
 	}
 
 	public List<Ref> getSupportedImpactMethods() {
-		return supportedImpactMethods != null ? supportedImpactMethods : List.of();
+		return supportedImpactMethods != null ? supportedImpactMethods : Collections.emptyList();
 	}
 
 	public List<FlowCompletenessEntry> getEntries() {
-		return entries != null ? entries : List.of();
+		return entries != null ? entries : Collections.emptyList();
 	}
 
 	public List<LangString> getOtherDetails() {
-		return otherDetails != null ? otherDetails : List.of();
+		return otherDetails != null ? otherDetails : Collections.emptyList();
 	}
 
 	public Other getOther() {
@@ -70,7 +71,7 @@ public class Completeness implements Copyable<Completeness> {
 	}
 
 	public Map<QName, String> getOtherAttributes() {
-		return otherAttributes != null ? otherAttributes : Map.of();
+		return otherAttributes != null ? otherAttributes : Collections.emptyMap();
 	}
 
 	// endregion

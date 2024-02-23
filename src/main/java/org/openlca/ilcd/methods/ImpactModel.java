@@ -15,6 +15,7 @@ import org.openlca.ilcd.util.Val;
 
 import javax.xml.namespace.QName;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -63,23 +64,23 @@ public class ImpactModel implements Copyable<ImpactModel> {
 	}
 
 	public List<LangString> getDescription() {
-		return description != null ? description : List.of();
+		return description != null ? description : Collections.emptyList();
 	}
 
 	public List<Ref> getSources() {
-		return sources != null ? sources : List.of();
+		return sources != null ? sources : Collections.emptyList();
 	}
 
 	public List<Ref> getIncludedMethods() {
-		return includedMethods != null ? includedMethods : List.of();
+		return includedMethods != null ? includedMethods : Collections.emptyList();
 	}
 
 	public List<LangString> getConsideredMechanisms() {
-		return consideredMechanisms != null ? consideredMechanisms : List.of();
+		return consideredMechanisms != null ? consideredMechanisms : Collections.emptyList();
 	}
 
 	public List<Ref> getFlowCharts() {
-		return flowCharts != null ? flowCharts : List.of();
+		return flowCharts != null ? flowCharts : Collections.emptyList();
 	}
 
 	public Other getOther() {
@@ -87,7 +88,7 @@ public class ImpactModel implements Copyable<ImpactModel> {
 	}
 
 	public Map<QName, String> getOtherAttributes() {
-		return otherAttributes != null ? otherAttributes : Map.of();
+		return otherAttributes != null ? otherAttributes : Collections.emptyMap();
 	}
 
 	// endregion
