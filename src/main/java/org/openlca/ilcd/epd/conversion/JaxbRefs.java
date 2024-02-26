@@ -1,17 +1,17 @@
 package org.openlca.ilcd.epd.conversion;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
 import jakarta.xml.bind.JAXBContext;
 import jakarta.xml.bind.Unmarshaller;
 import jakarta.xml.bind.annotation.XmlRootElement;
-import org.openlca.ilcd.commons.Other;
+import org.openlca.ilcd.commons.Extension;
 import org.openlca.ilcd.commons.Ref;
 import org.openlca.ilcd.util.Strings;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.Element;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * Contains some utility methods for reading and writing Ref instances from and
@@ -32,7 +32,7 @@ final class JaxbRefs {
 		to.withName().addAll(from.getName());
 	}
 
-	static <T extends Ref> void write(Class<T> type, List<T> refs, Other ext) {
+	static <T extends Ref> void write(Class<T> type, List<T> refs, Extension ext) {
 		if (refs.isEmpty() || ext == null)
 			return;
 		var any = ext.withAny();
@@ -54,7 +54,7 @@ final class JaxbRefs {
 		}
 	}
 
-	static <T extends Ref> List<Ref> read(Class<T> type, Other ext) {
+	static <T extends Ref> List<Ref> read(Class<T> type, Extension ext) {
 		if (ext == null || type == null || ext.getAny().isEmpty())
 			return Collections.emptyList();
 		var rootDef = type.getAnnotation(XmlRootElement.class);

@@ -5,12 +5,14 @@ import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlAnyAttribute;
 import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlType;
+import org.openlca.ilcd.Vocab;
 import org.openlca.ilcd.commons.Copyable;
 import org.openlca.ilcd.commons.LangString;
 import org.openlca.ilcd.commons.Other;
 import org.openlca.ilcd.commons.Ref;
 import org.openlca.ilcd.commons.annotations.FreeText;
 import org.openlca.ilcd.commons.annotations.Label;
+import org.openlca.ilcd.processes.epd.EpdRepresentativenessExtension;
 import org.openlca.ilcd.util.Val;
 
 import javax.xml.namespace.QName;
@@ -36,7 +38,7 @@ import java.util.Map;
 	"dataCollectionPeriod",
 	"uncertaintyAdjustments",
 	"useAdvice",
-	"other"
+	"epdExtension"
 })
 public class Representativeness implements Copyable<Representativeness> {
 
@@ -93,8 +95,8 @@ public class Representativeness implements Copyable<Representativeness> {
 	@XmlElement(name = "useAdviceForDataSet")
 	private List<LangString> useAdvice;
 
-	@XmlElement(namespace = "http://lca.jrc.it/ILCD/Common")
-	private Other other;
+	@XmlElement(name = "other", namespace = Vocab.COMMON)
+	private EpdRepresentativenessExtension epdExtension;
 
 	@XmlAnyAttribute
 	private Map<QName, String> otherAttributes;
@@ -157,8 +159,8 @@ public class Representativeness implements Copyable<Representativeness> {
 		return useAdvice != null ? useAdvice : Collections.emptyList();
 	}
 
-	public Other getOther() {
-		return other;
+	public EpdRepresentativenessExtension getEpdExtension() {
+		return epdExtension;
 	}
 
 	public Map<QName, String> getOtherAttributes() {
@@ -239,8 +241,8 @@ public class Representativeness implements Copyable<Representativeness> {
 		return this;
 	}
 
-	public Representativeness withOther(Other other) {
-		this.other = other;
+	public Representativeness withEpdExtension(EpdRepresentativenessExtension ext) {
+		this.epdExtension = ext;
 		return this;
 	}
 
@@ -340,11 +342,11 @@ public class Representativeness implements Copyable<Representativeness> {
 		return useAdvice;
 	}
 
-	public Other withOther() {
-		if (other == null) {
-			other = new Other();
+	public EpdRepresentativenessExtension withEpdExtension() {
+		if (epdExtension == null) {
+			epdExtension = new EpdRepresentativenessExtension();
 		}
-		return other;
+		return epdExtension;
 	}
 
 	public Map<QName, String> withOtherAttributes() {
@@ -373,7 +375,7 @@ public class Representativeness implements Copyable<Representativeness> {
 		Val.copy(dataCollectionPeriod, copy::withDataCollectionPeriod);
 		Val.copy(uncertaintyAdjustments, copy::withUncertaintyAdjustments);
 		Val.copy(useAdvice, copy::withUseAdvice);
-		Val.copy(other, copy::withOther);
+		Val.copy(epdExtension, copy::withEpdExtension);
 		Val.copy(otherAttributes, copy::withOtherAttributes);
 		return copy;
 	}

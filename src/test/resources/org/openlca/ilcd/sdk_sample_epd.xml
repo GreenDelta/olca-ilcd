@@ -120,6 +120,11 @@
             <referenceToDataSource uri="" type="source data set" refObjectId="aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa">
                 <common:shortDescription xml:lang="de">Hier können EPDs angehängt werden</common:shortDescription>
             </referenceToDataSource>
+					<common:other>
+						<epd2:referenceToOriginalEPD refObjectId="f79a8947-b608-4eeb-9b3b-97a3ea8cfea5" type="source data set" version="00.00.002">
+							<common:shortDescription xml:lang="en">Wood Panel EPD</common:shortDescription>
+						</epd2:referenceToOriginalEPD>
+					</common:other>
         </dataSourcesTreatmentAndRepresentativeness>
         <validation>
             <review type="Not reviewed">

@@ -1,5 +1,6 @@
 package org.openlca.ilcd.util;
 
+import org.openlca.ilcd.commons.Ref;
 import org.openlca.ilcd.processes.Process;
 import org.openlca.ilcd.processes.epd.EpdContentDeclaration;
 import org.openlca.ilcd.processes.epd.EpdInfoExtension;
@@ -69,6 +70,16 @@ public final class Epds {
 		var ext = t.withEpdExtension();
 		return ext != null
 			? ext.getPublicationDate()
+			: null;
+	}
+
+	public static Ref getOriginalEpd(Process p) {
+		var rep = Processes.getRepresentativeness(p);
+		if (rep == null)
+			return null;
+		var ext = rep.getEpdExtension();
+		return ext != null
+			? ext.getOriginalEpd()
 			: null;
 	}
 }

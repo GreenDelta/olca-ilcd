@@ -29,28 +29,28 @@ class OriginalEPDRef extends Ref {
 				return;
 			// currently nothing else is written to this extension
 			// point; so we can just drop it
-			rep.withOther(null);
+			rep.withEpdExtension(null);
 			return;
 		}
 
-		var other = epd.process
+		var ext = epd.process
 			.withModelling()
 			.withRepresentativeness()
-			.withOther();
-		other.withAny().clear();
+			.withEpdExtension();
+		ext.withAny().clear();
 		var refs = epd.originalEPDs.stream()
 			.map(OriginalEPDRef::wrap)
 			.collect(Collectors.toList());
-		JaxbRefs.write(OriginalEPDRef.class, refs, other);
+		JaxbRefs.write(OriginalEPDRef.class, refs, ext);
 	}
 
 	static void read(EpdDataSet epd) {
 		if (epd == null)
 			return;
 		var rep = Processes.getRepresentativeness(epd.process);
-		if (rep == null || rep.getOther() == null)
+		if (rep == null || rep.getEpdExtension() == null)
 			return;
-		var refs = JaxbRefs.read(OriginalEPDRef.class, rep.getOther());
+		var refs = JaxbRefs.read(OriginalEPDRef.class, rep.getEpdExtension());
 		if (refs.isEmpty())
 			return;
 		epd.originalEPDs.addAll(refs);
