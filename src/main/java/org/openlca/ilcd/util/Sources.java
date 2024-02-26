@@ -11,6 +11,7 @@ import org.openlca.ilcd.sources.Source;
 import org.openlca.ilcd.sources.SourceInfo;
 import org.slf4j.LoggerFactory;
 
+import javax.xml.datatype.XMLGregorianCalendar;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
 import java.util.Collections;
@@ -43,6 +44,13 @@ public final class Sources {
 	public static String getUri(Source s) {
 		var pub =	getPublication(s);
 		return pub != null ? pub.getUri() : null;
+	}
+
+	public static XMLGregorianCalendar getTimeStamp(Source s) {
+		var entry = getDataEntry(s);
+		return entry != null
+			? entry.getTimeStamp()
+			: null;
 	}
 
 	public static List<Classification> getClassifications(Source s) {

@@ -16,6 +16,8 @@ import org.openlca.ilcd.models.Publication;
 import org.openlca.ilcd.models.QuantitativeReference;
 import org.openlca.ilcd.models.Technology;
 
+import javax.xml.datatype.XMLGregorianCalendar;
+
 public class Models {
 
 	public static String getUUID(Model model) {
@@ -40,6 +42,13 @@ public class Models {
 	public static String getUri(Model m) {
 		var pub =	getPublication(m);
 		return pub != null ? pub.getUri() : null;
+	}
+
+	public static XMLGregorianCalendar getTimeStamp(Model m) {
+		var entry = getDataEntry(m);
+		return entry != null
+			? entry.getTimeStamp()
+			: null;
 	}
 
 	public static List<Classification> getClassifications(Model model) {

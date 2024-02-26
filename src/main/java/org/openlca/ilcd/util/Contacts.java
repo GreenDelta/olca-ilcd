@@ -9,6 +9,7 @@ import org.openlca.ilcd.contacts.Contact;
 import org.openlca.ilcd.contacts.ContactInfo;
 import org.openlca.ilcd.contacts.DataSetInfo;
 
+import javax.xml.datatype.XMLGregorianCalendar;
 import java.util.Collections;
 import java.util.List;
 
@@ -37,6 +38,13 @@ public final class Contacts {
 	public static String getUri(Contact c) {
 		var pub =	getPublication(c);
 		return pub != null ? pub.getUri() : null;
+	}
+
+	public static XMLGregorianCalendar getTimeStamp(Contact c) {
+		var entry = getDataEntry(c);
+		return entry != null
+			? entry.getTimeStamp()
+			: null;
 	}
 
 	public static List<Classification> getClassifications(Contact c) {

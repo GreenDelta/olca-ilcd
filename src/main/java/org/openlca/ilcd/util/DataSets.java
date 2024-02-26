@@ -13,6 +13,7 @@ import org.openlca.ilcd.processes.Process;
 import org.openlca.ilcd.sources.Source;
 import org.openlca.ilcd.units.UnitGroup;
 
+import javax.xml.datatype.XMLGregorianCalendar;
 import java.util.Collections;
 import java.util.List;
 
@@ -118,6 +119,26 @@ public final class DataSets {
 			return Sources.getUri(s);
 		if (ds instanceof UnitGroup ug)
 			return UnitGroups.getUri(ug);
+		return null;
+	}
+
+	public static XMLGregorianCalendar getTimeStamp(IDataSet ds) {
+		if (ds instanceof Contact c)
+			return Contacts.getTimeStamp(c);
+		if (ds instanceof Flow f)
+			return Flows.getTimeStamp(f);
+		if (ds instanceof FlowProperty fp)
+			return FlowProperties.getTimeStamp(fp);
+		if (ds instanceof ImpactMethod method)
+			return ImpactMethods.getTimeStamp(method);
+		if (ds instanceof Model model)
+			return Models.getTimeStamp(model);
+		if (ds instanceof Process p)
+			return Processes.getTimeStamp(p);
+		if (ds instanceof Source s)
+			return Sources.getTimeStamp(s);
+		if (ds instanceof UnitGroup ug)
+			return UnitGroups.getTimeStamp(ug);
 		return null;
 	}
 
