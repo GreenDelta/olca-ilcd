@@ -7,12 +7,13 @@ import jakarta.xml.bind.annotation.XmlAnyAttribute;
 import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlSchemaType;
 import jakarta.xml.bind.annotation.XmlType;
+import org.openlca.ilcd.Vocab;
 import org.openlca.ilcd.commons.Copyable;
 import org.openlca.ilcd.commons.LangString;
-import org.openlca.ilcd.commons.Other;
 import org.openlca.ilcd.commons.PublicationStatus;
 import org.openlca.ilcd.commons.Ref;
 import org.openlca.ilcd.commons.annotations.FreeText;
+import org.openlca.ilcd.processes.epd.EpdPublicationExtension;
 import org.openlca.ilcd.util.Val;
 
 import javax.xml.datatype.XMLGregorianCalendar;
@@ -38,53 +39,53 @@ import java.util.Map;
 		"entitiesWithExclusiveAccess",
 		"license",
 		"accessRestrictions",
-		"other"
+		"epdExtension"
 })
 public class Publication implements Copyable<Publication> {
 
-	@XmlElement(namespace = "http://lca.jrc.it/ILCD/Common", name = "dateOfLastRevision")
+	@XmlElement(namespace = Vocab.COMMON, name = "dateOfLastRevision")
 	private XMLGregorianCalendar lastRevision;
 
-	@XmlElement(namespace = "http://lca.jrc.it/ILCD/Common", required = true, name = "dataSetVersion")
+	@XmlElement(namespace = Vocab.COMMON, required = true, name = "dataSetVersion")
 	private String version;
 
-	@XmlElement(namespace = "http://lca.jrc.it/ILCD/Common", name = "referenceToPrecedingDataSetVersion")
+	@XmlElement(namespace = Vocab.COMMON, name = "referenceToPrecedingDataSetVersion")
 	private List<Ref> precedingVersions;
 
 	@XmlSchemaType(name = "anyURI")
-	@XmlElement(namespace = "http://lca.jrc.it/ILCD/Common", name = "permanentDataSetURI")
+	@XmlElement(namespace = Vocab.COMMON, name = "permanentDataSetURI")
 	private String uri;
 
-	@XmlElement(namespace = "http://lca.jrc.it/ILCD/Common", name = "workflowAndPublicationStatus")
+	@XmlElement(namespace = Vocab.COMMON, name = "workflowAndPublicationStatus")
 	private PublicationStatus status;
 
-	@XmlElement(namespace = "http://lca.jrc.it/ILCD/Common", name = "referenceToUnchangedRepublication")
+	@XmlElement(namespace = Vocab.COMMON, name = "referenceToUnchangedRepublication")
 	private Ref republication;
 
-	@XmlElement(namespace = "http://lca.jrc.it/ILCD/Common", name = "referenceToRegistrationAuthority")
+	@XmlElement(namespace = Vocab.COMMON, name = "referenceToRegistrationAuthority")
 	private Ref registrationAuthority;
 
-	@XmlElement(namespace = "http://lca.jrc.it/ILCD/Common")
+	@XmlElement(namespace = Vocab.COMMON)
 	private String registrationNumber;
 
-	@XmlElement(namespace = "http://lca.jrc.it/ILCD/Common", name = "referenceToOwnershipOfDataSet")
+	@XmlElement(namespace = Vocab.COMMON, name = "referenceToOwnershipOfDataSet")
 	private Ref owner;
 
-	@XmlElement(namespace = "http://lca.jrc.it/ILCD/Common")
+	@XmlElement(namespace = Vocab.COMMON)
 	private Boolean copyright;
 
-	@XmlElement(namespace = "http://lca.jrc.it/ILCD/Common", name = "referenceToEntitiesWithExclusiveAccess")
+	@XmlElement(namespace = Vocab.COMMON, name = "referenceToEntitiesWithExclusiveAccess")
 	private List<Ref> entitiesWithExclusiveAccess;
 
-	@XmlElement(namespace = "http://lca.jrc.it/ILCD/Common", name = "licenseType")
+	@XmlElement(namespace = Vocab.COMMON, name = "licenseType")
 	private LicenseType license;
 
 	@FreeText
-	@XmlElement(namespace = "http://lca.jrc.it/ILCD/Common")
+	@XmlElement(namespace = Vocab.COMMON)
 	private List<LangString> accessRestrictions;
 
-	@XmlElement(namespace = "http://lca.jrc.it/ILCD/Common")
-	private Other other;
+	@XmlElement(name= "other", namespace = Vocab.COMMON)
+	private EpdPublicationExtension epdExtension;
 
 	@XmlAnyAttribute
 	private Map<QName, String> otherAttributes;
@@ -143,8 +144,8 @@ public class Publication implements Copyable<Publication> {
 		return accessRestrictions != null ? accessRestrictions : Collections.emptyList();
 	}
 
-	public Other getOther() {
-		return other;
+	public EpdPublicationExtension getEpdExtension() {
+		return epdExtension;
 	}
 
 	public Map<QName, String> getOtherAttributes() {
@@ -220,8 +221,8 @@ public class Publication implements Copyable<Publication> {
 		return this;
 	}
 
-	public Publication withOther(Other other) {
-		this.other = other;
+	public Publication withEpdExtension(EpdPublicationExtension ext) {
+		this.epdExtension = ext;
 		return this;
 	}
 
@@ -272,11 +273,11 @@ public class Publication implements Copyable<Publication> {
 		return accessRestrictions;
 	}
 
-	public Other withOther() {
-		if (other == null) {
-			other = new Other();
+	public EpdPublicationExtension withEpdExtension() {
+		if (epdExtension == null) {
+			epdExtension = new EpdPublicationExtension();
 		}
-		return other;
+		return epdExtension;
 	}
 
 	public Map<QName, String> withOtherAttributes() {
@@ -304,9 +305,8 @@ public class Publication implements Copyable<Publication> {
 		Val.copy(entitiesWithExclusiveAccess, copy::withEntitiesWithExclusiveAccess);
 		copy.withLicense(license);
 		Val.copy(accessRestrictions, copy::withAccessRestrictions);
-		Val.copy(other, copy::withOther);
+		Val.copy(epdExtension, copy::withEpdExtension);
 		Val.copy(otherAttributes, copy::withOtherAttributes);
 		return copy;
 	}
-
 }

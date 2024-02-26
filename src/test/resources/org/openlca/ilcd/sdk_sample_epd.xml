@@ -166,6 +166,11 @@
                 <common:shortDescription xml:lang="de">Verband, der Material/ System repräsentiert</common:shortDescription>
             </common:referenceToOwnershipOfDataSet>
             <common:copyright>true</common:copyright>
+					<common:other>
+						<epd2:referenceToPublisher type="contact data set" refObjectId="d111dbec-b024-4be5-86c5-752d6eb2cf95" uri="../contacts/d111dbec-b024-4be5-86c5-752d6eb2cf95.xml">
+							<common:shortDescription xml:lang="de">Institut Bauen und Umwelt e. V.</common:shortDescription>
+						</epd2:referenceToPublisher>
+					</common:other>
         </publicationAndOwnership>
     </administrativeInformation>
     <exchanges>

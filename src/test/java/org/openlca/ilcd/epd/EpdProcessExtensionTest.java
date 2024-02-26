@@ -87,9 +87,16 @@ public class EpdProcessExtensionTest {
 
 	@Test
 	public void testOriginalEpdRef() {
-		var ref = Epds.getOriginalEpd(ds);
-		assertNotNull(ref);
+		var ref = Epds.getOriginalEpds(ds).get(0);
 		assertEquals("Wood Panel EPD", LangString.getFirst(ref.getName()));
+	}
+
+	@Test
+	public void testPublisherRef() {
+		var ref = Epds.getPublishers(ds).get(0);
+		assertEquals(
+			"Institut Bauen und Umwelt e. V.",
+			LangString.getFirst(ref.getName()));
 	}
 
 	@Test

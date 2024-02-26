@@ -15,19 +15,19 @@ import java.util.Collections;
 import java.util.List;
 
 @XmlAccessorType(XmlAccessType.FIELD)
-public class EpdRepresentativenessExtension
-	implements Copyable<EpdRepresentativenessExtension>, Extension {
+public class EpdPublicationExtension
+	implements Copyable<EpdPublicationExtension>, Extension {
 
-	@XmlElement(name = "referenceToOriginalEPD", namespace = Vocab.EPD_2019)
-	private List<Ref> originalEpds;
+	@XmlElement(name = "referenceToPublisher", namespace = Vocab.EPD_2019)
+	private List<Ref> publishers;
 
 	@XmlAnyElement(lax = true)
 	private List<Object> any;
 
 	// region getters
 
-	public List<Ref> getOriginalEpds() {
-		return originalEpds != null ? originalEpds : Collections.emptyList();
+	public List<Ref> getPublishers() {
+		return publishers != null ? publishers : Collections.emptyList();
 	}
 
 	public List<Object> getAny() {
@@ -38,21 +38,21 @@ public class EpdRepresentativenessExtension
 
 	// region setters
 
-	public EpdRepresentativenessExtension withOriginalEpd(List<Ref> originalEpds) {
-		this.originalEpds = originalEpds;
+	public EpdPublicationExtension withPublishers(List<Ref> publishers) {
+		this.publishers = publishers;
 		return this;
 	}
 
-	public EpdRepresentativenessExtension withAny(List<Object> any) {
+	public EpdPublicationExtension withAny(List<Object> any) {
 		this.any = any;
 		return this;
 	}
 
-	public List<Ref> withOriginalEpds() {
-		if (originalEpds == null) {
-			originalEpds = new ArrayList<>();
+	public List<Ref> withPublishers() {
+		if (publishers == null) {
+			publishers = new ArrayList<>();
 		}
-		return originalEpds;
+		return publishers;
 	}
 
 	public List<Object> withAny() {
@@ -65,9 +65,9 @@ public class EpdRepresentativenessExtension
 	// endregion
 
 	@Override
-	public EpdRepresentativenessExtension copy() {
-		var copy = new EpdRepresentativenessExtension();
-		Val.copy(originalEpds, copy::withOriginalEpds);
+	public EpdPublicationExtension copy() {
+		var copy = new EpdPublicationExtension();
+		Val.copy(publishers, copy::withPublishers);
 		Val.copyAny(any, copy::withAny);
 		return copy;
 	}

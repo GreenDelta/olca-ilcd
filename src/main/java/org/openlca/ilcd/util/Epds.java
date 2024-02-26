@@ -73,13 +73,23 @@ public final class Epds {
 			: null;
 	}
 
-	public static Ref getOriginalEpd(Process p) {
+	public static List<Ref> getOriginalEpds(Process p) {
 		var rep = Processes.getRepresentativeness(p);
 		if (rep == null)
-			return null;
+			return Collections.emptyList();
 		var ext = rep.getEpdExtension();
 		return ext != null
-			? ext.getOriginalEpd()
-			: null;
+			? ext.getOriginalEpds()
+			: Collections.emptyList();
+	}
+
+	public static List<Ref> getPublishers(Process p) {
+		var pub = Processes.getPublication(p);
+		if (pub == null)
+			return Collections.emptyList();
+		var ext = pub.getEpdExtension();
+		return ext != null
+			? ext.getPublishers()
+			: Collections.emptyList();
 	}
 }
