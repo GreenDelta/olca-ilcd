@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
+import org.openlca.ilcd.commons.Extension;
 import org.openlca.ilcd.commons.Other;
 import org.openlca.ilcd.epd.model.EpdDataSet;
 import org.openlca.ilcd.epd.model.Scenario;
@@ -19,7 +20,7 @@ import org.w3c.dom.NodeList;
 
 class ScenarioConverter {
 
-	static List<Scenario> readScenarios(Other other) {
+	static List<Scenario> readScenarios(Extension other) {
 		if (other == null)
 			return Collections.emptyList();
 		for (Object any : other.getAny()) {
@@ -81,7 +82,7 @@ class ScenarioConverter {
 		}
 	}
 
-	static void writeScenarios(EpdDataSet dataSet, Other other, Document doc) {
+	static void writeScenarios(EpdDataSet dataSet, Extension other, Document doc) {
 		if (dataSet == null || other == null || doc == null
 				|| dataSet.scenarios.isEmpty())
 			return;

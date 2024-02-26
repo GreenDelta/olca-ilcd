@@ -9,6 +9,7 @@ import org.openlca.ilcd.commons.ProcessType;
 import org.openlca.ilcd.io.Xml;
 import org.openlca.ilcd.processes.Process;
 import org.openlca.ilcd.processes.epd.EpdScenario;
+import org.openlca.ilcd.processes.epd.EpdSubType;
 import org.openlca.ilcd.util.Epds;
 import org.openlca.ilcd.util.Processes;
 
@@ -67,5 +68,8 @@ public class EpdProcessExtensionTest {
 		assertEquals(ProcessType.EPD, Processes.getProcessType(p));
 	}
 
-
+	@Test
+	public void testSubType() {
+		assertEquals(EpdSubType.AVERAGE_DATASET, Epds.getSubType(ds));
+	}
 }

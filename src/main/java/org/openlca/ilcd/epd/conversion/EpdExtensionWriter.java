@@ -76,17 +76,15 @@ class EpdExtensionWriter {
 			? info.getEpdExtension()
 			: info.withEpdExtension();
 
-		/*
 		ModuleConverter.writeModules(epd, ext, doc);
-		ScenarioConverter.writeScenarios(epd, infoOther, doc);
-		SafetyMarginsConverter.write(epd, infoOther, doc);
+		ScenarioConverter.writeScenarios(epd, ext, doc);
+		SafetyMarginsConverter.write(epd, ext, doc);
 		if (epd.contentDeclaration != null) {
-			epd.contentDeclaration.write(infoOther, doc);
+			epd.contentDeclaration.write(ext, doc);
 		}
-		if (Dom.isEmpty(infoOther)) {
-			info.withOther(null);
+		if (Dom.isEmpty(ext)) {
+			info.withEpdExtension(null);
 		}
-		*/
 
 		writeProfile();
 		writeSubType();
@@ -100,7 +98,7 @@ class EpdExtensionWriter {
 			var method = Processes.getInventoryMethod(epd.process);
 			if (method == null)
 				return;
-			method.withOther(null);
+			method.withEpdExtension(null);
 			return;
 		}
 
@@ -108,7 +106,7 @@ class EpdExtensionWriter {
 		if (elem != null) {
 			epd.process.withModelling()
 				.withInventoryMethod()
-				.withOther()
+				.withEpdExtension()
 				.withAny()
 				.add(elem);
 		}

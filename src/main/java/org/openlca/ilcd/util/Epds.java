@@ -6,6 +6,7 @@ import org.openlca.ilcd.processes.epd.EpdInfoExtension;
 import org.openlca.ilcd.processes.epd.EpdModule;
 import org.openlca.ilcd.processes.epd.EpdSafetyMargins;
 import org.openlca.ilcd.processes.epd.EpdScenario;
+import org.openlca.ilcd.processes.epd.EpdSubType;
 
 import java.util.Collections;
 import java.util.List;
@@ -47,6 +48,16 @@ public final class Epds {
 		var ext = getInfoExtension(p);
 		return ext != null
 			? ext.getContentDeclaration()
+			: null;
+	}
+
+	public static EpdSubType getSubType(Process p) {
+		var m = Processes.getInventoryMethod(p);
+		if (m == null)
+			return null;
+		var ext = m.getEpdExtension();
+		return ext != null
+			? ext.getSubType()
 			: null;
 	}
 

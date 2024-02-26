@@ -5,14 +5,15 @@ import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlAnyAttribute;
 import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlType;
+import org.openlca.ilcd.Vocab;
 import org.openlca.ilcd.commons.Copyable;
 import org.openlca.ilcd.commons.LangString;
 import org.openlca.ilcd.commons.ModellingApproach;
 import org.openlca.ilcd.commons.ModellingPrinciple;
-import org.openlca.ilcd.commons.Other;
 import org.openlca.ilcd.commons.ProcessType;
 import org.openlca.ilcd.commons.Ref;
 import org.openlca.ilcd.commons.annotations.FreeText;
+import org.openlca.ilcd.processes.epd.EpdInventoryMethodExtension;
 import org.openlca.ilcd.util.Val;
 
 import javax.xml.namespace.QName;
@@ -32,7 +33,7 @@ import java.util.Map;
 	"constants",
 	"constantsDeviations",
 	"sources",
-	"other"})
+	"epdExtension"})
 public class InventoryMethod implements Copyable<InventoryMethod> {
 
 	@XmlElement(name = "typeOfDataSet")
@@ -63,8 +64,8 @@ public class InventoryMethod implements Copyable<InventoryMethod> {
 	@XmlElement(name = "referenceToLCAMethodDetails")
 	private List<Ref> sources;
 
-	@XmlElement(namespace = "http://lca.jrc.it/ILCD/Common")
-	private Other other;
+	@XmlElement(name = "other", namespace = Vocab.COMMON)
+	private EpdInventoryMethodExtension epdExtension;
 
 	@XmlAnyAttribute
 	private Map<QName, String> otherAttributes;
@@ -103,8 +104,8 @@ public class InventoryMethod implements Copyable<InventoryMethod> {
 		return sources != null ? sources : Collections.emptyList();
 	}
 
-	public Other getOther() {
-		return other;
+	public EpdInventoryMethodExtension getEpdExtension() {
+		return epdExtension;
 	}
 
 	public Map<QName, String> getOtherAttributes() {
@@ -155,8 +156,8 @@ public class InventoryMethod implements Copyable<InventoryMethod> {
 		return this;
 	}
 
-	public InventoryMethod withOther(Other other) {
-		this.other = other;
+	public InventoryMethod withEpdExtension(EpdInventoryMethodExtension ext) {
+		this.epdExtension = ext;
 		return this;
 	}
 
@@ -207,11 +208,11 @@ public class InventoryMethod implements Copyable<InventoryMethod> {
 		return sources;
 	}
 
-	public Other withOther() {
-		if (other == null) {
-			other = new Other();
+	public EpdInventoryMethodExtension withEpdExtension() {
+		if (epdExtension == null) {
+			epdExtension = new EpdInventoryMethodExtension();
 		}
-		return other;
+		return epdExtension;
 	}
 
 	public Map<QName, String> withOtherAttributes() {
@@ -236,7 +237,7 @@ public class InventoryMethod implements Copyable<InventoryMethod> {
 		Val.copy(constants, copy::withConstants);
 		Val.copy(constantsDeviations, copy::withConstantsDeviations);
 		Val.copy(sources, copy::withSources);
-		Val.copy(other, copy::withOther);
+		Val.copy(epdExtension, copy::withEpdExtension);
 		Val.copy(otherAttributes, copy::withOtherAttributes);
 		return copy;
 	}

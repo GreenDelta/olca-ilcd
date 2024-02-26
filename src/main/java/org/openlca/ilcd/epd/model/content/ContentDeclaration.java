@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Objects;
 
 import org.openlca.ilcd.commons.Copyable;
+import org.openlca.ilcd.commons.Extension;
 import org.openlca.ilcd.commons.Other;
 import org.openlca.ilcd.epd.conversion.Dom;
 import org.openlca.ilcd.epd.conversion.Vocab;
@@ -29,7 +30,7 @@ public class ContentDeclaration implements Copyable<ContentDeclaration> {
 	 * Read a content declaration from the given extension element. May return
 	 * null when the extension is null or when it has no content declaration.
 	 */
-	public static ContentDeclaration read(Other other) {
+	public static ContentDeclaration read(Extension other) {
 		if (other == null)
 			return null;
 
@@ -62,7 +63,7 @@ public class ContentDeclaration implements Copyable<ContentDeclaration> {
 	 * Write this content declaration to the given extension element deleting an
 	 * old declaration if it already exists.
 	 */
-	public void write(Other other, Document doc) {
+	public void write(Extension other, Document doc) {
 		if (other == null || doc == null)
 			return;
 		Dom.clear(other, "contentDeclaration");

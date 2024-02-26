@@ -19,7 +19,6 @@ import java.util.Objects;
 
 public class EpdContentDeclarationTest {
 
-
 	private EpdContentDeclaration dec;
 
 	@Before

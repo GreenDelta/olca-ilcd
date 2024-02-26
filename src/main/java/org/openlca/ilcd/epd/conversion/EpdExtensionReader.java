@@ -45,10 +45,10 @@ record EpdExtensionReader(Process process, EpdProfile profile) {
 
 		// read the extensions that are stored under `dataSetInformation`
 		var info = Processes.getDataSetInfo(process);
-		/*
-		if (info == null || info.getOther() == null)
+
+		if (info == null || info.getEpdExtension() == null)
 			return;
-		var other = info.getOther();
+		var other = info.getEpdExtension();
 		List<Scenario> scenarios = ScenarioConverter.readScenarios(other);
 		epd.scenarios.addAll(scenarios);
 		List<ModuleEntry> modules = ModuleConverter.readModules(other, profile);
@@ -56,14 +56,13 @@ record EpdExtensionReader(Process process, EpdProfile profile) {
 		epd.safetyMargins = SafetyMarginsConverter.read(other);
 		epd.contentDeclaration = ContentDeclaration.read(other);
 
-		 */
 	}
 
 	private void readSubType(EpdDataSet dataSet) {
 		var method = Processes.getInventoryMethod(process);
-		if (method == null || method.getOther() == null)
+		if (method == null || method.getEpdExtension() == null)
 			return;
-		var elem = Dom.getElement(method.getOther(), "subType");
+		var elem = Dom.getElement(method.getEpdExtension(), "subType");
 		if (elem != null) {
 			dataSet.subType = SubType.fromLabel(elem.getTextContent());
 		}

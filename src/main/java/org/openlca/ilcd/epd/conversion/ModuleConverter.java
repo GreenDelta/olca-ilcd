@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
+import org.openlca.ilcd.commons.Extension;
 import org.openlca.ilcd.commons.Other;
 import org.openlca.ilcd.epd.model.EpdDataSet;
 import org.openlca.ilcd.epd.model.EpdProfile;
@@ -20,7 +21,7 @@ import org.w3c.dom.NodeList;
 
 class ModuleConverter {
 
-	static List<ModuleEntry> readModules(Other other, EpdProfile profile) {
+	static List<ModuleEntry> readModules(Extension other, EpdProfile profile) {
 		if (other == null)
 			return Collections.emptyList();
 		for (Object any : other.getAny()) {
@@ -73,7 +74,7 @@ class ModuleConverter {
 		}
 	}
 
-	static void writeModules(EpdDataSet dataSet, Other other, Document doc) {
+	static void writeModules(EpdDataSet dataSet, Extension other, Document doc) {
 		if (other == null || doc == null || !shouldWriteEntries(dataSet))
 			return;
 		Element root = doc.createElementNS(Vocab.NS_OLCA,

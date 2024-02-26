@@ -2,6 +2,7 @@ package org.openlca.ilcd.epd.conversion;
 
 import java.util.Objects;
 
+import org.openlca.ilcd.commons.Extension;
 import org.openlca.ilcd.commons.LangString;
 import org.openlca.ilcd.commons.Other;
 import org.openlca.ilcd.epd.model.EpdDataSet;
@@ -16,7 +17,7 @@ import org.w3c.dom.NodeList;
 
 class SafetyMarginsConverter {
 
-	static SafetyMargins read(Other other) {
+	static SafetyMargins read(Extension other) {
 		if (other == null)
 			return null;
 		for (Object any : other.getAny()) {
@@ -59,7 +60,7 @@ class SafetyMarginsConverter {
 		return margins;
 	}
 
-	static void write(EpdDataSet ds, Other other, Document doc) {
+	static void write(EpdDataSet ds, Extension other, Document doc) {
 		if (ds == null || other == null || doc == null)
 			return;
 		Dom.clear(other, "safetyMargins");

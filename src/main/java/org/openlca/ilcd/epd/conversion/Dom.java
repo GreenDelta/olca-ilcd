@@ -220,7 +220,7 @@ public final class Dom {
 	/**
 	 * Returns true if the given extension element is null or empty.
 	 */
-	static boolean isEmpty(Other ext) {
+	static boolean isEmpty(Extension ext) {
 		if (ext == null)
 			return true;
 		if (ext.getAny().isEmpty())
