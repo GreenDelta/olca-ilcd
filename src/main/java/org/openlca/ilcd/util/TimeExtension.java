@@ -4,7 +4,7 @@ import java.util.Date;
 
 import javax.xml.namespace.QName;
 
-import org.openlca.ilcd.commons.Time;
+import org.openlca.ilcd.processes.Time;
 
 public class TimeExtension {
 

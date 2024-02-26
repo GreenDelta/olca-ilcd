@@ -10,7 +10,7 @@ import java.io.StringWriter;
 import java.util.Date;
 
 import org.junit.Test;
-import org.openlca.ilcd.commons.Time;
+import org.openlca.ilcd.processes.Time;
 import org.openlca.ilcd.util.TimeExtension;
 
 import jakarta.xml.bind.JAXB;

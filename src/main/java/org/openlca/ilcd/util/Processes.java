@@ -5,7 +5,7 @@ import org.openlca.ilcd.commons.CommissionerAndGoal;
 import org.openlca.ilcd.commons.LangString;
 import org.openlca.ilcd.commons.ProcessType;
 import org.openlca.ilcd.commons.Ref;
-import org.openlca.ilcd.commons.Time;
+import org.openlca.ilcd.processes.Time;
 import org.openlca.ilcd.processes.Process;
 import org.openlca.ilcd.processes.*;
 

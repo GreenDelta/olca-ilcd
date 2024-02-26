@@ -1,10 +1,14 @@
-package org.openlca.ilcd.commons;
+package org.openlca.ilcd.processes;
 
 import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlAnyAttribute;
 import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlType;
+import org.openlca.ilcd.Vocab;
+import org.openlca.ilcd.commons.Copyable;
+import org.openlca.ilcd.commons.LangString;
+import org.openlca.ilcd.commons.Other;
 import org.openlca.ilcd.commons.annotations.FreeText;
 import org.openlca.ilcd.util.Val;
 
@@ -16,8 +20,13 @@ import java.util.List;
 import java.util.Map;
 
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "TimeType", propOrder = {"referenceYear", "validUntil",
-	"description", "other"})
+@XmlType(name = "TimeType",
+	propOrder = {
+		"referenceYear",
+		"validUntil",
+		"description",
+		"other"
+	})
 public class Time implements Copyable<Time> {
 
 	/**
@@ -27,6 +36,7 @@ public class Time implements Copyable<Time> {
 	 * overall environmental impact. In that case, the reference year is derived
 	 * by expert judgement.
 	 */
+	@XmlElement(name = "referenceYear", namespace = Vocab.COMMON)
 	private Integer referenceYear;
 
 	/**
@@ -36,7 +46,7 @@ public class Time implements Copyable<Time> {
 	 * relevant changes in environmentally or technically relevant inventory
 	 * values, including in the background system.
 	 */
-	@XmlElement(name = "dataSetValidUntil")
+	@XmlElement(name = "dataSetValidUntil", namespace = Vocab.COMMON)
 	private Integer validUntil;
 
 	/**
@@ -44,7 +54,9 @@ public class Time implements Copyable<Time> {
 	 * on limited usability within sub-time spans (e.g. summer/winter).
 	 */
 	@FreeText
-	@XmlElement(name = "timeRepresentativenessDescription")
+	@XmlElement(
+		name = "timeRepresentativenessDescription",
+		namespace = Vocab.COMMON)
 	private List<LangString> description;
 
 	private Other other;

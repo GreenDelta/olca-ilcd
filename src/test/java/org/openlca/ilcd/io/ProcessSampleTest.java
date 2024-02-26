@@ -8,7 +8,7 @@ import org.openlca.ilcd.commons.LangString;
 import org.openlca.ilcd.commons.ModellingPrinciple;
 import org.openlca.ilcd.commons.ProcessType;
 import org.openlca.ilcd.commons.PublicationStatus;
-import org.openlca.ilcd.commons.Time;
+import org.openlca.ilcd.processes.Time;
 import org.openlca.ilcd.commons.UncertaintyDistribution;
 import org.openlca.ilcd.processes.AllocationFactor;
 import org.openlca.ilcd.processes.DataEntry;

@@ -1,7 +1,7 @@
 package org.openlca.ilcd.epd.conversion;
 
 import org.openlca.ilcd.commons.Other;
-import org.openlca.ilcd.commons.Time;
+import org.openlca.ilcd.processes.Time;
 import org.openlca.ilcd.epd.model.EpdDataSet;
 import org.openlca.ilcd.processes.DataGenerator;
 import org.openlca.ilcd.processes.Geography;
