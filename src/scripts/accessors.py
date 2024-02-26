@@ -150,22 +150,11 @@ def extract_class(text: str) -> str:
 main(
 """
 
-
-
 @XmlAccessorType(XmlAccessType.FIELD)
-public class EpdInfoExtension {
+public class EpdTimeExtension implements Copyable<EpdTimeExtension>, Extension {
 
-	@XmlElement(name = "safetyMargins", namespace = Vocab.EPD_2013)
-	private EpdSafetyMargins safetyMargins;
-
-	@XmlElement(name = "scenarios", namespace = Vocab.EPD_2013)
-	private List<EpdScenario> scenarios;
-
-	@XmlElement(name = "modules", namespace = Vocab.EPD_2013)
-	private List<EpdModule> modules;
-
-	@XmlElement(name = "contentDeclaration", namespace = Vocab.EPD_2019)
-	private EpdContentDeclaration contentDeclaration;
+	@XmlElement(name = "publicationDateOfEPD", namespace = Vocab.EPD_2019)
+	private XMLGregorianCalendar publicationDate;
 
 	@XmlAnyElement(lax = true)
 	private List<Object> any;

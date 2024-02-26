@@ -13,6 +13,7 @@ import org.openlca.ilcd.processes.epd.EpdSubType;
 import org.openlca.ilcd.util.Epds;
 import org.openlca.ilcd.util.Processes;
 
+import java.text.SimpleDateFormat;
 import java.util.function.Function;
 
 public class EpdProcessExtensionTest {
@@ -71,5 +72,14 @@ public class EpdProcessExtensionTest {
 	@Test
 	public void testSubType() {
 		assertEquals(EpdSubType.AVERAGE_DATASET, Epds.getSubType(ds));
+	}
+
+	@Test
+	public void testPublicationDate() {
+		var pubDate = Epds.getPublicationDate(ds);
+		assertNotNull(pubDate);
+		var fmt = new SimpleDateFormat("yyyy-MM-dd")
+			.format(pubDate.toGregorianCalendar().getTime());
+		assertEquals("2020-05-08", fmt);
 	}
 }

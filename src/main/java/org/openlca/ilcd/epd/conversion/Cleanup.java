@@ -1,12 +1,12 @@
 package org.openlca.ilcd.epd.conversion;
 
-import org.openlca.ilcd.commons.Other;
-import org.openlca.ilcd.processes.Time;
+import org.openlca.ilcd.commons.Extension;
 import org.openlca.ilcd.epd.model.EpdDataSet;
 import org.openlca.ilcd.processes.DataGenerator;
 import org.openlca.ilcd.processes.Geography;
 import org.openlca.ilcd.processes.Location;
 import org.openlca.ilcd.processes.Technology;
+import org.openlca.ilcd.processes.Time;
 import org.openlca.ilcd.util.Processes;
 import org.openlca.ilcd.util.Strings;
 
@@ -52,7 +52,7 @@ class Cleanup {
 		return time.getDescription().isEmpty()
 			&& time.getReferenceYear() == null
 			&& time.getValidUntil() == null
-			&& isEmpty(time.getOther());
+			&& isEmpty(time.getEpdExtension());
 	}
 
 	private static boolean isEmpty(Geography geography) {
@@ -88,7 +88,7 @@ class Cleanup {
 			&& isEmpty(generator.getOther());
 	}
 
-	private static boolean isEmpty(Other other) {
+	private static boolean isEmpty(Extension other) {
 		return other == null || other.getAny().isEmpty();
 	}
 }

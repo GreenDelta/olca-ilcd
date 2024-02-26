@@ -8,6 +8,7 @@ import org.openlca.ilcd.processes.epd.EpdSafetyMargins;
 import org.openlca.ilcd.processes.epd.EpdScenario;
 import org.openlca.ilcd.processes.epd.EpdSubType;
 
+import javax.xml.datatype.XMLGregorianCalendar;
 import java.util.Collections;
 import java.util.List;
 
@@ -61,4 +62,13 @@ public final class Epds {
 			: null;
 	}
 
+	public static XMLGregorianCalendar getPublicationDate(Process p) {
+		var t = Processes.getTime(p);
+		if (t == null)
+			return null;
+		var ext = t.withEpdExtension();
+		return ext != null
+			? ext.getPublicationDate()
+			: null;
+	}
 }

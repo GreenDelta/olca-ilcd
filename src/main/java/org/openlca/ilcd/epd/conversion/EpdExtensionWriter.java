@@ -134,23 +134,23 @@ class EpdExtensionWriter {
 			var time = Processes.getTime(epd.process);
 			if (time == null)
 				return;
-			var other = time.getOther();
-			if (other == null)
+			var ext = time.getEpdExtension();
+			if (ext == null)
 				return;
-			Dom.clear(other, tag);
-			if (Dom.isEmpty(other)) {
-				time.withOther(null);
+			Dom.clear(ext, tag);
+			if (Dom.isEmpty(ext)) {
+				time.withEpdExtension(null);
 			}
 			return;
 		}
 
-		var other = epd.process
+		var ext = epd.process
 			.withProcessInfo()
 			.withTime()
-			.withOther();
+			.withEpdExtension();
 
 		// create or update the element
-		var elem = Dom.getElement(other, tag);
+		var elem = Dom.getElement(ext, tag);
 		if (elem != null) {
 			elem.setTextContent(pubDate.toString());
 			return;
@@ -159,6 +159,6 @@ class EpdExtensionWriter {
 		if (newElem == null)
 			return;
 		newElem.setTextContent(pubDate.toString());
-		other.withAny().add(newElem);
+		ext.withAny().add(newElem);
 	}
 }

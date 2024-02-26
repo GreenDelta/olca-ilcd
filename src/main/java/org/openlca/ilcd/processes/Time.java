@@ -8,8 +8,8 @@ import jakarta.xml.bind.annotation.XmlType;
 import org.openlca.ilcd.Vocab;
 import org.openlca.ilcd.commons.Copyable;
 import org.openlca.ilcd.commons.LangString;
-import org.openlca.ilcd.commons.Other;
 import org.openlca.ilcd.commons.annotations.FreeText;
+import org.openlca.ilcd.processes.epd.EpdTimeExtension;
 import org.openlca.ilcd.util.Val;
 
 import javax.xml.namespace.QName;
@@ -25,7 +25,7 @@ import java.util.Map;
 		"referenceYear",
 		"validUntil",
 		"description",
-		"other"
+		"epdExtension"
 	})
 public class Time implements Copyable<Time> {
 
@@ -59,7 +59,8 @@ public class Time implements Copyable<Time> {
 		namespace = Vocab.COMMON)
 	private List<LangString> description;
 
-	private Other other;
+	@XmlElement(name = "other", namespace = Vocab.COMMON)
+	private EpdTimeExtension epdExtension;
 
 	@XmlAnyAttribute
 	private Map<QName, String> otherAttributes;
@@ -78,8 +79,8 @@ public class Time implements Copyable<Time> {
 		return description != null ? description : Collections.emptyList();
 	}
 
-	public Other getOther() {
-		return other;
+	public EpdTimeExtension getEpdExtension() {
+		return epdExtension;
 	}
 
 	public Map<QName, String> getOtherAttributes() {
@@ -105,8 +106,8 @@ public class Time implements Copyable<Time> {
 		return this;
 	}
 
-	public Time withOther(Other other) {
-		this.other = other;
+	public Time withEpdExtension(EpdTimeExtension ext) {
+		this.epdExtension = ext;
 		return this;
 	}
 
@@ -122,11 +123,11 @@ public class Time implements Copyable<Time> {
 		return description;
 	}
 
-	public Other withOther() {
-		if (other == null) {
-			other = new Other();
+	public EpdTimeExtension withEpdExtension() {
+		if (epdExtension == null) {
+			epdExtension = new EpdTimeExtension();
 		}
-		return other;
+		return epdExtension;
 	}
 
 	public Map<QName, String> withOtherAttributes() {
@@ -144,7 +145,7 @@ public class Time implements Copyable<Time> {
 			.withReferenceYear(referenceYear)
 			.withValidUntil(validUntil);
 		Val.copy(description, copy::withDescription);
-		Val.copy(other, copy::withOther);
+		Val.copy(epdExtension, copy::withEpdExtension);
 		Val.copy(otherAttributes, copy::withOtherAttributes);
 		return copy;
 	}

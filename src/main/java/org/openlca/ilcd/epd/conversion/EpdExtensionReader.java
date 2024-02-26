@@ -70,9 +70,9 @@ record EpdExtensionReader(Process process, EpdProfile profile) {
 
 	private void readPublicationDate(EpdDataSet epd) {
 		var time = Processes.getTime(epd.process);
-		if (time == null || time.getOther() == null)
+		if (time == null || time.getEpdExtension() == null)
 			return;
-		var elem = Dom.getElement(time.getOther(), "publicationDateOfEPD");
+		var elem = Dom.getElement(time.getEpdExtension(), "publicationDateOfEPD");
 		if (elem == null)
 			return;
 		var text = elem.getTextContent();
