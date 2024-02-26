@@ -7,15 +7,16 @@ import jakarta.xml.bind.annotation.XmlAttribute;
 import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlElementWrapper;
 import jakarta.xml.bind.annotation.XmlType;
+import org.openlca.ilcd.Vocab;
 import org.openlca.ilcd.commons.Copyable;
 import org.openlca.ilcd.commons.DataDerivation;
 import org.openlca.ilcd.commons.ExchangeDirection;
 import org.openlca.ilcd.commons.ExchangeFunction;
 import org.openlca.ilcd.commons.LangString;
-import org.openlca.ilcd.commons.Other;
 import org.openlca.ilcd.commons.Ref;
 import org.openlca.ilcd.commons.UncertaintyDistribution;
 import org.openlca.ilcd.commons.annotations.Label;
+import org.openlca.ilcd.processes.epd.EpdResultExtension;
 import org.openlca.ilcd.util.Val;
 
 import javax.xml.namespace.QName;
@@ -43,7 +44,7 @@ import java.util.Map;
 		"dataDerivation",
 		"sources",
 		"comment",
-		"other" })
+		"epdExtension" })
 public class Exchange implements Copyable<Exchange> {
 
 	/** The data set internal ID (dataSetInternalID) of the exchange. */
@@ -96,8 +97,8 @@ public class Exchange implements Copyable<Exchange> {
 	@XmlElement(name = "generalComment")
 	private List<LangString> comment;
 
-	@XmlElement(namespace = "http://lca.jrc.it/ILCD/Common")
-	private Other other;
+	@XmlElement(name = "other", namespace = Vocab.COMMON)
+	private EpdResultExtension epdExtension;
 
 	@XmlAnyAttribute
 	private Map<QName, String> otherAttributes;
@@ -172,8 +173,8 @@ public class Exchange implements Copyable<Exchange> {
 		return comment != null ? comment : Collections.emptyList();
 	}
 
-	public Other getOther() {
-		return other;
+	public EpdResultExtension getEpdExtension() {
+		return epdExtension;
 	}
 
 	public Map<QName, String> getOtherAttributes() {
@@ -269,8 +270,8 @@ public class Exchange implements Copyable<Exchange> {
 		return this;
 	}
 
-	public Exchange withOther(Other other) {
-		this.other = other;
+	public Exchange withEpdExtension(EpdResultExtension epdExtension) {
+		this.epdExtension = epdExtension;
 		return this;
 	}
 
@@ -307,11 +308,11 @@ public class Exchange implements Copyable<Exchange> {
 		return comment;
 	}
 
-	public Other withOther() {
-		if (other == null) {
-			other = new Other();
+	public EpdResultExtension withEpdExtension() {
+		if (epdExtension == null) {
+			epdExtension = new EpdResultExtension();
 		}
-		return other;
+		return epdExtension;
 	}
 
 	public Map<QName, String> withOtherAttributes() {
@@ -343,7 +344,7 @@ public class Exchange implements Copyable<Exchange> {
 		copy.withDataDerivation(dataDerivation);
 		Val.copy(sources, copy::withSources);
 		Val.copy(comment, copy::withComment);
-		Val.copy(other, copy::withOther);
+		Val.copy(epdExtension, copy::withEpdExtension);
 		Val.copy(otherAttributes, copy::withOtherAttributes);
 		return copy;
 	}

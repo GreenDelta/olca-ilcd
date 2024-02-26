@@ -1,19 +1,19 @@
 package org.openlca.ilcd.epd.model;
 
+import org.openlca.ilcd.commons.ExchangeDirection;
+import org.openlca.ilcd.commons.Extension;
+import org.openlca.ilcd.commons.LangString;
+import org.openlca.ilcd.commons.Ref;
+import org.openlca.ilcd.epd.conversion.RefExtension;
+import org.openlca.ilcd.processes.Exchange;
+import org.openlca.ilcd.processes.ImpactResult;
+import org.openlca.ilcd.util.Strings;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 import java.util.function.Consumer;
-
-import org.openlca.ilcd.commons.ExchangeDirection;
-import org.openlca.ilcd.commons.LangString;
-import org.openlca.ilcd.commons.Other;
-import org.openlca.ilcd.commons.Ref;
-import org.openlca.ilcd.epd.conversion.RefExtension;
-import org.openlca.ilcd.util.Strings;
-import org.openlca.ilcd.processes.Exchange;
-import org.openlca.ilcd.processes.ImpactResult;
 
 public class EpdProfile {
 
@@ -33,7 +33,7 @@ public class EpdProfile {
 	public Indicator indicatorOf(Exchange exchange) {
 		if (exchange == null || exchange.getFlow() == null)
 			return null;
-		return indicator(exchange.getFlow(), exchange.getOther(), newIndicator -> {
+		return indicator(exchange.getFlow(), exchange.getEpdExtension(), newIndicator -> {
 			newIndicator.type = Indicator.Type.LCI;
 			newIndicator.isInput = exchange.getDirection() == ExchangeDirection.INPUT;
 		});
@@ -42,11 +42,11 @@ public class EpdProfile {
 	public Indicator indicatorOf(ImpactResult result) {
 		if (result == null || result.getMethod() == null)
 			return null;
-		return indicator(result.getMethod(), result.getOther(),
+		return indicator(result.getMethod(), result.getEpdExtension(),
 			newIndicator -> newIndicator.type = Indicator.Type.LCIA);
 	}
 
-	private Indicator indicator(Ref ref, Other ext, Consumer<Indicator> ifNew) {
+	private Indicator indicator(Ref ref, Extension ext, Consumer<Indicator> ifNew) {
 		for (var i : indicators) {
 			if (Objects.equals(i.uuid, ref.getUUID()))
 				return i;

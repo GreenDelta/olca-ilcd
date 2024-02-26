@@ -5,12 +5,13 @@ import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlAnyAttribute;
 import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlType;
+import org.openlca.ilcd.Vocab;
 import org.openlca.ilcd.commons.Copyable;
 import org.openlca.ilcd.commons.LangString;
-import org.openlca.ilcd.commons.Other;
 import org.openlca.ilcd.commons.Ref;
 import org.openlca.ilcd.commons.UncertaintyDistribution;
 import org.openlca.ilcd.commons.annotations.Label;
+import org.openlca.ilcd.processes.epd.EpdResultExtension;
 import org.openlca.ilcd.util.Val;
 
 import javax.xml.namespace.QName;
@@ -27,7 +28,7 @@ import java.util.Map;
 	"uncertaintyDistribution",
 	"relativeStandardDeviation95In",
 	"comment",
-	"other"
+	"epdExtension"
 })
 public class ImpactResult implements Copyable<ImpactResult> {
 
@@ -46,8 +47,8 @@ public class ImpactResult implements Copyable<ImpactResult> {
 	@XmlElement(name = "generalComment")
 	private List<LangString> comment;
 
-	@XmlElement(namespace = "http://lca.jrc.it/ILCD/Common")
-	private Other other;
+	@XmlElement(name = "other", namespace = Vocab.COMMON)
+	private EpdResultExtension epdExtension;
 
 	@XmlAnyAttribute
 	private Map<QName, String> otherAttributes;
@@ -74,8 +75,8 @@ public class ImpactResult implements Copyable<ImpactResult> {
 		return comment != null ? comment : Collections.emptyList();
 	}
 
-	public Other getOther() {
-		return other;
+	public EpdResultExtension getEpdExtension() {
+		return epdExtension;
 	}
 
 	public Map<QName, String> getOtherAttributes() {
@@ -111,8 +112,8 @@ public class ImpactResult implements Copyable<ImpactResult> {
 		return this;
 	}
 
-	public ImpactResult withOther(Other other) {
-		this.other = other;
+	public ImpactResult withEpdExtension(EpdResultExtension ext) {
+		this.epdExtension = ext;
 		return this;
 	}
 
@@ -135,11 +136,11 @@ public class ImpactResult implements Copyable<ImpactResult> {
 		return comment;
 	}
 
-	public Other withOther() {
-		if (other == null) {
-			other = new Other();
+	public EpdResultExtension withEpdExtension() {
+		if (epdExtension == null) {
+			epdExtension = new EpdResultExtension();
 		}
-		return other;
+		return epdExtension;
 	}
 
 	public Map<QName, String> withOtherAttributes() {
@@ -159,7 +160,7 @@ public class ImpactResult implements Copyable<ImpactResult> {
 		copy.withUncertaintyDistribution(uncertaintyDistribution);
 		copy.withRelativeStandardDeviation95In(relativeStandardDeviation95In);
 		Val.copy(comment, copy::withComment);
-		Val.copy(other, copy::withOther);
+		Val.copy(epdExtension, copy::withEpdExtension);
 		Val.copy(otherAttributes, copy::withOtherAttributes);
 		return copy;
 	}

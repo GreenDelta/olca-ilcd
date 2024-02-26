@@ -2,7 +2,7 @@ package org.openlca.ilcd.epd.conversion;
 
 import org.openlca.ilcd.commons.ExchangeDirection;
 import org.openlca.ilcd.commons.ExchangeFunction;
-import org.openlca.ilcd.commons.Other;
+import org.openlca.ilcd.commons.Extension;
 import org.openlca.ilcd.commons.Ref;
 import org.openlca.ilcd.epd.model.EpdDataSet;
 import org.openlca.ilcd.epd.model.EpdProfile;
@@ -11,6 +11,7 @@ import org.openlca.ilcd.epd.model.IndicatorResult;
 import org.openlca.ilcd.processes.Exchange;
 import org.openlca.ilcd.processes.ImpactResult;
 import org.openlca.ilcd.processes.Process;
+import org.openlca.ilcd.processes.epd.EpdResultExtension;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
@@ -36,7 +37,7 @@ class Results {
 				continue;
 			var result = new IndicatorResult();
 			result.indicator = indicator;
-			result.amounts.addAll(Amounts.readFrom(e.getOther(), profile));
+			result.amounts.addAll(Amounts.readFrom(e.getEpdExtension(), profile));
 			results.add(result);
 		}
 
@@ -47,7 +48,7 @@ class Results {
 				continue;
 			var result = new IndicatorResult();
 			result.indicator = indicator;
-			result.amounts.addAll(Amounts.readFrom(impact.getOther(), profile));
+			result.amounts.addAll(Amounts.readFrom(impact.getEpdExtension(), profile));
 			results.add(result);
 		}
 
@@ -70,7 +71,7 @@ class Results {
 		}
 	}
 
-	private static Other initFlow(Process p, Indicator indicator) {
+	private static EpdResultExtension initFlow(Process p, Indicator indicator) {
 		int nextId = 1;
 		for (var e : p.getExchanges()) {
 			if (e.getId() >= nextId) {
@@ -86,14 +87,14 @@ class Results {
 					? ExchangeDirection.INPUT
 					: ExchangeDirection.OUTPUT);
 		p.withExchanges().add(e);
-		return e.withOther();
+		return e.withEpdExtension();
 	}
 
-	private static Other initImpact(Process process, Indicator indicator) {
+	private static Extension initImpact(Process process, Indicator indicator) {
 		var r = new ImpactResult()
 			.withMethod(refOf(indicator));
 		process.withImpactResults().add(r);
-		return r.withOther();
+		return r.withEpdExtension();
 	}
 
 	private static Ref refOf(Indicator indicator) {
@@ -103,7 +104,7 @@ class Results {
 	}
 
 	private static void addUnitRef(
-		Other other, Indicator indicator, Document doc) {
+		Extension other, Indicator indicator, Document doc) {
 		if (other == null || indicator == null)
 			return;
 		Element root = doc.createElementNS(Vocab.NS_EPD,

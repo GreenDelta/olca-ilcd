@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
+import org.openlca.ilcd.commons.Extension;
 import org.openlca.ilcd.commons.Other;
 import org.openlca.ilcd.epd.model.Amount;
 import org.openlca.ilcd.epd.model.EpdProfile;
@@ -16,7 +17,7 @@ import org.w3c.dom.Element;
 
 class Amounts {
 
-	static List<Amount> readFrom(Other other, EpdProfile profile) {
+	static List<Amount> readFrom(Extension other, EpdProfile profile) {
 		if (other == null || profile == null)
 			return Collections.emptyList();
 		var amounts = new ArrayList<Amount>();
@@ -68,7 +69,7 @@ class Amounts {
 		}
 	}
 
-	static void writeAmounts(List<Amount> amounts, Other extension,
+	static void writeAmounts(List<Amount> amounts, Extension extension,
 			Document doc) {
 		if (amounts == null || extension == null || doc == null)
 			return;
