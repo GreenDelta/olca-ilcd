@@ -34,7 +34,7 @@ public class ModelIOTest {
 		var classification = new Classification();
 		var category = new Category()
 			.withLevel(0)
-			.withValue("Life cycle models");
+			.withName("Life cycle models");
 		classification.withCategories().add(category);
 		info.withClassifications().add(classification);
 

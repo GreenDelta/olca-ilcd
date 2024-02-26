@@ -23,7 +23,7 @@ import java.util.Map;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "DataSetInformationType", propOrder = { "uuid", "name",
-		"synonyms", "classifications", "generalComment", "other" })
+		"synonyms", "classifications", "comment", "other" })
 public class DataSetInfo implements Copyable<DataSetInfo> {
 
 	@XmlElement(name = "UUID", namespace = "http://lca.jrc.it/ILCD/Common", required = true)
@@ -42,8 +42,8 @@ public class DataSetInfo implements Copyable<DataSetInfo> {
 	private List<Classification> classifications;
 
 	@FreeText
-	@XmlElement(namespace = "http://lca.jrc.it/ILCD/Common")
-	private List<LangString> generalComment;
+	@XmlElement(name = "generalComment", namespace = "http://lca.jrc.it/ILCD/Common")
+	private List<LangString> comment;
 
 	@XmlElement(namespace = "http://lca.jrc.it/ILCD/Common")
 	private Other other;
@@ -69,8 +69,8 @@ public class DataSetInfo implements Copyable<DataSetInfo> {
 		return classifications != null ? classifications : Collections.emptyList();
 	}
 
-	public List<LangString> getGeneralComment() {
-		return generalComment != null ? generalComment : Collections.emptyList();
+	public List<LangString> getComment() {
+		return comment != null ? comment : Collections.emptyList();
 	}
 
 	public Other getOther() {
@@ -105,8 +105,8 @@ public class DataSetInfo implements Copyable<DataSetInfo> {
 		return this;
 	}
 
-	public DataSetInfo withGeneralComment(List<LangString> generalComment) {
-		this.generalComment = generalComment;
+	public DataSetInfo withComment(List<LangString> comment) {
+		this.comment = comment;
 		return this;
 	}
 
@@ -141,11 +141,11 @@ public class DataSetInfo implements Copyable<DataSetInfo> {
 		return classifications;
 	}
 
-	public List<LangString> withGeneralComment() {
-		if (generalComment == null) {
-			generalComment = new ArrayList<>();
+	public List<LangString> withComment() {
+		if (comment == null) {
+			comment = new ArrayList<>();
 		}
-		return generalComment;
+		return comment;
 	}
 
 	public Other withOther() {
@@ -171,7 +171,7 @@ public class DataSetInfo implements Copyable<DataSetInfo> {
 		Val.copy(name, copy::withName);
 		Val.copy(synonyms, copy::withSynonyms);
 		Val.copy(classifications, copy::withClassifications);
-		Val.copy(generalComment, copy::withGeneralComment);
+		Val.copy(comment, copy::withComment);
 		Val.copy(other, copy::withOther);
 		Val.copy(otherAttributes, copy::withOtherAttributes);
 		return copy;

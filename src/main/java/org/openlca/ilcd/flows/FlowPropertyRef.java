@@ -32,7 +32,7 @@ import java.util.Map;
 		"uncertaintyDistribution",
 		"relativeStandardDeviation95In",
 		"dataDerivation",
-		"generalComment",
+		"comment",
 		"other"
 })
 public class FlowPropertyRef implements Copyable<FlowPropertyRef> {
@@ -55,7 +55,8 @@ public class FlowPropertyRef implements Copyable<FlowPropertyRef> {
 	private FlowDataDerivation dataDerivation;
 
 	@Label
-	private List<LangString> generalComment;
+	@XmlElement(name = "generalComment")
+	private List<LangString> comment;
 
 	@XmlElement(namespace = "http://lca.jrc.it/ILCD/Common")
 	private Other other;
@@ -96,8 +97,8 @@ public class FlowPropertyRef implements Copyable<FlowPropertyRef> {
 		return dataDerivation;
 	}
 
-	public List<LangString> getGeneralComment() {
-		return generalComment != null ? generalComment : Collections.emptyList();
+	public List<LangString> getComment() {
+		return comment != null ? comment : Collections.emptyList();
 	}
 
 	public Other getOther() {
@@ -151,8 +152,8 @@ public class FlowPropertyRef implements Copyable<FlowPropertyRef> {
 		return this;
 	}
 
-	public FlowPropertyRef withGeneralComment(List<LangString> generalComment) {
-		this.generalComment = generalComment;
+	public FlowPropertyRef withComment(List<LangString> comment) {
+		this.comment = comment;
 		return this;
 	}
 
@@ -178,11 +179,11 @@ public class FlowPropertyRef implements Copyable<FlowPropertyRef> {
 		return flowProperty;
 	}
 
-	public List<LangString> withGeneralComment() {
-		if (generalComment == null) {
-			generalComment = new ArrayList<>();
+	public List<LangString> withComment() {
+		if (comment == null) {
+			comment = new ArrayList<>();
 		}
-		return generalComment;
+		return comment;
 	}
 
 	public Other withOther() {
@@ -211,7 +212,7 @@ public class FlowPropertyRef implements Copyable<FlowPropertyRef> {
 		copy.withUncertaintyDistribution(uncertaintyDistribution);
 		copy.withRelativeStandardDeviation95In(relativeStandardDeviation95In);
 		copy.withDataDerivation(dataDerivation);
-		Val.copy(generalComment, copy::withGeneralComment);
+		Val.copy(comment, copy::withComment);
 		Val.copy(other, copy::withOther);
 		copy.withDataSetInternalID(dataSetInternalID);
 		Val.copy(otherAttributes, copy::withOtherAttributes);

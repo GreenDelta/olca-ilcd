@@ -53,7 +53,7 @@ public class UnitGroupTest {
 	public void testGetComment() {
 		var info = UnitGroups.getDataSetInfo(group);
 		assertNotNull(info);
-		var comment = LangString.getFirst(info.getGeneralComment())
+		var comment = LangString.getFirst(info.getComment())
 			.replace("\n", "")
 			.replace("\t", " ")
 			.replace("    ", " ")
