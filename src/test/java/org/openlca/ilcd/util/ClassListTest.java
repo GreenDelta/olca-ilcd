@@ -2,7 +2,6 @@ package org.openlca.ilcd.util;
 
 import static org.junit.Assert.assertEquals;
 
-import java.io.InputStream;
 import java.util.List;
 
 import org.junit.Test;
@@ -22,7 +21,7 @@ public class ClassListTest {
 			assertEquals("Custom", list.get(1).getName());
 			assertEquals(2, list.get(1).getCategories().size());
 			assertEquals("classId7", list.get(1).getCategories().get(1).getClassId());
-			assertEquals("class3", list.get(1).getCategories().get(1).getValue());
+			assertEquals("class3", list.get(1).getCategories().get(1).getName());
 		});
 
 	}

@@ -18,12 +18,12 @@ import org.openlca.ilcd.util.Val;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "ClassType", propOrder = {
-	"value"
+	"name"
 })
 public class Category implements Copyable<Category> {
 
 	@XmlValue
-	private String value;
+	private String name;
 
 	/**
 	 * If more than one class is specified in a hierarchical classification
@@ -46,8 +46,8 @@ public class Category implements Copyable<Category> {
 
 	// region getters
 
-	public String getValue() {
-		return value;
+	public String getName() {
+		return name;
 	}
 
 	public int getLevel() {
@@ -68,8 +68,8 @@ public class Category implements Copyable<Category> {
 
 	// region fluent setters
 
-	public Category withValue(String value) {
-		this.value = value;
+	public Category withName(String value) {
+		this.name = value;
 		return this;
 	}
 
@@ -100,7 +100,7 @@ public class Category implements Copyable<Category> {
 	@Override
 	public Category copy() {
 		var copy = new Category()
-			.withValue(value)
+			.withName(name)
 			.withLevel(level)
 			.withClassId(classId);
 		Val.copy(otherAttributes, copy::withOtherAttributes);
@@ -119,13 +119,13 @@ public class Category implements Copyable<Category> {
 			return Objects.equals(classId, other.classId);
 		if (level != other.level)
 			return false;
-		return Objects.equals(value, other.value);
+		return Objects.equals(name, other.name);
 	}
 
 	@Override
 	public int hashCode() {
 		if (classId != null)
 			return classId.hashCode();
-		return Objects.hash(level, value);
+		return Objects.hash(level, name);
 	}
 }

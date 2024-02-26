@@ -27,7 +27,7 @@ import java.util.Map;
 		"classificationInformation",
 		"casNumber",
 		"sumFormula",
-		"generalComment",
+		"comment",
 		"epdExtension"
 })
 public class DataSetInfo implements Copyable<DataSetInfo> {
@@ -51,8 +51,8 @@ public class DataSetInfo implements Copyable<DataSetInfo> {
 	private String sumFormula;
 
 	@FreeText
-	@XmlElement(namespace = "http://lca.jrc.it/ILCD/Common")
-	private List<LangString> generalComment;
+	@XmlElement(name = "generalComment", namespace = "http://lca.jrc.it/ILCD/Common")
+	private List<LangString> comment;
 
 	@XmlElement(name= "other", namespace = "http://lca.jrc.it/ILCD/Common")
 	private EpdInfoExtension epdExtension;
@@ -86,8 +86,8 @@ public class DataSetInfo implements Copyable<DataSetInfo> {
 		return sumFormula;
 	}
 
-	public List<LangString> getGeneralComment() {
-		return generalComment != null ? generalComment : Collections.emptyList();
+	public List<LangString> getComment() {
+		return comment != null ? comment : Collections.emptyList();
 	}
 
 	public EpdInfoExtension getEpdExtension() {
@@ -132,8 +132,8 @@ public class DataSetInfo implements Copyable<DataSetInfo> {
 		return this;
 	}
 
-	public DataSetInfo withGeneralComment(List<LangString> generalComment) {
-		this.generalComment = generalComment;
+	public DataSetInfo withComment(List<LangString> comment) {
+		this.comment = comment;
 		return this;
 	}
 
@@ -168,11 +168,11 @@ public class DataSetInfo implements Copyable<DataSetInfo> {
 		return classificationInformation;
 	}
 
-	public List<LangString> withGeneralComment() {
-		if (generalComment == null) {
-			generalComment = new ArrayList<>();
+	public List<LangString> withComment() {
+		if (comment == null) {
+			comment = new ArrayList<>();
 		}
-		return generalComment;
+		return comment;
 	}
 
 	public EpdInfoExtension withEpdExtension() {
@@ -200,7 +200,7 @@ public class DataSetInfo implements Copyable<DataSetInfo> {
 		Val.copy(classificationInformation, copy::withClassificationInformation);
 		copy.withCasNumber(casNumber);
 		copy.withSumFormula(sumFormula);
-		Val.copy(generalComment, copy::withGeneralComment);
+		Val.copy(comment, copy::withComment);
 		Val.copy(epdExtension, copy::withEpdExtension);
 		Val.copy(otherAttributes, copy::withOtherAttributes);
 		return copy;

@@ -9,6 +9,7 @@ import org.openlca.ilcd.processes.Time;
 import org.openlca.ilcd.processes.Process;
 import org.openlca.ilcd.processes.*;
 
+import javax.xml.datatype.XMLGregorianCalendar;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
@@ -42,6 +43,13 @@ public final class Processes {
 	public static String getUri(Process p) {
 		var pub =	getPublication(p);
 		return pub != null ? pub.getUri() : null;
+	}
+
+	public static XMLGregorianCalendar getTimeStamp(Process p) {
+		var entry = getDataEntry(p);
+		return entry != null
+			? entry.getTimeStamp()
+			: null;
 	}
 
 	public static List<Classification> getClassifications(Process p) {

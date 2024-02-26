@@ -11,6 +11,7 @@ import org.openlca.ilcd.units.Unit;
 import org.openlca.ilcd.units.UnitGroup;
 import org.openlca.ilcd.units.UnitGroupInfo;
 
+import javax.xml.datatype.XMLGregorianCalendar;
 import java.util.Collections;
 import java.util.List;
 
@@ -41,6 +42,13 @@ public final class UnitGroups {
 	public static String getUri(UnitGroup u) {
 		var pub =	getPublication(u);
 		return pub != null ? pub.getUri() : null;
+	}
+
+	public static XMLGregorianCalendar getTimeStamp(UnitGroup u) {
+		var entry = getDataEntry(u);
+		return entry != null
+			? entry.getTimeStamp()
+			: null;
 	}
 
 	public static List<Classification> getClassifications(UnitGroup u) {

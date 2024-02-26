@@ -12,6 +12,7 @@ import org.openlca.ilcd.methods.Publication;
 import org.openlca.ilcd.methods.QuantitativeReference;
 import org.openlca.ilcd.methods.Time;
 
+import javax.xml.datatype.XMLGregorianCalendar;
 import java.util.Collections;
 import java.util.List;
 
@@ -44,6 +45,12 @@ public final class ImpactMethods {
 		return pub != null ? pub.getUri() : null;
 	}
 
+	public static XMLGregorianCalendar getTimeStamp(ImpactMethod m) {
+		var entry = getDataEntry(m);
+		return entry != null
+			? entry.getTimeStamp()
+			: null;
+	}
 
 	public static List<Classification> getClassifications(ImpactMethod m) {
 		var info = getDataSetInfo(m);

@@ -4,8 +4,20 @@ import org.openlca.ilcd.commons.Classification;
 import org.openlca.ilcd.commons.FlowType;
 import org.openlca.ilcd.commons.LangString;
 import org.openlca.ilcd.commons.Publication;
-import org.openlca.ilcd.flows.*;
+import org.openlca.ilcd.flows.AdminInfo;
+import org.openlca.ilcd.flows.DataEntry;
+import org.openlca.ilcd.flows.DataSetInfo;
+import org.openlca.ilcd.flows.Flow;
+import org.openlca.ilcd.flows.FlowInfo;
+import org.openlca.ilcd.flows.FlowName;
+import org.openlca.ilcd.flows.FlowPropertyRef;
+import org.openlca.ilcd.flows.Geography;
+import org.openlca.ilcd.flows.InventoryMethod;
+import org.openlca.ilcd.flows.Modelling;
+import org.openlca.ilcd.flows.QuantitativeReference;
+import org.openlca.ilcd.flows.Technology;
 
+import javax.xml.datatype.XMLGregorianCalendar;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -36,6 +48,13 @@ public final class Flows {
 	public static String getUri(Flow f) {
 		var pub =	getPublication(f);
 		return pub != null ? pub.getUri() : null;
+	}
+
+	public static XMLGregorianCalendar getTimeStamp(Flow f) {
+		var entry = getDataEntry(f);
+		return entry != null
+			? entry.getTimeStamp()
+			: null;
 	}
 
 	public static List<Classification> getClassifications(Flow f) {

@@ -48,7 +48,7 @@ public final class Categories {
 				return path.toArray(new String[0]);
 		}
 		sorted(ds).stream()
-			.map(Category::getValue)
+			.map(Category::getName)
 			.forEach(add);
 		return path.toArray(new String[0]);
 	}
@@ -157,11 +157,11 @@ public final class Categories {
 		s = s.trim();
 		if (s.isEmpty())
 			return;
-		var v = category.getValue();
+		var v = category.getName();
 		var next = v == null
 			? s
 			: v + " " + s;
-		category.withValue(next);
+		category.withName(next);
 	}
 
 	private static boolean eq(XMLStreamReader reader, String tag) {
