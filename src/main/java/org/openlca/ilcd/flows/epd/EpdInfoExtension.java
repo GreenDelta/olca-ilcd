@@ -7,6 +7,7 @@ import jakarta.xml.bind.annotation.XmlElement;
 import org.openlca.ilcd.Vocab;
 import org.openlca.ilcd.commons.Copyable;
 import org.openlca.ilcd.commons.Extension;
+import org.openlca.ilcd.flows.epd.matml.MaterialDoc;
 import org.openlca.ilcd.util.Val;
 
 import java.util.ArrayList;
@@ -64,7 +65,9 @@ public class EpdInfoExtension implements Copyable<EpdInfoExtension>, Extension {
 	@Override
 	public EpdInfoExtension copy() {
 		var copy = new EpdInfoExtension();
+		Val.copy(materialDoc, copy::withMaterialDoc);
 		Val.copyAny(any, copy::withAny);
 		return copy;
 	}
+
 }
