@@ -33,7 +33,7 @@ public class Model implements IDataSet, Copyable<Model> {
 	private AdminInfo adminInfo;
 
 	@XmlAttribute(name = "version")
-	private String version;
+	private String schemaVersion = SCHEMA_VERSION;
 
 	@XmlAttribute(name = "locations")
 	private String locations;
@@ -55,8 +55,9 @@ public class Model implements IDataSet, Copyable<Model> {
 		return adminInfo;
 	}
 
-	public String getVersion() {
-		return version;
+	@Override
+	public String getSchemaVersion() {
+		return schemaVersion;
 	}
 
 	public String getLocations() {
@@ -86,8 +87,8 @@ public class Model implements IDataSet, Copyable<Model> {
 		return this;
 	}
 
-	public Model withVersion(String version) {
-		this.version = version;
+	public Model withSchemaVersion(String version) {
+		this.schemaVersion = version;
 		return this;
 	}
 
@@ -137,7 +138,7 @@ public class Model implements IDataSet, Copyable<Model> {
 		Val.copy(info, copy::withInfo);
 		Val.copy(modelling, copy::withModelling);
 		Val.copy(adminInfo, copy::withAdminInfo);
-		copy.withVersion(version);
+		copy.withSchemaVersion(schemaVersion);
 		copy.withLocations(locations);
 		Val.copy(otherAttributes, copy::withOtherAttributes);
 		return copy;

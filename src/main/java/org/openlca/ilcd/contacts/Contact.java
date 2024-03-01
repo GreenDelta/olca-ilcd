@@ -37,7 +37,7 @@ public class Contact implements IDataSet, Copyable<Contact> {
 	private Other other;
 
 	@XmlAttribute(name = "version", required = true)
-	private String version;
+	private String schemaVersion = SCHEMA_VERSION;
 
 	@XmlAnyAttribute
 	private Map<QName, String> otherAttributes;
@@ -56,8 +56,9 @@ public class Contact implements IDataSet, Copyable<Contact> {
 		return other;
 	}
 
-	public String getVersion() {
-		return version;
+	@Override
+	public String getSchemaVersion() {
+		return schemaVersion;
 	}
 
 	public Map<QName, String> getOtherAttributes() {
@@ -83,8 +84,8 @@ public class Contact implements IDataSet, Copyable<Contact> {
 		return this;
 	}
 
-	public Contact withVersion(String version) {
-		this.version = version;
+	public Contact withSchemaVersion(String version) {
+		this.schemaVersion = version;
 		return this;
 	}
 
@@ -129,7 +130,7 @@ public class Contact implements IDataSet, Copyable<Contact> {
 		Val.copy(contactInfo, copy::withContactInfo);
 		Val.copy(adminInfo, copy::withAdminInfo);
 		Val.copy(other, copy::withOther);
-		copy.withVersion(version);
+		copy.withSchemaVersion(schemaVersion);
 		Val.copy(otherAttributes, copy::withOtherAttributes);
 		return copy;
 	}

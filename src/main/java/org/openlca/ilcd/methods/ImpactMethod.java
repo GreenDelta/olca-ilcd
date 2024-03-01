@@ -47,7 +47,7 @@ public class ImpactMethod implements IDataSet, Copyable<ImpactMethod> {
 	private Other other;
 
 	@XmlAttribute(name = "version", required = true)
-	private String version;
+	private String schemaVersion = SCHEMA_VERSION;
 
 	@XmlAttribute(name = "locations")
 	private String locations;
@@ -80,8 +80,9 @@ public class ImpactMethod implements IDataSet, Copyable<ImpactMethod> {
 		return other;
 	}
 
-	public String getVersion() {
-		return version;
+	@Override
+	public String getSchemaVersion() {
+		return schemaVersion;
 	}
 
 	public String getLocations() {
@@ -125,8 +126,8 @@ public class ImpactMethod implements IDataSet, Copyable<ImpactMethod> {
 		return this;
 	}
 
-	public ImpactMethod withVersion(String version) {
-		this.version = version;
+	public ImpactMethod withSchemaVersion(String version) {
+		this.schemaVersion = version;
 		return this;
 	}
 
@@ -197,7 +198,7 @@ public class ImpactMethod implements IDataSet, Copyable<ImpactMethod> {
 		Val.copy(adminInfo, copy::withAdminInfo);
 		Val.copy(factors, copy::withFactors);
 		Val.copy(other, copy::withOther);
-		copy.withVersion(version);
+		copy.withSchemaVersion(schemaVersion);
 		copy.withLocations(locations);
 		copy.withMethodologies(methodologies);
 		Val.copy(otherAttributes, copy::withOtherAttributes);

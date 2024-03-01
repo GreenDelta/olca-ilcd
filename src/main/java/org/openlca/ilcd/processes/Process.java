@@ -52,7 +52,7 @@ public class Process implements IDataSet, Copyable<Process> {
 	private Other other;
 
 	@XmlAttribute(name = "version", required = true)
-	private String version;
+	private String schemaVersion = SCHEMA_VERSION;
 
 	@XmlAttribute(name = "locations")
 	private String locations;
@@ -89,8 +89,9 @@ public class Process implements IDataSet, Copyable<Process> {
 		return other;
 	}
 
-	public String getVersion() {
-		return version;
+	@Override
+	public String getSchemaVersion() {
+		return schemaVersion;
 	}
 
 	public String getLocations() {
@@ -139,8 +140,8 @@ public class Process implements IDataSet, Copyable<Process> {
 		return this;
 	}
 
-	public Process withVersion(String version) {
-		this.version = version;
+	public Process withSchemaVersion(String version) {
+		this.schemaVersion = version;
 		return this;
 	}
 
@@ -219,7 +220,7 @@ public class Process implements IDataSet, Copyable<Process> {
 		Val.copy(exchanges, copy::withExchanges);
 		Val.copy(impactResults, copy::withImpactResults);
 		Val.copy(other, copy::withOther);
-		copy.withVersion(version);
+		copy.withSchemaVersion(schemaVersion);
 		copy.withLocations(locations);
 		copy.withMetaDataOnly(metaDataOnly);
 		Val.copy(otherAttributes, copy::withOtherAttributes);

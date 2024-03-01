@@ -33,7 +33,7 @@ public class Source implements IDataSet, Copyable<Source> {
 	private AdminInfo adminInfo;
 
 	@XmlAttribute(name = "version", required = true)
-	private String version;
+	private String schemaVersion = SCHEMA_VERSION;
 
 	@XmlElement(namespace = "http://lca.jrc.it/ILCD/Common")
 	private Other other;
@@ -51,8 +51,9 @@ public class Source implements IDataSet, Copyable<Source> {
 		return adminInfo;
 	}
 
-	public String getVersion() {
-		return version;
+	@Override
+	public String getSchemaVersion() {
+		return schemaVersion;
 	}
 
 	public Other getOther() {
@@ -77,8 +78,8 @@ public class Source implements IDataSet, Copyable<Source> {
 		return this;
 	}
 
-	public Source withVersion(String version) {
-		this.version = version;
+	public Source withSchemaVersion(String version) {
+		this.schemaVersion = version;
 		return this;
 	}
 
@@ -127,7 +128,7 @@ public class Source implements IDataSet, Copyable<Source> {
 		var copy = new Source();
 		Val.copy(sourceInfo, copy::withSourceInfo);
 		Val.copy(adminInfo, copy::withAdminInfo);
-		copy.withVersion(version);
+		copy.withSchemaVersion(schemaVersion);
 		Val.copy(other, copy::withOther);
 		Val.copy(otherAttributes, copy::withOtherAttributes);
 		return copy;
