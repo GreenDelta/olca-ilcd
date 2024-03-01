@@ -54,10 +54,18 @@
                                 <mm:Data format="float">0.58</mm:Data>
                             </mm:PropertyData>
                             <mm:PropertyData property="pr2">
-                                <mm:Data format="float">0.42</mm:Data>
+                                <mm:Data format="integer">42</mm:Data>
                             </mm:PropertyData>
                         </mm:BulkDetails>
                     </mm:Material>
+										<mm:Material>
+											<mm:BulkDetails>
+												<mm:Name>(Name of the secondary material)</mm:Name>
+												<mm:PropertyData property="pr1">
+													<mm:Data format="exponential">4.2e7</mm:Data>
+												</mm:PropertyData>
+											</mm:BulkDetails>
+										</mm:Material>
                     <mm:Metadata>
                         <mm:PropertyDetails id="pr1">
                             <mm:Name>gross density</mm:Name>
