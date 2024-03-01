@@ -45,7 +45,7 @@ public class Flow implements IDataSet, Copyable<Flow> {
 	private List<FlowPropertyRef> flowProperties;
 
 	@XmlAttribute(name = "version", required = true)
-	private String version;
+	private String schemaVersion = SCHEMA_VERSION;
 
 	@XmlAttribute(name = "locations")
 	private String locations;
@@ -74,8 +74,9 @@ public class Flow implements IDataSet, Copyable<Flow> {
 		return flowProperties != null ? flowProperties : Collections.emptyList();
 	}
 
-	public String getVersion() {
-		return version;
+	@Override
+	public String getSchemaVersion() {
+		return schemaVersion;
 	}
 
 	public String getLocations() {
@@ -114,8 +115,8 @@ public class Flow implements IDataSet, Copyable<Flow> {
 		return this;
 	}
 
-	public Flow withVersion(String version) {
-		this.version = version;
+	public Flow withSchemaVersion(String version) {
+		this.schemaVersion = version;
 		return this;
 	}
 
@@ -185,7 +186,7 @@ public class Flow implements IDataSet, Copyable<Flow> {
 		Val.copy(modelling, copy::withModelling);
 		Val.copy(adminInfo, copy::withAdminInfo);
 		Val.copy(flowProperties, copy::withFlowProperties);
-		copy.withVersion(version);
+		copy.withSchemaVersion(schemaVersion);
 		copy.withLocations(locations);
 		Val.copy(other, copy::withOther);
 		Val.copy(otherAttributes, copy::withOtherAttributes);

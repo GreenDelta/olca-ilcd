@@ -29,9 +29,17 @@ public final class Sources {
 			: null;
 	}
 
+	public static void withUUID(Source s, String uuid) {
+		withDataSetInfo(s).withUUID(uuid);
+	}
+
 	public static String getVersion(Source s) {
 		var pub = getPublication(s);
 		return pub != null ? pub.getVersion() : null;
+	}
+
+	public static void withVersion(Source s, String version) {
+		withPublication(s).withVersion(version);
 	}
 
 	public static List<LangString> getName(Source s) {
@@ -41,9 +49,25 @@ public final class Sources {
 			: Collections.emptyList();
 	}
 
+	public static List<LangString> withName(Source s) {
+		return withDataSetInfo(s).withName();
+	}
+
+	public static void withName(Source s, LangString name) {
+		var names = withName(s);
+		names.clear();
+		if (name != null) {
+			names.add(name);
+		}
+	}
+
 	public static String getUri(Source s) {
 		var pub =	getPublication(s);
 		return pub != null ? pub.getUri() : null;
+	}
+
+	public static void withUri(Source s, String uri) {
+		withPublication(s).withUri(uri);
 	}
 
 	public static XMLGregorianCalendar getTimeStamp(Source s) {
@@ -53,11 +77,19 @@ public final class Sources {
 			: null;
 	}
 
+	public static void withTimeStamp(Source s, XMLGregorianCalendar t) {
+		withDataEntry(s).withTimeStamp(t);
+	}
+
 	public static List<Classification> getClassifications(Source s) {
 		var info = getDataSetInfo(s);
 		return info != null
 			? info.getClassifications()
 			: Collections.emptyList();
+	}
+
+	public static List<Classification> withClassifications(Source s) {
+		return withDataSetInfo(s).withClassifications();
 	}
 
 	public static SourceInfo getSourceInfo(Source s) {
@@ -73,6 +105,10 @@ public final class Sources {
 			: null;
 	}
 
+	public static DataSetInfo withDataSetInfo(Source s) {
+		return s.withSourceInfo().withDataSetInfo();
+	}
+
 	public static AdminInfo getAdminInfo(Source s) {
 		return s != null
 			? s.getAdminInfo()
@@ -84,6 +120,10 @@ public final class Sources {
 		return info != null
 			? info.getDataEntry()
 			: null;
+	}
+
+	public static DataEntry withDataEntry(Source s) {
+		return s.withAdminInfo().withDataEntry();
 	}
 
 	public static List<FileRef> getFileRefs(Source s) {
@@ -98,6 +138,10 @@ public final class Sources {
 		return info != null
 			? info.getPublication()
 			: null;
+	}
+
+	public static Publication withPublication(Source s) {
+		return s.withAdminInfo().withPublication();
 	}
 
 	/**

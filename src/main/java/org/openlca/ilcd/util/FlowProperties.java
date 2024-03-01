@@ -25,9 +25,16 @@ public final class FlowProperties {
 		return info != null ? info.getUUID() : null;
 	}
 
+	public static void withUUID(FlowProperty fp, String uuid) {
+		withDataSetInfo(fp).withUUID(uuid);
+	}
 	public static String getVersion(FlowProperty fp) {
 		var pub = getPublication(fp);
 		return pub != null ? pub.getVersion() : null;
+	}
+
+	public static void withVersion(FlowProperty fp, String version) {
+		withPublication(fp).withVersion(version);
 	}
 
 	public static List<LangString> getName(FlowProperty fp) {
@@ -37,9 +44,25 @@ public final class FlowProperties {
 			: Collections.emptyList();
 	}
 
+	public static List<LangString> withName(FlowProperty fp) {
+		return withDataSetInfo(fp).withName();
+	}
+
+	public static void withName(FlowProperty fp, LangString name) {
+		var names = withName(fp);
+		names.clear();
+		if (name != null) {
+			names.add(name);
+		}
+	}
+
 	public static String getUri(FlowProperty fp) {
 		var pub = getPublication(fp);
 		return pub != null ? pub.getUri() : null;
+	}
+
+	public static void withUri(FlowProperty fp, String uri) {
+		withPublication(fp).withUri(uri);
 	}
 
 	public static XMLGregorianCalendar getTimeStamp(FlowProperty fp) {
@@ -49,11 +72,19 @@ public final class FlowProperties {
 			: null;
 	}
 
+	public static void withTimeStamp(FlowProperty fp, XMLGregorianCalendar t) {
+		withDataEntry(fp).withTimeStamp(t);
+	}
+
 	public static List<Classification> getClassifications(FlowProperty fp) {
 		var info = getDataSetInfo(fp);
 		return info != null
 			? info.getClassifications()
 			: Collections.emptyList();
+	}
+
+	public static List<Classification> withClassifications(FlowProperty fp) {
+		return withDataSetInfo(fp).withClassifications();
 	}
 
 	public static FlowPropertyInfo getFlowPropertyInfo(FlowProperty fp) {
@@ -62,12 +93,15 @@ public final class FlowProperties {
 			: null;
 	}
 
-	public static QuantitativeReference getQuantitativeReference(
-		FlowProperty fp) {
+	public static QuantitativeReference getQuantitativeReference(FlowProperty fp) {
 		var info = getFlowPropertyInfo(fp);
 		return info != null
 			? info.getQuantitativeReference()
 			: null;
+	}
+
+	public static QuantitativeReference withQuantitativeReference(FlowProperty fp) {
+		return fp.withFlowPropertyInfo().withQuantitativeReference();
 	}
 
 	public static Ref getUnitGroupRef(FlowProperty fp) {
@@ -77,11 +111,19 @@ public final class FlowProperties {
 			: null;
 	}
 
+	public static Ref withUnitGroupRef(FlowProperty fp) {
+		return withQuantitativeReference(fp).withUnitGroup();
+	}
+
 	public static DataSetInfo getDataSetInfo(FlowProperty fp) {
 		var info = getFlowPropertyInfo(fp);
 		return info != null
 			? info.getDataSetInfo()
 			: null;
+	}
+
+	public static DataSetInfo withDataSetInfo(FlowProperty fp) {
+		return fp.withFlowPropertyInfo().withDataSetInfo();
 	}
 
 	public static AdminInfo getAdminInfo(FlowProperty fp) {
@@ -97,11 +139,19 @@ public final class FlowProperties {
 			: null;
 	}
 
+	public static DataEntry withDataEntry(FlowProperty fp) {
+		return fp.withAdminInfo().withDataEntry();
+	}
+
 	public static Publication getPublication(FlowProperty fp) {
 		var info = getAdminInfo(fp);
 		return info != null
 			? info.getPublication()
 			: null;
+	}
+
+	public static Publication withPublication(FlowProperty fp) {
+		return fp.withAdminInfo().withPublication();
 	}
 
 }

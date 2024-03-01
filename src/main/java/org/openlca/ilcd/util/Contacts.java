@@ -23,9 +23,17 @@ public final class Contacts {
 		return info != null ? info.getUUID() : null;
 	}
 
+	public static void withUUID(Contact c, String uuid) {
+		withDataSetInfo(c).withUUID(uuid);
+	}
+
 	public static String getVersion(Contact c) {
 		var pub = getPublication(c);
 		return pub != null ? pub.getVersion() : null;
+	}
+
+	public static void withVersion(Contact c, String version) {
+		withPublication(c).withVersion(version);
 	}
 
 	public static List<LangString> getName(Contact c) {
@@ -35,9 +43,25 @@ public final class Contacts {
 			: Collections.emptyList();
 	}
 
+	public static List<LangString> withName(Contact c) {
+		return withDataSetInfo(c).withName();
+	}
+
+	public static void withName(Contact c, LangString name) {
+		var names = withName(c);
+		names.clear();
+		if (name != null) {
+			names.add(name);
+		}
+	}
+
 	public static String getUri(Contact c) {
 		var pub =	getPublication(c);
 		return pub != null ? pub.getUri() : null;
+	}
+
+	public static void withUri(Contact c, String uri) {
+		withPublication(c).withUri(uri);
 	}
 
 	public static XMLGregorianCalendar getTimeStamp(Contact c) {
@@ -47,6 +71,10 @@ public final class Contacts {
 			: null;
 	}
 
+	public static void withTimeStamp(Contact c, XMLGregorianCalendar t) {
+		withDataEntry(c).withTimeStamp(t);
+	}
+
 	public static List<Classification> getClassifications(Contact c) {
 		var info = getDataSetInfo(c);
 		return info != null
@@ -54,12 +82,12 @@ public final class Contacts {
 			: Collections.emptyList();
 	}
 
-	public static ContactInfo getContactInfo(Contact c) {
-		return c != null ? c.getContactInfo() : null;
+	public static List<Classification> withClassifications(Contact c) {
+		return withDataSetInfo(c).withClassifications();
 	}
 
-	public static ContactInfo withContactInfo(Contact c) {
-		return c.withContactInfo();
+	public static ContactInfo getContactInfo(Contact c) {
+		return c != null ? c.getContactInfo() : null;
 	}
 
 	public static DataSetInfo getDataSetInfo(Contact c) {
@@ -77,10 +105,6 @@ public final class Contacts {
 		return c != null
 			? c.getAdminInfo()
 			: null;
-	}
-
-	public static AdminInfo withAdminInfo(Contact c) {
-		return c.withAdminInfo();
 	}
 
 	public static DataEntry getDataEntry(Contact c) {

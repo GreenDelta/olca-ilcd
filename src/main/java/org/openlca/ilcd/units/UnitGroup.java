@@ -47,7 +47,7 @@ public class UnitGroup implements IDataSet, Copyable<UnitGroup> {
 	private Other other;
 
 	@XmlAttribute(name = "version", required = true)
-	private String version;
+	private String schemaVersion = SCHEMA_VERSION;
 
 	@XmlAnyAttribute
 	private Map<QName, String> otherAttributes;
@@ -74,8 +74,9 @@ public class UnitGroup implements IDataSet, Copyable<UnitGroup> {
 		return other;
 	}
 
-	public String getVersion() {
-		return version;
+	@Override
+	public String getSchemaVersion() {
+		return schemaVersion;
 	}
 
 	public Map<QName, String> getOtherAttributes() {
@@ -111,8 +112,8 @@ public class UnitGroup implements IDataSet, Copyable<UnitGroup> {
 		return this;
 	}
 
-	public UnitGroup withVersion(String version) {
-		this.version = version;
+	public UnitGroup withSchemaVersion(String version) {
+		this.schemaVersion = version;
 		return this;
 	}
 
@@ -173,7 +174,7 @@ public class UnitGroup implements IDataSet, Copyable<UnitGroup> {
 		Val.copy(adminInfo, copy::withAdminInfo);
 		Val.copy(units, copy::withUnits);
 		Val.copy(other, copy::withOther);
-		copy.withVersion(version);
+		copy.withSchemaVersion(schemaVersion);
 		Val.copy(otherAttributes, copy::withOtherAttributes);
 		return copy;
 	}

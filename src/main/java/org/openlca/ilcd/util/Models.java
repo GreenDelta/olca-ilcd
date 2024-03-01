@@ -27,9 +27,17 @@ public class Models {
 			: null;
 	}
 
+	public static void withUUID(Model m, String uuid) {
+		withDataSetInfo(m).withUUID(uuid);
+	}
+
 	public static String getVersion(Model m) {
 		var pub = getPublication(m);
 		return pub != null ? pub.getVersion() : null;
+	}
+
+	public static void withVersion(Model m, String version) {
+		withPublication(m).withVersion(version);
 	}
 
 	public static List<LangString> getBaseName(Model m) {
@@ -39,9 +47,25 @@ public class Models {
 			: Collections.emptyList();
 	}
 
+	public static List<LangString> withBaseName(Model m) {
+		return withModelName(m).withBaseName();
+	}
+
+	public static void withBaseName(Model m, LangString name) {
+		var names = withBaseName(m);
+		names.clear();
+		if (name != null) {
+			names.add(name);
+		}
+	}
+
 	public static String getUri(Model m) {
 		var pub =	getPublication(m);
 		return pub != null ? pub.getUri() : null;
+	}
+
+	public static void withUri(Model m, String uri) {
+		withPublication(m).withUri(uri);
 	}
 
 	public static XMLGregorianCalendar getTimeStamp(Model m) {
@@ -51,11 +75,19 @@ public class Models {
 			: null;
 	}
 
+	public static void withTimeStamp(Model m, XMLGregorianCalendar t) {
+		withDataEntry(m).withTimeStamp(t);
+	}
+
 	public static List<Classification> getClassifications(Model model) {
 		DataSetInfo di = getDataSetInfo(model);
 		return di != null
 			? di.getClassifications()
 			: Collections.emptyList();
+	}
+
+	public static List<Classification> withClassifications(Model m) {
+		return withDataSetInfo(m).withClassifications();
 	}
 
 	public static String getOrigin(Model model) {
@@ -83,11 +115,19 @@ public class Models {
 			: null;
 	}
 
+	public static DataSetInfo withDataSetInfo(Model model) {
+		return model.withInfo().withDataSetInfo();
+	}
+
 	public static ModelName getModelName(Model model) {
 		DataSetInfo di = getDataSetInfo(model);
 		if (di == null)
 			return null;
 		return di.getModelName();
+	}
+
+	public static ModelName withModelName(Model model) {
+		return withDataSetInfo(model).withModelName();
 	}
 
 	public static QuantitativeReference getQuantitativeReference(Model m) {
@@ -97,11 +137,19 @@ public class Models {
 		return mi.getQuantitativeReference();
 	}
 
+	public static QuantitativeReference withQuantitativeReference(Model m) {
+		return m.withInfo().withQuantitativeReference();
+	}
+
 	public static Technology getTechnology(Model m) {
 		ModelInfo mi = getModelInfo(m);
 		if (mi == null)
 			return null;
 		return mi.getTechnology();
+	}
+
+	public static Technology withTechnology(Model m) {
+		return m.withInfo().withTechnology();
 	}
 
 	public static AdminInfo getAdminInfo(Model m) {
@@ -117,6 +165,10 @@ public class Models {
 		return ai.getDataEntry();
 	}
 
+	public static DataEntry withDataEntry(Model m) {
+		return m.withAdminInfo().withDataEntry();
+	}
+
 	public static Publication getPublication(Model m) {
 		AdminInfo ai = getAdminInfo(m);
 		if (ai == null)
@@ -124,11 +176,19 @@ public class Models {
 		return ai.getPublication();
 	}
 
+	public static Publication withPublication(Model m) {
+		return m.withAdminInfo().withPublication();
+	}
+
 	public static List<ProcessInstance> getProcesses(Model m) {
 		var tech = getTechnology(m);
 		return tech == null
 			? Collections.emptyList()
 			: tech.getProcesses();
+	}
+
+	public static List<ProcessInstance> withProcesses(Model m) {
+		return withTechnology(m).withProcesses();
 	}
 
 }

@@ -14,6 +14,7 @@ import org.openlca.ilcd.sources.Source;
 import org.openlca.ilcd.units.UnitGroup;
 
 import javax.xml.datatype.XMLGregorianCalendar;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -62,6 +63,40 @@ public final class DataSets {
 		return null;
 	}
 
+	public static void withUUID(IDataSet ds, String uuid) {
+		if (ds instanceof Contact c) {
+			Contacts.withUUID(c, uuid);
+			return;
+		}
+		if (ds instanceof Flow f) {
+			Flows.withUUID(f, uuid);
+			return;
+		}
+		if (ds instanceof FlowProperty fp) {
+			FlowProperties.withUUID(fp, uuid);
+			return;
+		}
+		if (ds instanceof ImpactMethod method) {
+			ImpactMethods.withUUID(method, uuid);
+			return;
+		}
+		if (ds instanceof Model model) {
+			Models.withUUID(model, uuid);
+			return;
+		}
+		if (ds instanceof Process p) {
+			Processes.withUUID(p, uuid);
+			return;
+		}
+		if (ds instanceof Source s) {
+			Sources.withUUID(s, uuid);
+			return;
+		}
+		if (ds instanceof UnitGroup ug) {
+			UnitGroups.withUUID(ug, uuid);
+		}
+	}
+
 	public static String getVersion(IDataSet ds) {
 		if (ds instanceof Contact c)
 			return Contacts.getVersion(c);
@@ -80,6 +115,40 @@ public final class DataSets {
 		if (ds instanceof UnitGroup ug)
 			return UnitGroups.getVersion(ug);
 		return null;
+	}
+
+	public static void withVersion(IDataSet ds, String version) {
+		if (ds instanceof Contact c) {
+			Contacts.withVersion(c, version);
+			return;
+		}
+		if (ds instanceof Flow f) {
+			Flows.withVersion(f, version);
+			return;
+		}
+		if (ds instanceof FlowProperty fp) {
+			FlowProperties.withVersion(fp, version);
+			return;
+		}
+		if (ds instanceof ImpactMethod method) {
+			ImpactMethods.withVersion(method, version);
+			return;
+		}
+		if (ds instanceof Model model) {
+			Models.withVersion(model, version);
+			return;
+		}
+		if (ds instanceof Process p) {
+			Processes.withVersion(p, version);
+			return;
+		}
+		if (ds instanceof Source s) {
+			Sources.withVersion(s, version);
+			return;
+		}
+		if (ds instanceof UnitGroup ug) {
+			UnitGroups.withVersion(ug, version);
+		}
 	}
 
 	public static List<LangString> getBaseName(IDataSet ds) {
@@ -102,6 +171,40 @@ public final class DataSets {
 		return null;
 	}
 
+	public static void withBaseName(IDataSet ds, LangString name) {
+		if (ds instanceof Contact c) {
+			Contacts.withName(c, name);
+			return;
+		}
+		if (ds instanceof Flow f) {
+			Flows.withBaseName(f, name);
+			return;
+		}
+		if (ds instanceof FlowProperty fp) {
+			FlowProperties.withName(fp, name);
+			return;
+		}
+		if (ds instanceof ImpactMethod method) {
+			ImpactMethods.withName(method, name);
+			return;
+		}
+		if (ds instanceof Model model) {
+			Models.withBaseName(model, name);
+			return;
+		}
+		if (ds instanceof Process p) {
+			Processes.withBaseName(p, name);
+			return;
+		}
+		if (ds instanceof Source s) {
+			Sources.withName(s, name);
+			return;
+		}
+		if (ds instanceof UnitGroup ug) {
+			UnitGroups.withName(ug, name);
+		}
+	}
+
 	public static String getUri(IDataSet ds) {
 		if (ds instanceof Contact c)
 			return Contacts.getUri(c);
@@ -120,6 +223,40 @@ public final class DataSets {
 		if (ds instanceof UnitGroup ug)
 			return UnitGroups.getUri(ug);
 		return null;
+	}
+
+	public static void withUri(IDataSet ds, String uri) {
+		if (ds instanceof Contact c) {
+			Contacts.withUri(c, uri);
+			return;
+		}
+		if (ds instanceof Flow f) {
+			Flows.withUri(f, uri);
+			return;
+		}
+		if (ds instanceof FlowProperty fp) {
+			FlowProperties.withUri(fp, uri);
+			return;
+		}
+		if (ds instanceof ImpactMethod method) {
+			ImpactMethods.withUri(method, uri);
+			return;
+		}
+		if (ds instanceof Model model) {
+			Models.withUri(model, uri);
+			return;
+		}
+		if (ds instanceof Process p) {
+			Processes.withUri(p, uri);
+			return;
+		}
+		if (ds instanceof Source s) {
+			Sources.withUri(s, uri);
+			return;
+		}
+		if (ds instanceof UnitGroup ug) {
+			UnitGroups.withUri(ug, uri);
+		}
 	}
 
 	public static XMLGregorianCalendar getTimeStamp(IDataSet ds) {
@@ -142,6 +279,40 @@ public final class DataSets {
 		return null;
 	}
 
+	public static void withTimeStamp(IDataSet ds, XMLGregorianCalendar t) {
+		if (ds instanceof Contact c) {
+			Contacts.withTimeStamp(c, t);
+			return;
+		}
+		if (ds instanceof Flow f) {
+			Flows.withTimeStamp(f, t);
+			return;
+		}
+		if (ds instanceof FlowProperty fp) {
+			FlowProperties.withTimeStamp(fp, t);
+			return;
+		}
+		if (ds instanceof ImpactMethod method) {
+			ImpactMethods.withTimeStamp(method, t);
+			return;
+		}
+		if (ds instanceof Model model) {
+			Models.withTimeStamp(model, t);
+			return;
+		}
+		if (ds instanceof Process p) {
+			Processes.withTimeStamp(p, t);
+			return;
+		}
+		if (ds instanceof Source s) {
+			Sources.withTimeStamp(s, t);
+			return;
+		}
+		if (ds instanceof UnitGroup ug) {
+			UnitGroups.withTimeStamp(ug, t);
+		}
+	}
+
 	public static List<Classification> getClassifications(IDataSet ds) {
 		if (ds instanceof Contact c)
 			return Contacts.getClassifications(c);
@@ -160,5 +331,25 @@ public final class DataSets {
 		if (ds instanceof UnitGroup ug)
 			return UnitGroups.getClassifications(ug);
 		return Collections.emptyList();
+	}
+
+	public static List<Classification> withClassifications(IDataSet ds) {
+		if (ds instanceof Contact c)
+			return Contacts.withClassifications(c);
+		if (ds instanceof Flow f)
+			return Flows.withClassifications(f);
+		if (ds instanceof FlowProperty fp)
+			return FlowProperties.withClassifications(fp);
+		if (ds instanceof ImpactMethod method)
+			return ImpactMethods.withClassifications(method);
+		if (ds instanceof Model model)
+			return Models.withClassifications(model);
+		if (ds instanceof Process p)
+			return Processes.withClassifications(p);
+		if (ds instanceof Source s)
+			return Sources.withClassifications(s);
+		if (ds instanceof UnitGroup ug)
+			return UnitGroups.withClassifications(ug);
+		return new ArrayList<>();
 	}
 }
