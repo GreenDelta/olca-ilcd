@@ -28,9 +28,17 @@ public final class ImpactMethods {
 			: null;
 	}
 
+	public static void withUUID(ImpactMethod m, String uuid) {
+		withDataSetInfo(m).withUUID(uuid);
+	}
+
 	public static String getVersion(ImpactMethod m) {
 		var pub = getPublication(m);
 		return pub != null ? pub.getVersion() : null;
+	}
+
+	public static void withVersion(ImpactMethod m, String version) {
+		withPublication(m).withVersion(version);
 	}
 
 	public static List<LangString> getName(ImpactMethod m) {
@@ -40,9 +48,25 @@ public final class ImpactMethods {
 			: Collections.emptyList();
 	}
 
+	public static List<LangString> withName(ImpactMethod m) {
+		return withDataSetInfo(m).withName();
+	}
+
+	public static void withName(ImpactMethod m, LangString name) {
+		var names = withName(m);
+		names.clear();
+		if (name != null) {
+			names.add(name);
+		}
+	}
+
 	public static String getUri(ImpactMethod m) {
 		var pub =	getPublication(m);
 		return pub != null ? pub.getUri() : null;
+	}
+
+	public static void withUri(ImpactMethod m, String uri) {
+		withPublication(m).withUri(uri);
 	}
 
 	public static XMLGregorianCalendar getTimeStamp(ImpactMethod m) {
@@ -50,6 +74,10 @@ public final class ImpactMethods {
 		return entry != null
 			? entry.getTimeStamp()
 			: null;
+	}
+
+	public static void withTimeStamp(ImpactMethod m, XMLGregorianCalendar t) {
+		withDataEntry(m).withTimeStamp(t);
 	}
 
 	public static List<Classification> getClassifications(ImpactMethod m) {

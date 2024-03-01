@@ -28,9 +28,17 @@ public final class Processes {
 			: null;
 	}
 
+	public static void withUUID(Process p, String uuid) {
+		withDataSetInfo(p).withUUID(uuid);
+	}
+
 	public static String getVersion(Process p) {
 		var pub = getPublication(p);
 		return pub != null ? pub.getVersion() : null;
+	}
+
+	public static void withVersion(Process p, String version) {
+		withPublication(p).withVersion(version);
 	}
 
 	public static List<LangString> getBaseName(Process p) {
@@ -40,9 +48,25 @@ public final class Processes {
 			: Collections.emptyList();
 	}
 
+	public static List<LangString> withBaseName(Process p) {
+		return withProcessName(p).withBaseName();
+	}
+
+	public static void withBaseName(Process p, LangString name) {
+		var names = withBaseName(p);
+		names.clear();
+		if (name != null) {
+			names.add(name);
+		}
+	}
+
 	public static String getUri(Process p) {
 		var pub =	getPublication(p);
 		return pub != null ? pub.getUri() : null;
+	}
+
+	public static void withUri(Process p, String uri) {
+		withPublication(p).withUri(uri);
 	}
 
 	public static XMLGregorianCalendar getTimeStamp(Process p) {
@@ -52,11 +76,19 @@ public final class Processes {
 			: null;
 	}
 
+	public static void withTimeStamp(Process p, XMLGregorianCalendar t) {
+		withDataEntry(p).withTimeStamp(t);
+	}
+
 	public static List<Classification> getClassifications(Process p) {
 		var info = getDataSetInfo(p);
 		return info != null
 			? info.getClassifications()
 			: Collections.emptyList();
+	}
+
+	public static List<Classification> withClassifications(Process p) {
+		return withDataSetInfo(p).withClassifications();
 	}
 
 	public static ProcessInfo getProcessInfo(Process p) {

@@ -27,9 +27,17 @@ public final class UnitGroups {
 			: null;
 	}
 
+	public static void withUUID(UnitGroup ug, String uuid) {
+		withDataSetInfo(ug).withUUID(uuid);
+	}
+
 	public static String getVersion(UnitGroup u) {
 		var pub = getPublication(u);
 		return pub != null ? pub.getVersion() : null;
+	}
+
+	public static void withVersion(UnitGroup ug, String version) {
+		withPublication(ug).withVersion(version);
 	}
 
 	public static List<LangString> getName(UnitGroup u) {
@@ -39,9 +47,25 @@ public final class UnitGroups {
 			: Collections.emptyList();
 	}
 
+	public static List<LangString> withName(UnitGroup ug) {
+		return withDataSetInfo(ug).withName();
+	}
+
+	public static void withName(UnitGroup ug, LangString name) {
+		var names = withName(ug);
+		names.clear();
+		if (name != null) {
+			names.add(name);
+		}
+	}
+
 	public static String getUri(UnitGroup u) {
 		var pub =	getPublication(u);
 		return pub != null ? pub.getUri() : null;
+	}
+
+	public static void withUri(UnitGroup ug, String uri) {
+		withPublication(ug).withUri(uri);
 	}
 
 	public static XMLGregorianCalendar getTimeStamp(UnitGroup u) {
@@ -51,11 +75,19 @@ public final class UnitGroups {
 			: null;
 	}
 
+	public static void withTimeStamp(UnitGroup ug, XMLGregorianCalendar t) {
+		withDataEntry(ug).withTimeStamp(t);
+	}
+
 	public static List<Classification> getClassifications(UnitGroup u) {
 		var info = getDataSetInfo(u);
 		return info != null
 			? info.getClassifications()
 			: Collections.emptyList();
+	}
+
+	public static List<Classification> withClassifications(UnitGroup ug) {
+		return withDataSetInfo(ug).withClassifications();
 	}
 
 	public static UnitGroupInfo getUnitGroupInfo(UnitGroup u) {

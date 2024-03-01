@@ -27,9 +27,17 @@ public class Models {
 			: null;
 	}
 
+	public static void withUUID(Model m, String uuid) {
+		withDataSetInfo(m).withUUID(uuid);
+	}
+
 	public static String getVersion(Model m) {
 		var pub = getPublication(m);
 		return pub != null ? pub.getVersion() : null;
+	}
+
+	public static void withVersion(Model m, String version) {
+		withPublication(m).withVersion(version);
 	}
 
 	public static List<LangString> getBaseName(Model m) {
@@ -39,9 +47,25 @@ public class Models {
 			: Collections.emptyList();
 	}
 
+	public static List<LangString> withBaseName(Model m) {
+		return withModelName(m).withBaseName();
+	}
+
+	public static void withBaseName(Model m, LangString name) {
+		var names = withBaseName(m);
+		names.clear();
+		if (name != null) {
+			names.add(name);
+		}
+	}
+
 	public static String getUri(Model m) {
 		var pub =	getPublication(m);
 		return pub != null ? pub.getUri() : null;
+	}
+
+	public static void withUri(Model m, String uri) {
+		withPublication(m).withUri(uri);
 	}
 
 	public static XMLGregorianCalendar getTimeStamp(Model m) {
@@ -51,11 +75,19 @@ public class Models {
 			: null;
 	}
 
+	public static void withTimeStamp(Model m, XMLGregorianCalendar t) {
+		withDataEntry(m).withTimeStamp(t);
+	}
+
 	public static List<Classification> getClassifications(Model model) {
 		DataSetInfo di = getDataSetInfo(model);
 		return di != null
 			? di.getClassifications()
 			: Collections.emptyList();
+	}
+
+	public static List<Classification> withClassifications(Model m) {
+		return withDataSetInfo(m).withClassifications();
 	}
 
 	public static String getOrigin(Model model) {

@@ -25,9 +25,16 @@ public final class FlowProperties {
 		return info != null ? info.getUUID() : null;
 	}
 
+	public static void withUUID(FlowProperty fp, String uuid) {
+		withDataSetInfo(fp).withUUID(uuid);
+	}
 	public static String getVersion(FlowProperty fp) {
 		var pub = getPublication(fp);
 		return pub != null ? pub.getVersion() : null;
+	}
+
+	public static void withVersion(FlowProperty fp, String version) {
+		withPublication(fp).withVersion(version);
 	}
 
 	public static List<LangString> getName(FlowProperty fp) {
@@ -37,9 +44,25 @@ public final class FlowProperties {
 			: Collections.emptyList();
 	}
 
+	public static List<LangString> withName(FlowProperty fp) {
+		return withDataSetInfo(fp).withName();
+	}
+
+	public static void withName(FlowProperty fp, LangString name) {
+		var names = withName(fp);
+		names.clear();
+		if (name != null) {
+			names.add(name);
+		}
+	}
+
 	public static String getUri(FlowProperty fp) {
 		var pub = getPublication(fp);
 		return pub != null ? pub.getUri() : null;
+	}
+
+	public static void withUri(FlowProperty fp, String uri) {
+		withPublication(fp).withUri(uri);
 	}
 
 	public static XMLGregorianCalendar getTimeStamp(FlowProperty fp) {
@@ -49,11 +72,19 @@ public final class FlowProperties {
 			: null;
 	}
 
+	public static void withTimeStamp(FlowProperty fp, XMLGregorianCalendar t) {
+		withDataEntry(fp).withTimeStamp(t);
+	}
+
 	public static List<Classification> getClassifications(FlowProperty fp) {
 		var info = getDataSetInfo(fp);
 		return info != null
 			? info.getClassifications()
 			: Collections.emptyList();
+	}
+
+	public static List<Classification> withClassifications(FlowProperty fp) {
+		return withDataSetInfo(fp).withClassifications();
 	}
 
 	public static FlowPropertyInfo getFlowPropertyInfo(FlowProperty fp) {
