@@ -77,11 +77,19 @@ public final class Flows {
 			: null;
 	}
 
+	public static DataEntry withDataEntry(Flow f) {
+		return f.withAdminInfo().withDataEntry();
+	}
+
 	public static Publication getPublication(Flow f) {
 		AdminInfo ai = getAdminInfo(f);
 		return ai != null
 			? ai.getPublication()
 			: null;
+	}
+
+	public static Publication withPublication(Flow f) {
+		return f.withAdminInfo().withPublication();
 	}
 
 	public static FlowInfo getFlowInfo(Flow f) {
@@ -97,11 +105,19 @@ public final class Flows {
 			: null;
 	}
 
+	public static DataSetInfo withDataSetInfo(Flow f) {
+		return f.withFlowInfo().withDataSetInfo();
+	}
+
 	public static FlowName getFlowName(Flow f) {
 		DataSetInfo dsi = getDataSetInfo(f);
 		return dsi != null
 			? dsi.getFlowName()
 			: null;
+	}
+
+	public static FlowName withFlowName(Flow f) {
+		return withDataSetInfo(f).withFlowName();
 	}
 
 	public static String getFullName(Flow f, String... langs) {
@@ -125,12 +141,16 @@ public final class Flows {
 			: null;
 	}
 
+	public static QuantitativeReference withQuantitativeReference(Flow f) {
+		return f.withFlowInfo().withQuantitativeReference();
+	}
+
 	/**
 	 * Returns the data set internal ID of the reference flow property of the
 	 * given flow or null if it is not defined.
 	 */
 	public static Integer getReferenceFlowPropertyID(Flow f) {
-		QuantitativeReference qref = getQuantitativeReference(f);
+		var qref = getQuantitativeReference(f);
 		return qref != null
 			? qref.getReferenceFlowProperty()
 			: null;
@@ -143,11 +163,19 @@ public final class Flows {
 			: null;
 	}
 
+	public static Geography withGeography(Flow f) {
+		return f.withFlowInfo().withGeography();
+	}
+
 	public static Technology getTechnology(Flow f) {
 		FlowInfo fi = getFlowInfo(f);
 		return fi != null
 			? fi.getTechnology()
 			: null;
+	}
+
+	public static Technology withTechnology(Flow f) {
+		return f.withFlowInfo().withTechnology();
 	}
 
 	public static Modelling getModelling(Flow f) {
@@ -161,6 +189,10 @@ public final class Flows {
 		return m != null
 			? m.getInventoryMethod()
 			: null;
+	}
+
+	public static InventoryMethod withInventoryMethod(Flow f) {
+		return f.withModelling().withInventoryMethod();
 	}
 
 	public static FlowType getType(Flow f) {

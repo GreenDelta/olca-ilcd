@@ -58,10 +58,6 @@ public final class Contacts {
 		return c != null ? c.getContactInfo() : null;
 	}
 
-	public static ContactInfo withContactInfo(Contact c) {
-		return c.withContactInfo();
-	}
-
 	public static DataSetInfo getDataSetInfo(Contact c) {
 		var info = getContactInfo(c);
 		return info != null
@@ -77,10 +73,6 @@ public final class Contacts {
 		return c != null
 			? c.getAdminInfo()
 			: null;
-	}
-
-	public static AdminInfo withAdminInfo(Contact c) {
-		return c.withAdminInfo();
 	}
 
 	public static DataEntry getDataEntry(Contact c) {

@@ -83,11 +83,19 @@ public class Models {
 			: null;
 	}
 
+	public static DataSetInfo withDataSetInfo(Model model) {
+		return model.withInfo().withDataSetInfo();
+	}
+
 	public static ModelName getModelName(Model model) {
 		DataSetInfo di = getDataSetInfo(model);
 		if (di == null)
 			return null;
 		return di.getModelName();
+	}
+
+	public static ModelName withModelName(Model model) {
+		return withDataSetInfo(model).withModelName();
 	}
 
 	public static QuantitativeReference getQuantitativeReference(Model m) {
@@ -97,11 +105,19 @@ public class Models {
 		return mi.getQuantitativeReference();
 	}
 
+	public static QuantitativeReference withQuantitativeReference(Model m) {
+		return m.withInfo().withQuantitativeReference();
+	}
+
 	public static Technology getTechnology(Model m) {
 		ModelInfo mi = getModelInfo(m);
 		if (mi == null)
 			return null;
 		return mi.getTechnology();
+	}
+
+	public static Technology withTechnology(Model m) {
+		return m.withInfo().withTechnology();
 	}
 
 	public static AdminInfo getAdminInfo(Model m) {
@@ -117,6 +133,10 @@ public class Models {
 		return ai.getDataEntry();
 	}
 
+	public static DataEntry withDataEntry(Model m) {
+		return m.withAdminInfo().withDataEntry();
+	}
+
 	public static Publication getPublication(Model m) {
 		AdminInfo ai = getAdminInfo(m);
 		if (ai == null)
@@ -124,11 +144,19 @@ public class Models {
 		return ai.getPublication();
 	}
 
+	public static Publication withPublication(Model m) {
+		return m.withAdminInfo().withPublication();
+	}
+
 	public static List<ProcessInstance> getProcesses(Model m) {
 		var tech = getTechnology(m);
 		return tech == null
 			? Collections.emptyList()
 			: tech.getProcesses();
+	}
+
+	public static List<ProcessInstance> withProcesses(Model m) {
+		return withTechnology(m).withProcesses();
 	}
 
 }

@@ -59,6 +59,10 @@ public final class ImpactMethods {
 			: Collections.emptyList();
 	}
 
+	public static List<Classification> withClassifications(ImpactMethod m) {
+		return withDataSetInfo(m).withClassifications();
+	}
+
 	public static MethodInfo getMethodInfo(ImpactMethod m) {
 		return m != null
 			? m.getMethodInfo()
@@ -72,6 +76,10 @@ public final class ImpactMethods {
 			: info.getTime();
 	}
 
+	public static Time withTime(ImpactMethod m) {
+		return m.withMethodInfo().withTime();
+	}
+
 	public static QuantitativeReference getQuantitativeReference(ImpactMethod m) {
 		var info = getMethodInfo(m);
 		return info != null
@@ -79,11 +87,19 @@ public final class ImpactMethods {
 			: null;
 	}
 
+	public static QuantitativeReference withQuantitativeReference(ImpactMethod m) {
+		return m.withMethodInfo().withQuantitativeReference();
+	}
+
 	public static DataSetInfo getDataSetInfo(ImpactMethod m) {
 		var info = getMethodInfo(m);
 		return info != null
 			? info.getDataSetInfo()
 			: null;
+	}
+
+	public static DataSetInfo withDataSetInfo(ImpactMethod m) {
+		return m.withMethodInfo().withDataSetInfo();
 	}
 
 	public static AdminInfo getAdminInfo(ImpactMethod m) {
@@ -99,11 +115,19 @@ public final class ImpactMethods {
 			: null;
 	}
 
+	public static DataEntry withDataEntry(ImpactMethod m) {
+		return m.withAdminInfo().withDataEntry();
+	}
+
 	public static Publication getPublication(ImpactMethod m) {
 		var info = getAdminInfo(m);
 		return info != null
 			? info.getPublication()
 			: null;
+	}
+
+	public static Publication withPublication(ImpactMethod m) {
+		return m.withAdminInfo().withPublication();
 	}
 
 	public static List<Factor> getFactors(ImpactMethod m) {

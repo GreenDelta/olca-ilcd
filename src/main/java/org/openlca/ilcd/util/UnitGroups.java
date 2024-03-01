@@ -64,10 +64,6 @@ public final class UnitGroups {
 			: null;
 	}
 
-	public static UnitGroupInfo withUnitGroupInfo(UnitGroup u) {
-		return u.withUnitGroupInfo();
-	}
-
 	public static DataSetInfo getDataSetInfo(UnitGroup u) {
 		var info = getUnitGroupInfo(u);
 		return info != null
@@ -75,11 +71,19 @@ public final class UnitGroups {
 			: null;
 	}
 
+	public static DataSetInfo withDataSetInfo(UnitGroup u) {
+		return u.withUnitGroupInfo().withDataSetInfo();
+	}
+
 	public static QuantitativeReference getQuantitativeReference(UnitGroup u) {
 		var info = getUnitGroupInfo(u);
 		return info != null
 			? info.getQuantitativeReference()
 			: null;
+	}
+
+	public static QuantitativeReference withQuantitativeReference(UnitGroup u) {
+		return u.withUnitGroupInfo().withQuantitativeReference();
 	}
 
 	public static AdminInfo getAdminInfo(UnitGroup u) {
@@ -95,11 +99,19 @@ public final class UnitGroups {
 			: null;
 	}
 
+	public static DataEntry withDataEntry(UnitGroup u) {
+		return u.withAdminInfo().withDataEntry();
+	}
+
 	public static Publication getPublication(UnitGroup u) {
 		var info = getAdminInfo(u);
 		return info != null
 			? info.getPublication()
 			: null;
+	}
+
+	public static Publication withPublication(UnitGroup u) {
+		return u.withAdminInfo().withPublication();
 	}
 
 	public static List<Unit> getUnits(UnitGroup u) {

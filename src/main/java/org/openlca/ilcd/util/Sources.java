@@ -73,6 +73,10 @@ public final class Sources {
 			: null;
 	}
 
+	public static DataSetInfo withDataSetInfo(Source s) {
+		return s.withSourceInfo().withDataSetInfo();
+	}
+
 	public static AdminInfo getAdminInfo(Source s) {
 		return s != null
 			? s.getAdminInfo()
@@ -84,6 +88,10 @@ public final class Sources {
 		return info != null
 			? info.getDataEntry()
 			: null;
+	}
+
+	public static DataEntry withDataEntry(Source s) {
+		return s.withAdminInfo().withDataEntry();
 	}
 
 	public static List<FileRef> getFileRefs(Source s) {
@@ -98,6 +106,10 @@ public final class Sources {
 		return info != null
 			? info.getPublication()
 			: null;
+	}
+
+	public static Publication withPublication(Source s) {
+		return s.withAdminInfo().withPublication();
 	}
 
 	/**
