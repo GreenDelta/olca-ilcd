@@ -77,7 +77,6 @@ class EpdExtensionWriter {
 			: info.withEpdExtension();
 
 		ModuleConverter.writeModules(epd, ext, doc);
-		SafetyMarginsConverter.write(epd, ext, doc);
 		if (epd.contentDeclaration != null) {
 			epd.contentDeclaration.write(ext, doc);
 		}

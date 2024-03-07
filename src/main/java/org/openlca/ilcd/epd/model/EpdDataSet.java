@@ -23,7 +23,6 @@ public class EpdDataSet implements Copyable<EpdDataSet> {
 	public SubType subType;
 	public LocalDate publicationDate;
 
-	public SafetyMargins safetyMargins;
 	public ContentDeclaration contentDeclaration;
 	public QMetaData qMetaData;
 
@@ -75,9 +74,6 @@ public class EpdDataSet implements Copyable<EpdDataSet> {
 				publicationDate.getDayOfMonth());
 		}
 
-		clone.safetyMargins = safetyMargins != null
-			? safetyMargins.copy()
-			: null;
 		clone.contentDeclaration = contentDeclaration != null
 			? contentDeclaration.copy()
 			: null;

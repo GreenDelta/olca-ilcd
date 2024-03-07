@@ -50,7 +50,6 @@ record EpdExtensionReader(Process process, EpdProfile profile) {
 		var other = info.getEpdExtension();
 		List<ModuleEntry> modules = ModuleConverter.readModules(other, profile);
 		epd.moduleEntries.addAll(modules);
-		epd.safetyMargins = SafetyMarginsConverter.read(other);
 		epd.contentDeclaration = ContentDeclaration.read(other);
 
 	}
