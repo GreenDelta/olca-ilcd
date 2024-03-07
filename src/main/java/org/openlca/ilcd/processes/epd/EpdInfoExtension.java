@@ -130,6 +130,4 @@ public class EpdInfoExtension implements Copyable<EpdInfoExtension>, Extension {
 		Val.copyAny(any, copy::withAny);
 		return copy;
 	}
-
-
 }

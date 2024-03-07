@@ -1,5 +1,6 @@
 package org.openlca.ilcd.util;
 
+import org.openlca.ilcd.Vocab;
 import org.openlca.ilcd.commons.Ref;
 import org.openlca.ilcd.processes.Process;
 import org.openlca.ilcd.processes.epd.EpdContentDeclaration;
@@ -10,6 +11,7 @@ import org.openlca.ilcd.processes.epd.EpdScenario;
 import org.openlca.ilcd.processes.epd.EpdSubType;
 
 import javax.xml.datatype.XMLGregorianCalendar;
+import javax.xml.namespace.QName;
 import java.util.Collections;
 import java.util.List;
 
