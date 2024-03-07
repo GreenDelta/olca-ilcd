@@ -69,25 +69,43 @@ public enum DataSetType {
 	}
 
 	public static DataSetType of(IDataSet ds) {
-		if (ds == null)
-			return null;
-		if (ds instanceof Contact)
+		return ds != null
+			? of(ds.getClass())
+			: null;
+	}
+
+	public static DataSetType of(Class<? extends IDataSet> c) {
+		if (c == Contact.class)
 			return DataSetType.CONTACT;
-		if (ds instanceof FlowProperty)
+		if (c == FlowProperty.class)
 			return DataSetType.FLOW_PROPERTY;
-		if (ds instanceof Flow)
+		if (c == Flow.class)
 			return DataSetType.FLOW;
-		if (ds instanceof ImpactMethod)
+		if (c == ImpactMethod.class)
 			return DataSetType.IMPACT_METHOD;
-		if (ds instanceof Model)
+		if (c == Model.class)
 			return DataSetType.MODEL;
-		if (ds instanceof Process)
+		if (c == Process.class)
 			return DataSetType.PROCESS;
-		if (ds instanceof Source)
+		if (c == Source.class)
 			return DataSetType.SOURCE;
-		if (ds instanceof UnitGroup)
+		if (c == UnitGroup.class)
 			return DataSetType.UNIT_GROUP;
 		return null;
+	}
+
+	public Class<? extends IDataSet> getDataSetClass() {
+		return switch (this) {
+			case CONTACT -> Contact.class;
+			case FLOW_PROPERTY -> FlowProperty.class;
+			case FLOW -> Flow.class;
+			case IMPACT_METHOD -> ImpactMethod.class;
+			case MODEL -> Model.class;
+			case PROCESS -> Process.class;
+			case SOURCE -> Source.class;
+			case UNIT_GROUP -> UnitGroup.class;
+			case EXTERNAL_FILE -> null;
+		};
 	}
 
 	@Override
