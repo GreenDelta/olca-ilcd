@@ -29,7 +29,6 @@ public class EpdDataSet implements Copyable<EpdDataSet> {
 
 	public final List<IndicatorResult> results = new ArrayList<>();
 	public final List<ModuleEntry> moduleEntries = new ArrayList<>();
-	public final List<Scenario> scenarios = new ArrayList<>();
 
 	public final List<Ref> publishers = new ArrayList<>();
 	public final List<Ref> originalEPDs = new ArrayList<>();
@@ -91,9 +90,6 @@ public class EpdDataSet implements Copyable<EpdDataSet> {
 		}
 		for (var entry : moduleEntries) {
 			clone.moduleEntries.add(entry.copy());
-		}
-		for (var scenario : scenarios) {
-			clone.scenarios.add(scenario.copy());
 		}
 
 		for (var ref : publishers) {

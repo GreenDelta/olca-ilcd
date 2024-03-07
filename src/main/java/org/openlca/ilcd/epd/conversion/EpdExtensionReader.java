@@ -5,7 +5,6 @@ import org.openlca.ilcd.epd.model.EpdDataSet;
 import org.openlca.ilcd.epd.model.EpdProfile;
 import org.openlca.ilcd.epd.model.IndicatorResult;
 import org.openlca.ilcd.epd.model.ModuleEntry;
-import org.openlca.ilcd.epd.model.Scenario;
 import org.openlca.ilcd.epd.model.SubType;
 import org.openlca.ilcd.epd.model.content.ContentDeclaration;
 import org.openlca.ilcd.epd.model.qmeta.QMetaData;
@@ -49,8 +48,6 @@ record EpdExtensionReader(Process process, EpdProfile profile) {
 		if (info == null || info.getEpdExtension() == null)
 			return;
 		var other = info.getEpdExtension();
-		List<Scenario> scenarios = ScenarioConverter.readScenarios(other);
-		epd.scenarios.addAll(scenarios);
 		List<ModuleEntry> modules = ModuleConverter.readModules(other, profile);
 		epd.moduleEntries.addAll(modules);
 		epd.safetyMargins = SafetyMarginsConverter.read(other);
