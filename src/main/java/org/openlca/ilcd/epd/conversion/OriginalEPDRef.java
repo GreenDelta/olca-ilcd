@@ -1,6 +1,7 @@
 package org.openlca.ilcd.epd.conversion;
 
 import jakarta.xml.bind.annotation.XmlRootElement;
+import org.openlca.ilcd.Vocab;
 import org.openlca.ilcd.commons.DataSetType;
 import org.openlca.ilcd.commons.Ref;
 import org.openlca.ilcd.epd.model.EpdDataSet;
@@ -8,7 +9,7 @@ import org.openlca.ilcd.util.Processes;
 
 import java.util.stream.Collectors;
 
-@XmlRootElement(name = "referenceToOriginalEPD", namespace = Vocab.NS_EPDv2)
+@XmlRootElement(name = "referenceToOriginalEPD", namespace = Vocab.EPD_2019)
 class OriginalEPDRef extends Ref {
 
 	private static OriginalEPDRef wrap(Ref other) {

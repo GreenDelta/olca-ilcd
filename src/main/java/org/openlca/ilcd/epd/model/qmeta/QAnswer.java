@@ -1,8 +1,8 @@
 package org.openlca.ilcd.epd.model.qmeta;
 
+import org.openlca.ilcd.Vocab;
 import org.openlca.ilcd.commons.Copyable;
 import org.openlca.ilcd.epd.conversion.Dom;
-import org.openlca.ilcd.epd.conversion.Vocab;
 import org.w3c.dom.Element;
 
 public class QAnswer implements Copyable<QAnswer> {

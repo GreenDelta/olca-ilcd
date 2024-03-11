@@ -67,6 +67,9 @@ public class Process implements IDataSet, Copyable<Process> {
 	@XmlAttribute(name="epd-version", namespace = Vocab.EPD_2019)
 	private String epdVersion;
 
+	@XmlAttribute(name="profile", namespace = Vocab.OKWORX)
+	private String epdProfile;
+
 	// region getters
 
 	public ProcessInfo getProcessInfo() {
@@ -112,6 +115,10 @@ public class Process implements IDataSet, Copyable<Process> {
 
 	public String getEpdVersion() {
 		return epdVersion;
+	}
+
+	public String getEpdProfile() {
+		return epdProfile;
 	}
 
 	// endregion
@@ -222,6 +229,11 @@ public class Process implements IDataSet, Copyable<Process> {
 		return this;
 	}
 
+	public Process withEpdProfile(String epdProfile) {
+		this.epdProfile = epdProfile;
+		return this;
+	}
+
 	// endregion
 
 	@Override
@@ -238,6 +250,7 @@ public class Process implements IDataSet, Copyable<Process> {
 		copy.withMetaDataOnly(metaDataOnly);
 		Val.copy(otherAttributes, copy::withOtherAttributes);
 		copy.withEpdVersion(epdVersion);
+		copy.withEpdProfile(epdProfile);
 		return copy;
 	}
 

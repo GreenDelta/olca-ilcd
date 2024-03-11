@@ -1,7 +1,7 @@
 package org.openlca.ilcd.epd.model.content;
 
+import org.openlca.ilcd.Vocab;
 import org.openlca.ilcd.commons.Copyable;
-import org.openlca.ilcd.epd.conversion.Vocab;
 import org.openlca.ilcd.util.Strings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,15 +31,15 @@ public class ContentAmount implements Copyable<ContentAmount> {
 		if (e == null)
 			return a;
 		try {
-			String vStr = e.getAttributeNS(Vocab.NS_EPDv2, "value");
+			String vStr = e.getAttributeNS(Vocab.EPD_2019, "value");
 			if (!Strings.nullOrEmpty(vStr)) {
 				a.value = Double.parseDouble(vStr);
 			}
-			String lStr = e.getAttributeNS(Vocab.NS_EPDv2, "lowerValue");
+			String lStr = e.getAttributeNS(Vocab.EPD_2019, "lowerValue");
 			if (!Strings.nullOrEmpty(lStr)) {
 				a.lowerValue = Double.parseDouble(lStr);
 			}
-			String uStr = e.getAttributeNS(Vocab.NS_EPDv2, "upperValue");
+			String uStr = e.getAttributeNS(Vocab.EPD_2019, "upperValue");
 			if (!Strings.nullOrEmpty(uStr)) {
 				a.upperValue = Double.parseDouble(uStr);
 			}
@@ -55,15 +55,15 @@ public class ContentAmount implements Copyable<ContentAmount> {
 			return;
 		if (value != null) {
 			e.setAttributeNS(
-				Vocab.NS_EPDv2, "epd2:value", value.toString());
+				Vocab.EPD_2019, "epd2:value", value.toString());
 		}
 		if (lowerValue != null) {
 			e.setAttributeNS(
-				Vocab.NS_EPDv2, "epd2:lowerValue", lowerValue.toString());
+				Vocab.EPD_2019, "epd2:lowerValue", lowerValue.toString());
 		}
 		if (upperValue != null) {
 			e.setAttributeNS(
-				Vocab.NS_EPDv2, "epd2:upperValue", upperValue.toString());
+				Vocab.EPD_2019, "epd2:upperValue", upperValue.toString());
 		}
 	}
 

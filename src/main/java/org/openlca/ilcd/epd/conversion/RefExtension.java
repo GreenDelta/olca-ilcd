@@ -2,6 +2,7 @@ package org.openlca.ilcd.epd.conversion;
 
 import java.util.Optional;
 
+import org.openlca.ilcd.Vocab;
 import org.openlca.ilcd.commons.DataSetType;
 import org.openlca.ilcd.commons.Extension;
 import org.openlca.ilcd.commons.LangString;
@@ -47,7 +48,7 @@ public class RefExtension {
 		var doc = Dom.createDocument();
 		if (doc == null)
 			return;
-		var elem = doc.createElementNS(Vocab.NS_EPD, "epd:" + tag);
+		var elem = doc.createElementNS(Vocab.EPD_2013, "epd:" + tag);
 		elem.setAttribute("refObjectId", ref.getUUID());
 		if (ref.getType() != null) {
 			elem.setAttribute("type", ref.getType().value());

@@ -5,10 +5,10 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import org.openlca.ilcd.Vocab;
 import org.openlca.ilcd.commons.Copyable;
 import org.openlca.ilcd.commons.Other;
 import org.openlca.ilcd.epd.conversion.Dom;
-import org.openlca.ilcd.epd.conversion.Vocab;
 import org.openlca.ilcd.util.Strings;
 import org.openlca.ilcd.processes.AdminInfo;
 import org.openlca.ilcd.processes.Modelling;

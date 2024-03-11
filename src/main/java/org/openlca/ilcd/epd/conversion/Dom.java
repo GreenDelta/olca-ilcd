@@ -9,6 +9,7 @@ import java.util.function.Consumer;
 
 import javax.xml.parsers.DocumentBuilderFactory;
 
+import org.openlca.ilcd.Vocab;
 import org.openlca.ilcd.commons.Extension;
 import org.openlca.ilcd.commons.LangString;
 import org.openlca.ilcd.commons.Other;
@@ -97,7 +98,7 @@ public final class Dom {
 			return;
 		elem.setTextContent(s.value);
 		if (!Strings.nullOrEmpty(s.lang)) {
-			elem.setAttributeNS(Vocab.NS_XML, "lang", s.lang);
+			elem.setAttributeNS(Vocab.XML, "lang", s.lang);
 		}
 	}
 

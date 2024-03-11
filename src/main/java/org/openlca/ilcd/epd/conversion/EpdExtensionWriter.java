@@ -1,5 +1,6 @@
 package org.openlca.ilcd.epd.conversion;
 
+import org.openlca.ilcd.Vocab;
 import org.openlca.ilcd.epd.model.EpdDataSet;
 import org.openlca.ilcd.processes.Process;
 import org.openlca.ilcd.util.Processes;
@@ -77,7 +78,6 @@ class EpdExtensionWriter {
 			info.withEpdExtension(null);
 		}
 
-		writeProfile();
 		writeSubType();
 		writePublicationDate();
 		PublisherRef.write(epd);
@@ -93,25 +93,13 @@ class EpdExtensionWriter {
 			return;
 		}
 
-		var elem = Dom.createElement(Vocab.NS_EPD, "subType");
+		var elem = Dom.createElement(Vocab.EPD_2013, "subType");
 		if (elem != null) {
 			epd.process.withModelling()
 				.withInventoryMethod()
 				.withEpdExtension()
 				.withAny()
 				.add(elem);
-		}
-	}
-
-	private void writeProfile() {
-		if (epd.profile != null) {
-			epd.process.withOtherAttributes()
-				.put(Vocab.PROFILE_ATTR, epd.profile);
-		} else {
-			var atts = epd.process.getOtherAttributes();
-			if (!atts.isEmpty()) {
-				atts.remove(Vocab.PROFILE_ATTR);
-			}
 		}
 	}
 
@@ -146,7 +134,7 @@ class EpdExtensionWriter {
 			elem.setTextContent(pubDate.toString());
 			return;
 		}
-		var newElem = Dom.createElement(Vocab.NS_EPDv2, tag);
+		var newElem = Dom.createElement(Vocab.EPD_2019, tag);
 		if (newElem == null)
 			return;
 		newElem.setTextContent(pubDate.toString());
