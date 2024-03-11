@@ -25,7 +25,6 @@ class EpdExtensionWriter {
 			return;
 		var process = epd.process;
 		clearResults(process);
-		Results.writeResults(epd);
 		writeExtensions();
 		Cleanup.on(epd);
 	}

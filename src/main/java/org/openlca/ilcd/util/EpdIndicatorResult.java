@@ -97,16 +97,25 @@ public record EpdIndicatorResult(
 		return rs;
 	}
 
+	public static void clear(Process epd) {
+		if (epd == null)
+			return;
+		if (!epd.getExchanges().isEmpty()) {
+			var qrefs = Processes.getReferenceFlows(epd);
+			epd.getExchanges()
+				.removeIf(e -> !qrefs.contains(e.getId()));
+		}
+		if (!epd.getImpactResults().isEmpty()) {
+			epd.getImpactResults().clear();
+		}
+	}
+
 	public static void writeClean(Process epd, List<EpdIndicatorResult> rs) {
 		if (epd == null || rs == null)
 			return;
-
-		var qrefs = Processes.getReferenceFlows(epd);
+		clear(epd);
 		var exchanges = epd.withExchanges();
-		exchanges.removeIf(e -> !qrefs.contains(e.getId()));
 		var impacts = epd.withImpactResults();
-		impacts.clear();
-
 		for (var r : rs) {
 			if (r.hasInventoryIndicator()) {
 				exchanges.add(r.toExchange());
