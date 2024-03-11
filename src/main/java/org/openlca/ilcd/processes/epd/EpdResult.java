@@ -11,7 +11,7 @@ import org.openlca.ilcd.commons.Copyable;
 public class EpdResult implements Copyable<EpdResult> {
 
 	@XmlValue
-	private double amount;
+	private Double amount;
 
 	@XmlAttribute(name="module", namespace = Vocab.EPD_2013)
 	private String module;
@@ -21,7 +21,7 @@ public class EpdResult implements Copyable<EpdResult> {
 
 	// region getters
 
-	public double getAmount() {
+	public Double getAmount() {
 		return amount;
 	}
 
@@ -37,7 +37,7 @@ public class EpdResult implements Copyable<EpdResult> {
 
 	// region setters
 
-	public EpdResult withAmount(double amount) {
+	public EpdResult withAmount(Double amount) {
 		this.amount = amount;
 		return this;
 	}
