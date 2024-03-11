@@ -24,7 +24,7 @@ public class EpdInfoExtension implements Copyable<EpdInfoExtension>, Extension {
 	private List<EpdScenario> scenarios;
 
 	@XmlElement(name = "modules", namespace = Vocab.EPD_2013)
-	private List<EpdModule> modules;
+	private List<EpdModuleEntry> moduleEntries;
 
 	@XmlElement(name = "contentDeclaration", namespace = Vocab.EPD_2019)
 	private EpdContentDeclaration contentDeclaration;
@@ -42,8 +42,8 @@ public class EpdInfoExtension implements Copyable<EpdInfoExtension>, Extension {
 		return scenarios != null ? scenarios : List.of();
 	}
 
-	public List<EpdModule> getModules() {
-		return modules != null ? modules : List.of();
+	public List<EpdModuleEntry> getModuleEntries() {
+		return moduleEntries != null ? moduleEntries : List.of();
 	}
 
 	public EpdContentDeclaration getContentDeclaration() {
@@ -68,8 +68,8 @@ public class EpdInfoExtension implements Copyable<EpdInfoExtension>, Extension {
 		return this;
 	}
 
-	public EpdInfoExtension withModules(List<EpdModule> modules) {
-		this.modules = modules;
+	public EpdInfoExtension withModuleEntries(List<EpdModuleEntry> modules) {
+		this.moduleEntries = modules;
 		return this;
 	}
 
@@ -97,11 +97,11 @@ public class EpdInfoExtension implements Copyable<EpdInfoExtension>, Extension {
 		return scenarios;
 	}
 
-	public List<EpdModule> withModules() {
-		if (modules == null) {
-			modules = new ArrayList<>();
+	public List<EpdModuleEntry> withModuleEntries() {
+		if (moduleEntries == null) {
+			moduleEntries = new ArrayList<>();
 		}
-		return modules;
+		return moduleEntries;
 	}
 
 	public EpdContentDeclaration withContentDeclaration() {
@@ -125,7 +125,7 @@ public class EpdInfoExtension implements Copyable<EpdInfoExtension>, Extension {
 		var copy = new EpdInfoExtension();
 		Val.copy(safetyMargins, copy::withSafetyMargins);
 		Val.copy(scenarios, copy::withScenarios);
-		Val.copy(modules, copy::withModules);
+		Val.copy(moduleEntries, copy::withModuleEntries);
 		Val.copy(contentDeclaration, copy::withContentDeclaration);
 		Val.copyAny(any, copy::withAny);
 		return copy;
