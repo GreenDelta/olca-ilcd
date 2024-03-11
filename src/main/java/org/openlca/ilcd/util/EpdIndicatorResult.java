@@ -1,5 +1,6 @@
 package org.openlca.ilcd.util;
 
+import org.openlca.ilcd.commons.Copyable;
 import org.openlca.ilcd.commons.DataSetType;
 import org.openlca.ilcd.commons.ExchangeDirection;
 import org.openlca.ilcd.commons.ExchangeFunction;
@@ -22,7 +23,7 @@ public record EpdIndicatorResult(
 	Ref indicator,
 	Ref unitGroup,
 	List<EpdResult> values,
-	boolean isInput) {
+	boolean isInput) implements Copyable<EpdIndicatorResult> {
 
 	public static EpdIndicatorResult of(Ref indicator, Ref unitGroup) {
 		return new EpdIndicatorResult(
@@ -51,9 +52,7 @@ public record EpdIndicatorResult(
 			? ofInputIndicator(e.getFlow(), unitGroup)
 			: ofOutputIndicator(e.getFlow(), unitGroup);
 		if (ext != null) {
-			for (var a : ext.getResults()) {
-				r.values.add(a.copy());
-			}
+			r.values.addAll(ext.getResults());
 		}
 		return Optional.of(r);
 	}
@@ -67,9 +66,7 @@ public record EpdIndicatorResult(
 			: null;
 		var r = EpdIndicatorResult.of(i.getMethod(), unitGroup);
 		if (ext != null) {
-			for (var a : ext.getResults()) {
-				r.values.add(a.copy());
-			}
+			r.values.addAll(ext.getResults());
 		}
 		return Optional.of(r);
 	}
@@ -113,12 +110,22 @@ public record EpdIndicatorResult(
 	public static void writeClean(Process epd, List<EpdIndicatorResult> rs) {
 		if (epd == null || rs == null)
 			return;
+
 		clear(epd);
 		var exchanges = epd.withExchanges();
+		int nextId = 1;
+		for (var e : exchanges) {
+			if (e.getId() >= nextId) {
+				nextId = e.getId() + 1;
+			}
+		}
 		var impacts = epd.withImpactResults();
+
 		for (var r : rs) {
 			if (r.hasInventoryIndicator()) {
-				exchanges.add(r.toExchange());
+				var e = r.toExchange().withId(nextId);
+				exchanges.add(e);
+				nextId++;
 			} else {
 				impacts.add(r.toImpactResult());
 			}
@@ -136,9 +143,7 @@ public record EpdIndicatorResult(
 		var vs = e.withEpdExtension()
 			.withUnitGroup(unitGroup)
 			.withResults();
-		for (var v : values) {
-			vs.add(v.copy());
-		}
+		vs.addAll(values);
 		return e;
 	}
 
@@ -148,9 +153,7 @@ public record EpdIndicatorResult(
 		var vs = i.withEpdExtension()
 			.withUnitGroup(unitGroup)
 			.withResults();
-		for (var v : values) {
-			vs.add(v.copy());
-		}
+		vs.addAll(values);
 		return i;
 	}
 
@@ -164,4 +167,14 @@ public record EpdIndicatorResult(
 			&& indicator.getType() == DataSetType.FLOW;
 	}
 
+	@Override
+	public EpdIndicatorResult copy() {
+		var copyValues = new ArrayList<EpdResult>();
+		Val.copy(values, () -> copyValues);
+		return new EpdIndicatorResult(
+			indicator != null ? indicator.copy() : null,
+			unitGroup != null ? unitGroup.copy() : null,
+			copyValues,
+			isInput);
+	}
 }

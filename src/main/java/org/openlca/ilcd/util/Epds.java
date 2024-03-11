@@ -51,14 +51,14 @@ public final class Epds {
 		return withInfoExtension(p).withScenarios();
 	}
 
-	public static List<EpdModuleEntry> getModules(Process p) {
+	public static List<EpdModuleEntry> getModuleEntries(Process p) {
 		var ext = getInfoExtension(p);
 		return ext != null
 			? ext.getModuleEntries()
 			: Collections.emptyList();
 	}
 
-	public static List<EpdModuleEntry> withModules(Process p) {
+	public static List<EpdModuleEntry> withModuleEntries(Process p) {
 		return withInfoExtension(p).withModuleEntries();
 	}
 
