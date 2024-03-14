@@ -129,6 +129,12 @@ public final class Epds {
 			: Collections.emptyList();
 	}
 
+	public static List<Ref> withOriginalEpds(Process p) {
+		return Processes.withRepresentativeness(p)
+			.withEpdExtension()
+			.withOriginalEpds();
+	}
+
 	public static List<Ref> getPublishers(Process p) {
 		var pub = Processes.getPublication(p);
 		if (pub == null)
@@ -137,5 +143,11 @@ public final class Epds {
 		return ext != null
 			? ext.getPublishers()
 			: Collections.emptyList();
+	}
+
+	public static List<Ref> withPublishers(Process p) {
+		return Processes.withPublication(p)
+			.withEpdExtension()
+			.withPublishers();
 	}
 }
