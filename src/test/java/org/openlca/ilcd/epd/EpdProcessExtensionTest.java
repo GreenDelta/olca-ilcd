@@ -12,7 +12,6 @@ import org.openlca.ilcd.processes.epd.EpdResultExtension;
 import org.openlca.ilcd.processes.epd.EpdScenario;
 import org.openlca.ilcd.processes.epd.EpdSubType;
 import org.openlca.ilcd.util.Epds;
-import org.openlca.ilcd.util.Processes;
 
 import java.text.SimpleDateFormat;
 import java.util.Map;
@@ -60,15 +59,13 @@ public class EpdProcessExtensionTest {
 
 	@Test
 	public void testVersion() {
-		var p = new Process()
+		var epd = new Process()
 			.withEpdVersion("1.2");
-		p.withModelling()
-			.withInventoryMethod()
+		Epds.withInventoryMethod(epd)
 			.withProcessType(ProcessType.EPD);
-
-		var copy = Xml.read(Process.class, Xml.toString(p));
+		var copy = Xml.read(Process.class, Xml.toString(epd));
 		assertEquals("1.2", copy.getEpdVersion());
-		assertEquals(ProcessType.EPD, Processes.getProcessType(p));
+		assertEquals(ProcessType.EPD, Epds.getProcessType(epd));
 	}
 
 	@Test
@@ -148,12 +145,12 @@ public class EpdProcessExtensionTest {
 	) {
 		assertEquals(unit, LangString.getFirst(e.getUnitGroup().getName()));
 		int c = 0;
-		for (var r : e.getResults()) {
-			var key = r.getModule();
-			if (r.getScenario() != null) {
-				key += "/" + r.getScenario();
+		for (var v : e.getValues()) {
+			var key = v.getModule();
+			if (v.getScenario() != null) {
+				key += "/" + v.getScenario();
 			}
-			assertEquals(results.get(key), r.getAmount(), 1e-16);
+			assertEquals(results.get(key), v.getAmount(), 1e-16);
 			c++;
 		}
 		assertEquals(results.size(), c);

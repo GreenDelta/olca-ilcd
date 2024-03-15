@@ -8,7 +8,7 @@ import org.openlca.ilcd.commons.Ref;
 import org.openlca.ilcd.processes.Exchange;
 import org.openlca.ilcd.processes.ImpactResult;
 import org.openlca.ilcd.processes.Process;
-import org.openlca.ilcd.processes.epd.EpdResult;
+import org.openlca.ilcd.processes.epd.EpdValue;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +22,7 @@ import java.util.Optional;
 public record EpdIndicatorResult(
 	Ref indicator,
 	Ref unitGroup,
-	List<EpdResult> values,
+	List<EpdValue> values,
 	boolean isInput) implements Copyable<EpdIndicatorResult> {
 
 	public static EpdIndicatorResult of(Ref indicator, Ref unitGroup) {
@@ -52,7 +52,7 @@ public record EpdIndicatorResult(
 			? ofInputIndicator(e.getFlow(), unitGroup)
 			: ofOutputIndicator(e.getFlow(), unitGroup);
 		if (ext != null) {
-			r.values.addAll(ext.getResults());
+			r.values.addAll(ext.getValues());
 		}
 		return Optional.of(r);
 	}
@@ -66,7 +66,7 @@ public record EpdIndicatorResult(
 			: null;
 		var r = EpdIndicatorResult.of(i.getMethod(), unitGroup);
 		if (ext != null) {
-			r.values.addAll(ext.getResults());
+			r.values.addAll(ext.getValues());
 		}
 		return Optional.of(r);
 	}
@@ -142,7 +142,7 @@ public record EpdIndicatorResult(
 				: ExchangeDirection.OUTPUT);
 		var vs = e.withEpdExtension()
 			.withUnitGroup(unitGroup)
-			.withResults();
+			.withValues();
 		vs.addAll(values);
 		return e;
 	}
@@ -152,7 +152,7 @@ public record EpdIndicatorResult(
 			.withMethod(indicator);
 		var vs = i.withEpdExtension()
 			.withUnitGroup(unitGroup)
-			.withResults();
+			.withValues();
 		vs.addAll(values);
 		return i;
 	}
@@ -169,7 +169,7 @@ public record EpdIndicatorResult(
 
 	@Override
 	public EpdIndicatorResult copy() {
-		var copyValues = new ArrayList<EpdResult>();
+		var copyValues = new ArrayList<EpdValue>();
 		Val.copy(values, () -> copyValues);
 		return new EpdIndicatorResult(
 			indicator != null ? indicator.copy() : null,

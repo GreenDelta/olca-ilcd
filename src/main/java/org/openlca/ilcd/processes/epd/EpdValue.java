@@ -8,7 +8,7 @@ import org.openlca.ilcd.Vocab;
 import org.openlca.ilcd.commons.Copyable;
 
 @XmlAccessorType(XmlAccessType.FIELD)
-public class EpdResult implements Copyable<EpdResult> {
+public class EpdValue implements Copyable<EpdValue> {
 
 	@XmlValue
 	private Double amount;
@@ -37,17 +37,17 @@ public class EpdResult implements Copyable<EpdResult> {
 
 	// region setters
 
-	public EpdResult withAmount(Double amount) {
+	public EpdValue withAmount(Double amount) {
 		this.amount = amount;
 		return this;
 	}
 
-	public EpdResult withModule(String module) {
+	public EpdValue withModule(String module) {
 		this.module = module;
 		return this;
 	}
 
-	public EpdResult withScenario(String scenario) {
+	public EpdValue withScenario(String scenario) {
 		this.scenario = scenario;
 		return this;
 	}
@@ -55,8 +55,8 @@ public class EpdResult implements Copyable<EpdResult> {
 	// endregion
 
 	@Override
-	public EpdResult copy() {
-		var copy = new EpdResult();
+	public EpdValue copy() {
+		var copy = new EpdValue();
 		copy.withAmount(amount);
 		copy.withModule(module);
 		copy.withScenario(scenario);

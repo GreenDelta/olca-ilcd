@@ -18,7 +18,7 @@ public class EpdResultExtension
 	implements Copyable<EpdResultExtension>, Extension {
 
 	@XmlElement(name="amount", namespace = Vocab.EPD_2013)
-	private List<EpdResult> results;
+	private List<EpdValue> values;
 
 	@XmlElement(name="referenceToUnitGroupDataSet", namespace = Vocab.EPD_2013)
 	private Ref unitGroup;
@@ -28,8 +28,8 @@ public class EpdResultExtension
 
 	// region getters
 
-	public List<EpdResult> getResults() {
-		return results != null ? results : List.of();
+	public List<EpdValue> getValues() {
+		return values != null ? values : List.of();
 	}
 
 	public Ref getUnitGroup() {
@@ -44,8 +44,8 @@ public class EpdResultExtension
 
 	// region setters
 
-	public EpdResultExtension withResults(List<EpdResult> results) {
-		this.results = results;
+	public EpdResultExtension withValues(List<EpdValue> values) {
+		this.values = values;
 		return this;
 	}
 
@@ -59,11 +59,11 @@ public class EpdResultExtension
 		return this;
 	}
 
-	public List<EpdResult> withResults() {
-		if (results == null) {
-			results = new ArrayList<>();
+	public List<EpdValue> withValues() {
+		if (values == null) {
+			values = new ArrayList<>();
 		}
-		return results;
+		return values;
 	}
 
 	public Ref withUnitGroup() {
@@ -85,7 +85,7 @@ public class EpdResultExtension
 	@Override
 	public EpdResultExtension copy() {
 		var copy = new EpdResultExtension();
-		Val.copy(results, copy::withResults);
+		Val.copy(values, copy::withValues);
 		Val.copy(unitGroup, copy::withUnitGroup);
 		Val.copyAny(any, copy::withAny);
 		return copy;

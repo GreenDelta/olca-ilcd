@@ -13,7 +13,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
 import java.util.Collections;
 import java.util.List;
 
-public final class Epds {
+public final class Epds extends Processes {
 
 	private Epds() {
 	}

@@ -16,9 +16,9 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public final class Processes {
+public class Processes {
 
-	private Processes() {
+	Processes() {
 	}
 
 	public static String getUUID(Process p) {
