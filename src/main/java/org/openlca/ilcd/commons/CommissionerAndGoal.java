@@ -43,28 +43,10 @@ public class CommissionerAndGoal implements Copyable<CommissionerAndGoal> {
 			&& Val.isEmpty(otherAttributes);
 	}
 
-	public void trim() {
-		if (Val.isEmpty(commissioners)) {
-			commissioners = null;
-		}
-		if (Val.isEmpty(project)) {
-			project = null;
-		}
-		if (Val.isEmpty(intendedApplications)) {
-			intendedApplications = null;
-		}
-		if (Val.isEmpty(other)) {
-			other = null;
-		}
-		if (Val.isEmpty(otherAttributes)) {
-			otherAttributes = null;
-		}
-	}
-
 	// region getters
 
 	public List<Ref> getCommissioners() {
-		return commissioners;
+		return commissioners != null ? commissioners : Collections.emptyList();
 	}
 
 	public List<LangString> getProject() {
@@ -82,7 +64,7 @@ public class CommissionerAndGoal implements Copyable<CommissionerAndGoal> {
 	}
 
 	public Map<QName, String> getOtherAttributes() {
-		return otherAttributes;
+		return otherAttributes != null ? otherAttributes : Collections.emptyMap();
 	}
 
 	// endregion

@@ -4,19 +4,18 @@ import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlAttribute;
 import jakarta.xml.bind.annotation.XmlValue;
-import org.openlca.ilcd.Vocab;
 import org.openlca.ilcd.commons.Copyable;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 public class EpdModuleEntry implements Copyable<EpdModuleEntry> {
 
-	@XmlAttribute(name = "name", namespace = Vocab.EPD_2013)
+	@XmlAttribute(name = "name")
 	private String module;
 
-	@XmlAttribute(name = "scenario", namespace = Vocab.OLCA)
+	@XmlAttribute(name = "scenario")
 	private String scenario;
 
-	@XmlAttribute(name = "productsystem-id", namespace = Vocab.EPD_2013)
+	@XmlAttribute(name = "productsystem-id")
 	private String productSystemId;
 
 	@XmlValue
