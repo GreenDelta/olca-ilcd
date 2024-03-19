@@ -4,9 +4,11 @@ import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlAnyElement;
 import jakarta.xml.bind.annotation.XmlElement;
+import jakarta.xml.bind.annotation.XmlType;
 import org.openlca.ilcd.Vocab;
 import org.openlca.ilcd.commons.Copyable;
 import org.openlca.ilcd.commons.Extension;
+import org.openlca.ilcd.commons.Ref;
 import org.openlca.ilcd.flows.epd.matml.MaterialDoc;
 import org.openlca.ilcd.util.Val;
 
@@ -14,7 +16,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 @XmlAccessorType(XmlAccessType.FIELD)
+@XmlType(propOrder = {
+	"genericFlow",
+	"materialDoc",
+	"any"
+})
 public class EpdInfoExtension implements Copyable<EpdInfoExtension>, Extension {
+
+	@XmlElement(name = "isA", namespace = Vocab.EPD_2013)
+	private Ref genericFlow;
 
 	@XmlElement(name = "MatML_Doc", namespace = Vocab.MATML)
 	private MaterialDoc materialDoc;
@@ -23,6 +33,11 @@ public class EpdInfoExtension implements Copyable<EpdInfoExtension>, Extension {
 	private List<Object> any;
 
 	// region getters
+
+
+	public Ref getGenericFlow() {
+		return genericFlow;
+	}
 
 	public MaterialDoc getMaterialDoc() {
 		return materialDoc;
@@ -36,9 +51,22 @@ public class EpdInfoExtension implements Copyable<EpdInfoExtension>, Extension {
 
 	// region setters
 
+
+	public EpdInfoExtension withGenericFlow(Ref genericFlow) {
+		this.genericFlow = genericFlow;
+		return this;
+	}
+
 	public EpdInfoExtension withMaterialDoc(MaterialDoc materialDoc) {
 		this.materialDoc = materialDoc;
 		return this;
+	}
+
+	public Ref withGenericFlow() {
+		if (genericFlow == null) {
+			genericFlow = new Ref();
+		}
+		return genericFlow;
 	}
 
 	public MaterialDoc withMaterialDoc() {
@@ -65,6 +93,7 @@ public class EpdInfoExtension implements Copyable<EpdInfoExtension>, Extension {
 	@Override
 	public EpdInfoExtension copy() {
 		var copy = new EpdInfoExtension();
+		Val.copy(genericFlow, copy::withGenericFlow);
 		Val.copy(materialDoc, copy::withMaterialDoc);
 		Val.copyAny(any, copy::withAny);
 		return copy;

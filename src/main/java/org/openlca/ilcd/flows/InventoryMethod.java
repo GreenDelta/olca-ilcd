@@ -6,9 +6,10 @@ import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlAnyAttribute;
 import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlType;
+import org.openlca.ilcd.Vocab;
 import org.openlca.ilcd.commons.Copyable;
 import org.openlca.ilcd.commons.FlowType;
-import org.openlca.ilcd.commons.Other;
+import org.openlca.ilcd.flows.epd.EpdMethodExtension;
 import org.openlca.ilcd.util.Val;
 
 import javax.xml.namespace.QName;
@@ -20,15 +21,15 @@ import java.util.Map;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "LCIMethodType", propOrder = {
 	"flowType",
-	"other"
+	"epdExtension"
 })
 public class InventoryMethod implements Copyable<InventoryMethod> {
 
 	@XmlElement(name = "typeOfDataSet", required = true)
 	private FlowType flowType;
 
-	@XmlElement(namespace = "http://lca.jrc.it/ILCD/Common")
-	private Other other;
+	@XmlElement(name= "other", namespace = Vocab.COMMON)
+	private EpdMethodExtension epdExtension;
 
 	@XmlAnyAttribute
 	private Map<QName, String> otherAttributes;
@@ -39,8 +40,8 @@ public class InventoryMethod implements Copyable<InventoryMethod> {
 		return flowType;
 	}
 
-	public Other getOther() {
-		return other;
+	public EpdMethodExtension getEpdExtension() {
+		return epdExtension;
 	}
 
 	public Map<QName, String> getOtherAttributes() {
@@ -56,8 +57,8 @@ public class InventoryMethod implements Copyable<InventoryMethod> {
 		return this;
 	}
 
-	public InventoryMethod withOther(Other other) {
-		this.other = other;
+	public InventoryMethod withEpdExtension(EpdMethodExtension ext) {
+		this.epdExtension = ext;
 		return this;
 	}
 
@@ -66,11 +67,11 @@ public class InventoryMethod implements Copyable<InventoryMethod> {
 		return this;
 	}
 
-	public Other withOther() {
-		if (other == null) {
-			other = new Other();
+	public EpdMethodExtension withEpdExtension() {
+		if (epdExtension == null) {
+			epdExtension = new EpdMethodExtension();
 		}
-		return other;
+		return epdExtension;
 	}
 
 	public Map<QName, String> withOtherAttributes() {
@@ -86,7 +87,7 @@ public class InventoryMethod implements Copyable<InventoryMethod> {
 	public InventoryMethod copy() {
 		var copy = new InventoryMethod();
 		copy.withFlowType(flowType);
-		Val.copy(other, copy::withOther);
+		Val.copy(epdExtension, copy::withEpdExtension);
 		Val.copy(otherAttributes, copy::withOtherAttributes);
 		return copy;
 	}

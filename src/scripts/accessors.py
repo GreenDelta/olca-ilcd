@@ -151,13 +151,16 @@ main(
 """
 
 @XmlAccessorType(XmlAccessType.FIELD)
-public class EpdTimeExtension implements Copyable<EpdTimeExtension>, Extension {
+public class EpdMethodExtension {
 
-	@XmlElement(name = "publicationDateOfEPD", namespace = Vocab.EPD_2019)
-	private XMLGregorianCalendar publicationDate;
+	@XmlElement(name="vendorSpecificProduct", namespace = Vocab.EPD_2013)
+	private Boolean vendorSpecific;
 
-	@XmlAnyElement(lax = true)
-	private List<Object> any;
+	@XmlElement(name="referenceToVendor", namespace = Vocab.EPD_2013)
+	private Ref vendor;
+
+	@XmlElement(name="referenceToSource", namespace = Vocab.EPD_2013)
+	private Ref documentation;
 
 """,
 )

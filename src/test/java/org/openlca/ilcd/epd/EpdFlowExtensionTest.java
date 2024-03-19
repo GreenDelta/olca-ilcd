@@ -2,6 +2,7 @@ package org.openlca.ilcd.epd;
 
 import org.junit.Test;
 import org.openlca.ilcd.Tests;
+import org.openlca.ilcd.commons.LangString;
 import org.openlca.ilcd.flows.Flow;
 import org.openlca.ilcd.flows.epd.matml.Units;
 import org.openlca.ilcd.util.Flows;
@@ -11,6 +12,26 @@ import static org.junit.Assert.*;
 public class EpdFlowExtensionTest {
 
 	private final Flow ds = Tests.read(Flow.class, "sdk_sample_epd_flow.xml");
+
+	@Test
+	public void testMethodExtension() {
+		var method = Flows.getInventoryMethod(ds);
+		assertNotNull(method);
+		var ext = method.getEpdExtension();
+		assertTrue(ext.getVendorSpecific());
+		assertEquals("Hersteller", LangString.getFirst(ext.getVendor().getName()));
+		assertEquals(
+			"Verweis z.B. auf Produktkatalog",
+			LangString.getFirst(ext.getDocumentation().getName()));
+	}
+
+	@Test
+	public void testGenericFlow() {
+		var info = Flows.getDataSetInfo(ds);
+		assertNotNull(info);
+		var ref = info.getEpdExtension().getGenericFlow();
+		assertEquals("generic reference flow", LangString.getFirst(ref.getName()));
+	}
 
 	@Test
 	public void testMatMLRoot() {
