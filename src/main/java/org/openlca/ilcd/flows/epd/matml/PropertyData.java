@@ -11,23 +11,22 @@ import org.openlca.ilcd.commons.Copyable;
 import org.openlca.ilcd.util.Val;
 
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "PropertyData", propOrder = {"data"})
+@XmlType(name = "PropertyData", propOrder = {"value"})
 public class PropertyData implements Copyable<PropertyData> {
 
 	@XmlElement(name = "Data", namespace = Vocab.MATML, required = true)
-	private Data data;
+	private DataValue value;
 
-	@XmlIDREF
 	@XmlAttribute(name = "property", required = true)
-	private PropertyDetails property;
+	private String property;
 
 	// region getters
 
-	public Data getData() {
-		return data;
+	public DataValue getValue() {
+		return value;
 	}
 
-	public PropertyDetails getProperty() {
+	public String getProperty() {
 		return property;
 	}
 
@@ -35,37 +34,30 @@ public class PropertyData implements Copyable<PropertyData> {
 
 	// region setters
 
-	public PropertyData withData(Data data) {
-		this.data = data;
+	public PropertyData withValue(DataValue value) {
+		this.value = value;
 		return this;
 	}
 
-	public PropertyData withProperty(PropertyDetails property) {
+	public PropertyData withProperty(String property) {
 		this.property = property;
 		return this;
 	}
 
-	public Data withData() {
-		if (data == null) {
-			data = new Data();
+	public DataValue withValue() {
+		if (value == null) {
+			value = new DataValue();
 		}
-		return data;
-	}
-
-	public PropertyDetails withProperty() {
-		if (property == null) {
-			property = new PropertyDetails();
-		}
-		return property;
+		return value;
 	}
 
 	// endregion
 
 	@Override
 	public PropertyData copy() {
-		var copy = new PropertyData();
-		Val.copy(data, copy::withData);
-		Val.copy(property, copy::withProperty);
+		var copy = new PropertyData()
+			.withProperty(property);
+		Val.copy(value, copy::withValue);
 		return copy;
 	}
 

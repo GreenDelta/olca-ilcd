@@ -4,29 +4,26 @@ import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlAttribute;
 import jakarta.xml.bind.annotation.XmlElement;
-import jakarta.xml.bind.annotation.XmlID;
 import jakarta.xml.bind.annotation.XmlType;
 import org.openlca.ilcd.Vocab;
 import org.openlca.ilcd.commons.Copyable;
-import org.openlca.ilcd.util.Val;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "PropertyDetails	", propOrder = {"name", "units"})
 public class PropertyDetails implements Copyable<PropertyDetails> {
 
 	@XmlElement(name = "Name", namespace = Vocab.MATML, required = true)
-	private Name name;
+	private String name;
 
 	@XmlElement(name = "Units", namespace = Vocab.MATML, required = true)
 	private Units units;
 
-	@XmlID
 	@XmlAttribute(name = "id", required = true)
 	private String id;
 
 	// region getters
 
-	public Name getName() {
+	public String getName() {
 		return name;
 	}
 
@@ -42,7 +39,7 @@ public class PropertyDetails implements Copyable<PropertyDetails> {
 
 	// region setters
 
-	public PropertyDetails withName(Name name) {
+	public PropertyDetails withName(String name) {
 		this.name = name;
 		return this;
 	}
@@ -57,14 +54,7 @@ public class PropertyDetails implements Copyable<PropertyDetails> {
 		return this;
 	}
 
-	public Name withName() {
-		if (name == null) {
-			name = new Name();
-		}
-		return name;
-	}
-
-	public Object withUnits() {
+	public Units withUnits() {
 		if (units == null) {
 			units = new Units();
 		}
@@ -75,8 +65,8 @@ public class PropertyDetails implements Copyable<PropertyDetails> {
 
 	@Override
 	public PropertyDetails copy() {
-		var copy = new PropertyDetails();
-		Val.copy(name, copy::withName);
+		var copy = new PropertyDetails()
+			.withName(name);
 		copy.withUnits(units);
 		copy.withId(id);
 		return copy;

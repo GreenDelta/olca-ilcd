@@ -3,7 +3,6 @@ package org.openlca.ilcd.epd;
 import org.junit.Test;
 import org.openlca.ilcd.Tests;
 import org.openlca.ilcd.flows.Flow;
-import org.openlca.ilcd.flows.epd.matml.DataFormat;
 import org.openlca.ilcd.flows.epd.matml.Units;
 import org.openlca.ilcd.util.Flows;
 
@@ -33,7 +32,7 @@ public class EpdFlowExtensionTest {
 
 		// "pr1"
 		var property1 = properties.get(0);
-		assertEquals("gross density", property1.getName().getValue());
+		assertEquals("gross density", property1.getName());
 		assertEquals("pr1", property1.getId());
 
 		assertEquals(Units.class, property1.getUnits().getClass());
@@ -49,7 +48,7 @@ public class EpdFlowExtensionTest {
 		// "pr2"
 		var property2 = properties.get(1);
 		assertEquals("pr2", property2.getId());
-		assertEquals("grammage", property2.getName().getValue());
+		assertEquals("grammage", property2.getName());
 
 		assertEquals(Units.class, property2.getUnits().getClass());
 		var units2 = (Units) property2.getUnits();
@@ -67,30 +66,32 @@ public class EpdFlowExtensionTest {
 		var ext = ds.getFlowInfo().getDataSetInfo().getEpdExtension();
 		var materials = ext.getMaterialDoc().getMaterials();
 		var properties = ext.getMaterialDoc().getMetadata().getProperties();
+		assertEquals(2, properties.size());
+		assertEquals("gross density", properties.get(0).getName());
 
 		// Material 0
 		var material0 = materials.get(0);
 		var bulkDetails0 = material0.getBulkDetails();
-		assertEquals("(Name of the material)", bulkDetails0.getName().getValue());
+		assertEquals("(Name of the material)", bulkDetails0.getName());
 		var properties0 = bulkDetails0.getProperties();
 
-		assertEquals(properties.get(0), properties0.get(0).getProperty());
-		assertEquals("0.58", properties0.get(0).getData().getValue());
-		assertEquals(DataFormat.FLOAT, properties0.get(0).getData().getFormat());
+		assertEquals("pr1", properties0.get(0).getProperty());
+		assertEquals("0.58", properties0.get(0).getValue().getValue());
+		assertEquals("float", properties0.get(0).getValue().getFormat());
 
-		assertEquals(properties.get(1), properties0.get(1).getProperty());
-		assertEquals("42", properties0.get(1).getData().getValue());
-		assertEquals(DataFormat.INTEGER, properties0.get(1).getData().getFormat());
+		assertEquals("pr2", properties0.get(1).getProperty());
+		assertEquals("42", properties0.get(1).getValue().getValue());
+		assertEquals("integer", properties0.get(1).getValue().getFormat());
 
 		// Material 1
 		var material1 = materials.get(1);
 		var bulkDetails1 = material1.getBulkDetails();
-		assertEquals("(Name of the secondary material)", bulkDetails1.getName().getValue());
+		assertEquals("(Name of the secondary material)", bulkDetails1.getName());
 		var properties1 = bulkDetails1.getProperties();
 
-		assertEquals(properties.get(0), properties1.get(0).getProperty());
-		assertEquals("4.2e7", properties1.get(0).getData().getValue());
-		assertEquals(DataFormat.EXPONENTIAL, properties1.get(0).getData().getFormat());
+		assertEquals("pr1", properties1.get(0).getProperty());
+		assertEquals("4.2e7", properties1.get(0).getValue().getValue());
+		assertEquals("exponential", properties1.get(0).getValue().getFormat());
 	}
 
 	@Test

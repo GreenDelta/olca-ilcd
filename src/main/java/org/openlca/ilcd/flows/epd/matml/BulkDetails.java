@@ -16,14 +16,14 @@ import java.util.List;
 public class BulkDetails implements Copyable<BulkDetails> {
 
 	@XmlElement(name = "Name", namespace = Vocab.MATML, required = true)
-	private Name name;
+	private String name;
 
 	@XmlElement(name = "PropertyData", namespace = Vocab.MATML)
 	private List<PropertyData> properties;
 
 	// region getters
 
-	public Name getName() {
+	public String getName() {
 		return name;
 	}
 
@@ -35,7 +35,7 @@ public class BulkDetails implements Copyable<BulkDetails> {
 
 	// region setters
 
-	public BulkDetails withName(Name name) {
+	public BulkDetails withName(String name) {
 		this.name = name;
 		return this;
 	}
@@ -43,13 +43,6 @@ public class BulkDetails implements Copyable<BulkDetails> {
 	public BulkDetails withProperties(List<PropertyData> properties) {
 		this.properties = properties;
 		return this;
-	}
-
-	public Name withName() {
-		if (name == null) {
-			name = new Name();
-		}
-		return name;
 	}
 
 	public List<PropertyData> withProperties() {
@@ -63,8 +56,8 @@ public class BulkDetails implements Copyable<BulkDetails> {
 
 	@Override
 	public BulkDetails copy() {
-		var copy = new BulkDetails();
-		Val.copy(name, copy::withName);
+		var copy = new BulkDetails()
+			.withName(name);
 		Val.copy(properties, copy::withProperties);
 		return copy;
 	}
