@@ -41,15 +41,15 @@ public class EpdFlowExtensionTest {
 
 		// MaterialDoc
 		var materials = materialDoc.getMaterials();
-		var metadata = materialDoc.getMetadata();
+		var properties = materialDoc.getProperties();
 		assertEquals(2, materials.size());
-		assertNotNull(metadata);
+		assertEquals(2, properties.size());
 	}
 
 	@Test
 	public void testMatMLMetadata() {
 		var ext = ds.getFlowInfo().getDataSetInfo().getEpdExtension();
-		var properties = ext.getMaterialDoc().getMetadata().getProperties();
+		var properties = ext.getMaterialDoc().getProperties();
 
 		// "pr1"
 		var property1 = properties.get(0);
@@ -86,7 +86,7 @@ public class EpdFlowExtensionTest {
 	public void testMatMLMaterial() {
 		var ext = ds.getFlowInfo().getDataSetInfo().getEpdExtension();
 		var materials = ext.getMaterialDoc().getMaterials();
-		var properties = ext.getMaterialDoc().getMetadata().getProperties();
+		var properties = ext.getMaterialDoc().getProperties();
 		assertEquals(2, properties.size());
 		assertEquals("gross density", properties.get(0).getName());
 

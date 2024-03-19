@@ -3,6 +3,7 @@ package org.openlca.ilcd.flows.epd.matml;
 import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlElement;
+import jakarta.xml.bind.annotation.XmlElementWrapper;
 import jakarta.xml.bind.annotation.XmlType;
 import org.openlca.ilcd.Vocab;
 import org.openlca.ilcd.commons.Copyable;
@@ -12,14 +13,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "MatML_Doc", propOrder = {"materials", "metadata"})
+@XmlType(name = "MatML_Doc", propOrder = {"materials", "properties"})
 public class MaterialDoc implements Copyable<MaterialDoc> {
 
 	@XmlElement(name = "Material", namespace = Vocab.MATML, required = true)
 	private List<Material> materials;
 
-	@XmlElement(name = "Metadata", namespace = Vocab.MATML)
-	private Metadata metadata;
+	@XmlElementWrapper(name = "Metadata", namespace = Vocab.MATML)
+	@XmlElement(name = "PropertyDetails", namespace = Vocab.MATML)
+	private List<PropertyDetails> properties;
 
 	// region getters
 
@@ -27,8 +29,8 @@ public class MaterialDoc implements Copyable<MaterialDoc> {
 		return materials != null ? materials : List.of();
 	}
 
-	public Metadata getMetadata() {
-		return metadata;
+	public List<PropertyDetails> getProperties() {
+		return properties != null ? properties : List.of();
 	}
 
 	// endregion
@@ -40,8 +42,8 @@ public class MaterialDoc implements Copyable<MaterialDoc> {
 		return this;
 	}
 
-	public MaterialDoc withMetadata(Metadata metadata) {
-		this.metadata = metadata;
+	public MaterialDoc withProperties(List<PropertyDetails> properties) {
+		this.properties = properties;
 		return this;
 	}
 
@@ -52,11 +54,11 @@ public class MaterialDoc implements Copyable<MaterialDoc> {
 		return materials;
 	}
 
-	public Metadata withMetadata() {
-		if (metadata == null) {
-			metadata = new Metadata();
+	public List<PropertyDetails> withProperties() {
+		if (properties == null) {
+			properties = new ArrayList<>();
 		}
-		return metadata;
+		return properties;
 	}
 
 	// endregion
@@ -65,7 +67,7 @@ public class MaterialDoc implements Copyable<MaterialDoc> {
 	public MaterialDoc copy() {
 		var copy = new MaterialDoc();
 		Val.copy(materials, copy::withMaterials);
-		Val.copy(metadata, copy::withMetadata);
+		Val.copy(properties, copy::withProperties);
 		return copy;
 	}
 
