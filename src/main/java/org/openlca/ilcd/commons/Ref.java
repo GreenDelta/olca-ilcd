@@ -1,11 +1,14 @@
 package org.openlca.ilcd.commons;
 
-import jakarta.xml.bind.annotation.XmlAccessType;
-import jakarta.xml.bind.annotation.XmlAccessorType;
-import jakarta.xml.bind.annotation.XmlAttribute;
-import jakarta.xml.bind.annotation.XmlElement;
-import jakarta.xml.bind.annotation.XmlSchemaType;
-import jakarta.xml.bind.annotation.XmlType;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+
+import javax.xml.namespace.QName;
+
 import org.openlca.ilcd.commons.annotations.ShortText;
 import org.openlca.ilcd.contacts.Contact;
 import org.openlca.ilcd.flowproperties.FlowProperty;
@@ -18,15 +21,19 @@ import org.openlca.ilcd.units.UnitGroup;
 import org.openlca.ilcd.util.DataSets;
 import org.openlca.ilcd.util.Val;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import jakarta.xml.bind.annotation.XmlAccessType;
+import jakarta.xml.bind.annotation.XmlAccessorType;
+import jakarta.xml.bind.annotation.XmlAnyAttribute;
+import jakarta.xml.bind.annotation.XmlAttribute;
+import jakarta.xml.bind.annotation.XmlElement;
+import jakarta.xml.bind.annotation.XmlSchemaType;
+import jakarta.xml.bind.annotation.XmlType;
 
 /**
  * Ref describes an ILCD data set reference (GlobalReferenceType).
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "GlobalReferenceType", propOrder = {"name"})
+@XmlType(name = "GlobalReferenceType", propOrder = {"name", "other"})
 public class Ref implements Copyable<Ref> {
 
 	@ShortText
@@ -45,6 +52,12 @@ public class Ref implements Copyable<Ref> {
 	@XmlAttribute(name = "uri")
 	@XmlSchemaType(name = "anyURI")
 	private String uri;
+
+	@XmlElement(namespace = "http://lca.jrc.it/ILCD/Common")
+	private Other other;
+
+	@XmlAnyAttribute
+	private Map<QName, String> otherAttributes;
 
 	public static Ref of(IDataSet ds) {
 		var ref = new Ref()
@@ -81,6 +94,14 @@ public class Ref implements Copyable<Ref> {
 		return uri;
 	}
 
+	public Other getOther() {
+		return other;
+	}
+
+	public Map<QName, String> getOtherAttributes() {
+		return otherAttributes != null ? otherAttributes : Collections.emptyMap();
+	}
+
 	// endregion
 
 	// region setters
@@ -110,11 +131,35 @@ public class Ref implements Copyable<Ref> {
 		return this;
 	}
 
+	public Ref withOther(Other other) {
+		this.other = other;
+		return this;
+	}
+
+	public Ref withOtherAttributes(Map<QName, String> otherAttributes) {
+		this.otherAttributes = otherAttributes;
+		return this;
+	}
+
 	public List<LangString> withName() {
 		if (name == null) {
 			name = new ArrayList<>();
 		}
 		return name;
+	}
+
+	public Other withOther() {
+		if (other == null) {
+			other = new Other();
+		}
+		return other;
+	}
+
+	public Map<QName, String> withOtherAttributes() {
+		if (otherAttributes == null) {
+			otherAttributes = new HashMap<>();
+		}
+		return otherAttributes;
 	}
 
 	// endregion
@@ -140,10 +185,10 @@ public class Ref implements Copyable<Ref> {
 			return false;
 		if (obj == this)
 			return true;
-		if (!(obj instanceof Ref other))
+		if (!(obj instanceof Ref otherRef))
 			return false;
-		return Objects.equals(this.type, other.type)
-			&& Objects.equals(this.uuid, other.uuid);
+		return Objects.equals(this.type, otherRef.type)
+			&& Objects.equals(this.uuid, otherRef.uuid);
 	}
 
 	@Override
@@ -154,6 +199,8 @@ public class Ref implements Copyable<Ref> {
 			.withVersion(version)
 			.withUri(uri);
 		Val.copy(name, copy::withName);
+		Val.copy(other, copy::withOther);
+		Val.copy(otherAttributes, copy::withOtherAttributes);
 		return copy;
 	}
 
