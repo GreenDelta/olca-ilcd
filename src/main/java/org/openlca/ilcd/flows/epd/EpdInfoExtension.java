@@ -1,10 +1,8 @@
 package org.openlca.ilcd.flows.epd;
 
-import jakarta.xml.bind.annotation.XmlAccessType;
-import jakarta.xml.bind.annotation.XmlAccessorType;
-import jakarta.xml.bind.annotation.XmlAnyElement;
-import jakarta.xml.bind.annotation.XmlElement;
-import jakarta.xml.bind.annotation.XmlType;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.openlca.ilcd.Vocab;
 import org.openlca.ilcd.commons.Copyable;
 import org.openlca.ilcd.commons.Extension;
@@ -12,8 +10,11 @@ import org.openlca.ilcd.commons.Ref;
 import org.openlca.ilcd.flows.epd.matml.MaterialDoc;
 import org.openlca.ilcd.util.Val;
 
-import java.util.ArrayList;
-import java.util.List;
+import jakarta.xml.bind.annotation.XmlAccessType;
+import jakarta.xml.bind.annotation.XmlAccessorType;
+import jakarta.xml.bind.annotation.XmlAnyElement;
+import jakarta.xml.bind.annotation.XmlElement;
+import jakarta.xml.bind.annotation.XmlType;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(propOrder = {

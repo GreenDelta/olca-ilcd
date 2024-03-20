@@ -1,14 +1,19 @@
 package org.openlca.ilcd.util;
 
+import static org.junit.Assert.*;
+
+import java.io.ByteArrayInputStream;
+import java.util.UUID;
+import java.util.function.Consumer;
+
 import org.junit.Test;
 import org.openlca.ilcd.Tests;
 import org.openlca.ilcd.commons.DataSetType;
 import org.openlca.ilcd.commons.LangString;
 import org.openlca.ilcd.commons.Ref;
-
-import java.util.function.Consumer;
-
-import static org.junit.Assert.*;
+import org.openlca.ilcd.io.Xml;
+import org.openlca.ilcd.units.Unit;
+import org.openlca.ilcd.units.UnitGroup;
 
 public class RefsTest {
 
@@ -73,6 +78,25 @@ public class RefsTest {
 			assertEquals("name0", LangString.getVal(ref.getName(), "en"));
 			assertEquals("name1", LangString.getVal(ref.getName(), "de"));
 		});
+	}
+
+	@Test
+	public void testNoUnitNames() {
+		var g = new UnitGroup();
+		UnitGroups.withDataSetInfo(g)
+			.withUUID(UUID.randomUUID().toString())
+			.withName().add(LangString.of("Mass units", "en"));
+		g.withUnits().add(
+			new Unit().withId(1).withName("kg"));
+		g.withUnits().add(
+			new Unit().withId(2).withName("t"));
+
+		var xml = Xml.toBytes(g);
+		var ref = Refs.fetch(new ByteArrayInputStream(xml));
+		assertNotNull(ref);
+		assertEquals(UnitGroups.getUUID(g), ref.getUUID());
+		assertEquals("Mass units", LangString.getFirst(ref.getName()));
+		assertEquals(1, ref.getName().size());
 	}
 
 	private void with(String file, Consumer<Ref> fn) {

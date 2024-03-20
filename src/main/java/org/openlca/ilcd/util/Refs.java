@@ -4,10 +4,12 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
 
+import javax.xml.namespace.QName;
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamConstants;
 import javax.xml.stream.XMLStreamReader;
 
+import org.openlca.ilcd.Vocab;
 import org.openlca.ilcd.commons.DataSetType;
 import org.openlca.ilcd.commons.LangString;
 import org.openlca.ilcd.commons.Ref;
@@ -105,24 +107,24 @@ public class Refs {
 				case "flowDataSet" -> DataSetType.FLOW;
 				case "flowPropertyDataSet" -> DataSetType.FLOW_PROPERTY;
 				case "unitGroupDataSet" -> DataSetType.UNIT_GROUP;
+				case "lifeCycleModelDataSet" -> DataSetType.MODEL;
 				default -> null;
 			};
 		}
 
 		void start() {
-			String element = reader.getLocalName();
-			if (element == null)
+			var name = reader.getName();
+			if (name == null)
 				return;
-			switch (element) {
+			switch (name.getLocalPart()) {
 				case "UUID":
 				case "dataSetVersion":
 				case "permanentDataSetURI":
 					sb = new StringBuilder();
 					return;
 			}
-			if (matchName(element)) {
-				lang = reader.getAttributeValue(
-					"http://www.w3.org/XML/1998/namespace", "lang");
+			if (matchName(reader.getName())) {
+				lang = reader.getAttributeValue(Vocab.XML, "lang");
 				sb = new StringBuilder();
 			}
 		}
@@ -158,24 +160,30 @@ public class Refs {
 					ref.withUri(t);
 					return true;
 			}
-			if (matchName(element)) {
+			if (matchName(reader.getName())) {
 				ref.withName().add(LangString.of(t, lang));
 			}
 			return false;
 		}
 
-		private boolean matchName(String name) {
+		private boolean matchName(QName name) {
 			var type = ref.getType();
-			return switch (name) {
-				case "name" -> type == DataSetType.CONTACT
-					|| type == DataSetType.FLOW_PROPERTY
-					|| type == DataSetType.UNIT_GROUP
-					|| type == DataSetType.IMPACT_METHOD;
+			return switch (name.getLocalPart()) {
+				case "name" -> isCommon(name) && (
+					type == DataSetType.CONTACT
+						|| type == DataSetType.FLOW_PROPERTY
+						|| type == DataSetType.UNIT_GROUP
+						|| type == DataSetType.IMPACT_METHOD);
 				case "baseName" -> type == DataSetType.FLOW
 					|| type == DataSetType.PROCESS;
 				case "shortName" -> type == DataSetType.SOURCE;
 				default -> false;
 			};
+		}
+
+		private boolean isCommon(QName name) {
+			return name != null
+				&& Vocab.COMMON.equalsIgnoreCase(name.getNamespaceURI());
 		}
 	}
 }
