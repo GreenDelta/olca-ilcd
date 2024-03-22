@@ -147,6 +147,6 @@ public class Publication implements Copyable<Publication> {
 		Val.copy(otherAttributes, copy::withOtherAttributes);
 		Val.copy(precedingVersions, copy::withPrecedingVersions);
 		Val.copy(owner, copy::withOwner);
-		return null;
+		return copy;
 	}
 }

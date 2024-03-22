@@ -86,4 +86,12 @@ public class FlowTest {
 			path[2]);
 	}
 
+	@Test
+	public void testFlowCopy() {
+		var flow = new Flow();
+		Flows.withUUID(flow, "abc");
+		Flows.withVersion(flow, "1.0");
+		var copy = flow.copy();
+		assertEquals("1.0", Flows.getVersion(copy));
+	}
 }
