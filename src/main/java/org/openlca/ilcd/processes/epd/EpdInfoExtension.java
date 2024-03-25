@@ -23,7 +23,7 @@ public class EpdInfoExtension implements Copyable<EpdInfoExtension>, Extension {
 	@XmlElement(name = "scenario", namespace = Vocab.EPD_2013)
 	private List<EpdScenario> scenarios;
 
-	@XmlElement(name = "modules", namespace = Vocab.OLCA)
+	@XmlElement(name = "modules", namespace = Vocab.OLCA_EPD)
 	private List<EpdModuleEntry> moduleEntries;
 
 	@XmlElement(name = "contentDeclaration", namespace = Vocab.EPD_2019)

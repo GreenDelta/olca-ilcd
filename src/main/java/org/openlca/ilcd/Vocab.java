@@ -9,7 +9,7 @@ public interface Vocab {
 	String EPD_2019 = "http://www.indata.network/EPD/2019";
 	String MATML = "http://www.matml.org/";
 	String SBE_ILCD = "http://sbeilcd.se/EPD/2017";
-	String OLCA = "http://openlca.org/epd_ilcd";
+	String OLCA_EPD = "http://openlca.org/epd_ilcd";
 	String OKWORX = "http://www.okworx.com/ILCD/Extensions/2018/Profile";
 	String XML = "http://www.w3.org/XML/1998/namespace";
 
@@ -22,7 +22,7 @@ public interface Vocab {
 		return switch (namespace) {
 			case EPD_2013 -> Optional.of("epd");
 			case EPD_2019 -> Optional.of("epd2");
-			case OLCA -> Optional.of("olca");
+			case OLCA_EPD -> Optional.of("olca");
 			case SBE_ILCD -> Optional.of("sbe");
 			case XML -> Optional.of("xml");
 			default -> Optional.empty();
