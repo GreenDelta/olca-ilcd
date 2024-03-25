@@ -2,6 +2,10 @@ package org.openlca.ilcd.epd;
 
 import static org.junit.Assert.*;
 
+import java.text.SimpleDateFormat;
+import java.util.Map;
+import java.util.function.Function;
+
 import org.junit.Test;
 import org.openlca.ilcd.Tests;
 import org.openlca.ilcd.commons.LangString;
@@ -12,10 +16,6 @@ import org.openlca.ilcd.processes.epd.EpdResultExtension;
 import org.openlca.ilcd.processes.epd.EpdScenario;
 import org.openlca.ilcd.processes.epd.EpdSubType;
 import org.openlca.ilcd.util.Epds;
-
-import java.text.SimpleDateFormat;
-import java.util.Map;
-import java.util.function.Function;
 
 public class EpdProcessExtensionTest {
 
@@ -28,7 +28,7 @@ public class EpdProcessExtensionTest {
 		assertEquals(10, margins.getValue(), 1e-16);
 		assertEquals(
 			"Reasons for choice of safety margins",
-			LangString.getFirst(margins.getDescription())
+			LangString.getDefault(margins.getDescription())
 		);
 	}
 
@@ -54,7 +54,7 @@ public class EpdProcessExtensionTest {
 
 		assertEquals(
 			"description of scenario S1",
-			LangString.getFirst(s.apply("S1").getDescription()));
+			LangString.getDefault(s.apply("S1").getDescription()));
 	}
 
 	@Test
@@ -85,7 +85,7 @@ public class EpdProcessExtensionTest {
 	@Test
 	public void testOriginalEpdRef() {
 		var ref = Epds.getOriginalEpds(ds).get(0);
-		assertEquals("Wood Panel EPD", LangString.getFirst(ref.getName()));
+		assertEquals("Wood Panel EPD", LangString.getDefault(ref.getName()));
 	}
 
 	@Test
@@ -93,7 +93,7 @@ public class EpdProcessExtensionTest {
 		var ref = Epds.getPublishers(ds).get(0);
 		assertEquals(
 			"Institut Bauen und Umwelt e. V.",
-			LangString.getFirst(ref.getName()));
+			LangString.getDefault(ref.getName()));
 	}
 
 	@Test
@@ -143,7 +143,7 @@ public class EpdProcessExtensionTest {
 	private void checkResult(
 		EpdResultExtension e, String unit, Map<String, Double> results
 	) {
-		assertEquals(unit, LangString.getFirst(e.getUnitGroup().getName()));
+		assertEquals(unit, LangString.getDefault(e.getUnitGroup().getName()));
 		int c = 0;
 		for (var v : e.getValues()) {
 			var key = v.getModule();

@@ -1,14 +1,10 @@
 package org.openlca.ilcd.io;
 
-import static org.junit.Assert.assertEquals;
-
-import java.io.InputStream;
-import java.util.function.Consumer;
+import static org.junit.Assert.*;
 
 import org.junit.Test;
 import org.openlca.ilcd.Tests;
 import org.openlca.ilcd.commons.DataSetType;
-import org.openlca.ilcd.commons.IDataSet;
 import org.openlca.ilcd.commons.Ref;
 import org.openlca.ilcd.contacts.Contact;
 import org.openlca.ilcd.flowproperties.FlowProperty;
@@ -18,8 +14,6 @@ import org.openlca.ilcd.processes.Process;
 import org.openlca.ilcd.sources.Source;
 import org.openlca.ilcd.units.UnitGroup;
 
-import jakarta.xml.bind.JAXB;
-
 public class IDataSetRefTest {
 
 	@Test
@@ -28,7 +22,7 @@ public class IDataSetRefTest {
 		assertEquals("00000000-0000-0000-0000-000000000000", ref.getUUID());
 		assertEquals("00.00", ref.getVersion());
 		assertEquals(DataSetType.SOURCE, ref.getType());
-		assertEquals("shortName0", ref.getName().get(0).value.trim());
+		assertEquals("shortName0", ref.getName().get(0).getValue().trim());
 		assertEquals(
 			"http://www.ilcd-network.org/data/processes/sample_source.xml",
 			ref.getUri().trim());
@@ -39,7 +33,7 @@ public class IDataSetRefTest {
 		var ref = Ref.of(Tests.read(Contact.class, "sdk_sample_contact.xml"));
 		assertEquals("00000000-0000-0000-0000-000000000000", ref.getUUID());
 		assertEquals("00.00", ref.getVersion());
-		assertEquals("name0", ref.getName().get(0).value.trim());
+		assertEquals("name0", ref.getName().get(0).getValue().trim());
 		assertEquals(DataSetType.CONTACT, ref.getType());
 		assertEquals(
 			"http://www.ilcd-network.org/data/processes/sample_contact.xml",
@@ -51,7 +45,7 @@ public class IDataSetRefTest {
 		var ref = Ref.of(Tests.read(UnitGroup.class, "sdk_sample_unitgroup.xml"));
 		assertEquals("00000000-0000-0000-0000-000000000000", ref.getUUID());
 		assertEquals("00.00", ref.getVersion());
-		assertEquals("name0", ref.getName().get(0).value.trim());
+		assertEquals("name0", ref.getName().get(0).getValue().trim());
 		assertEquals(DataSetType.UNIT_GROUP, ref.getType());
 		assertEquals(
 			"http://www.ilcd-network.org/data/processes/sample_unitgroup.xml",
@@ -63,7 +57,7 @@ public class IDataSetRefTest {
 		var ref = Ref.of(Tests.read(FlowProperty.class, "sdk_sample_flowproperty.xml"));
 		assertEquals("00000000-0000-0000-0000-000000000000", ref.getUUID());
 		assertEquals("00.00", ref.getVersion());
-		assertEquals("name0", ref.getName().get(0).value.trim());
+		assertEquals("name0", ref.getName().get(0).getValue().trim());
 		assertEquals(DataSetType.FLOW_PROPERTY, ref.getType());
 		assertEquals(
 			"http://www.ilcd-network.org/data/processes/sample_flowproperty.xml",
@@ -75,7 +69,7 @@ public class IDataSetRefTest {
 		var ref = Ref.of(Tests.read(Flow.class, "sdk_sample_flow.xml"));
 		assertEquals("00000000-0000-0000-0000-000000000000", ref.getUUID());
 		assertEquals("00.00", ref.getVersion());
-		assertEquals("baseName0", ref.getName().get(0).value.trim());
+		assertEquals("baseName0", ref.getName().get(0).getValue().trim());
 		assertEquals(DataSetType.FLOW, ref.getType());
 		assertEquals(
 			"http://www.ilcd-network.org/data/processes/sample_flow.xml",
@@ -87,7 +81,7 @@ public class IDataSetRefTest {
 		var ref = Ref.of(Tests.read(Process.class, "sdk_sample_process.xml"));
 		assertEquals("00000000-0000-0000-0000-000000000000", ref.getUUID());
 		assertEquals("00.00", ref.getVersion());
-		assertEquals("baseName0", ref.getName().get(0).value.trim());
+		assertEquals("baseName0", ref.getName().get(0).getValue().trim());
 		assertEquals(DataSetType.PROCESS, ref.getType());
 		assertEquals(
 			"http://www.ilcd-network.org/data/processes/sample_process.xml",
@@ -99,7 +93,7 @@ public class IDataSetRefTest {
 		var ref = Ref.of(Tests.read(ImpactMethod.class, "sdk_sample_lciamethod.xml"));
 		assertEquals("00000000-0000-0000-0000-000000000000", ref.getUUID());
 		assertEquals("00.00", ref.getVersion());
-		assertEquals("name0", ref.getName().get(0).value.trim());
+		assertEquals("name0", ref.getName().get(0).getValue().trim());
 		assertEquals(DataSetType.IMPACT_METHOD, ref.getType());
 		assertEquals(
 			"http://www.ilcd-network.org/data/lciamethods/sample_lciamethod.xml",

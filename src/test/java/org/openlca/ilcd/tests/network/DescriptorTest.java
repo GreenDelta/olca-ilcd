@@ -1,7 +1,7 @@
 package org.openlca.ilcd.tests.network;
 
-import jakarta.ws.rs.client.Client;
-import jakarta.ws.rs.client.ClientBuilder;
+import static org.junit.Assert.*;
+
 import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
@@ -14,7 +14,8 @@ import org.openlca.ilcd.util.UnitGroups;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import static org.junit.Assert.*;
+import jakarta.ws.rs.client.Client;
+import jakarta.ws.rs.client.ClientBuilder;
 
 
 public class DescriptorTest {
@@ -76,7 +77,9 @@ public class DescriptorTest {
 		var group = resource.request().get(UnitGroup.class);
 		var info = UnitGroups.getDataSetInfo(group);
 		assertNotNull(info);
-		assertEquals(LangString.getFirst(d.getName()), info.getName().get(0).value);
+		assertEquals(
+			LangString.getDefault(d.getName()),
+			info.getName().get(0).getValue());
 		assertEquals(d.getUUID(), info.getUUID());
 	}
 

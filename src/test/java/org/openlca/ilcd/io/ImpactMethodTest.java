@@ -1,5 +1,7 @@
 package org.openlca.ilcd.io;
 
+import static org.junit.Assert.*;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.openlca.ilcd.Tests;
@@ -10,8 +12,6 @@ import org.openlca.ilcd.methods.ImpactMethod;
 import org.openlca.ilcd.methods.ImpactModel;
 import org.openlca.ilcd.methods.Time;
 import org.openlca.ilcd.util.ImpactMethods;
-
-import static org.junit.Assert.*;
 
 public class ImpactMethodTest {
 
@@ -49,7 +49,7 @@ public class ImpactMethodTest {
 		Time time = ImpactMethods.getTime(method);
 		assertNotNull(time);
 		assertEquals(1234, time.getReferenceYear().intValue());
-		assertEquals("duration1", time.getDuration().get(1).value);
+		assertEquals("duration1", time.getDuration().get(1).getValue());
 		assertEquals(2, time.getDescription().size());
 	}
 

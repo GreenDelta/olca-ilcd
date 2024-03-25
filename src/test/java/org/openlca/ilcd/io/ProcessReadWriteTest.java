@@ -17,9 +17,9 @@ public class ProcessReadWriteTest {
 		byte[] bytes = Xml.toBytes(process);
 		process = Xml.read(Process.class, bytes);
 		Assert.assertEquals("process name",
-			Processes.getBaseName(process).get(0).value);
+			Processes.getBaseName(process).get(0).getValue());
 		Assert.assertEquals("process description",
-			process.getProcessInfo().getDataSetInfo().getComment().get(0).value);
+			process.getProcessInfo().getDataSetInfo().getComment().get(0).getValue());
 		Assert.assertEquals(1, process.getExchanges().size());
 	}
 

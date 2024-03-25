@@ -1,5 +1,7 @@
 package org.openlca.ilcd.io;
 
+import static org.junit.Assert.*;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.openlca.ilcd.Tests;
@@ -8,8 +10,6 @@ import org.openlca.ilcd.sources.DataSetInfo;
 import org.openlca.ilcd.sources.Source;
 import org.openlca.ilcd.util.Categories;
 import org.openlca.ilcd.util.Sources;
-
-import static org.junit.Assert.*;
 
 public class SourceTest {
 
@@ -34,12 +34,12 @@ public class SourceTest {
 	public void testName() {
 		assertEquals(
 			"IMA-Europe_Plastic_Clay_diagramme_2c699413-f88b-4cb5-a56d-98cb4068472f.jpg",
-			LangString.getFirst(info.getName()));
+			LangString.getDefault(info.getName()));
 	}
 
 	@Test
 	public void testDescription() {
-		assertNull(LangString.getFirst(info.getDescription()));
+		assertNull(LangString.getDefault(info.getDescription()));
 	}
 
 	@Test

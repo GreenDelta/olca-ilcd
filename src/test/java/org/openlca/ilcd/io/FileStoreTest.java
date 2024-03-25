@@ -1,5 +1,12 @@
 package org.openlca.ilcd.io;
 
+import static org.junit.Assert.*;
+
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.util.UUID;
+
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Ignore;
@@ -10,13 +17,6 @@ import org.openlca.ilcd.contacts.Contact;
 import org.openlca.ilcd.sources.Source;
 import org.openlca.ilcd.units.UnitGroup;
 import org.openlca.ilcd.util.UnitGroups;
-
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.util.UUID;
-
-import static org.junit.Assert.*;
 
 public class FileStoreTest {
 
@@ -56,7 +56,7 @@ public class FileStoreTest {
 		assertNotNull(group);
 		assertEquals(
 			"Units of mass",
-			LangString.getFirst(UnitGroups.getName(group)));
+			LangString.getDefault(UnitGroups.getName(group)));
 	}
 
 	@Test

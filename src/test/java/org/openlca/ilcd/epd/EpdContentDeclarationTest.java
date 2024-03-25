@@ -2,6 +2,8 @@ package org.openlca.ilcd.epd;
 
 import static org.junit.Assert.*;
 
+import java.util.Objects;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.openlca.ilcd.Tests;
@@ -14,8 +16,6 @@ import org.openlca.ilcd.processes.epd.EpdContentMaterial;
 import org.openlca.ilcd.processes.epd.EpdContentSubstance;
 import org.openlca.ilcd.processes.epd.EpdInnerContentElement;
 import org.openlca.ilcd.util.Epds;
-
-import java.util.Objects;
 
 public class EpdContentDeclarationTest {
 
@@ -35,7 +35,7 @@ public class EpdContentDeclarationTest {
 			.add(LangString.of("wooden panel"));
 		expected.withWeightPerc().withValue(100d);
 		check(expected, dec.getElements().stream()
-			.filter(e -> LangString.getFirst(e.getName()).equals("wooden panel"))
+			.filter(e -> LangString.getDefault(e.getName()).equals("wooden panel"))
 			.findAny()
 			.orElseThrow());
 	}
@@ -60,7 +60,7 @@ public class EpdContentDeclarationTest {
 			.withMax(99d);
 		mat1.withMass().withValue(0.99);
 		check(mat1, comp.getElements().stream()
-			.filter(m -> LangString.getFirst(m.getName()).equals("Spruce"))
+			.filter(m -> LangString.getDefault(m.getName()).equals("Spruce"))
 			.findAny()
 			.orElseThrow());
 
@@ -79,7 +79,7 @@ public class EpdContentDeclarationTest {
 			.withMin(0.0005)
 			.withMax(0.01);
 		check(mat2, comp.getElements().stream()
-			.filter(m -> LangString.getFirst(m.getName()).equals("MUF adhesive"))
+			.filter(m -> LangString.getDefault(m.getName()).equals("MUF adhesive"))
 			.findAny()
 			.orElseThrow());
 	}
@@ -98,7 +98,7 @@ public class EpdContentDeclarationTest {
 		mat1.withWeightPerc().withMax(0.03d);
 		mat1.withMass().withMax(0.11);
 		check(mat1, dec.getElements().stream()
-			.filter(m -> LangString.getFirst(m.getName()).equals("Straps, nylon"))
+			.filter(m -> LangString.getDefault(m.getName()).equals("Straps, nylon"))
 			.findAny()
 			.orElseThrow());
 
@@ -113,7 +113,7 @@ public class EpdContentDeclarationTest {
 		mat2.withWeightPerc().withValue(0.3);
 		mat2.withMass().withValue(1.1);
 		check(mat2, dec.getElements().stream()
-			.filter(m -> LangString.getFirst(m.getName()).equals("Clingwrap, polyeten"))
+			.filter(m -> LangString.getDefault(m.getName()).equals("Clingwrap, polyeten"))
 			.findAny()
 			.orElseThrow());
 	}
@@ -121,7 +121,7 @@ public class EpdContentDeclarationTest {
 	@Test
 	public void testSubstance() {
 		var mat = dec.getElements().stream()
-			.filter(e -> LangString.getFirst(e.getName()).equals("Straps, nylon"))
+			.filter(e -> LangString.getDefault(e.getName()).equals("Straps, nylon"))
 			.map(EpdContentMaterial.class::cast)
 			.findAny()
 			.orElseThrow();
@@ -140,8 +140,8 @@ public class EpdContentDeclarationTest {
 	private void check(EpdContentElement<?> expected, EpdContentElement<?> elem) {
 		assertEquals(expected.getClass(), elem.getClass());
 		assertEquals(
-			LangString.getFirst(expected.getName()),
-			LangString.getFirst(elem.getName()));
+			LangString.getDefault(expected.getName()),
+			LangString.getDefault(elem.getName()));
 
 		if (expected.getWeightPerc() == null) {
 			assertNull(elem.getWeightPerc());

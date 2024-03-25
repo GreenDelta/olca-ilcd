@@ -1,20 +1,40 @@
 package org.openlca.ilcd.util;
 
-import org.openlca.ilcd.commons.Classification;
-import org.openlca.ilcd.commons.CommissionerAndGoal;
-import org.openlca.ilcd.commons.LangString;
-import org.openlca.ilcd.commons.ProcessType;
-import org.openlca.ilcd.commons.Ref;
-import org.openlca.ilcd.processes.Time;
-import org.openlca.ilcd.processes.Process;
-import org.openlca.ilcd.processes.*;
-
-import javax.xml.datatype.XMLGregorianCalendar;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+
+import javax.xml.datatype.XMLGregorianCalendar;
+
+import org.openlca.ilcd.commons.Classification;
+import org.openlca.ilcd.commons.CommissionerAndGoal;
+import org.openlca.ilcd.commons.LangString;
+import org.openlca.ilcd.commons.ProcessType;
+import org.openlca.ilcd.commons.Ref;
+import org.openlca.ilcd.processes.AdminInfo;
+import org.openlca.ilcd.processes.Completeness;
+import org.openlca.ilcd.processes.ComplianceDeclaration;
+import org.openlca.ilcd.processes.DataEntry;
+import org.openlca.ilcd.processes.DataGenerator;
+import org.openlca.ilcd.processes.DataSetInfo;
+import org.openlca.ilcd.processes.Geography;
+import org.openlca.ilcd.processes.InventoryMethod;
+import org.openlca.ilcd.processes.Location;
+import org.openlca.ilcd.processes.Modelling;
+import org.openlca.ilcd.processes.Parameter;
+import org.openlca.ilcd.processes.ParameterModel;
+import org.openlca.ilcd.processes.Process;
+import org.openlca.ilcd.processes.ProcessInfo;
+import org.openlca.ilcd.processes.ProcessName;
+import org.openlca.ilcd.processes.Publication;
+import org.openlca.ilcd.processes.QuantitativeReference;
+import org.openlca.ilcd.processes.Representativeness;
+import org.openlca.ilcd.processes.Review;
+import org.openlca.ilcd.processes.Technology;
+import org.openlca.ilcd.processes.Time;
+import org.openlca.ilcd.processes.Validation;
 
 public class Processes {
 
@@ -119,7 +139,7 @@ public class Processes {
 		return withDataSetInfo(p).withProcessName();
 	}
 
-	public static String getFullName(Process p, String... langs) {
+	public static String getFullName(Process p, String lang) {
 		var name = getProcessName(p);
 		if (name == null)
 			return null;
@@ -128,7 +148,7 @@ public class Processes {
 				name.getMixAndLocation(),
 				name.getTechnicalDetails(),
 				name.getFlowProperties())
-			.map(strings -> LangString.getFirst(strings, langs))
+			.map(strings -> LangString.getOrDefault(strings, lang))
 			.filter(s -> s != null && !s.trim().isEmpty())
 			.collect(Collectors.joining(", "));
 	}

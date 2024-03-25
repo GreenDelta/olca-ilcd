@@ -1,5 +1,7 @@
 package org.openlca.ilcd.io;
 
+import static org.junit.Assert.*;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.openlca.ilcd.Tests;
@@ -8,8 +10,6 @@ import org.openlca.ilcd.contacts.Contact;
 import org.openlca.ilcd.contacts.DataSetInfo;
 import org.openlca.ilcd.util.Categories;
 import org.openlca.ilcd.util.Contacts;
-
-import static org.junit.Assert.*;
 
 public class ContactTest {
 
@@ -31,14 +31,14 @@ public class ContactTest {
 	@Test
 	public void testGetShortName() {
 		assertEquals(
-			"IISI Review panel 2000", LangString.getFirst(info.getShortName()));
+			"IISI Review panel 2000", LangString.getDefault(info.getShortName()));
 	}
 
 	@Test
 	public void testGetName() {
 		assertEquals(
 			"B. P. Weidema, A. Inaba, G. A. Keoleian",
-			LangString.getFirst(info.getName()));
+			LangString.getDefault(info.getName()));
 	}
 
 	@Test
@@ -52,7 +52,7 @@ public class ContactTest {
 	public void testGetContactAddress() {
 		assertEquals(
 			"Rue Colonel Bourg 120 B-1140 Brussels, Belgium",
-			LangString.getFirst(info.getContactAddress()));
+			LangString.getDefault(info.getContactAddress()));
 	}
 
 	@Test
@@ -74,7 +74,7 @@ public class ContactTest {
 	public void testGetCentralContactPoint() {
 		assertEquals(
 			"Rue Colonel Bourg 120 B-1140 Brussels, Belgium",
-			LangString.getFirst(info.getCentralContactPoint()));
+			LangString.getDefault(info.getCentralContactPoint()));
 	}
 
 }

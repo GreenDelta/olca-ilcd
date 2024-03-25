@@ -1,5 +1,7 @@
 package org.openlca.ilcd.io;
 
+import static org.junit.Assert.*;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.openlca.ilcd.Tests;
@@ -8,8 +10,6 @@ import org.openlca.ilcd.flowproperties.DataSetInfo;
 import org.openlca.ilcd.flowproperties.FlowProperty;
 import org.openlca.ilcd.util.Categories;
 import org.openlca.ilcd.util.FlowProperties;
-
-import static org.junit.Assert.*;
 
 public class FlowPropertyTest {
 
@@ -30,7 +30,7 @@ public class FlowPropertyTest {
 
 	@Test
 	public void testName() {
-		assertEquals("Gross calorific value", LangString.getFirst(info.getName()));
+		assertEquals("Gross calorific value", LangString.getDefault(info.getName()));
 	}
 
 	@Test

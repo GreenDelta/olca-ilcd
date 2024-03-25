@@ -1,5 +1,9 @@
 package org.openlca.ilcd.io;
 
+import static org.junit.Assert.*;
+
+import java.util.List;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.openlca.ilcd.Tests;
@@ -9,10 +13,6 @@ import org.openlca.ilcd.units.Unit;
 import org.openlca.ilcd.units.UnitGroup;
 import org.openlca.ilcd.util.Categories;
 import org.openlca.ilcd.util.UnitGroups;
-
-import java.util.List;
-
-import static org.junit.Assert.*;
 
 public class UnitGroupTest {
 
@@ -46,14 +46,14 @@ public class UnitGroupTest {
 
 	@Test
 	public void testGetName() {
-		assertEquals("Units of mass*time", LangString.getFirst(info.getName()));
+		assertEquals("Units of mass*time", LangString.getDefault(info.getName()));
 	}
 
 	@Test
 	public void testGetComment() {
 		var info = UnitGroups.getDataSetInfo(group);
 		assertNotNull(info);
-		var comment = LangString.getFirst(info.getComment())
+		var comment = LangString.getDefault(info.getComment())
 			.replace("\n", "")
 			.replace("\t", " ")
 			.replace("    ", " ")

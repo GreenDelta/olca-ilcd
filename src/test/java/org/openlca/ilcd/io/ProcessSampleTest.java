@@ -1,5 +1,9 @@
 package org.openlca.ilcd.io;
 
+import static org.junit.Assert.*;
+
+import java.util.List;
+
 import org.junit.Test;
 import org.openlca.ilcd.Tests;
 import org.openlca.ilcd.commons.Compliance;
@@ -8,7 +12,6 @@ import org.openlca.ilcd.commons.LangString;
 import org.openlca.ilcd.commons.ModellingPrinciple;
 import org.openlca.ilcd.commons.ProcessType;
 import org.openlca.ilcd.commons.PublicationStatus;
-import org.openlca.ilcd.processes.Time;
 import org.openlca.ilcd.commons.UncertaintyDistribution;
 import org.openlca.ilcd.processes.AllocationFactor;
 import org.openlca.ilcd.processes.DataEntry;
@@ -20,11 +23,8 @@ import org.openlca.ilcd.processes.Parameter;
 import org.openlca.ilcd.processes.ParameterModel;
 import org.openlca.ilcd.processes.Process;
 import org.openlca.ilcd.processes.Review;
+import org.openlca.ilcd.processes.Time;
 import org.openlca.ilcd.util.Processes;
-
-import java.util.List;
-
-import static org.junit.Assert.*;
 
 public class ProcessSampleTest {
 
@@ -59,7 +59,7 @@ public class ProcessSampleTest {
 		assertEquals(2, info.getComplementingProcesses().size());
 		assertEquals("identifierOfSubDataSet0", info.getSubIdentifier());
 		assertEquals(2, info.getClassifications().size());
-		assertEquals("baseName0", LangString.get(info.getProcessName().getBaseName(), "en").value);
+		assertEquals("baseName0", LangString.get(info.getProcessName().getBaseName(), "en"));
 	}
 
 	@Test

@@ -1,5 +1,12 @@
 package org.openlca.ilcd.util;
 
+import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+import javax.xml.datatype.XMLGregorianCalendar;
+
 import org.openlca.ilcd.commons.Classification;
 import org.openlca.ilcd.commons.FlowType;
 import org.openlca.ilcd.commons.LangString;
@@ -17,12 +24,6 @@ import org.openlca.ilcd.flows.InventoryMethod;
 import org.openlca.ilcd.flows.Modelling;
 import org.openlca.ilcd.flows.QuantitativeReference;
 import org.openlca.ilcd.flows.Technology;
-
-import javax.xml.datatype.XMLGregorianCalendar;
-import java.util.Collections;
-import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public final class Flows {
 
@@ -153,7 +154,7 @@ public final class Flows {
 		return withDataSetInfo(f).withFlowName();
 	}
 
-	public static String getFullName(Flow f, String... langs) {
+	public static String getFullName(Flow f, String lang) {
 		var name = getFlowName(f);
 		if (name == null)
 			return null;
@@ -162,7 +163,7 @@ public final class Flows {
 				name.getFlowProperties(),
 				name.getMixAndLocationTypes(),
 				name.getTreatmentStandardsRoutes())
-			.map(strings -> LangString.getFirst(strings, langs))
+			.map(strings -> LangString.getOrDefault(strings, lang))
 			.filter(Strings::notEmpty)
 			.collect(Collectors.joining(", "));
 	}

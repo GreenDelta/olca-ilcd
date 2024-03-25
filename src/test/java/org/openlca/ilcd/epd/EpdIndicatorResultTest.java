@@ -2,14 +2,14 @@ package org.openlca.ilcd.epd;
 
 import static org.junit.Assert.*;
 
+import java.util.Map;
+
 import org.junit.Test;
 import org.openlca.ilcd.Tests;
 import org.openlca.ilcd.commons.LangString;
 import org.openlca.ilcd.io.Xml;
 import org.openlca.ilcd.processes.Process;
 import org.openlca.ilcd.util.EpdIndicatorResult;
-
-import java.util.Map;
 
 public class EpdIndicatorResultTest {
 
@@ -67,7 +67,7 @@ public class EpdIndicatorResultTest {
 	private void checkResult(
 		EpdIndicatorResult r, String unit, Map<String, Double> results
 	) {
-		assertEquals(unit, LangString.getFirst(r.unitGroup().getName()));
+		assertEquals(unit, LangString.getDefault(r.unitGroup().getName()));
 		assertEquals(r.hasImpactIndicator(), unit.contains("Ä"));
 		int c = 0;
 		for (var a : r.values()) {

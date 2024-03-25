@@ -1,22 +1,21 @@
 package org.openlca.ilcd.commons;
 
+import java.util.List;
+import java.util.Objects;
+
 import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlAttribute;
 import jakarta.xml.bind.annotation.XmlValue;
 
-import java.util.List;
-import java.util.Objects;
-import java.util.function.Supplier;
-
 @XmlAccessorType(XmlAccessType.FIELD)
 public final class LangString implements Copyable<LangString> {
 
 	@XmlValue
-	public final String value;
+	private final String value;
 
 	@XmlAttribute(name = "lang", namespace = "http://www.w3.org/XML/1998/namespace")
-	public final String lang;
+	private final String lang;
 
 	/**
 	 * This private constructor is required so that JAXB can call it, see
@@ -38,6 +37,14 @@ public final class LangString implements Copyable<LangString> {
 
 	public static LangString of(String value) {
 		return new LangString(value, "en");
+	}
+
+	public String getLang() {
+		return lang;
+	}
+
+	public String getValue() {
+		return value;
 	}
 
 	@Override
@@ -69,28 +76,49 @@ public final class LangString implements Copyable<LangString> {
 	}
 
 	/**
-	 * Copies all language strings from the source list to the target list.
+	 * Returns the value for the given language code from the given
+	 * multi-language strings. Returns {@code null} if there is no
+	 * value for that language available.
 	 */
-	public static void copy(List<LangString> source, List<LangString> target) {
-		if (source == null || target == null)
-			return;
-		for (LangString s : source) {
-			target.add(s.copy());
-		}
-	}
-
-	public static void copy(
-		List<LangString> source, Supplier<List<LangString>> target) {
-		if (source == null || source.isEmpty())
-			return;
-		target.get().addAll(source);
+	public static String get(List<LangString> list, String lang) {
+		var s = getEntry(list, lang);
+		return s == null ? null : s.value;
 	}
 
 	/**
-	 * Returns the language string with the given language code from the list.
-	 * Returns null if there is no such string in the list.
+	 * Returns the default value from the given list of multi-language strings.
+	 * The default value is English (language code "en") if available, otherwise
+	 * the first other value. Returns {@code null} if there is no value
+	 * available.
 	 */
-	public static LangString get(List<LangString> list, String lang) {
+	public static String getDefault(List<LangString> list) {
+		if (list.isEmpty())
+			return null;
+		var s = get(list, "en");
+		if (s != null)
+			return s;
+		for (var i : list) {
+			if (i.value != null)
+				return i.value;
+		}
+		return null;
+	}
+
+	/**
+	 * Get the value for the given language code from the list of
+	 * multi-language strings. Returns the default value if there
+	 * is no value for the given language available and {@code null}
+	 * if there is even no default value in the list.
+	 */
+	public static String getOrDefault(List<LangString> list, String lang) {
+		if (list == null || list.isEmpty())
+			return null;
+		var s = get(list, lang);
+		return s != null ? s : getDefault(list);
+	}
+
+
+	private static LangString getEntry(List<LangString> list, String lang) {
 		if (list == null)
 			return null;
 		for (LangString s : list) {
@@ -98,41 +126,6 @@ public final class LangString implements Copyable<LangString> {
 				return s;
 		}
 		return null;
-	}
-
-	/**
-	 * Returns the value of language string with the given language code from
-	 * the list. Returns null if there is no such string in the list.
-	 */
-	public static String getVal(List<LangString> list, String lang) {
-		LangString s = get(list, lang);
-		return s == null ? null : s.value;
-	}
-
-	/**
-	 * Get the first string value from the given list that matches a given
-	 * language code. The language codes are checked from left to right. If
-	 * there is no string with the given code in the list, the value of the
-	 * first language string will be returned. If the given list is empty, null
-	 * will be returned. If no language code is given it prefers English ("en").
-	 */
-	public static String getFirst(List<LangString> list, String... langs) {
-		if (list == null || list.isEmpty())
-			return null;
-
-		if (langs == null || langs.length == 0) {
-			var v = getVal(list, "en");
-			if (v != null)
-				return v;
-		} else {
-			for (var lang : langs) {
-				var v = getVal(list, lang);
-				if (v != null)
-					return v;
-			}
-		}
-		var first = list.get(0);
-		return first != null ? first.value : null;
 	}
 
 	/**
@@ -145,6 +138,14 @@ public final class LangString implements Copyable<LangString> {
 			return;
 		list.removeIf(s -> equal(s.lang, lang));
 		list.add(LangString.of(value, lang));
+	}
+
+	public static boolean remove(List<LangString> list, String lang) {
+		var e = getEntry(list, lang);
+		if (e != null) {
+			return list.remove(e);
+		}
+		return false;
 	}
 
 	private static boolean equal(String s1, String s2) {

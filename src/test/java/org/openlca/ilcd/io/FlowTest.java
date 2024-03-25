@@ -1,20 +1,20 @@
 package org.openlca.ilcd.io;
 
+import static org.junit.Assert.*;
+
+import java.util.List;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.openlca.ilcd.Tests;
 import org.openlca.ilcd.commons.DataSetType;
 import org.openlca.ilcd.commons.LangString;
+import org.openlca.ilcd.flows.DataSetInfo;
 import org.openlca.ilcd.flows.Flow;
 import org.openlca.ilcd.flows.FlowPropertyRef;
 import org.openlca.ilcd.util.Categories;
 import org.openlca.ilcd.util.DataSets;
 import org.openlca.ilcd.util.Flows;
-import org.openlca.ilcd.flows.DataSetInfo;
-
-import java.util.List;
-
-import static org.junit.Assert.*;
 
 public class FlowTest {
 
@@ -35,7 +35,7 @@ public class FlowTest {
 
 	@Test
 	public void testGetName() {
-		assertEquals("glycidol", LangString.getFirst(info.getFlowName().getBaseName()));
+		assertEquals("glycidol", LangString.getDefault(info.getFlowName().getBaseName()));
 	}
 
 	@Test
@@ -64,7 +64,7 @@ public class FlowTest {
 	public void testLocation() {
 		var geo = Flows.getGeography(flow);
 		assertNotNull(geo);
-		assertEquals("US", geo.getLocation().get(0).value);
+		assertEquals("US", geo.getLocation().get(0).getValue());
 	}
 
 	@Test

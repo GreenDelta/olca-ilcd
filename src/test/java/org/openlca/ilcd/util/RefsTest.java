@@ -21,8 +21,8 @@ public class RefsTest {
 	public void testFetchMethodRef() {
 		with("sdk_sample_lciamethod.xml", ref -> {
 			assertEquals(DataSetType.IMPACT_METHOD, ref.getType());
-			assertEquals("name0", LangString.getVal(ref.getName(), "en"));
-			assertEquals("name1", LangString.getVal(ref.getName(), "de"));
+			assertEquals("name0", LangString.get(ref.getName(), "en"));
+			assertEquals("name1", LangString.get(ref.getName(), "de"));
 		});
 	}
 
@@ -30,8 +30,8 @@ public class RefsTest {
 	public void testFetchProcessRef() {
 		with("sdk_sample_process.xml", ref -> {
 			assertEquals(DataSetType.PROCESS, ref.getType());
-			assertEquals("baseName0", LangString.getVal(ref.getName(), "en"));
-			assertEquals("baseName1", LangString.getVal(ref.getName(), "de"));
+			assertEquals("baseName0", LangString.get(ref.getName(), "en"));
+			assertEquals("baseName1", LangString.get(ref.getName(), "de"));
 		});
 	}
 
@@ -39,8 +39,8 @@ public class RefsTest {
 	public void testFetchSourceRef() {
 		with("sdk_sample_source.xml", ref -> {
 			assertEquals(DataSetType.SOURCE, ref.getType());
-			assertEquals("shortName0", LangString.getVal(ref.getName(), "en"));
-			assertEquals("shortName1", LangString.getVal(ref.getName(), "de"));
+			assertEquals("shortName0", LangString.get(ref.getName(), "en"));
+			assertEquals("shortName1", LangString.get(ref.getName(), "de"));
 		});
 	}
 
@@ -48,8 +48,8 @@ public class RefsTest {
 	public void testFetchContactRef() {
 		with("sdk_sample_contact.xml", ref -> {
 			assertEquals(DataSetType.CONTACT, ref.getType());
-			assertEquals("name0", LangString.getVal(ref.getName(), "en"));
-			assertEquals("name1", LangString.getVal(ref.getName(), "de"));
+			assertEquals("name0", LangString.get(ref.getName(), "en"));
+			assertEquals("name1", LangString.get(ref.getName(), "de"));
 		});
 	}
 
@@ -57,8 +57,8 @@ public class RefsTest {
 	public void testFetchFlowRef() {
 		with("sdk_sample_flow.xml", ref -> {
 			assertEquals(DataSetType.FLOW, ref.getType());
-			assertEquals("baseName0", LangString.getVal(ref.getName(), "en"));
-			assertEquals("baseName1", LangString.getVal(ref.getName(), "de"));
+			assertEquals("baseName0", LangString.get(ref.getName(), "en"));
+			assertEquals("baseName1", LangString.get(ref.getName(), "de"));
 		});
 	}
 
@@ -66,8 +66,8 @@ public class RefsTest {
 	public void testFetchFlowPropertyRef() {
 		with("sdk_sample_flowproperty.xml", ref -> {
 			assertEquals(DataSetType.FLOW_PROPERTY, ref.getType());
-			assertEquals("name0", LangString.getVal(ref.getName(), "en"));
-			assertEquals("name1", LangString.getVal(ref.getName(), "de"));
+			assertEquals("name0", LangString.get(ref.getName(), "en"));
+			assertEquals("name1", LangString.get(ref.getName(), "de"));
 		});
 	}
 
@@ -75,8 +75,8 @@ public class RefsTest {
 	public void testFetchUnitGroupRef() {
 		with("sdk_sample_unitgroup.xml", ref -> {
 			assertEquals(DataSetType.UNIT_GROUP, ref.getType());
-			assertEquals("name0", LangString.getVal(ref.getName(), "en"));
-			assertEquals("name1", LangString.getVal(ref.getName(), "de"));
+			assertEquals("name0", LangString.get(ref.getName(), "en"));
+			assertEquals("name1", LangString.get(ref.getName(), "de"));
 		});
 	}
 
@@ -95,7 +95,7 @@ public class RefsTest {
 		var ref = Refs.fetch(new ByteArrayInputStream(xml));
 		assertNotNull(ref);
 		assertEquals(UnitGroups.getUUID(g), ref.getUUID());
-		assertEquals("Mass units", LangString.getFirst(ref.getName()));
+		assertEquals("Mass units", LangString.getDefault(ref.getName()));
 		assertEquals(1, ref.getName().size());
 	}
 

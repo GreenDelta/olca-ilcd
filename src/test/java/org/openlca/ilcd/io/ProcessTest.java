@@ -1,5 +1,9 @@
 package org.openlca.ilcd.io;
 
+import static org.junit.Assert.*;
+
+import java.util.List;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.openlca.ilcd.Tests;
@@ -9,10 +13,6 @@ import org.openlca.ilcd.processes.DataSetInfo;
 import org.openlca.ilcd.processes.Process;
 import org.openlca.ilcd.util.Categories;
 import org.openlca.ilcd.util.Processes;
-
-import java.util.List;
-
-import static org.junit.Assert.*;
 
 public class ProcessTest {
 
@@ -45,7 +45,7 @@ public class ProcessTest {
 				+ "Styrene, acrylonitrile, butadiene polymer; 2-Propenenitrile, "
 				+ "polymer with 1,3-butadiene and ethenylbenzene; Acrylonitrile, "
 				+ "polymer with 1,3-butadiene and styrene",
-			LangString.getFirst(info.getSynonyms()));
+			LangString.getDefault(info.getSynonyms()));
 	}
 
 	@Test
