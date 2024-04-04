@@ -1,4 +1,4 @@
-package org.openlca.ilcd.util;
+package org.openlca.ilcd.epd;
 
 import org.openlca.ilcd.commons.Copyable;
 import org.openlca.ilcd.commons.DataSetType;
@@ -9,6 +9,8 @@ import org.openlca.ilcd.processes.Exchange;
 import org.openlca.ilcd.processes.ImpactResult;
 import org.openlca.ilcd.processes.Process;
 import org.openlca.ilcd.processes.epd.EpdValue;
+import org.openlca.ilcd.util.Processes;
+import org.openlca.ilcd.util.Val;
 
 import java.util.ArrayList;
 import java.util.List;

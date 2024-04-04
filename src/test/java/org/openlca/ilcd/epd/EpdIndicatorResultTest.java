@@ -9,7 +9,6 @@ import org.openlca.ilcd.Tests;
 import org.openlca.ilcd.commons.LangString;
 import org.openlca.ilcd.io.Xml;
 import org.openlca.ilcd.processes.Process;
-import org.openlca.ilcd.util.EpdIndicatorResult;
 
 public class EpdIndicatorResultTest {
 
