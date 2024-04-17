@@ -8,9 +8,9 @@ import java.io.OutputStream;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 import org.openlca.ilcd.processes.Process;
-import org.openlca.ilcd.util.Epds;
 
 import jakarta.xml.bind.JAXB;
 
@@ -53,23 +53,25 @@ public enum EpdProfiles {
 	}
 
 	/**
-	 * Returns true, when the given EPD has a compliance declaration
-	 * with a reference to the same compliance system as declared
-	 * in the given profile.
+	 * Returns {@code true}, when the given EPD matches the indicators of the
+	 * given profile. This is the case, when all indicators used in the EPD
+	 * have an ID of a corresponding indicator in the profile.
 	 */
 	public static boolean matches(Process epd, EpdProfile profile) {
-		if (epd == null
-			|| profile == null
-			|| profile.getComplianceSystem() == null)
+		if (epd == null || profile == null)
 			return false;
-		var sysId = profile.getComplianceSystem().getUUID();
-		for (var dec : Epds.getComplianceDeclarations(epd)) {
-			if (dec.getSystem() == null)
-				continue;
-			if (Objects.equals(sysId, dec.getSystem().getUUID()))
-				return true;
+		var ids = profile.getIndicators().stream()
+			.filter(i -> i.getRef() != null && i.getRef().getUUID() != null)
+			.map(i -> i.getRef().getUUID())
+			.collect(Collectors.toSet());
+		for (var r : EpdIndicatorResult.allOf(epd)) {
+			var id = r.indicator() != null
+				? r.indicator().getUUID()
+				: null;
+			if (id == null || !ids.contains(id))
+				return false;
 		}
-		return false;
+		return true;
 	}
 
 	public static void add(EpdProfile profile) {
