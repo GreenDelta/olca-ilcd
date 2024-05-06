@@ -7,7 +7,9 @@ import java.util.List;
 import java.util.Objects;
 
 import org.openlca.ilcd.Vocab;
+import org.openlca.ilcd.commons.Copyable;
 import org.openlca.ilcd.commons.Ref;
+import org.openlca.ilcd.util.Val;
 
 import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
@@ -17,7 +19,7 @@ import jakarta.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement(name = "profile", namespace = Vocab.OLCA_EPD)
 @XmlAccessorType(XmlAccessType.FIELD)
-public class EpdProfile {
+public class EpdProfile implements Copyable<EpdProfile> {
 
 	@XmlElement(name = "id", namespace = Vocab.OLCA_EPD)
 	private String id;
@@ -142,6 +144,19 @@ public class EpdProfile {
 		return id != null
 			? id.hashCode()
 			: super.hashCode();
+	}
+
+	@Override
+	public EpdProfile copy() {
+		var copy = new EpdProfile()
+			.withId(id)
+			.withName(name)
+			.withDescription(description)
+			.withDataUrl(dataUrl);
+		Val.copy(complianceSystem, copy::withComplianceSystem);
+		Val.copy(modules, copy::withModules);
+		Val.copy(indicators, copy::withIndicators);
+		return copy;
 	}
 }
 

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <profile xmlns:common="http://lca.jrc.it/ILCD/Common" xmlns="http://openlca.org/epd_ilcd">
-	<id>EN_15804_A2</id>
-	<name>EN 15804+A2</name>
+	<id>EN_15804_A2_EF30</id>
+	<name>EN 15804+A2 (EF 3.0)</name>
 	<dataUrl>https://data.indata.network/resource/datastocks/67a67abd-13b6-4a26-a166-5be16cd8feda/</dataUrl>
 	<complianceSystem type="source data set" refObjectId="c0016b33-8cf7-415c-ac6e-deba0d21440d" version="00.01.002">
 		<common:shortDescription xml:lang="en">EN 15804+A2</common:shortDescription>

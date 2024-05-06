@@ -4,9 +4,11 @@ package org.openlca.ilcd.epd;
 import java.util.Objects;
 
 import org.openlca.ilcd.Vocab;
+import org.openlca.ilcd.commons.Copyable;
 import org.openlca.ilcd.commons.DataSetType;
 import org.openlca.ilcd.commons.LangString;
 import org.openlca.ilcd.commons.Ref;
+import org.openlca.ilcd.util.Val;
 
 import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
@@ -14,7 +16,7 @@ import jakarta.xml.bind.annotation.XmlAttribute;
 import jakarta.xml.bind.annotation.XmlElement;
 
 @XmlAccessorType(XmlAccessType.FIELD)
-public class EpdProfileIndicator {
+public class EpdProfileIndicator implements Copyable<EpdProfileIndicator> {
 
 	@XmlAttribute(name = "isInputIndicator")
 	private Boolean inputIndicator;
@@ -114,6 +116,17 @@ public class EpdProfileIndicator {
 				? EpdIndicatorResult.ofInputIndicator(ref, unit)
 				: EpdIndicatorResult.ofOutputIndicator(ref, unit);
 		return EpdIndicatorResult.of(ref, unit);
+	}
+
+	@Override
+	public EpdProfileIndicator copy() {
+		var copy = new EpdProfileIndicator()
+			.withCode(code)
+			.withGroup(group)
+			.withInputIndicator(inputIndicator);
+		Val.copy(ref, copy::withRef);
+		Val.copy(unit, copy::withUnit);
+		return copy;
 	}
 }
 

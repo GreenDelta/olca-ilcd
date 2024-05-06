@@ -18,7 +18,11 @@ public enum EpdProfiles {
 
 	EN_15804("EN 15804"),
 
-	EN_15804_A2("EN 15804+A2");
+	/**
+	 * The indicator profile for EN 15804+A2 with indicator references based
+	 * on EF 3.0 for impact indicators and InData 2018 for inventory indicators.
+	 */
+	EN_15804_A2_EF30("EN 15804+A2 (EF 3.0)");
 
 	private final String label;
 
@@ -33,7 +37,7 @@ public enum EpdProfiles {
 	}
 
 	public static EpdProfile getDefault() {
-		return EN_15804_A2.get();
+		return EN_15804_A2_EF30.get();
 	}
 
 	public static EpdProfile of(Process epd) {

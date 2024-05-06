@@ -2,6 +2,7 @@ package org.openlca.ilcd.epd;
 
 import java.util.Objects;
 
+import org.openlca.ilcd.commons.Copyable;
 import org.openlca.ilcd.util.Strings;
 
 import jakarta.xml.bind.annotation.XmlAccessType;
@@ -10,7 +11,8 @@ import jakarta.xml.bind.annotation.XmlAttribute;
 import jakarta.xml.bind.annotation.XmlElement;
 
 @XmlAccessorType(XmlAccessType.FIELD)
-public class EpdProfileModule implements Comparable<EpdProfileModule> {
+public class EpdProfileModule
+	implements Comparable<EpdProfileModule>, Copyable<EpdProfileModule> {
 
 	@XmlAttribute(name = "index")
 	private int index;
@@ -76,5 +78,12 @@ public class EpdProfileModule implements Comparable<EpdProfileModule> {
 		return Strings.nullOrEqual(this.name, other.name);
 	}
 
+	@Override
+	public EpdProfileModule copy() {
+		return new EpdProfileModule()
+			.withIndex(index)
+			.withName(name)
+			.withDescription(description);
+	}
 }
 

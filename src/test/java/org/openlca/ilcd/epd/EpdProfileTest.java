@@ -16,7 +16,7 @@ public class EpdProfileTest {
 		assertEquals(18, p1.getModules().size());
 		assertEquals(25, p1.getIndicators().size());
 
-		var p2 = EpdProfiles.EN_15804_A2.get();
+		var p2 = EpdProfiles.EN_15804_A2_EF30.get();
 		assertEquals(
 			"EN 15804+A2",
 			LangString.getDefault(p2.getComplianceSystem().getName()));
@@ -26,7 +26,7 @@ public class EpdProfileTest {
 
 	@Test
 	public void testIndicatorNamesAndCodes() {
-		var profile = EpdProfiles.EN_15804_A2.get();
+		var profile = EpdProfiles.EN_15804_A2_EF30.get();
 		for (var i : profile.getIndicators()) {
 			assertNotNull(i.getCode());
 			var name = LangString.getDefault(i.getRef().getName());
