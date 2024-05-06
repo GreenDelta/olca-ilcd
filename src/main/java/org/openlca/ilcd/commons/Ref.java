@@ -75,7 +75,7 @@ public class Ref implements Copyable<Ref> {
 	// region getters
 
 	public List<LangString> getName() {
-		return name;
+		return name != null ? name : Collections.emptyList();
 	}
 
 	public DataSetType getType() {

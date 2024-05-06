@@ -92,7 +92,7 @@ public final class LangString implements Copyable<LangString> {
 	 * available.
 	 */
 	public static String getDefault(List<LangString> list) {
-		if (list.isEmpty())
+		if (list == null || list.isEmpty())
 			return null;
 		var s = get(list, "en");
 		if (s != null)

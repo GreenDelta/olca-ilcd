@@ -16,13 +16,13 @@ import jakarta.xml.bind.annotation.XmlElement;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class EpdProfileIndicator {
 
-	@XmlAttribute(name = "isInputIndicator", namespace = Vocab.OLCA_EPD)
+	@XmlAttribute(name = "isInputIndicator")
 	private Boolean inputIndicator;
 
-	@XmlAttribute(name = "code", namespace = Vocab.OLCA_EPD)
+	@XmlAttribute(name = "code")
 	private String code;
 
-	@XmlAttribute(name = "group", namespace = Vocab.OLCA_EPD)
+	@XmlAttribute(name = "group")
 	private String group;
 
 	@XmlElement(name = "ref", namespace = Vocab.OLCA_EPD)
