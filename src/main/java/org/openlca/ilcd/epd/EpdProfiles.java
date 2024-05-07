@@ -8,6 +8,7 @@ import java.io.OutputStream;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
 import org.openlca.ilcd.processes.Process;
@@ -26,7 +27,7 @@ public enum EpdProfiles {
 
 	private final String label;
 
-	private static final Map<String, EpdProfile> cache = new HashMap<>();
+	private static final Map<String, EpdProfile> cache = new ConcurrentHashMap<>();
 
 	EpdProfiles(String label) {
 		this.label = label;
@@ -78,14 +79,30 @@ public enum EpdProfiles {
 		return true;
 	}
 
+	/**
+	 * Adds the given profile to the shared cache of EPD profiles. Note that
+	 * the profile needs to have a valid ID by which it is identified, also it
+	 * is possible to overwrite existing profiles by adding a new profile with
+	 * the same ID.
+	 */
 	public static void add(EpdProfile profile) {
 		if (profile == null || profile.getId() == null)
 			return;
 		cache.put(profile.getId(), profile);
 	}
 
+
 	public static EpdProfile get(String id) {
-		return cache.get(id);
+		// try to get a registered profile
+		var profile = cache.get(id);
+		if (profile != null)
+			return profile;
+		// test if there is a default profile with that ID
+		for (var v : values()) {
+			if (Objects.equals(id, v.name()))
+				return v.get();
+		}
+		return null;
 	}
 
 	public static EpdProfile read(InputStream stream) {
