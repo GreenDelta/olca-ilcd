@@ -5,7 +5,6 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
@@ -23,7 +22,13 @@ public enum EpdProfiles {
 	 * The indicator profile for EN 15804+A2 with indicator references based
 	 * on EF 3.0 for impact indicators and InData 2018 for inventory indicators.
 	 */
-	EN_15804_A2_EF30("EN 15804+A2 (EF 3.0)");
+	EN_15804_A2_EF30("EN 15804+A2 (EF 3.0)"),
+
+	/**
+	 * The indicator profile for EN 15804+A2 with indicator references based
+	 * on EF 3.1 for impact indicators and InData 2018 for inventory indicators.
+	 */
+	EN_15804_A2_EF31("EN 15804+A2 (EF 3.1)");
 
 	private final String label;
 
