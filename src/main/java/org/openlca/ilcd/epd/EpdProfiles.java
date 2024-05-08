@@ -5,6 +5,9 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
@@ -96,7 +99,6 @@ public enum EpdProfiles {
 		cache.put(profile.getId(), profile);
 	}
 
-
 	public static EpdProfile get(String id) {
 		// try to get a registered profile
 		var profile = cache.get(id);
@@ -108,6 +110,48 @@ public enum EpdProfiles {
 				return v.get();
 		}
 		return null;
+	}
+
+	public static List<EpdProfile> getAll() {
+		// make sure the default profiles are in the cache
+		for (var v : values()) {
+			v.get();
+		}
+		return new ArrayList<>(cache.values());
+	}
+
+	/**
+	 * Searches the registered profiles for an indicator with the given ID. Returns
+	 * the first matching indicator or {@code null} in case it cannot find it.
+	 */
+	public static EpdProfileIndicator getIndicatorForId(String id) {
+		if (id == null)
+			return null;
+		for (var profile : getAll()) {
+			for (var indicator : profile.getIndicators()) {
+				var ref = indicator.getRef();
+				if (ref != null && Objects.equals(id, ref.getUUID()))
+					return indicator;
+			}
+		}
+		return null;
+	}
+
+	/**
+	 * Returns all indicators from the registered profiles with the given code.
+	 */
+	public static List<EpdProfileIndicator> getIndicatorsForCode(String code) {
+		if (code == null)
+			return Collections.emptyList();
+		var list = new ArrayList<EpdProfileIndicator>(3);
+		for (var profile : getAll()) {
+			for (var indicator : profile.getIndicators()) {
+				if (Objects.equals(code, indicator.getCode())) {
+					list.add(indicator);
+				}
+			}
+		}
+		return list;
 	}
 
 	public static EpdProfile read(InputStream stream) {
