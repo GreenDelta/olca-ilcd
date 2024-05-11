@@ -195,7 +195,7 @@ public class SodaClient implements DataStore {
 
 	@Override
 	public <T extends IDataSet> boolean delete(Class<T> type, String id) {
-		// TODO Auto-generated method stub
+		// not supported by the soda4LCA client API
 		return false;
 	}
 

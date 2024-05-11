@@ -1,11 +1,11 @@
 package org.openlca.ilcd.tests.network;
 
+import java.net.HttpURLConnection;
+import java.net.URL;
+
 import org.openlca.ilcd.io.SodaClient;
 import org.openlca.ilcd.io.SodaConnection;
 import org.slf4j.LoggerFactory;
-
-import java.net.HttpURLConnection;
-import java.net.URL;
 
 class TestServer {
 
@@ -50,6 +50,15 @@ class TestServer {
 		con.url = ENDPOINT;
 		con.user = USER;
 		con.password = PASSWORD;
-		return SodaClient.of(con);
+		var client = SodaClient.of(con);
+		for (var stock : client.getDataStockList().getDataStocks()) {
+			if (stock.getShortName() == null || stock.getUUID() == null)
+				continue;
+			var name = stock.getShortName().strip().toLowerCase();
+			if (name.startsWith("test")) {
+				client.useDataStock(stock.getUUID());
+			}
+		}
+		return client;
 	}
 }

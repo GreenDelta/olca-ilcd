@@ -2,85 +2,87 @@ package org.openlca.ilcd.tests.network;
 
 import static org.junit.Assert.*;
 
+import java.util.List;
+
 import org.junit.Assume;
-import org.junit.Before;
 import org.junit.Test;
-import org.openlca.ilcd.commons.LangString;
-import org.openlca.ilcd.descriptors.DescriptorList;
-import org.openlca.ilcd.descriptors.UnitGroupDescriptor;
-import org.openlca.ilcd.io.Xml;
+import org.openlca.ilcd.Tests;
+import org.openlca.ilcd.commons.IDataSet;
+import org.openlca.ilcd.contacts.Contact;
+import org.openlca.ilcd.flowproperties.FlowProperty;
+import org.openlca.ilcd.flows.Flow;
+import org.openlca.ilcd.io.SodaClient;
+import org.openlca.ilcd.processes.Process;
+import org.openlca.ilcd.sources.Source;
 import org.openlca.ilcd.units.UnitGroup;
-import org.openlca.ilcd.util.UnitGroups;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import jakarta.ws.rs.client.Client;
-import jakarta.ws.rs.client.ClientBuilder;
-
+import org.openlca.ilcd.util.DataSets;
 
 public class DescriptorTest {
-
-	private final Logger log = LoggerFactory.getLogger(this.getClass());
-	private final String unitUrl = TestServer.ENDPOINT + "/unitgroups";
-	private final Client client = ClientBuilder.newClient();
-
-	@Before
-	public void setup() throws Exception {
-		if (!TestServer.isAvailable())
-			return;
-		try (var client = TestServer.newClient();
-				 var stream = getClass().getResourceAsStream("unit.xml")) {
-			var group = Xml.read(UnitGroup.class, stream);
-			if (client.contains(UnitGroup.class, UnitGroups.getUUID(group)))
-				return;
-			client.put(group);
-		}
-	}
 
 	@Test
 	public void testGetDescriptors() {
 		Assume.assumeTrue(TestServer.isAvailable());
-		log.trace("Run testGetDescriptors");
-		log.trace("Get unit groups: {}", unitUrl);
-		var result = client.target(unitUrl)
-			.request()
-			.get(DescriptorList.class);
-		assertFalse(result.getDescriptors().isEmpty());
-		iterateAndCompareFirst(result);
-	}
+		try (var client = TestServer.newClient()) {
 
-	private void iterateAndCompareFirst(DescriptorList result) {
-		for (Object obj : result.getDescriptors()) {
-			assertTrue(obj instanceof UnitGroupDescriptor);
-			var descriptor = (UnitGroupDescriptor) obj;
-			log.trace("Unit group '{}' found.", descriptor.getUUID());
+			var group = Tests.read(UnitGroup.class, "unit.xml");
+			var uuid = DataSets.getUUID(group);
+			if (!client.contains(UnitGroup.class, uuid)) {
+				client.put(group);
+			}
+
+			boolean found = false;
+			for (var d : client.getDescriptors(UnitGroup.class)) {
+				if (uuid.equals(d.getUUID())) {
+					found = true;
+					break;
+				}
+			}
+			assertTrue(found);
 		}
-		var descriptorFromList = (UnitGroupDescriptor) result.getDescriptors().get(0);
-		compareFirst(descriptorFromList);
-		loadFull(descriptorFromList);
 	}
 
-	private void compareFirst(UnitGroupDescriptor fromList) {
-		var resource = client.target(unitUrl)
-			.path(fromList.getUUID())
-			.queryParam("view", "overview");
-		log.trace("Get unit group descriptor: {}", resource.getUri());
-		var descriptor = resource.request().get(UnitGroupDescriptor.class);
-		assertEquals(fromList.getName().get(0), descriptor.getName().get(0));
-		assertEquals(fromList.getUUID(), descriptor.getUUID());
+	@Test
+	public void testDescriptors2() {
+		Assume.assumeTrue(TestServer.isAvailable());
+		try (var client = TestServer.newClient()) {
+			var specs = List.of(
+				Spec.of(Contact.class, "contact.xml"),
+				Spec.of(Source.class, "source.xml"),
+				Spec.of(UnitGroup.class, "unit.xml"),
+				Spec.of(FlowProperty.class, "flowproperty.xml"),
+				Spec.of(Flow.class, "flow.xml"),
+				Spec.of(Process.class, "process.xml"));
+			for (var spec : specs) {
+				spec.runOn(client);
+			}
+		}
 	}
 
-	private void loadFull(UnitGroupDescriptor d) {
-		var resource = client.target(unitUrl)
-			.path(d.getUUID()).queryParam("format", "xml");
-		log.trace("Get full unit group: {}", resource.getUri());
-		var group = resource.request().get(UnitGroup.class);
-		var info = UnitGroups.getDataSetInfo(group);
-		assertNotNull(info);
-		assertEquals(
-			LangString.getDefault(d.getName()),
-			info.getName().get(0).getValue());
-		assertEquals(d.getUUID(), info.getUUID());
+
+	private record Spec<T extends IDataSet>(Class<T> type, String file) {
+
+		static <T extends IDataSet> Spec<T> of(Class<T> type, String file) {
+			return new Spec<>(type, file);
+		}
+
+		void runOn(SodaClient client) {
+			T ds = Tests.read(type, file);
+			var uuid = DataSets.getUUID(ds);
+			if (!client.contains(type, uuid)) {
+				client.put(ds);
+			}
+			assertTrue(client.contains(type, uuid));
+
+			boolean found = false;
+			for (var d : client.getDescriptors(type)) {
+				if (uuid.equals(d.getUUID())) {
+					found = true;
+					break;
+				}
+			}
+			assertTrue(found);
+		}
 	}
+
 
 }
