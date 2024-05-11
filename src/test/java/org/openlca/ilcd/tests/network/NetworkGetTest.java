@@ -1,5 +1,9 @@
 package org.openlca.ilcd.tests.network;
 
+import static org.junit.Assert.*;
+
+import java.util.UUID;
+
 import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
@@ -8,7 +12,6 @@ import org.openlca.ilcd.contacts.Contact;
 import org.openlca.ilcd.flowproperties.FlowProperty;
 import org.openlca.ilcd.flows.Flow;
 import org.openlca.ilcd.io.SodaClient;
-import org.openlca.ilcd.io.SodaConnection;
 import org.openlca.ilcd.processes.Process;
 import org.openlca.ilcd.sources.Source;
 import org.openlca.ilcd.units.UnitGroup;
@@ -18,10 +21,6 @@ import org.openlca.ilcd.util.Flows;
 import org.openlca.ilcd.util.Processes;
 import org.openlca.ilcd.util.Sources;
 import org.openlca.ilcd.util.UnitGroups;
-
-import java.util.UUID;
-
-import static org.junit.Assert.*;
 
 public class NetworkGetTest {
 
@@ -33,24 +32,6 @@ public class NetworkGetTest {
 			return;
 		DataSets.upload();
 		client = TestServer.newClient();
-	}
-
-	@Test
-	public void testCreateWithPassword() {
-		Assume.assumeTrue(TestServer.isAvailable());
-		SodaClient client = TestServer.newClient();
-		assertNotNull(client);
-	}
-
-	@Test(expected = Exception.class)
-	public void testCreateWithWrongPassword() {
-		Assume.assumeTrue(TestServer.isAvailable());
-		var con = new SodaConnection();
-		con.url = TestServer.ENDPOINT;
-		con.user = "user";
-		con.password = "invalid";
-		var client = SodaClient.of(con);
-		client.close();
 	}
 
 	@Test

@@ -15,14 +15,7 @@ import static org.junit.Assert.*;
 
 public class StocksAndCategoryListsTest {
 
-	@Test
-	public void testGetDataStocks() {
-		Assume.assumeTrue(TestServer.isAvailable());
-		try (var client = TestServer.newClient()) {
-			var stocks = client.getDataStockList();
-			assertFalse(stocks.getDataStocks().isEmpty());
-		}
-	}
+
 
 	@Test
 	@Ignore

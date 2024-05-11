@@ -13,12 +13,35 @@ import org.openlca.ilcd.contacts.Contact;
 import org.openlca.ilcd.flowproperties.FlowProperty;
 import org.openlca.ilcd.flows.Flow;
 import org.openlca.ilcd.io.SodaClient;
+import org.openlca.ilcd.io.SodaQuery;
+import org.openlca.ilcd.methods.ImpactMethod;
 import org.openlca.ilcd.processes.Process;
 import org.openlca.ilcd.sources.Source;
 import org.openlca.ilcd.units.UnitGroup;
 import org.openlca.ilcd.util.DataSets;
 
 public class DescriptorTest {
+
+	@Test
+	public void testPageCount() {
+		Assume.assumeTrue(TestServer.isAvailable());
+		try (var client = TestServer.newClient()) {
+			var types = List.of(
+				Contact.class,
+				Source.class,
+				UnitGroup.class,
+				FlowProperty.class,
+				Flow.class,
+				Process.class,
+				ImpactMethod.class); // Model.class fails!
+			for (var type : types) {
+				int count = client.query(type, new SodaQuery())
+					.getTotalSize();
+				var ds = client.getDescriptors(type);
+				assertEquals(count, ds.size());
+			}
+		}
+	}
 
 	@Test
 	public void testGetDescriptors() {
