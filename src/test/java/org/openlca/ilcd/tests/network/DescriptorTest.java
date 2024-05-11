@@ -3,6 +3,7 @@ package org.openlca.ilcd.tests.network;
 import static org.junit.Assert.*;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.junit.Assume;
 import org.junit.Test;
@@ -23,28 +24,6 @@ public class DescriptorTest {
 	public void testGetDescriptors() {
 		Assume.assumeTrue(TestServer.isAvailable());
 		try (var client = TestServer.newClient()) {
-
-			var group = Tests.read(UnitGroup.class, "unit.xml");
-			var uuid = DataSets.getUUID(group);
-			if (!client.contains(UnitGroup.class, uuid)) {
-				client.put(group);
-			}
-
-			boolean found = false;
-			for (var d : client.getDescriptors(UnitGroup.class)) {
-				if (uuid.equals(d.getUUID())) {
-					found = true;
-					break;
-				}
-			}
-			assertTrue(found);
-		}
-	}
-
-	@Test
-	public void testDescriptors2() {
-		Assume.assumeTrue(TestServer.isAvailable());
-		try (var client = TestServer.newClient()) {
 			var specs = List.of(
 				Spec.of(Contact.class, "contact.xml"),
 				Spec.of(Source.class, "source.xml"),
@@ -58,7 +37,6 @@ public class DescriptorTest {
 		}
 	}
 
-
 	private record Spec<T extends IDataSet>(Class<T> type, String file) {
 
 		static <T extends IDataSet> Spec<T> of(Class<T> type, String file) {
@@ -67,7 +45,8 @@ public class DescriptorTest {
 
 		void runOn(SodaClient client) {
 			T ds = Tests.read(type, file);
-			var uuid = DataSets.getUUID(ds);
+			var uuid = UUID.randomUUID().toString();
+			DataSets.withUUID(ds, uuid);
 			if (!client.contains(type, uuid)) {
 				client.put(ds);
 			}
@@ -83,6 +62,4 @@ public class DescriptorTest {
 			assertTrue(found);
 		}
 	}
-
-
 }

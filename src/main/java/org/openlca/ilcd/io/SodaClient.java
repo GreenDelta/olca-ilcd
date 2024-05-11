@@ -68,7 +68,7 @@ public class SodaClient implements DataStore {
 	}
 
 	public SodaClient login(String user, String password) {
-		log.info("Authenticate user: {}", user);
+		log.info("login user: {}", user);
 		var response = client.target(url)
 			.path("authenticate/login")
 			.queryParam("userName", user)
@@ -78,6 +78,23 @@ public class SodaClient implements DataStore {
 		eval(response);
 		response.getCookies().forEach((key, value) -> cookies.add(value.toCookie()));
 		return this;
+	}
+
+	public void logout() {
+		if (cookies.isEmpty())
+			return;
+		try {
+			var info = getAuthInfo();
+			if (info.isAuthenticated()) {
+				var message = new Req().p("authenticate/logout").get()
+					.readEntity(String.class);
+				log.trace(message);
+			}
+		} catch (Exception e) {
+			log.error("logout failed", e);
+		} finally {
+			cookies.clear();
+		}
 	}
 
 	public SodaClient useDataStock(String dataStockId) {
@@ -302,6 +319,7 @@ public class SodaClient implements DataStore {
 
 	@Override
 	public void close() {
+		logout();
 		client.close();
 	}
 
