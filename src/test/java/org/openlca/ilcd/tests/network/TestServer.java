@@ -9,7 +9,8 @@ import org.slf4j.LoggerFactory;
 
 class TestServer {
 
-	static final String ENDPOINT = "http://localhost:8080/resource";
+	// static final String ENDPOINT = "http://localhost:8080/resource";
+	static final String ENDPOINT = "http://192.168.142.136:8080/resource";
 	static final String USER = "admin";
 	static final String PASSWORD = "default";
 

@@ -136,6 +136,13 @@ public class SodaClient implements DataStore {
 		}
 	}
 
+	public int count(Class<? extends IDataSet> type) {
+		var list = new Req().onStock().p(type)
+			.q(new SodaQuery().withCountOnly(true))
+			.get(DescriptorList.class);
+		return list.getTotalSize();
+	}
+
 	@Override
 	public void put(IDataSet ds) {
 		var uid = DataSets.getUUID(ds);
@@ -218,8 +225,23 @@ public class SodaClient implements DataStore {
 
 	@Override
 	public <T extends IDataSet> Iterator<T> iterator(Class<T> type) {
-		// TODO Auto-generated method stub
-		return null;
+		var ds = getDescriptors(type);
+		return new Iterator<>() {
+
+			int pos = 0;
+
+			@Override
+			public boolean hasNext() {
+				return pos < ds.size();
+			}
+
+			@Override
+			public T next() {
+				var d = ds.get(pos);
+				pos++;
+				return get(type, d.getUUID());
+			}
+		};
 	}
 
 	@Override
@@ -295,7 +317,7 @@ public class SodaClient implements DataStore {
 				"data-stock " + idOrName + " does not exist on server");
 		}
 
-		var resp = new Req().p("datastocks").p( id).p( "export").get();
+		var resp = new Req().p("datastocks").p(id).p("export").get();
 		eval(resp);
 		return resp.readEntity(InputStream.class);
 	}
