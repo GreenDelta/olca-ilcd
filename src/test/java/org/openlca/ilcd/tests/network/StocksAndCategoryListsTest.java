@@ -1,29 +1,21 @@
 package org.openlca.ilcd.tests.network;
 
-import org.junit.Assume;
-import org.junit.Ignore;
-import org.junit.Test;
-import org.openlca.ilcd.descriptors.CategorySystemList;
-import org.openlca.ilcd.io.SodaClient;
-import org.openlca.ilcd.lists.CategoryList;
-import org.openlca.ilcd.lists.CategorySystem;
-import org.openlca.ilcd.lists.ContentType;
-
-import java.util.List;
-
 import static org.junit.Assert.*;
 
+import org.junit.Ignore;
+import org.junit.Test;
+import org.openlca.ilcd.io.SodaClient;
+import org.openlca.ilcd.lists.ContentType;
+
 public class StocksAndCategoryListsTest {
-
-
 
 	@Test
 	@Ignore
 	public void testGetCategorySystems() {
-		var url = "http://www.oekobaudat.de/OEKOBAU.DAT/resource";
+		var url = "https://www.oekobaudat.de/OEKOBAU.DAT/resource";
 		try (var client = SodaClient.of(url)) {
-			CategorySystemList list = client.getCategorySystemList();
-			List<String> names = list.getNames();
+			var list = client.getCategorySystemList();
+			var names = list.getNames();
 			assertEquals(1, names.size());
 			assertTrue(names.contains("OEKOBAU.DAT"));
 		}
@@ -32,11 +24,11 @@ public class StocksAndCategoryListsTest {
 	@Test
 	@Ignore
 	public void testGetCategorySystem() {
-		var url = "http://www.oekobaudat.de/OEKOBAU.DAT/resource";
-		try (SodaClient client = SodaClient.of(url)) {
-			CategorySystem system = client.getCategorySystem("OEKOBAU.DAT");
+		var url = "https://www.oekobaudat.de/OEKOBAU.DAT/resource";
+		try (var client = SodaClient.of(url)) {
+			var system = client.getCategorySystem("OEKOBAU.DAT");
 			boolean processTypeFound = false;
-			for (CategoryList list : system.getCategories()) {
+			for (var list : system.getCategories()) {
 				if (list.getType() == ContentType.PROCESS) {
 					assertTrue(list.getCategories().size() > 5);
 					processTypeFound = true;
@@ -45,5 +37,4 @@ public class StocksAndCategoryListsTest {
 			assertTrue(processTypeFound);
 		}
 	}
-
 }

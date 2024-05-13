@@ -44,7 +44,7 @@ public class CrurTest {
 		}
 	}
 
-	void run(IDataSet ds, SodaClient client) {
+	private void run(IDataSet ds, SodaClient client) {
 		var id = UUID.randomUUID().toString();
 		var name = "a " + ds.getClass().getSimpleName();
 		DataSets.withUUID(ds, id);

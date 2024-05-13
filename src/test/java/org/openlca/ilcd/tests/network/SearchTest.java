@@ -1,133 +1,57 @@
 package org.openlca.ilcd.tests.network;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Ignore;
+import static org.junit.Assert.*;
+
+import java.util.List;
+import java.util.UUID;
+
 import org.junit.Test;
+import org.openlca.ilcd.commons.FlowType;
+import org.openlca.ilcd.commons.IDataSet;
+import org.openlca.ilcd.commons.LangString;
 import org.openlca.ilcd.contacts.Contact;
-import org.openlca.ilcd.descriptors.ContactDescriptor;
-import org.openlca.ilcd.descriptors.DescriptorList;
-import org.openlca.ilcd.descriptors.FlowDescriptor;
-import org.openlca.ilcd.descriptors.FlowPropertyDescriptor;
-import org.openlca.ilcd.descriptors.ProcessDescriptor;
-import org.openlca.ilcd.descriptors.SourceDescriptor;
-import org.openlca.ilcd.descriptors.UnitGroupDescriptor;
 import org.openlca.ilcd.flowproperties.FlowProperty;
 import org.openlca.ilcd.flows.Flow;
 import org.openlca.ilcd.io.SodaClient;
+import org.openlca.ilcd.methods.ImpactMethod;
 import org.openlca.ilcd.processes.Process;
 import org.openlca.ilcd.sources.Source;
 import org.openlca.ilcd.units.UnitGroup;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.openlca.ilcd.util.DataSets;
+import org.openlca.ilcd.util.Flows;
 
-import static org.junit.Assert.*;
-
-/**
- * Run some search tests against the ELCD database. These tests are ignored by
- * default because they need some time and a valid network connection.
- */
-@Ignore
 public class SearchTest {
 
-	private final Logger log = LoggerFactory.getLogger(this.getClass());
-	private SodaClient client;
-
-	@Before
-	public void setUp() throws Exception {
-		client = SodaClient.of("http://eplca.jrc.ec.europa.eu/ELCD3/resource");
-	}
-
-	@After
-	public void tearDown() {
-		client.close();
-	}
-
 	@Test
-	public void testListParams() {
-		DescriptorList list = client.search(Flow.class, "water");
-		assertTrue(list.getTotalSize() > 0);
-		assertEquals(list.getStartIndex(), 0);
-		assertEquals(list.getPageSize(), 500);
-	}
-
-	@Test
-	public void testSearchProcess() {
-		String name = "ABS";
-		log.debug("test: search process with name '{}'", name);
-		DescriptorList list = client.search(Process.class, name);
-		assertFalse(list.getDescriptors().isEmpty());
-		for (Object obj : list.getDescriptors()) {
-			assertTrue(obj instanceof ProcessDescriptor);
-			ProcessDescriptor descriptor = (ProcessDescriptor) obj;
-			log.debug("process found: id={}", descriptor.getUUID());
-		}
-		client.close();
-	}
-
-	@Test
-	public void testSearchFlow() {
-		String name = "glycidol";
-		log.debug("test: search flow with name '{}'", name);
-		DescriptorList list = client.search(Flow.class, name);
-		assertFalse(list.getDescriptors().isEmpty());
-		for (Object obj : list.getDescriptors()) {
-			assertTrue(obj instanceof FlowDescriptor);
-			FlowDescriptor descriptor = (FlowDescriptor) obj;
-			log.debug("flow found: id={}", descriptor.getUUID());
+	public void testSearch() {
+		try (var client = TestServer.newClient()) {
+			List.of(
+					new Contact(),
+					new Source(),
+					new UnitGroup(),
+					new FlowProperty(),
+					new Flow(),
+					new Process(),
+					new ImpactMethod())
+				.forEach(ds -> run(ds, client));
 		}
 	}
 
-	@Test
-	public void testSearchFlowProperty() {
-		String name = "calorific";
-		log.debug("test: search flow property with name '{}'", name);
-		DescriptorList list = client.search(FlowProperty.class, name);
-		assertFalse(list.getDescriptors().isEmpty());
-		for (Object obj : list.getDescriptors()) {
-			assertTrue(obj instanceof FlowPropertyDescriptor);
-			FlowPropertyDescriptor descriptor = (FlowPropertyDescriptor) obj;
-			log.debug("flow property found: id={}", descriptor.getUUID());
+	private void run(IDataSet ds, SodaClient client) {
+		var id = UUID.randomUUID().toString();
+		var name = ds.getClass().getSimpleName() + id.substring(24);
+		DataSets.withUUID(ds, id);
+		DataSets.withVersion(ds, "01.00.000");
+		DataSets.withBaseName(ds, LangString.of(name));
+		if (ds instanceof Flow flow) {
+			Flows.withFlowType(flow, FlowType.ELEMENTARY_FLOW);
 		}
-	}
+		client.put(ds);
+		assertTrue(client.contains(ds.getClass(), id));
 
-	@Test
-	public void testSearchUnitGroup() {
-		String name = "mass";
-		log.debug("test: search unit group with name '{}'", name);
-		DescriptorList list = client.search(UnitGroup.class, name);
-		assertFalse(list.getDescriptors().isEmpty());
-		for (Object obj : list.getDescriptors()) {
-			assertTrue(obj instanceof UnitGroupDescriptor);
-			UnitGroupDescriptor descriptor = (UnitGroupDescriptor) obj;
-			log.debug("unit group found: id={}", descriptor.getUUID());
-		}
+		var page = client.search(ds.getClass(), name);
+		assertEquals(1, page.getDescriptors().size());
+		var d = page.getDescriptors().get(0);
+		assertEquals(id, d.getUUID());
 	}
-
-	@Test
-	public void testSearchContact() {
-		String name = "Review";
-		log.debug("test: search contact with name '{}'", name);
-		DescriptorList list = client.search(Contact.class, name);
-		assertFalse(list.getDescriptors().isEmpty());
-		for (Object obj : list.getDescriptors()) {
-			assertTrue(obj instanceof ContactDescriptor);
-			ContactDescriptor descriptor = (ContactDescriptor) obj;
-			log.debug("contact found: id={}", descriptor.getUUID());
-		}
-	}
-
-	@Test
-	public void testSearchSource() {
-		String name = "IMA-Europe_Plastic";
-		log.debug("test: search source with name '{}'", name);
-		DescriptorList list = client.search(Source.class, name);
-		assertFalse(list.getDescriptors().isEmpty());
-		for (Object obj : list.getDescriptors()) {
-			assertTrue(obj instanceof SourceDescriptor);
-			SourceDescriptor descriptor = (SourceDescriptor) obj;
-			log.debug("contact found: id={}", descriptor.getUUID());
-		}
-	}
-
 }

@@ -88,31 +88,31 @@ public class SodaQuery implements Copyable<SodaQuery> {
 		var t = r.queryParam("pageSize", pageSize)
 			.queryParam("startIndex", startIndex);
 		if (search != null) {
-			t = r.queryParam("search", search);
+			t = t.queryParam("search", search);
 		}
 		if (distributed != null) {
-			t = r.queryParam("distributed", distributed);
+			t = t.queryParam("distributed", distributed);
 		}
 		if (name != null) {
-			t = r.queryParam("name", name);
+			t = t.queryParam("name", name);
 		}
 		if (description != null) {
-			t = r.queryParam("description", description);
+			t = t.queryParam("description", description);
 		}
 		if (classId != null) {
-			t = r.queryParam("classId", classId);
+			t = t.queryParam("classId", classId);
 		}
 		if (lang != null) {
-			t = r.queryParam("lang", lang);
+			t = t.queryParam("lang", lang);
 		}
 		if (langFallback != null) {
-			t = r.queryParam("langFallback", langFallback);
+			t = t.queryParam("langFallback", langFallback);
 		}
 		if (allVersions != null) {
-			t = r.queryParam("allVersions", allVersions);
+			t = t.queryParam("allVersions", allVersions);
 		}
 		if (countOnly != null) {
-			t = r.queryParam("countOnly", countOnly);
+			t = t.queryParam("countOnly", countOnly);
 		}
 		return t;
 	}

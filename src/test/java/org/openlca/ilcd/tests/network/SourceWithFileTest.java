@@ -21,31 +21,30 @@ public class SourceWithFileTest {
 	private SodaClient client;
 
 	@Before
-	public void setUp() throws Exception {
-		if (!TestServer.isAvailable())
-			return;
+	public void setUp() {
+		Assume.assumeTrue(TestServer.isAvailable());
 		client = TestServer.newClient();
 	}
 
 	@Test
 	public void testSimpleSourceUpload() {
 		Assume.assumeTrue(TestServer.isAvailable());
-		String id = UUID.randomUUID().toString();
-		Source source = makeSource(id);
+		var id = UUID.randomUUID().toString();
+		var source = makeSource(id);
 		client.put(source);
-		Source fromServer = client.get(Source.class, id);
+		var fromServer = client.get(Source.class, id);
 		assertEquals(id, Sources.getUUID(fromServer));
 	}
 
 	@Test
 	public void testSourceWithFileUpload() throws Exception {
 		Assume.assumeTrue(TestServer.isAvailable());
-		String id = UUID.randomUUID().toString();
-		Source source = makeSource(id);
+		var id = UUID.randomUUID().toString();
+		var source = makeSource(id);
 		Path tempFile = Files.createTempFile("soda_upload_test", ".txt");
 		byte[] content = "Test file content".getBytes();
 		Files.write(tempFile, content);
-		File file = tempFile.toFile();
+		var file = tempFile.toFile();
 		addFileLink(source, file);
 		client.put(source, new File[]{file});
 
@@ -65,7 +64,7 @@ public class SourceWithFileTest {
 	}
 
 	private Source makeSource(String id) {
-		Source source = SampleSource.create();
+		var source = SampleSource.create();
 		source.withSourceInfo().withDataSetInfo().withUUID(id);
 		return source;
 	}
