@@ -1,9 +1,10 @@
-package org.openlca.ilcd.tests.network;
+package org.openlca.ilcd.io.soda;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import java.util.List;
 
+import org.junit.Assume;
 import org.junit.Test;
 import org.openlca.ilcd.commons.IDataSet;
 import org.openlca.ilcd.contacts.Contact;
@@ -28,6 +29,7 @@ public class IterTest {
 
 	@Test
 	public void testIter() {
+		Assume.assumeTrue(TestServer.isAvailable());
 		try (var client = TestServer.newClient()) {
 			for (var type : types) {
 				int count = 0;

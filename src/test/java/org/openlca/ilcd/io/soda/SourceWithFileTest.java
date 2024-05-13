@@ -1,4 +1,4 @@
-package org.openlca.ilcd.tests.network;
+package org.openlca.ilcd.io.soda;
 
 import static org.junit.Assert.*;
 

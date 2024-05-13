@@ -1,4 +1,4 @@
-package org.openlca.ilcd.tests.network;
+package org.openlca.ilcd.io.soda;
 
 import static org.junit.Assert.*;
 
@@ -29,6 +29,7 @@ public class CrurTest {
 
 	@Test
 	public void testCrur() {
+		Assume.assumeTrue(TestServer.isAvailable());
 		try (var client = TestServer.newClient()) {
 			// it does not work for life cycle models (Model) with
 			// the current soda4LCA version

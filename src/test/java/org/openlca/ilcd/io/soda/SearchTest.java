@@ -1,10 +1,11 @@
-package org.openlca.ilcd.tests.network;
+package org.openlca.ilcd.io.soda;
 
 import static org.junit.Assert.*;
 
 import java.util.List;
 import java.util.UUID;
 
+import org.junit.Assume;
 import org.junit.Test;
 import org.openlca.ilcd.commons.FlowType;
 import org.openlca.ilcd.commons.IDataSet;
@@ -24,6 +25,7 @@ public class SearchTest {
 
 	@Test
 	public void testSearch() {
+		Assume.assumeTrue(TestServer.isAvailable());
 		try (var client = TestServer.newClient()) {
 			List.of(
 					new Contact(),

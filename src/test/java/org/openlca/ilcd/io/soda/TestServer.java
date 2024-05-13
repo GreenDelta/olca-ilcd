@@ -1,4 +1,4 @@
-package org.openlca.ilcd.tests.network;
+package org.openlca.ilcd.io.soda;
 
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -7,10 +7,20 @@ import org.openlca.ilcd.io.SodaClient;
 import org.openlca.ilcd.io.SodaConnection;
 import org.slf4j.LoggerFactory;
 
+/**
+ * In order to run the tests for the soda4LCA REST client API, you
+ * need to have a local soda4LCA instance running at port 8080 with
+ * the default administrator account (user: admin, password: default).
+ * Also, the tests will select a data stock that starts with "test" to
+ * run the tests against. As it is not possible to delete datasets
+ * with the client API, the tests will produce test data in this data
+ * stock. Thus, it is a good idea to just create and delete such
+ * "test*" data stocks in the instance (do not forget to give the
+ * admin read and write access to these stocks).
+ */
 class TestServer {
 
-	// static final String ENDPOINT = "http://localhost:8080/resource";
-	static final String ENDPOINT = "http://192.168.142.136:8080/resource";
+	static final String ENDPOINT = "http://localhost:8080/resource";
 	static final String USER = "admin";
 	static final String PASSWORD = "default";
 

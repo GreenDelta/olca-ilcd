@@ -84,7 +84,7 @@ public class SodaQuery implements Copyable<SodaQuery> {
 
 	WebTarget applyOn(WebTarget r) {
 		if (r == null)
-			return r;
+			return null;
 		var t = r.queryParam("pageSize", pageSize)
 			.queryParam("startIndex", startIndex);
 		if (search != null) {
