@@ -1,17 +1,17 @@
 package org.openlca.ilcd.io;
 
 
-import org.openlca.ilcd.commons.IDataSet;
-import org.openlca.ilcd.methods.ImpactMethod;
-import org.openlca.ilcd.processes.Process;
-import org.openlca.ilcd.sources.Source;
-import org.openlca.ilcd.util.Processes;
-
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Iterator;
 import java.util.Objects;
+
+import org.openlca.ilcd.commons.IDataSet;
+import org.openlca.ilcd.methods.ImpactMethod;
+import org.openlca.ilcd.processes.Process;
+import org.openlca.ilcd.sources.Source;
+import org.openlca.ilcd.util.Processes;
 
 /**
  * Provides a meta-data-only view on a data store. This will remove exchanges
@@ -61,10 +61,10 @@ public class MetaDataOnlyStore implements DataStore {
 	}
 
 	@Override
-	public <T extends IDataSet> Iterator<T> iterator(Class<T> type) {
-		return new Iterator<>() {
+	public <T extends IDataSet> Iterable<T> iter(Class<T> type) {
+		return () -> new Iterator<>() {
 
-			private final Iterator<T> it = store.iterator(type);
+			private final Iterator<T> it = store.iter(type).iterator();
 
 			@Override
 			public boolean hasNext() {

@@ -2,7 +2,6 @@ package org.openlca.ilcd.io;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.util.Iterator;
@@ -157,9 +156,9 @@ public class FileStore implements DataStore {
 	}
 
 	@Override
-	public <T extends IDataSet> Iterator<T> iterator(Class<T> type) {
+	public <T extends IDataSet> Iterable<T> iter(Class<T> type) {
 		File folder = getFolder(type);
-		return new FileIterator<>(type, folder);
+		return () -> new FileIterator<>(type, folder);
 	}
 
 	@Override

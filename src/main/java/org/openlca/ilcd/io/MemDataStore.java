@@ -6,13 +6,14 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.Iterator;
 
 import org.openlca.ilcd.commons.IDataSet;
 import org.openlca.ilcd.sources.Source;
 import org.openlca.ilcd.util.DataSets;
 
-/** An in memory implementation of the data store interface. */
+/**
+ * An in memory implementation of the data store interface.
+ */
 public class MemDataStore implements DataStore {
 
 	private final HashMap<Class<?>, HashMap<String, Object>> content = new HashMap<>();
@@ -72,15 +73,14 @@ public class MemDataStore implements DataStore {
 	}
 
 	@Override
-	@SuppressWarnings("unchecked")
-	public <T extends IDataSet> Iterator<T> iterator(Class<T> type) {
-		if (type == null)
-			return Collections.emptyIterator();
-		HashMap<String, ?> map = content.get(type);
+	public <T extends IDataSet> Iterable<T> iter(Class<T> type) {
+		var map = content.get(type);
 		if (map == null)
-			return Collections.emptyIterator();
-		return map.values().stream()
-				.map(obj -> (T) obj).iterator();
+			return Collections.emptyList();
+		return () -> map.values()
+			.stream()
+			.map(type::cast)
+			.iterator();
 	}
 
 	@Override

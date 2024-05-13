@@ -1,11 +1,5 @@
 package org.openlca.ilcd.io;
 
-import org.openlca.ilcd.commons.IDataSet;
-import org.openlca.ilcd.sources.Source;
-import org.openlca.ilcd.util.DataSets;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -13,7 +7,6 @@ import java.net.URI;
 import java.nio.file.FileSystem;
 import java.nio.file.FileSystems;
 import java.nio.file.FileVisitResult;
-import java.nio.file.FileVisitor;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.SimpleFileVisitor;
@@ -22,11 +15,16 @@ import java.nio.file.attribute.BasicFileAttributes;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.function.Consumer;
+
+import org.openlca.ilcd.commons.IDataSet;
+import org.openlca.ilcd.sources.Source;
+import org.openlca.ilcd.util.DataSets;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class ZipStore implements DataStore {
 
@@ -69,7 +67,9 @@ public class ZipStore implements DataStore {
 		}
 	}
 
-	/** Get the entries of the given directory. */
+	/**
+	 * Get the entries of the given directory.
+	 */
 	public List<Path> getEntries(String dir) {
 		return entries.computeIfAbsent(dir, _d -> new ArrayList<>());
 	}
@@ -112,7 +112,7 @@ public class ZipStore implements DataStore {
 			List<Path> list = getEntries(dir);
 			list.add(entry);
 			var ids = addedContent.computeIfAbsent(
-					ds.getClass(), k -> new HashSet<>());
+				ds.getClass(), k -> new HashSet<>());
 			ids.add(uid);
 		} catch (Exception e) {
 			throw new RuntimeException("Could not add file  " + entryName, e);
@@ -133,7 +133,7 @@ public class ZipStore implements DataStore {
 			for (File file : files) {
 				Path entry = zip.getPath("ILCD/external_docs/" + file.getName());
 				Files.copy(file.toPath(), entry,
-						StandardCopyOption.REPLACE_EXISTING);
+					StandardCopyOption.REPLACE_EXISTING);
 				List<Path> list = getEntries("external_docs");
 				list.add(entry);
 			}
@@ -161,11 +161,11 @@ public class ZipStore implements DataStore {
 	}
 
 	<T> T unmarshal(Class<T> type, Path entry) {
-		try (	var is = Files.newInputStream(entry)) {
+		try (var is = Files.newInputStream(entry)) {
 			return Xml.read(type, is);
 		} catch (Exception e) {
 			throw new RuntimeException("Cannot load " + type + " from entry "
-					+ entry, e);
+				+ entry, e);
 		}
 	}
 
@@ -189,9 +189,8 @@ public class ZipStore implements DataStore {
 	}
 
 	@Override
-	public <T extends IDataSet> Iterator<T> iterator(Class<T> type) {
-		log.trace("create iterator for type {}", type);
-		return new ZipEntryIterator<>(this, type);
+	public <T extends IDataSet> Iterable<T> iter(Class<T> type) {
+		return () -> new ZipEntryIterator<>(this, type);
 	}
 
 	@Override

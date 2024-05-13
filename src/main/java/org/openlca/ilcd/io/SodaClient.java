@@ -224,10 +224,9 @@ public class SodaClient implements DataStore {
 	}
 
 	@Override
-	public <T extends IDataSet> Iterator<T> iterator(Class<T> type) {
-		var ds = getDescriptors(type);
-		return new Iterator<>() {
-
+	public <T extends IDataSet> Iterable<T> iter(Class<T> type) {
+		return () -> new Iterator<>() {
+			final List<Descriptor<?>> ds = getDescriptors(type);
 			int pos = 0;
 
 			@Override

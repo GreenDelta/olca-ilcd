@@ -1,16 +1,16 @@
 package org.openlca.ilcd.io;
 
+import static org.junit.Assert.*;
+
+import java.io.File;
+import java.util.UUID;
+
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openlca.ilcd.SampleSource;
 import org.openlca.ilcd.contacts.Contact;
 import org.openlca.ilcd.sources.Source;
-
-import java.io.File;
-import java.util.UUID;
-
-import static org.junit.Assert.*;
 
 public class ZipStoreTest {
 
@@ -44,13 +44,13 @@ public class ZipStoreTest {
 		assertTrue(store.contains(Source.class, id));
 		Source copy = store.get(Source.class, id);
 		assertEquals(id, copy.getSourceInfo().getDataSetInfo().getUUID());
-		assertNotNull(store.iterator(Source.class).next());
+		assertNotNull(store.iter(Source.class).iterator().next());
 	}
 
 	@Test
 	public void testNoContact() {
 		assertFalse(store.contains(Contact.class, "110_abc"));
-		assertFalse(store.iterator(Contact.class).hasNext());
+		assertFalse(store.iter(Contact.class).iterator().hasNext());
 	}
 
 }

@@ -2,14 +2,14 @@ package org.openlca.ilcd.io;
 
 import static org.junit.Assert.*;
 
+import java.io.IOException;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.openlca.ilcd.Tests;
 import org.openlca.ilcd.methods.ImpactMethod;
 import org.openlca.ilcd.processes.Process;
-
-import java.io.IOException;
 
 public class MetaDataOnlyStoreTest {
 
@@ -37,7 +37,8 @@ public class MetaDataOnlyStoreTest {
 		assertTrue(pi.getExchanges().isEmpty());
 		assertTrue(pi.getImpactResults().isEmpty());
 		assertTrue(
-			meta.iterator(Process.class)
+			meta.iter(Process.class)
+				.iterator()
 				.next()
 				.getExchanges()
 				.isEmpty());
@@ -60,7 +61,8 @@ public class MetaDataOnlyStoreTest {
 		var ii = meta.get(ImpactMethod.class, UID);
 		assertTrue(ii.getFactors().isEmpty());
 		assertTrue(
-			meta.iterator(ImpactMethod.class)
+			meta.iter(ImpactMethod.class)
+				.iterator()
 				.next()
 				.getFactors()
 				.isEmpty());
