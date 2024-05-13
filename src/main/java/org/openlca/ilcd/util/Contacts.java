@@ -126,7 +126,7 @@ public final class Contacts {
 	}
 
 	public static Publication withPublication(Contact c) {
-		return c.getAdminInfo().withPublication();
+		return c.withAdminInfo().withPublication();
 	}
 
 }

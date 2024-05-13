@@ -240,11 +240,15 @@ public final class Flows {
 		return f.withModelling().withInventoryMethod();
 	}
 
-	public static FlowType getType(Flow f) {
-		InventoryMethod m = getInventoryMethod(f);
+	public static FlowType getFlowType(Flow f) {
+		var m = getInventoryMethod(f);
 		return m != null
 			? m.getFlowType()
 			: null;
+	}
+
+	public static void withFlowType(Flow flow, FlowType type) {
+		withInventoryMethod(flow).withFlowType(type);
 	}
 
 	public static List<FlowPropertyRef> getFlowProperties(Flow f) {
