@@ -22,7 +22,7 @@ public class FlowTest {
 	private DataSetInfo info;
 
 	@Before
-	public void setUp() throws Exception {
+	public void setUp() {
 		flow = Tests.read(Flow.class, "flow.xml");
 		info = Flows.getDataSetInfo(flow);
 		assertNotNull(info);

@@ -10,7 +10,6 @@ public interface Vocab {
 	String MATML = "http://www.matml.org/";
 	String SBE_ILCD = "http://sbeilcd.se/EPD/2017";
 	String OLCA_EPD = "http://openlca.org/epd_ilcd";
-	String OKWORX = "http://www.okworx.com/ILCD/Extensions/2018/Profile";
 	String XML = "http://www.w3.org/XML/1998/namespace";
 
 	/**

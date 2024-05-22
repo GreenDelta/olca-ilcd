@@ -1,5 +1,19 @@
 package org.openlca.ilcd.processes;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.xml.namespace.QName;
+
+import org.openlca.ilcd.Vocab;
+import org.openlca.ilcd.commons.Copyable;
+import org.openlca.ilcd.commons.IDataSet;
+import org.openlca.ilcd.commons.Other;
+import org.openlca.ilcd.util.Val;
+
 import jakarta.xml.bind.JAXBElement;
 import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
@@ -8,18 +22,6 @@ import jakarta.xml.bind.annotation.XmlAttribute;
 import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlElementWrapper;
 import jakarta.xml.bind.annotation.XmlType;
-import org.openlca.ilcd.Vocab;
-import org.openlca.ilcd.commons.Copyable;
-import org.openlca.ilcd.commons.IDataSet;
-import org.openlca.ilcd.commons.Other;
-import org.openlca.ilcd.util.Val;
-
-import javax.xml.namespace.QName;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "ProcessDataSetType", propOrder = {
@@ -67,9 +69,6 @@ public class Process implements IDataSet, Copyable<Process> {
 	@XmlAttribute(name="epd-version", namespace = Vocab.EPD_2019)
 	private String epdVersion;
 
-	@XmlAttribute(name="profile", namespace = Vocab.OKWORX)
-	private String epdProfile;
-
 	// region getters
 
 	public ProcessInfo getProcessInfo() {
@@ -115,10 +114,6 @@ public class Process implements IDataSet, Copyable<Process> {
 
 	public String getEpdVersion() {
 		return epdVersion;
-	}
-
-	public String getEpdProfile() {
-		return epdProfile;
 	}
 
 	// endregion
@@ -229,11 +224,6 @@ public class Process implements IDataSet, Copyable<Process> {
 		return this;
 	}
 
-	public Process withEpdProfile(String epdProfile) {
-		this.epdProfile = epdProfile;
-		return this;
-	}
-
 	// endregion
 
 	@Override
@@ -250,7 +240,6 @@ public class Process implements IDataSet, Copyable<Process> {
 		copy.withMetaDataOnly(metaDataOnly);
 		Val.copy(otherAttributes, copy::withOtherAttributes);
 		copy.withEpdVersion(epdVersion);
-		copy.withEpdProfile(epdProfile);
 		return copy;
 	}
 
