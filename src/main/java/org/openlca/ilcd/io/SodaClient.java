@@ -7,7 +7,6 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Optional;
 
 import org.glassfish.jersey.media.multipart.FormDataBodyPart;
 import org.glassfish.jersey.media.multipart.FormDataMultiPart;
@@ -89,17 +88,21 @@ public class SodaClient implements DataStore {
 	/**
 	 * Get an authentication token for the given user and password from the API.
 	 */
-	public Optional<String> getAuthenticationToken(String user, String password) {
-		var resp = client.target(url)
-			.path("authenticate/getToken")
-			.queryParam("userName", user)
-			.queryParam("password", password)
-			.request()
-			.get();
-		if (resp.getStatus() != 200)
-			return Optional.empty();
-		var token = resp.readEntity(String.class);
-		return Optional.of(token);
+	public Res<String> getAuthenticationToken(String user, String password) {
+		try {
+			var resp = client.target(url)
+				.path("authenticate/getToken")
+				.queryParam("userName", user)
+				.queryParam("password", password)
+				.request()
+				.get();
+			var token = resp.readEntity(String.class);
+			return resp.getStatus() == 200
+				? Res.of(token)
+				: Res.error("failed to get token: " + token);
+		} catch (Exception e) {
+			return Res.error("failed to get authentication token", e):
+		}
 	}
 
 	public SodaClient withAuthenticationToken(String token) {
