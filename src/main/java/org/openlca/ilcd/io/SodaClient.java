@@ -7,6 +7,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Optional;
 
 import org.glassfish.jersey.media.multipart.FormDataBodyPart;
 import org.glassfish.jersey.media.multipart.FormDataMultiPart;
@@ -45,7 +46,7 @@ public class SodaClient implements DataStore {
 	private final String url;
 	private final Client client;
 	private String dataStockId;
-
+	private String authToken;
 	private final List<Cookie> cookies = new ArrayList<>();
 
 	private SodaClient(String url) {
@@ -67,6 +68,11 @@ public class SodaClient implements DataStore {
 		return client;
 	}
 
+	/**
+	 * Performs a session based login. A session cookie is stored and used for
+	 * all requests until logout. Note that this method throws an exception
+	 * when the login failed.
+	 */
 	public SodaClient login(String user, String password) {
 		log.info("login user: {}", user);
 		var response = client.target(url)
@@ -77,6 +83,27 @@ public class SodaClient implements DataStore {
 			.get();
 		eval(response);
 		response.getCookies().forEach((key, value) -> cookies.add(value.toCookie()));
+		return this;
+	}
+
+	/**
+	 * Get an authentication token for the given user and password from the API.
+	 */
+	public Optional<String> getAuthenticationToken(String user, String password) {
+		var resp = client.target(url)
+			.path("authenticate/getToken")
+			.queryParam("userName", user)
+			.queryParam("password", password)
+			.request()
+			.get();
+		if (resp.getStatus() != 200)
+			return Optional.empty();
+		var token = resp.readEntity(String.class);
+		return Optional.of(token);
+	}
+
+	public SodaClient withAuthenticationToken(String token) {
+		this.authToken = token;
 		return this;
 	}
 
@@ -391,6 +418,9 @@ public class SodaClient implements DataStore {
 			var builder = target.request();
 			for (var c : cookies) {
 				builder.cookie(c);
+			}
+			if (Strings.notEmpty(authToken)) {
+				builder.header("Authorization", "Bearer " + authToken);
 			}
 			return builder;
 		}
