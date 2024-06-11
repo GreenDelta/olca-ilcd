@@ -101,7 +101,7 @@ public class SodaClient implements DataStore {
 				? Res.of(token)
 				: Res.error("failed to get token: " + token);
 		} catch (Exception e) {
-			return Res.error("failed to get authentication token", e):
+			return Res.error("failed to get authentication token", e);
 		}
 	}
 
