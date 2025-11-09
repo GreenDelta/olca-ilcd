@@ -1,6 +1,6 @@
 package org.openlca.ilcd.epd;
 
-import org.openlca.ilcd.commons.Copyable;
+import org.openlca.commons.Copyable;
 import org.openlca.ilcd.commons.DataSetType;
 import org.openlca.ilcd.commons.ExchangeDirection;
 import org.openlca.ilcd.commons.ExchangeFunction;

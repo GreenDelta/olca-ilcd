@@ -4,7 +4,7 @@ import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlAttribute;
 import org.openlca.ilcd.Vocab;
-import org.openlca.ilcd.commons.Copyable;
+import org.openlca.commons.Copyable;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 public class EpdContentAmount implements Copyable<EpdContentAmount> {

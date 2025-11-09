@@ -8,13 +8,15 @@ import java.util.Objects;
 
 import javax.xml.namespace.QName;
 
+import org.openlca.commons.Copyable;
+import org.openlca.ilcd.util.Val;
+
 import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlAnyAttribute;
 import jakarta.xml.bind.annotation.XmlAttribute;
 import jakarta.xml.bind.annotation.XmlType;
 import jakarta.xml.bind.annotation.XmlValue;
-import org.openlca.ilcd.util.Val;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "ClassType", propOrder = {

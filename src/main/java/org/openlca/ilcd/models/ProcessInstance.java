@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import org.openlca.ilcd.commons.Copyable;
+import org.openlca.commons.Copyable;
 import org.openlca.ilcd.commons.Ref;
 
 import jakarta.xml.bind.annotation.XmlAccessType;

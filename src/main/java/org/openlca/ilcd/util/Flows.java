@@ -7,6 +7,7 @@ import java.util.stream.Stream;
 
 import javax.xml.datatype.XMLGregorianCalendar;
 
+import org.openlca.commons.Strings;
 import org.openlca.ilcd.commons.Classification;
 import org.openlca.ilcd.commons.FlowType;
 import org.openlca.ilcd.commons.LangString;
@@ -164,7 +165,7 @@ public final class Flows {
 				name.getMixAndLocationTypes(),
 				name.getTreatmentStandardsRoutes())
 			.map(strings -> LangString.getOrDefault(strings, lang))
-			.filter(Strings::notEmpty)
+			.filter(Strings::isNotBlank)
 			.collect(Collectors.joining(", "));
 	}
 

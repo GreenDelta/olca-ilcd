@@ -2,7 +2,7 @@ package org.openlca.ilcd.processes.epd;
 
 import jakarta.xml.bind.annotation.XmlEnum;
 import jakarta.xml.bind.annotation.XmlEnumValue;
-import org.openlca.ilcd.util.Strings;
+import org.openlca.commons.Strings;
 
 import java.util.Optional;
 
@@ -35,7 +35,7 @@ public enum EpdSubType {
 	}
 
 	public static Optional<EpdSubType> fromValue(String v) {
-		if (Strings.nullOrEmpty(v))
+		if (Strings.isBlank(v))
 			return Optional.empty();
 		for (var t : EpdSubType.values()) {
 			if (t.value.equals(v)) {

@@ -11,6 +11,8 @@ import java.util.List;
 import org.glassfish.jersey.media.multipart.FormDataBodyPart;
 import org.glassfish.jersey.media.multipart.FormDataMultiPart;
 import org.glassfish.jersey.media.multipart.MultiPartFeature;
+import org.openlca.commons.Res;
+import org.openlca.commons.Strings;
 import org.openlca.ilcd.commons.IDataSet;
 import org.openlca.ilcd.commons.Ref;
 import org.openlca.ilcd.descriptors.CategorySystemList;
@@ -20,7 +22,6 @@ import org.openlca.ilcd.descriptors.DescriptorList;
 import org.openlca.ilcd.lists.CategorySystem;
 import org.openlca.ilcd.sources.Source;
 import org.openlca.ilcd.util.DataSets;
-import org.openlca.ilcd.util.Strings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -60,7 +61,7 @@ public class SodaClient implements DataStore {
 
 	public static SodaClient of(SodaConnection con) {
 		var client = SodaClient.of(con.url);
-		if (Strings.notEmpty(con.user) && Strings.notEmpty(con.password)) {
+		if (Strings.isNotBlank(con.user) && Strings.isNotBlank(con.password)) {
 			client.login(con.user, con.password);
 		}
 		client.useDataStock(con.dataStockId);
@@ -98,7 +99,7 @@ public class SodaClient implements DataStore {
 				.get();
 			var token = resp.readEntity(String.class);
 			return resp.getStatus() == 200
-				? Res.of(token)
+				? Res.ok(token)
 				: Res.error("failed to get token: " + token);
 		} catch (Exception e) {
 			return Res.error("failed to get authentication token", e);
@@ -185,7 +186,7 @@ public class SodaClient implements DataStore {
 			.accept(MediaType.APPLICATION_XML);
 		try {
 			byte[] bytes = Xml.toBytes(ds);
-			if (Strings.notEmpty(dataStockId)) {
+			if (Strings.isNotBlank(dataStockId)) {
 				req = req.header("stock", dataStockId);
 			}
 			var response = req.post(Entity.xml(bytes));
@@ -200,7 +201,7 @@ public class SodaClient implements DataStore {
 		log.info("Publish source with files {}", source);
 		try {
 			var formData = new FormDataMultiPart();
-			if (Strings.notEmpty(dataStockId)) {
+			if (Strings.isNotBlank(dataStockId)) {
 				log.trace("post to data stock {}", dataStockId);
 				formData.field("stock", dataStockId);
 			}
@@ -225,7 +226,7 @@ public class SodaClient implements DataStore {
 			}
 
 			var req = new Req().p("sources/withBinaries").build();
-			if (Strings.notEmpty(dataStockId)) {
+			if (Strings.isNotBlank(dataStockId)) {
 				req = req.header("stock", dataStockId);
 			}
 			var resp = req.post(Entity.entity(
@@ -329,14 +330,14 @@ public class SodaClient implements DataStore {
 	}
 
 	public InputStream exportDataStock(String idOrName) {
-		if (Strings.nullOrEmpty(idOrName))
+		if (Strings.isBlank(idOrName))
 			throw new IllegalArgumentException("no ID or name of data-stock provided");
 
 		// find the data-stock
 		String id = null;
 		for (var stock : getDataStockList().getDataStocks()) {
-			if (Strings.nullOrEqual(stock.getUUID(), idOrName)
-				|| Strings.nullOrEqual(stock.getShortName(), idOrName)) {
+			if (idOrName.equals(stock.getUUID())
+				|| idOrName.equals(stock.getShortName())) {
 				id = stock.getUUID();
 				break;
 			}
@@ -422,7 +423,7 @@ public class SodaClient implements DataStore {
 			for (var c : cookies) {
 				builder.cookie(c);
 			}
-			if (Strings.notEmpty(authToken)) {
+			if (Strings.isNotBlank(authToken)) {
 				builder.header("Authorization", "Bearer " + authToken);
 			}
 			return builder;

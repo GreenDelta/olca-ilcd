@@ -3,6 +3,8 @@ package org.openlca.ilcd.commons;
 import java.util.List;
 import java.util.Objects;
 
+import org.openlca.commons.Copyable;
+
 import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlAttribute;

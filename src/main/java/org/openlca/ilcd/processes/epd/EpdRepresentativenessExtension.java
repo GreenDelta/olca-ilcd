@@ -5,7 +5,7 @@ import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlAnyElement;
 import jakarta.xml.bind.annotation.XmlElement;
 import org.openlca.ilcd.Vocab;
-import org.openlca.ilcd.commons.Copyable;
+import org.openlca.commons.Copyable;
 import org.openlca.ilcd.commons.Extension;
 import org.openlca.ilcd.commons.Ref;
 import org.openlca.ilcd.util.Val;

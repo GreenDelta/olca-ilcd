@@ -3,7 +3,7 @@ package org.openlca.ilcd.sources;
 import jakarta.xml.bind.annotation.XmlEnum;
 import jakarta.xml.bind.annotation.XmlEnumValue;
 import jakarta.xml.bind.annotation.XmlType;
-import org.openlca.ilcd.util.Strings;
+import org.openlca.commons.Strings;
 
 import java.util.Optional;
 
@@ -96,7 +96,7 @@ public enum SourceType {
 	}
 
 	public static Optional<SourceType> fromValue(String v) {
-		if (Strings.nullOrEmpty(v))
+		if (Strings.isBlank(v))
 			return Optional.empty();
 		for (SourceType c : SourceType.values()) {
 			if (c.value.equals(v)) {

@@ -9,7 +9,7 @@ import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlRootElement;
-import org.openlca.ilcd.commons.Copyable;
+import org.openlca.commons.Copyable;
 import org.openlca.ilcd.commons.XmlRoot;
 import org.openlca.ilcd.util.Val;
 

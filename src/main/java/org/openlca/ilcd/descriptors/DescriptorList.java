@@ -12,7 +12,7 @@ import jakarta.xml.bind.annotation.XmlAttribute;
 import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlElements;
 import jakarta.xml.bind.annotation.XmlType;
-import org.openlca.ilcd.commons.Copyable;
+import org.openlca.commons.Copyable;
 import org.openlca.ilcd.commons.XmlRoot;
 
 import javax.xml.namespace.QName;

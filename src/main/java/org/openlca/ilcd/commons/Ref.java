@@ -9,6 +9,7 @@ import java.util.Objects;
 
 import javax.xml.namespace.QName;
 
+import org.openlca.commons.Copyable;
 import org.openlca.ilcd.commons.annotations.ShortText;
 import org.openlca.ilcd.contacts.Contact;
 import org.openlca.ilcd.flowproperties.FlowProperty;

@@ -6,7 +6,7 @@ import java.util.List;
 
 import jakarta.xml.bind.annotation.XmlElementWrapper;
 import org.openlca.ilcd.commons.Classification;
-import org.openlca.ilcd.commons.Copyable;
+import org.openlca.commons.Copyable;
 import org.openlca.ilcd.commons.LangString;
 import org.openlca.ilcd.commons.Ref;
 import org.openlca.ilcd.commons.annotations.FreeText;

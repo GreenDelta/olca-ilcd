@@ -5,7 +5,7 @@ import java.util.Collections;
 import java.util.List;
 
 import jakarta.xml.bind.annotation.XmlAttribute;
-import org.openlca.ilcd.commons.Copyable;
+import org.openlca.commons.Copyable;
 import org.openlca.ilcd.commons.DataSetType;
 import org.openlca.ilcd.commons.LangString;
 import org.openlca.ilcd.commons.Ref;

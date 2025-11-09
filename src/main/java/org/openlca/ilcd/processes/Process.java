@@ -9,7 +9,7 @@ import java.util.Map;
 import javax.xml.namespace.QName;
 
 import org.openlca.ilcd.Vocab;
-import org.openlca.ilcd.commons.Copyable;
+import org.openlca.commons.Copyable;
 import org.openlca.ilcd.commons.IDataSet;
 import org.openlca.ilcd.commons.Other;
 import org.openlca.ilcd.util.Val;

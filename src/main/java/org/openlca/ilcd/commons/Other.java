@@ -1,16 +1,18 @@
 package org.openlca.ilcd.commons;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+import org.openlca.commons.Copyable;
+import org.openlca.ilcd.util.Val;
+import org.w3c.dom.Element;
+
 import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlAnyElement;
 import jakarta.xml.bind.annotation.XmlRootElement;
 import jakarta.xml.bind.annotation.XmlType;
-import org.openlca.ilcd.util.Val;
-import org.w3c.dom.Element;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = { "any" })
@@ -26,6 +28,7 @@ public class Other implements Copyable<Other>, Extension {
 
 	// region getters
 
+	@Override
 	public List<Object> getAny() {
 		return any != null ? any : Collections.emptyList();
 	}
@@ -34,6 +37,7 @@ public class Other implements Copyable<Other>, Extension {
 
 	// region setters
 
+	@Override
 	public List<Object> withAny() {
 		if (any == null) {
 			any = new ArrayList<>();
@@ -41,6 +45,7 @@ public class Other implements Copyable<Other>, Extension {
 		return any;
 	}
 
+	@Override
 	public Other withAny(List<Object> any) {
 		this.any = any;
 		return this;

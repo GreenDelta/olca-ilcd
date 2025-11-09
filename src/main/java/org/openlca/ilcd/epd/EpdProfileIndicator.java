@@ -4,7 +4,7 @@ package org.openlca.ilcd.epd;
 import java.util.Objects;
 
 import org.openlca.ilcd.Vocab;
-import org.openlca.ilcd.commons.Copyable;
+import org.openlca.commons.Copyable;
 import org.openlca.ilcd.commons.DataSetType;
 import org.openlca.ilcd.commons.LangString;
 import org.openlca.ilcd.commons.Ref;

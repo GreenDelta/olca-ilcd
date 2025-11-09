@@ -1,12 +1,13 @@
 
 package org.openlca.ilcd.commons;
 
+import java.util.Optional;
+
+import org.openlca.commons.Strings;
+
 import jakarta.xml.bind.annotation.XmlEnum;
 import jakarta.xml.bind.annotation.XmlEnumValue;
 import jakarta.xml.bind.annotation.XmlType;
-import org.openlca.ilcd.util.Strings;
-
-import java.util.Optional;
 
 @XmlType(name = "CompletenessAvailabilityValues")
 @XmlEnum
@@ -70,7 +71,7 @@ public enum Availability {
 	}
 
 	public static Optional<Availability> fromValue(String v) {
-		if (Strings.nullOrEmpty(v))
+		if (Strings.isBlank(v))
 			return Optional.empty();
 		for (Availability c : Availability.values()) {
 			if (c.value.equals(v)) {

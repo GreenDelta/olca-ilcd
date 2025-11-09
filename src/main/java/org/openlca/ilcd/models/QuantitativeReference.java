@@ -4,7 +4,7 @@ import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlType;
-import org.openlca.ilcd.commons.Copyable;
+import org.openlca.commons.Copyable;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(propOrder = { "refProcess" })

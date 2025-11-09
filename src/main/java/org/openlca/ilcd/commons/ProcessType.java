@@ -3,7 +3,7 @@ package org.openlca.ilcd.commons;
 import jakarta.xml.bind.annotation.XmlEnum;
 import jakarta.xml.bind.annotation.XmlEnumValue;
 import jakarta.xml.bind.annotation.XmlType;
-import org.openlca.ilcd.util.Strings;
+import org.openlca.commons.Strings;
 
 import java.util.Optional;
 
@@ -81,7 +81,7 @@ public enum ProcessType {
 	}
 
 	public static Optional<ProcessType> fromValue(String v) {
-		if (Strings.nullOrEmpty(v))
+		if (Strings.isBlank(v))
 			return Optional.empty();
 		for (ProcessType c : ProcessType.values()) {
 			if (c.value.equals(v)) {

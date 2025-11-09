@@ -4,14 +4,15 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import org.openlca.commons.Copyable;
+import org.openlca.commons.Strings;
+import org.openlca.ilcd.util.Val;
+
 import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlAttribute;
 import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlRootElement;
-import org.openlca.ilcd.commons.Copyable;
-import org.openlca.ilcd.util.Strings;
-import org.openlca.ilcd.util.Val;
 
 /**
  * Contains the list of category systems that are available in a data
@@ -63,7 +64,7 @@ public class CategorySystemList implements Copyable<CategorySystemList> {
 		return getSystems()
 			.stream()
 			.map(Entry::getName)
-			.filter(Strings::notEmpty)
+			.filter(Strings::isNotBlank)
 			.toList();
 	}
 

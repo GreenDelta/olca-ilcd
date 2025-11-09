@@ -8,7 +8,7 @@ import jakarta.xml.bind.annotation.XmlElements;
 import jakarta.xml.bind.annotation.XmlType;
 import org.aopalliance.reflect.Code;
 import org.openlca.ilcd.Vocab;
-import org.openlca.ilcd.commons.Copyable;
+import org.openlca.commons.Copyable;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "Unit", propOrder = {"name"})

@@ -4,7 +4,7 @@ package org.openlca.ilcd.processes;
 import jakarta.xml.bind.annotation.XmlEnum;
 import jakarta.xml.bind.annotation.XmlEnumValue;
 import jakarta.xml.bind.annotation.XmlType;
-import org.openlca.ilcd.util.Strings;
+import org.openlca.commons.Strings;
 
 import java.util.Optional;
 
@@ -112,7 +112,7 @@ public enum ReviewScope {
 	}
 
 	public static Optional<ReviewScope> fromValue(String v) {
-		if (Strings.nullOrEmpty(v))
+		if (Strings.isBlank(v))
 			return Optional.empty();
 		for (ReviewScope c : ReviewScope.values()) {
 			if (c.value.equals(v)) {

@@ -2,8 +2,8 @@ package org.openlca.ilcd.epd;
 
 import java.util.Objects;
 
-import org.openlca.ilcd.commons.Copyable;
-import org.openlca.ilcd.util.Strings;
+import org.openlca.commons.Copyable;
+import org.openlca.commons.Strings;
 
 import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
@@ -75,7 +75,7 @@ public class EpdProfileModule
 			return true;
 		if (!(obj instanceof EpdProfileModule other))
 			return false;
-		return Strings.nullOrEqual(this.name, other.name);
+		return Strings.equalsIgnoreCase(this.name, other.name);
 	}
 
 	@Override

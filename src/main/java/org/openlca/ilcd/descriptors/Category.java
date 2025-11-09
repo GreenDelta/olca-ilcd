@@ -3,7 +3,7 @@ package org.openlca.ilcd.descriptors;
 
 import jakarta.xml.bind.annotation.XmlAttribute;
 import jakarta.xml.bind.annotation.XmlValue;
-import org.openlca.ilcd.commons.Copyable;
+import org.openlca.commons.Copyable;
 
 public class Category implements Copyable<Category> {
 

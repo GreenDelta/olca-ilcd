@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.openlca.ilcd.Vocab;
-import org.openlca.ilcd.commons.Copyable;
+import org.openlca.commons.Copyable;
 import org.openlca.ilcd.commons.Extension;
 import org.openlca.ilcd.commons.Ref;
 import org.openlca.ilcd.flows.epd.matml.MaterialDoc;

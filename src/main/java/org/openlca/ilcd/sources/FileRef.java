@@ -6,7 +6,7 @@ import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlAttribute;
 import jakarta.xml.bind.annotation.XmlSchemaType;
 import jakarta.xml.bind.annotation.XmlType;
-import org.openlca.ilcd.commons.Copyable;
+import org.openlca.commons.Copyable;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "ReferenceToDigitalFileType")

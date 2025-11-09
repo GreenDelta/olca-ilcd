@@ -2,7 +2,7 @@ package org.openlca.ilcd.io;
 
 import java.util.Optional;
 
-import org.openlca.ilcd.commons.Copyable;
+import org.openlca.commons.Copyable;
 import org.openlca.ilcd.descriptors.DescriptorList;
 
 import jakarta.ws.rs.client.WebTarget;

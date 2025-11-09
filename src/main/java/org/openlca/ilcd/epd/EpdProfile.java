@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Objects;
 
 import org.openlca.ilcd.Vocab;
-import org.openlca.ilcd.commons.Copyable;
+import org.openlca.commons.Copyable;
 import org.openlca.ilcd.commons.Ref;
 import org.openlca.ilcd.util.Val;
 

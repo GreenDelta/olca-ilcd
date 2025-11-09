@@ -1,14 +1,15 @@
 package org.openlca.ilcd.util;
 
-import org.openlca.ilcd.commons.Copyable;
-import org.openlca.ilcd.commons.Other;
-import org.w3c.dom.Element;
-
-import javax.xml.datatype.XMLGregorianCalendar;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
+
+import javax.xml.datatype.XMLGregorianCalendar;
+
+import org.openlca.commons.Copyable;
+import org.openlca.ilcd.commons.Other;
+import org.w3c.dom.Element;
 
 public class Val {
 

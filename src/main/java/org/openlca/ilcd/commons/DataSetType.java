@@ -1,9 +1,9 @@
 
 package org.openlca.ilcd.commons;
 
-import jakarta.xml.bind.annotation.XmlEnum;
-import jakarta.xml.bind.annotation.XmlEnumValue;
-import jakarta.xml.bind.annotation.XmlType;
+import java.util.Optional;
+
+import org.openlca.commons.Strings;
 import org.openlca.ilcd.contacts.Contact;
 import org.openlca.ilcd.flowproperties.FlowProperty;
 import org.openlca.ilcd.flows.Flow;
@@ -12,9 +12,10 @@ import org.openlca.ilcd.models.Model;
 import org.openlca.ilcd.processes.Process;
 import org.openlca.ilcd.sources.Source;
 import org.openlca.ilcd.units.UnitGroup;
-import org.openlca.ilcd.util.Strings;
 
-import java.util.Optional;
+import jakarta.xml.bind.annotation.XmlEnum;
+import jakarta.xml.bind.annotation.XmlEnumValue;
+import jakarta.xml.bind.annotation.XmlType;
 
 @XmlType(name = "GlobalReferenceTypeValues")
 @XmlEnum
@@ -58,7 +59,7 @@ public enum DataSetType {
 	}
 
 	public static Optional<DataSetType> fromValue(String v) {
-		if (Strings.nullOrEmpty(v))
+		if (Strings.isBlank(v))
 			return Optional.empty();
 		for (var type : DataSetType.values()) {
 			if (type.value.equals(v)) {
