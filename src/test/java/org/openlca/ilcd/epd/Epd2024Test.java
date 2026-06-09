@@ -6,6 +6,7 @@ import org.junit.Test;
 import org.openlca.ilcd.Tests;
 import org.openlca.ilcd.commons.LangString;
 import org.openlca.ilcd.processes.Process;
+import org.openlca.ilcd.processes.epd.EpdConditionCategory;
 import org.openlca.ilcd.util.Epds;
 
 public class Epd2024Test {
@@ -49,28 +50,26 @@ public class Epd2024Test {
 
 		var comments = rsl.getComments();
 		assertEquals(2, comments.size());
-		assertEquals("The indicated service life requires installation and maintenance according to manufacturer instructions.",
+		assertEquals(
+			"The indicated service life requires installation and maintenance " +
+				"according to manufacturer instructions.",
 			LangString.getDefault(comments));
-	}
 
-	@Test
-	public void testReferenceServiceLifeFactors() {
-		var rsl = Epds.getReferenceServiceLife(ds);
 		var factors = rsl.getConditionFactors();
-
 		var first = factors.getFirst();
-		assertEquals("A - inherent quality", first.getCategory());
+		assertEquals(EpdConditionCategory.A_INHERENT_QUALITY, first.getCategory());
 		assertEquals(Integer.valueOf(1), first.getObjectSpecificGrade());
 		assertEquals(Integer.valueOf(1), first.getReferenceGrade());
 		assertEquals(1.0, first.getValue(), 1e-16);
 
 		var outdoor = factors.get(4);
-		assertEquals("E - outdoor environment", outdoor.getCategory());
+		assertEquals(EpdConditionCategory.E_OUTDOOR_ENVIRONMENT, outdoor.getCategory());
 		assertEquals(Integer.valueOf(2), outdoor.getObjectSpecificGrade());
 		assertEquals(Integer.valueOf(1), outdoor.getReferenceGrade());
 		assertEquals(0.9, outdoor.getValue(), 1e-16);
 		assertEquals(2, outdoor.getComments().size());
-		assertEquals("Lots of rain but no wind", LangString.getDefault(outdoor.getComments()));
+		assertEquals("Lots of rain but no wind",
+			LangString.getDefault(outdoor.getComments()));
 	}
 
 	@Test
@@ -78,19 +77,12 @@ public class Epd2024Test {
 		var esl = Epds.getEstimatedServiceLife(ds);
 		assertNotNull(esl);
 		assertEquals(8.0, esl.getYears(), 1e-16);
-		assertEquals(7, esl.getConditionFactors().size());
-
 		var std = esl.getStandards().getFirst();
 		assertEquals("ISO22057", LangString.getDefault(std.getName()));
-	}
 
-	@Test
-	public void testEstimatedServiceLifeFactors() {
-		var esl = Epds.getEstimatedServiceLife(ds);
-		var factors = esl.getConditionFactors();
-
-		var first = factors.getFirst();
-		assertEquals("A - inherent quality", first.getCategory());
+		assertEquals(7, esl.getConditionFactors().size());
+		var first =  esl.getConditionFactors().getFirst();
+		assertEquals(EpdConditionCategory.A_INHERENT_QUALITY, first.getCategory());
 		assertEquals(Integer.valueOf(5), first.getObjectSpecificGrade());
 		assertEquals(Integer.valueOf(1), first.getReferenceGrade());
 		assertEquals(0.7, first.getValue(), 1e-16);

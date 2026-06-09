@@ -17,7 +17,7 @@ import jakarta.xml.bind.annotation.XmlElement;
 public final class EpdConditionFactor implements Copyable<EpdConditionFactor> {
 
 	@XmlAttribute(name = "factorCategory", namespace = Vocab.EPD_2024)
-	private String category;
+	private EpdConditionCategory category;
 
 	@XmlAttribute(name = "objectSpecificGrade", namespace = Vocab.EPD_2024)
 	private Integer objectSpecificGrade;
@@ -33,7 +33,7 @@ public final class EpdConditionFactor implements Copyable<EpdConditionFactor> {
 
 	// region getters
 
-	public String getCategory() {
+	public EpdConditionCategory getCategory() {
 		return category;
 	}
 
@@ -57,8 +57,8 @@ public final class EpdConditionFactor implements Copyable<EpdConditionFactor> {
 
 	// region setters
 
-	public EpdConditionFactor withFactorCategory(String factorCategory) {
-		this.category = factorCategory;
+	public EpdConditionFactor withCategory(EpdConditionCategory category) {
+		this.category = category;
 		return this;
 	}
 
@@ -93,11 +93,11 @@ public final class EpdConditionFactor implements Copyable<EpdConditionFactor> {
 
 	@Override
 	public EpdConditionFactor copy() {
-		var copy = new EpdConditionFactor();
-		copy.withFactorCategory(category);
-		copy.withObjectSpecificGrade(objectSpecificGrade);
-		copy.withReferenceGrade(referenceGrade);
-		copy.withValue(value);
+		var copy = new EpdConditionFactor()
+			.withCategory(category)
+			.withObjectSpecificGrade(objectSpecificGrade)
+			.withReferenceGrade(referenceGrade)
+			.withValue(value);
 		Val.copy(comments, copy::withComments);
 		return copy;
 	}
