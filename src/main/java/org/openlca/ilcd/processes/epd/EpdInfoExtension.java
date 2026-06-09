@@ -29,6 +29,10 @@ public class EpdInfoExtension implements Copyable<EpdInfoExtension>, Extension {
 	@XmlElement(name = "contentDeclaration", namespace = Vocab.EPD_2019)
 	private EpdContentDeclaration contentDeclaration;
 
+	@XmlElementWrapper(name = "productIds", namespace = Vocab.EPD_2024)
+	@XmlElement(name = "productId", namespace = Vocab.EPD_2024)
+	private List<EpdProductId> productIds;
+
 	@XmlAnyElement(lax = true)
 	private List<Object> any;
 
@@ -48,6 +52,10 @@ public class EpdInfoExtension implements Copyable<EpdInfoExtension>, Extension {
 
 	public EpdContentDeclaration getContentDeclaration() {
 		return contentDeclaration;
+	}
+
+	public List<EpdProductId> getProductIds() {
+		return productIds != null ? productIds : List.of();
 	}
 
 	public List<Object> getAny() {
@@ -75,6 +83,11 @@ public class EpdInfoExtension implements Copyable<EpdInfoExtension>, Extension {
 
 	public EpdInfoExtension withContentDeclaration(EpdContentDeclaration contentDeclaration) {
 		this.contentDeclaration = contentDeclaration;
+		return this;
+	}
+
+	public EpdInfoExtension withProductIds(List<EpdProductId> productIds) {
+		this.productIds = productIds;
 		return this;
 	}
 
@@ -111,6 +124,13 @@ public class EpdInfoExtension implements Copyable<EpdInfoExtension>, Extension {
 		return contentDeclaration;
 	}
 
+	public List<EpdProductId> withProductIds() {
+		if (productIds == null) {
+			productIds = new ArrayList<>();
+		}
+		return productIds;
+	}
+
 	public List<Object> withAny() {
 		if (any == null) {
 			any = new ArrayList<>();
@@ -127,6 +147,7 @@ public class EpdInfoExtension implements Copyable<EpdInfoExtension>, Extension {
 		Val.copy(scenarios, copy::withScenarios);
 		Val.copy(moduleEntries, copy::withModuleEntries);
 		Val.copy(contentDeclaration, copy::withContentDeclaration);
+		Val.copy(productIds, copy::withProductIds);
 		Val.copyAny(any, copy::withAny);
 		return copy;
 	}

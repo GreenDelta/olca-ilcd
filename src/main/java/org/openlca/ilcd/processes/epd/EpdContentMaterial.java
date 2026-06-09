@@ -1,13 +1,14 @@
 package org.openlca.ilcd.processes.epd;
 
-import jakarta.xml.bind.annotation.XmlAccessType;
-import jakarta.xml.bind.annotation.XmlAccessorType;
-import jakarta.xml.bind.annotation.XmlElement;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.openlca.ilcd.Vocab;
 import org.openlca.ilcd.util.Val;
 
-import java.util.ArrayList;
-import java.util.List;
+import jakarta.xml.bind.annotation.XmlAccessType;
+import jakarta.xml.bind.annotation.XmlAccessorType;
+import jakarta.xml.bind.annotation.XmlElement;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 public class EpdContentMaterial extends
@@ -16,7 +17,7 @@ public class EpdContentMaterial extends
 	@XmlElement(name = "substance", namespace = Vocab.EPD_2019)
 	private List<EpdContentSubstance> substances;
 
-	  // region getters
+	// region getters
 
   public List<EpdContentSubstance> getSubstances() {
     return substances != null ? substances : List.of();

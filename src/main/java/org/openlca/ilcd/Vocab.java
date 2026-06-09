@@ -22,6 +22,7 @@ public interface Vocab {
 		return switch (namespace) {
 			case EPD_2013 -> Optional.of("epd");
 			case EPD_2019 -> Optional.of("epd2");
+			case EPD_2024 -> Optional.of("epd24");
 			case OLCA_EPD -> Optional.of("olca");
 			case SBE_ILCD -> Optional.of("sbe");
 			case XML -> Optional.of("xml");

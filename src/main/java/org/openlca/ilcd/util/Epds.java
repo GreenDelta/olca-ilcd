@@ -5,6 +5,7 @@ import org.openlca.ilcd.processes.Process;
 import org.openlca.ilcd.processes.epd.EpdContentDeclaration;
 import org.openlca.ilcd.processes.epd.EpdInfoExtension;
 import org.openlca.ilcd.processes.epd.EpdModuleEntry;
+import org.openlca.ilcd.processes.epd.EpdProductId;
 import org.openlca.ilcd.processes.epd.EpdSafetyMargins;
 import org.openlca.ilcd.processes.epd.EpdScenario;
 import org.openlca.ilcd.processes.epd.EpdSubType;
@@ -71,6 +72,17 @@ public final class Epds extends Processes {
 
 	public static EpdContentDeclaration withContentDeclaration(Process p) {
 		return withInfoExtension(p).withContentDeclaration();
+	}
+
+	public static List<EpdProductId> getProductIds(Process p) {
+		var ext = getInfoExtension(p);
+		return ext != null
+			? ext.getProductIds()
+			: Collections.emptyList();
+	}
+
+	public static List<EpdProductId> withProductIds(Process p) {
+		return withInfoExtension(p).withProductIds();
 	}
 
 	public static EpdSubType getSubType(Process p) {

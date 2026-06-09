@@ -11,7 +11,8 @@
 		@XmlNs(prefix = "m", namespaceURI = "http://lca.jrc.it/ILCD/LCIAMethod"),
 		@XmlNs(prefix = "common", namespaceURI = "http://lca.jrc.it/ILCD/Common"),
 		@XmlNs(prefix = "epd", namespaceURI = "http://www.iai.kit.edu/EPD/2013"),
-		@XmlNs(prefix = "epd2", namespaceURI = "http://www.indata.network/EPD/2019")
+		@XmlNs(prefix = "epd2", namespaceURI = "http://www.indata.network/EPD/2019"),
+		@XmlNs(prefix = "epd24", namespaceURI = "http://www.indata.network/EPD/2024")
 	})
 package org.openlca.ilcd.processes;
 
