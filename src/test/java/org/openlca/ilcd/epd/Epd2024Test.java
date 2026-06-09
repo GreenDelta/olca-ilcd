@@ -11,6 +11,7 @@ import org.openlca.ilcd.processes.Process;
 import org.openlca.ilcd.processes.epd.EpdConditionCategory;
 import org.openlca.ilcd.processes.epd.EpdManufacturerVariability;
 import org.openlca.ilcd.processes.epd.EpdProductVariability;
+import org.openlca.ilcd.processes.epd.EpdVariationRange;
 import org.openlca.ilcd.util.Epds;
 
 public class Epd2024Test {
@@ -156,13 +157,13 @@ public class Epd2024Test {
 		assertNotNull(mv);
 		assertEquals(EpdManufacturerVariability.VariabilityType.SINGLE_PRODUCTION_SITE, mv.getType());
 		assertEquals(5.0, mv.getVariation(), 1e-16);
-		assertEquals("B - between 2,5% and 10%", mv.getRange());
+		assertEquals(EpdVariationRange.B_BETWEEN_2_5_AND_10, mv.getRange());
 
 		var pv = v.getProductVariability();
 		assertNotNull(pv);
 		assertEquals(EpdProductVariability.VariabilityType.RANGE_OF_PRODUCTS, pv.getType());
 		assertEquals(20.0, pv.getVariation(), 1e-16);
-		assertEquals("C - between 10% and 25%", pv.getRange());
+		assertEquals(EpdVariationRange.C_BETWEEN_10_AND_25, pv.getRange());
 
 		assertEquals(2, v.getDescriptions().size());
 	}

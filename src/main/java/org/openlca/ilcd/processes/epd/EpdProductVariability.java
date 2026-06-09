@@ -20,7 +20,7 @@ public final class EpdProductVariability implements Copyable<EpdProductVariabili
 	private Double variation;
 
 	@XmlAttribute(name = "variationRange", namespace = Vocab.EPD_2024)
-	private String range;
+	private EpdVariationRange range;
 
 	// region getters
 
@@ -32,7 +32,7 @@ public final class EpdProductVariability implements Copyable<EpdProductVariabili
 		return variation;
 	}
 
-	public String getRange() {
+	public EpdVariationRange getRange() {
 		return range;
 	}
 
@@ -50,7 +50,7 @@ public final class EpdProductVariability implements Copyable<EpdProductVariabili
 		return this;
 	}
 
-	public EpdProductVariability withRange(String range) {
+	public EpdProductVariability withRange(EpdVariationRange range) {
 		this.range = range;
 		return this;
 	}
