@@ -135,4 +135,11 @@ public class Epd2024Test {
 		assertEquals(0.0, rec2.getRecycling(), 1e-16);
 		assertEquals(0.9, rec2.getEnergyRecovery(), 1e-16);
 	}
+
+	@Test
+	public void testSvhc() {
+		var svhc = Epds.getSvhc(ds);
+		assertNotNull(svhc);
+		assertTrue(svhc.isPresent());
+	}
 }
