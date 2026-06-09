@@ -4,6 +4,7 @@ import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlAnyElement;
 import jakarta.xml.bind.annotation.XmlElement;
+import jakarta.xml.bind.annotation.XmlElementWrapper;
 import org.openlca.ilcd.Vocab;
 import org.openlca.commons.Copyable;
 import org.openlca.ilcd.commons.Extension;
@@ -21,6 +22,10 @@ public class EpdRepresentativenessExtension
 	@XmlElement(name = "referenceToOriginalEPD", namespace = Vocab.EPD_2019)
 	private List<Ref> originalEpds;
 
+	@XmlElementWrapper(name = "manufacturers", namespace = Vocab.EPD_2024)
+	@XmlElement(name = "manufacturer", namespace = Vocab.EPD_2024)
+	private List<EpdManufacturer> manufacturers;
+
 	@XmlAnyElement(lax = true)
 	private List<Object> any;
 
@@ -28,6 +33,10 @@ public class EpdRepresentativenessExtension
 
 	public List<Ref> getOriginalEpds() {
 		return originalEpds != null ? originalEpds : Collections.emptyList();
+	}
+
+	public List<EpdManufacturer> getManufacturers() {
+		return manufacturers != null ? manufacturers : List.of();
 	}
 
 	public List<Object> getAny() {
@@ -43,6 +52,11 @@ public class EpdRepresentativenessExtension
 		return this;
 	}
 
+	public EpdRepresentativenessExtension withManufacturers(List<EpdManufacturer> manufacturers) {
+		this.manufacturers = manufacturers;
+		return this;
+	}
+
 	public EpdRepresentativenessExtension withAny(List<Object> any) {
 		this.any = any;
 		return this;
@@ -53,6 +67,13 @@ public class EpdRepresentativenessExtension
 			originalEpds = new ArrayList<>();
 		}
 		return originalEpds;
+	}
+
+	public List<EpdManufacturer> withManufacturers() {
+		if (manufacturers == null) {
+			manufacturers = new ArrayList<>();
+		}
+		return manufacturers;
 	}
 
 	public List<Object> withAny() {
@@ -68,6 +89,7 @@ public class EpdRepresentativenessExtension
 	public EpdRepresentativenessExtension copy() {
 		var copy = new EpdRepresentativenessExtension();
 		Val.copy(originalEpds, copy::withOriginalEpds);
+		Val.copy(manufacturers, copy::withManufacturers);
 		Val.copyAny(any, copy::withAny);
 		return copy;
 	}

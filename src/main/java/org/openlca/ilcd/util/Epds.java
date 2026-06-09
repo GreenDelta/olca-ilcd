@@ -9,6 +9,7 @@ import org.openlca.ilcd.commons.Ref;
 import org.openlca.ilcd.processes.Process;
 import org.openlca.ilcd.processes.epd.EpdContentDeclaration;
 import org.openlca.ilcd.processes.epd.EpdInfoExtension;
+import org.openlca.ilcd.processes.epd.EpdManufacturer;
 import org.openlca.ilcd.processes.epd.EpdModuleEntry;
 import org.openlca.ilcd.processes.epd.EpdProductId;
 import org.openlca.ilcd.processes.epd.EpdSafetyMargins;
@@ -250,6 +251,22 @@ public final class Epds extends Processes {
 		return Processes.withRepresentativeness(p)
 			.withEpdExtension()
 			.withOriginalEpds();
+	}
+
+	public static List<EpdManufacturer> getManufacturers(Process p) {
+		var rep = Processes.getRepresentativeness(p);
+		if (rep == null)
+			return Collections.emptyList();
+		var ext = rep.getEpdExtension();
+		return ext != null
+			? ext.getManufacturers()
+			: Collections.emptyList();
+	}
+
+	public static List<EpdManufacturer> withManufacturers(Process p) {
+		return Processes.withRepresentativeness(p)
+			.withEpdExtension()
+			.withManufacturers();
 	}
 
 	public static List<Ref> getPublishers(Process p) {

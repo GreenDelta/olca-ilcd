@@ -177,6 +177,30 @@ public class Epd2024Test {
 	}
 
 	@Test
+	public void testManufacturers() {
+		var mfs = Epds.getManufacturers(ds);
+		assertEquals(1, mfs.size());
+
+		var mf = mfs.getFirst();
+		assertTrue(mf.isProvidingData());
+
+		var contact = mf.getContact();
+		assertNotNull(contact);
+		assertEquals("12345678-1234-1234-1234-123456789012", contact.getUUID());
+		assertEquals("ACME", LangString.getDefault(contact.getName()));
+
+		var sites = mf.getSites();
+		assertEquals(1, sites.size());
+
+		var site = sites.getFirst();
+		assertEquals("ACME Base camp", site.getName());
+		assertEquals("KELLNERDOM", site.getFacilityIdentifier());
+		assertEquals("9F28WXR4+FW2", site.getOlc());
+		assertEquals("DE", site.getGeoCode());
+		assertEquals("Domkloster 4, 50667 Cologne, Germany", site.getStreetAddress());
+	}
+
+	@Test
 	public void testDates() {
 		var pubDate = Epds.getPublicationDate(ds);
 		assertNotNull(pubDate);
