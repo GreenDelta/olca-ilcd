@@ -99,12 +99,11 @@ public class Epd2024Test {
 		assertNull(useStage.getScenario());
 
 		var impacts = useStage.getSoilAndWaterImpacts();
-		assertNotNull(impacts);
-		assertEquals(2, impacts.getDescriptions().size());
+		assertEquals(2, impacts.size());
 		assertEquals(
 			"Potential release of adhesives, cleaning agents, or their " +
 				"breakdown products into water systems.",
-			LangString.getDefault(impacts.getDescriptions()));
+			LangString.getDefault(impacts));
 
 		// EoL scenario data
 		assertEquals(2, sd.getEolData().size());

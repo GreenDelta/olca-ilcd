@@ -16,13 +16,13 @@ public final class EpdEolData implements Copyable<EpdEolData> {
 	private String scenario;
 
 	@XmlElement(name = "collection", namespace = Vocab.EPD_2024)
-	private EpdCollection collection;
+	private WasteCollection collection;
 
 	@XmlElement(name = "recovery", namespace = Vocab.EPD_2024)
-	private EpdRecovery recovery;
+	private WasteRecovery recovery;
 
 	@XmlElement(name = "disposal", namespace = Vocab.EPD_2024)
-	private EpdDisposal disposal;
+	private WasteDisposal disposal;
 
 	// region getters
 
@@ -30,15 +30,15 @@ public final class EpdEolData implements Copyable<EpdEolData> {
 		return scenario;
 	}
 
-	public EpdCollection getCollection() {
+	public WasteCollection getCollection() {
 		return collection;
 	}
 
-	public EpdRecovery getRecovery() {
+	public WasteRecovery getRecovery() {
 		return recovery;
 	}
 
-	public EpdDisposal getDisposal() {
+	public WasteDisposal getDisposal() {
 		return disposal;
 	}
 
@@ -51,19 +51,40 @@ public final class EpdEolData implements Copyable<EpdEolData> {
 		return this;
 	}
 
-	public EpdEolData withCollection(EpdCollection collection) {
+	public EpdEolData withCollection(WasteCollection collection) {
 		this.collection = collection;
 		return this;
 	}
 
-	public EpdEolData withRecovery(EpdRecovery recovery) {
+	public WasteCollection withCollection() {
+		if (collection == null) {
+			collection = new WasteCollection();
+		}
+		return collection;
+	}
+
+	public EpdEolData withRecovery(WasteRecovery recovery) {
 		this.recovery = recovery;
 		return this;
 	}
 
-	public EpdEolData withDisposal(EpdDisposal disposal) {
+	public WasteRecovery withRecovery() {
+		if (recovery == null) {
+			recovery = new WasteRecovery();
+		}
+		return recovery;
+	}
+
+	public EpdEolData withDisposal(WasteDisposal disposal) {
 		this.disposal = disposal;
 		return this;
+	}
+
+	public WasteDisposal withDisposal() {
+		if (disposal == null) {
+			disposal = new WasteDisposal();
+		}
+		return disposal;
 	}
 
 	// endregion
@@ -76,5 +97,137 @@ public final class EpdEolData implements Copyable<EpdEolData> {
 		Val.copy(recovery, copy::withRecovery);
 		Val.copy(disposal, copy::withDisposal);
 		return copy;
+	}
+
+	@XmlAccessorType(XmlAccessType.FIELD)
+	public static final class WasteCollection implements Copyable<WasteCollection> {
+
+		@XmlAttribute(name = "separate", namespace = Vocab.EPD_2024)
+		private Double separate;
+
+		@XmlAttribute(name = "withMixedWaste", namespace = Vocab.EPD_2024)
+		private Double withMixedWaste;
+
+		// region getters
+
+		public Double getSeparate() {
+			return separate;
+		}
+
+		public Double getWithMixedWaste() {
+			return withMixedWaste;
+		}
+
+		// endregion
+
+		// region setters
+
+		public WasteCollection withSeparate(Double separate) {
+			this.separate = separate;
+			return this;
+		}
+
+		public WasteCollection withWithMixedWaste(Double withMixedWaste) {
+			this.withMixedWaste = withMixedWaste;
+			return this;
+		}
+
+		// endregion
+
+		@Override
+		public WasteCollection copy() {
+			var copy = new WasteCollection();
+			copy.withSeparate(separate);
+			copy.withWithMixedWaste(withMixedWaste);
+			return copy;
+		}
+	}
+
+	@XmlAccessorType(XmlAccessType.FIELD)
+	public static final class WasteRecovery implements Copyable<WasteRecovery> {
+
+		@XmlAttribute(name = "reuse", namespace = Vocab.EPD_2024)
+		private Double reuse;
+
+		@XmlAttribute(name = "recycling", namespace = Vocab.EPD_2024)
+		private Double recycling;
+
+		@XmlAttribute(name = "energyRecovery", namespace = Vocab.EPD_2024)
+		private Double energyRecovery;
+
+		// region getters
+
+		public Double getReuse() {
+			return reuse;
+		}
+
+		public Double getRecycling() {
+			return recycling;
+		}
+
+		public Double getEnergyRecovery() {
+			return energyRecovery;
+		}
+
+		// endregion
+
+		// region setters
+
+		public WasteRecovery withReuse(Double reuse) {
+			this.reuse = reuse;
+			return this;
+		}
+
+		public WasteRecovery withRecycling(Double recycling) {
+			this.recycling = recycling;
+			return this;
+		}
+
+		public WasteRecovery withEnergyRecovery(Double energyRecovery) {
+			this.energyRecovery = energyRecovery;
+			return this;
+		}
+
+		// endregion
+
+		@Override
+		public WasteRecovery copy() {
+			var copy = new WasteRecovery();
+			copy.withReuse(reuse);
+			copy.withRecycling(recycling);
+			copy.withEnergyRecovery(energyRecovery);
+			return copy;
+		}
+	}
+
+	@XmlAccessorType(XmlAccessType.FIELD)
+	public static final class WasteDisposal implements Copyable<WasteDisposal> {
+
+		@XmlAttribute(name = "finalDeposition", namespace = Vocab.EPD_2024)
+		private Double finalDeposition;
+
+		// region getters
+
+		public Double getFinalDeposition() {
+			return finalDeposition;
+		}
+
+		// endregion
+
+		// region setters
+
+		public WasteDisposal withFinalDeposition(Double finalDeposition) {
+			this.finalDeposition = finalDeposition;
+			return this;
+		}
+
+		// endregion
+
+		@Override
+		public WasteDisposal copy() {
+			var copy = new WasteDisposal();
+			copy.withFinalDeposition(finalDeposition);
+			return copy;
+		}
 	}
 }
