@@ -9,6 +9,8 @@ import org.openlca.ilcd.Tests;
 import org.openlca.ilcd.commons.LangString;
 import org.openlca.ilcd.processes.Process;
 import org.openlca.ilcd.processes.epd.EpdConditionCategory;
+import org.openlca.ilcd.processes.epd.EpdManufacturerVariability;
+import org.openlca.ilcd.processes.epd.EpdProductVariability;
 import org.openlca.ilcd.util.Epds;
 
 public class Epd2024Test {
@@ -143,6 +145,35 @@ public class Epd2024Test {
 		var svhc = Epds.getSvhc(ds);
 		assertNotNull(svhc);
 		assertTrue(svhc.isPresent());
+	}
+
+	@Test
+	public void testVariability() {
+		var v = Epds.getVariability(ds);
+		assertNotNull(v);
+
+		var mv = v.getManufacturerVariability();
+		assertNotNull(mv);
+		assertEquals(EpdManufacturerVariability.VariabilityType.SINGLE_PRODUCTION_SITE, mv.getType());
+		assertEquals(5.0, mv.getVariation(), 1e-16);
+		assertEquals("B - between 2,5% and 10%", mv.getRange());
+
+		var pv = v.getProductVariability();
+		assertNotNull(pv);
+		assertEquals(EpdProductVariability.VariabilityType.RANGE_OF_PRODUCTS, pv.getType());
+		assertEquals(20.0, pv.getVariation(), 1e-16);
+		assertEquals("C - between 10% and 25%", pv.getRange());
+
+		assertEquals(2, v.getDescriptions().size());
+	}
+
+	@Test
+	public void testPcrCompliance() {
+		var pc = Epds.getPcrCompliance(ds);
+		assertNotNull(pc);
+		assertTrue(pc.isAllocation());
+		assertTrue(pc.isCutOffRules());
+		assertFalse(pc.isUpstreamDataDeviatingFromAllocationPrinciples());
 	}
 
 	@Test

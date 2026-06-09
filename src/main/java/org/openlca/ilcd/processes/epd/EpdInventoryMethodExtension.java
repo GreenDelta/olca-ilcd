@@ -19,6 +19,12 @@ public class EpdInventoryMethodExtension
 	@XmlElement(name = "subType", namespace = Vocab.EPD_2013)
 	private EpdSubType subType;
 
+	@XmlElement(name = "variability", namespace = Vocab.EPD_2024)
+	private EpdVariability variability;
+
+	@XmlElement(name = "pcrCompliance", namespace = Vocab.EPD_2024)
+	private EpdPcrCompliance pcrCompliance;
+
 	@XmlAnyElement(lax = true)
 	private List<Object> any;
 
@@ -26,6 +32,14 @@ public class EpdInventoryMethodExtension
 
 	public EpdSubType getSubType() {
 		return subType;
+	}
+
+	public EpdVariability getVariability() {
+		return variability;
+	}
+
+	public EpdPcrCompliance getPcrCompliance() {
+		return pcrCompliance;
 	}
 
 	public List<Object> getAny() {
@@ -41,9 +55,33 @@ public class EpdInventoryMethodExtension
 		return this;
 	}
 
+	public EpdInventoryMethodExtension withVariability(EpdVariability variability) {
+		this.variability = variability;
+		return this;
+	}
+
+	public EpdInventoryMethodExtension withPcrCompliance(EpdPcrCompliance pcrCompliance) {
+		this.pcrCompliance = pcrCompliance;
+		return this;
+	}
+
 	public EpdInventoryMethodExtension withAny(List<Object> any) {
 		this.any = any;
 		return this;
+	}
+
+	public EpdVariability withVariability() {
+		if (variability == null) {
+			variability = new EpdVariability();
+		}
+		return variability;
+	}
+
+	public EpdPcrCompliance withPcrCompliance() {
+		if (pcrCompliance == null) {
+			pcrCompliance = new EpdPcrCompliance();
+		}
+		return pcrCompliance;
 	}
 
 	public List<Object> withAny() {
@@ -59,6 +97,8 @@ public class EpdInventoryMethodExtension
 	public EpdInventoryMethodExtension copy() {
 		var copy = new EpdInventoryMethodExtension()
 			.withSubType(subType);
+		Val.copy(variability, copy::withVariability);
+		Val.copy(pcrCompliance, copy::withPcrCompliance);
 		Val.copyAny(any, copy::withAny);
 		return copy;
 	}

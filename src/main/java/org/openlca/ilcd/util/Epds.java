@@ -13,9 +13,12 @@ import org.openlca.ilcd.processes.epd.EpdModuleEntry;
 import org.openlca.ilcd.processes.epd.EpdProductId;
 import org.openlca.ilcd.processes.epd.EpdSafetyMargins;
 import org.openlca.ilcd.processes.epd.EpdScenario;
+import org.openlca.ilcd.processes.epd.EpdPcrCompliance;
 import org.openlca.ilcd.processes.epd.EpdScenarioData;
 import org.openlca.ilcd.processes.epd.EpdServiceLife;
+import org.openlca.ilcd.processes.epd.EpdSafetyMargins;
 import org.openlca.ilcd.processes.epd.EpdSvhc;
+import org.openlca.ilcd.processes.epd.EpdVariability;
 import org.openlca.ilcd.processes.epd.EpdSubType;
 
 public final class Epds extends Processes {
@@ -154,6 +157,38 @@ public final class Epds extends Processes {
 		if (m != null) {
 			m.withEpdExtension(null);
 		}
+	}
+
+	public static EpdVariability getVariability(Process p) {
+		var m = Processes.getInventoryMethod(p);
+		if (m == null)
+			return null;
+		var ext = m.getEpdExtension();
+		return ext != null
+			? ext.getVariability()
+			: null;
+	}
+
+	public static EpdVariability withVariability(Process p) {
+		return Processes.withInventoryMethod(p)
+			.withEpdExtension()
+			.withVariability();
+	}
+
+	public static EpdPcrCompliance getPcrCompliance(Process p) {
+		var m = Processes.getInventoryMethod(p);
+		if (m == null)
+			return null;
+		var ext = m.getEpdExtension();
+		return ext != null
+			? ext.getPcrCompliance()
+			: null;
+	}
+
+	public static EpdPcrCompliance withPcrCompliance(Process p) {
+		return Processes.withInventoryMethod(p)
+			.withEpdExtension()
+			.withPcrCompliance();
 	}
 
 	public static XMLGregorianCalendar getPublicationDate(Process p) {
