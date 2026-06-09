@@ -39,6 +39,9 @@ public class EpdInfoExtension implements Copyable<EpdInfoExtension>, Extension {
 	@XmlElement(name = "estimatedServiceLife", namespace = Vocab.EPD_2024)
 	private EpdServiceLife estimatedServiceLife;
 
+	@XmlElement(name = "scenarioData", namespace = Vocab.EPD_2024)
+	private EpdScenarioData scenarioData;
+
 	@XmlAnyElement(lax = true)
 	private List<Object> any;
 
@@ -70,6 +73,10 @@ public class EpdInfoExtension implements Copyable<EpdInfoExtension>, Extension {
 
 	public EpdServiceLife getEstimatedServiceLife() {
 		return estimatedServiceLife;
+	}
+
+	public EpdScenarioData getScenarioData() {
+		return scenarioData;
 	}
 
 	public List<Object> getAny() {
@@ -134,6 +141,18 @@ public class EpdInfoExtension implements Copyable<EpdInfoExtension>, Extension {
 		return estimatedServiceLife;
 	}
 
+	public EpdInfoExtension withScenarioData(EpdScenarioData scenarioData) {
+		this.scenarioData = scenarioData;
+		return this;
+	}
+
+	public EpdScenarioData withScenarioData() {
+		if (scenarioData == null) {
+			scenarioData = new EpdScenarioData();
+		}
+		return scenarioData;
+	}
+
 	public EpdSafetyMargins withSafetyMargins() {
 		if (safetyMargins == null) {
 			safetyMargins = new EpdSafetyMargins();
@@ -188,6 +207,7 @@ public class EpdInfoExtension implements Copyable<EpdInfoExtension>, Extension {
 		Val.copy(productIds, copy::withProductIds);
 		Val.copy(referenceServiceLife, copy::withReferenceServiceLife);
 		Val.copy(estimatedServiceLife, copy::withEstimatedServiceLife);
+		Val.copy(scenarioData, copy::withScenarioData);
 		Val.copyAny(any, copy::withAny);
 		return copy;
 	}

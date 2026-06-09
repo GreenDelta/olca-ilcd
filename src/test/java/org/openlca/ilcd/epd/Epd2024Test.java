@@ -87,4 +87,53 @@ public class Epd2024Test {
 		assertEquals(Integer.valueOf(1), first.getReferenceGrade());
 		assertEquals(0.7, first.getValue(), 1e-16);
 	}
+
+	@Test
+	public void testScenarioData() {
+		var sd = Epds.getScenarioData(ds);
+		assertNotNull(sd);
+
+		// use-stage data
+		assertEquals(1, sd.getUseStageData().size());
+		var useStage = sd.getUseStageData().getFirst();
+		assertNull(useStage.getScenario());
+
+		var impacts = useStage.getSoilAndWaterImpacts();
+		assertNotNull(impacts);
+		assertEquals(2, impacts.getDescriptions().size());
+		assertEquals(
+			"Potential release of adhesives, cleaning agents, or their " +
+				"breakdown products into water systems.",
+			LangString.getDefault(impacts.getDescriptions()));
+
+		// EoL scenario data
+		assertEquals(2, sd.getEolData().size());
+
+		var eol1 = sd.getEolData().getFirst();
+		assertEquals("100% recycling", eol1.getScenario());
+
+		var coll1 = eol1.getCollection();
+		assertNotNull(coll1);
+		assertEquals(0.9, coll1.getSeparate(), 1e-16);
+		assertEquals(0.1, coll1.getWithMixedWaste(), 1e-16);
+
+		var rec1 = eol1.getRecovery();
+		assertNotNull(rec1);
+		assertEquals(0.0, rec1.getReuse(), 1e-16);
+		assertEquals(0.9, rec1.getRecycling(), 1e-16);
+		assertEquals(0.0, rec1.getEnergyRecovery(), 1e-16);
+
+		var disp = eol1.getDisposal();
+		assertNotNull(disp);
+		assertEquals(0.1, disp.getFinalDeposition(), 1e-16);
+
+		var eol2 = sd.getEolData().get(1);
+		assertEquals("100% incineration", eol2.getScenario());
+
+		var rec2 = eol2.getRecovery();
+		assertNotNull(rec2);
+		assertEquals(0.0, rec2.getReuse(), 1e-16);
+		assertEquals(0.0, rec2.getRecycling(), 1e-16);
+		assertEquals(0.9, rec2.getEnergyRecovery(), 1e-16);
+	}
 }
