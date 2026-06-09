@@ -160,7 +160,7 @@ public final class Epds extends Processes {
 		var t = Processes.getTime(p);
 		if (t == null)
 			return null;
-		var ext = t.withEpdExtension();
+		var ext = t.getEpdExtension();
 		return ext != null
 			? ext.getPublicationDate()
 			: null;
@@ -171,6 +171,29 @@ public final class Epds extends Processes {
 			Processes.withTime(p)
 				.withEpdExtension()
 				.withPublicationDate(date);
+			return;
+		}
+		var time = Processes.withTime(p);
+		if (time != null) {
+			time.withEpdExtension(null);
+		}
+	}
+
+	public static XMLGregorianCalendar getExpirationDate(Process p) {
+		var t = Processes.getTime(p);
+		if (t == null)
+			return null;
+		var ext = t.getEpdExtension();
+		return ext != null
+			? ext.getExpirationDate()
+			: null;
+	}
+
+	public static void withExpirationDate(Process p, XMLGregorianCalendar date) {
+		if (date != null) {
+			Processes.withTime(p)
+				.withEpdExtension()
+				.withExpirationDate(date);
 			return;
 		}
 		var time = Processes.withTime(p);

@@ -2,6 +2,8 @@ package org.openlca.ilcd.epd;
 
 import static org.junit.Assert.*;
 
+import java.text.SimpleDateFormat;
+
 import org.junit.Test;
 import org.openlca.ilcd.Tests;
 import org.openlca.ilcd.commons.LangString;
@@ -81,7 +83,7 @@ public class Epd2024Test {
 		assertEquals("ISO22057", LangString.getDefault(std.getName()));
 
 		assertEquals(7, esl.getConditionFactors().size());
-		var first =  esl.getConditionFactors().getFirst();
+		var first = esl.getConditionFactors().getFirst();
 		assertEquals(EpdConditionCategory.A_INHERENT_QUALITY, first.getCategory());
 		assertEquals(Integer.valueOf(5), first.getObjectSpecificGrade());
 		assertEquals(Integer.valueOf(1), first.getReferenceGrade());
@@ -141,5 +143,19 @@ public class Epd2024Test {
 		var svhc = Epds.getSvhc(ds);
 		assertNotNull(svhc);
 		assertTrue(svhc.isPresent());
+	}
+
+	@Test
+	public void testDates() {
+		var pubDate = Epds.getPublicationDate(ds);
+		assertNotNull(pubDate);
+		var fmt = new SimpleDateFormat("yyyy-MM-dd");
+		assertEquals("2020-05-08",
+			fmt.format(pubDate.toGregorianCalendar().getTime()));
+
+		var expDate = Epds.getExpirationDate(ds);
+		assertNotNull(expDate);
+		assertEquals("2024-05-08",
+			fmt.format(expDate.toGregorianCalendar().getTime()));
 	}
 }

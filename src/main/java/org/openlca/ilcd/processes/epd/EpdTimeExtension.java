@@ -19,6 +19,9 @@ public class EpdTimeExtension implements Copyable<EpdTimeExtension>, Extension {
 	@XmlElement(name = "publicationDateOfEPD", namespace = Vocab.EPD_2019)
 	private XMLGregorianCalendar publicationDate;
 
+	@XmlElement(name = "expirationDateOfEPD", namespace = Vocab.EPD_2024)
+	private XMLGregorianCalendar expirationDate;
+
 	@XmlAnyElement(lax = true)
 	private List<Object> any;
 
@@ -26,6 +29,10 @@ public class EpdTimeExtension implements Copyable<EpdTimeExtension>, Extension {
 
 	public XMLGregorianCalendar getPublicationDate() {
 		return publicationDate;
+	}
+
+	public XMLGregorianCalendar getExpirationDate() {
+		return expirationDate;
 	}
 
 	public List<Object> getAny() {
@@ -38,6 +45,11 @@ public class EpdTimeExtension implements Copyable<EpdTimeExtension>, Extension {
 
 	public EpdTimeExtension withPublicationDate(XMLGregorianCalendar publicationDate) {
 		this.publicationDate = publicationDate;
+		return this;
+	}
+
+	public EpdTimeExtension withExpirationDate(XMLGregorianCalendar expirationDate) {
+		this.expirationDate = expirationDate;
 		return this;
 	}
 
@@ -59,6 +71,7 @@ public class EpdTimeExtension implements Copyable<EpdTimeExtension>, Extension {
 	public EpdTimeExtension copy() {
 		var copy = new EpdTimeExtension();
 		copy.withPublicationDate(publicationDate);
+		copy.withExpirationDate(expirationDate);
 		Val.copyAny(any, copy::withAny);
 		return copy;
 	}
