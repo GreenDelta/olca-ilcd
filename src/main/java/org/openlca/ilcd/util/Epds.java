@@ -1,19 +1,20 @@
 package org.openlca.ilcd.util;
 
+import java.util.Collections;
+import java.util.List;
+
+import javax.xml.datatype.XMLGregorianCalendar;
+
 import org.openlca.ilcd.commons.Ref;
 import org.openlca.ilcd.processes.Process;
 import org.openlca.ilcd.processes.epd.EpdContentDeclaration;
 import org.openlca.ilcd.processes.epd.EpdInfoExtension;
 import org.openlca.ilcd.processes.epd.EpdModuleEntry;
 import org.openlca.ilcd.processes.epd.EpdProductId;
-import org.openlca.ilcd.processes.epd.EpdReferenceServiceLife;
 import org.openlca.ilcd.processes.epd.EpdSafetyMargins;
 import org.openlca.ilcd.processes.epd.EpdScenario;
+import org.openlca.ilcd.processes.epd.EpdServiceLife;
 import org.openlca.ilcd.processes.epd.EpdSubType;
-
-import javax.xml.datatype.XMLGregorianCalendar;
-import java.util.Collections;
-import java.util.List;
 
 public final class Epds extends Processes {
 
@@ -86,25 +87,25 @@ public final class Epds extends Processes {
 		return withInfoExtension(p).withProductIds();
 	}
 
-	public static EpdReferenceServiceLife getReferenceServiceLife(Process p) {
+	public static EpdServiceLife getReferenceServiceLife(Process p) {
 		var ext = getInfoExtension(p);
 		return ext != null
 			? ext.getReferenceServiceLife()
 			: null;
 	}
 
-	public static EpdReferenceServiceLife withReferenceServiceLife(Process p) {
+	public static EpdServiceLife withReferenceServiceLife(Process p) {
 		return withInfoExtension(p).withReferenceServiceLife();
 	}
 
-	public static EpdReferenceServiceLife getEstimatedServiceLife(Process p) {
+	public static EpdServiceLife getEstimatedServiceLife(Process p) {
 		var ext = getInfoExtension(p);
 		return ext != null
 			? ext.getEstimatedServiceLife()
 			: null;
 	}
 
-	public static EpdReferenceServiceLife withEstimatedServiceLife(Process p) {
+	public static EpdServiceLife withEstimatedServiceLife(Process p) {
 		return withInfoExtension(p).withEstimatedServiceLife();
 	}
 

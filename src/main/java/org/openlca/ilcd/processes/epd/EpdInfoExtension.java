@@ -34,10 +34,10 @@ public class EpdInfoExtension implements Copyable<EpdInfoExtension>, Extension {
 	private List<EpdProductId> productIds;
 
 	@XmlElement(name = "referenceServiceLife", namespace = Vocab.EPD_2024)
-	private EpdReferenceServiceLife referenceServiceLife;
+	private EpdServiceLife referenceServiceLife;
 
 	@XmlElement(name = "estimatedServiceLife", namespace = Vocab.EPD_2024)
-	private EpdReferenceServiceLife estimatedServiceLife;
+	private EpdServiceLife estimatedServiceLife;
 
 	@XmlAnyElement(lax = true)
 	private List<Object> any;
@@ -64,11 +64,11 @@ public class EpdInfoExtension implements Copyable<EpdInfoExtension>, Extension {
 		return productIds != null ? productIds : List.of();
 	}
 
-	public EpdReferenceServiceLife getReferenceServiceLife() {
+	public EpdServiceLife getReferenceServiceLife() {
 		return referenceServiceLife;
 	}
 
-	public EpdReferenceServiceLife getEstimatedServiceLife() {
+	public EpdServiceLife getEstimatedServiceLife() {
 		return estimatedServiceLife;
 	}
 
@@ -105,12 +105,12 @@ public class EpdInfoExtension implements Copyable<EpdInfoExtension>, Extension {
 		return this;
 	}
 
-	public EpdInfoExtension withReferenceServiceLife(EpdReferenceServiceLife referenceServiceLife) {
+	public EpdInfoExtension withReferenceServiceLife(EpdServiceLife referenceServiceLife) {
 		this.referenceServiceLife = referenceServiceLife;
 		return this;
 	}
 
-	public EpdInfoExtension withEstimatedServiceLife(EpdReferenceServiceLife estimatedServiceLife) {
+	public EpdInfoExtension withEstimatedServiceLife(EpdServiceLife estimatedServiceLife) {
 		this.estimatedServiceLife = estimatedServiceLife;
 		return this;
 	}
@@ -120,16 +120,16 @@ public class EpdInfoExtension implements Copyable<EpdInfoExtension>, Extension {
 		return this;
 	}
 
-	public EpdReferenceServiceLife withReferenceServiceLife() {
+	public EpdServiceLife withReferenceServiceLife() {
 		if (referenceServiceLife == null) {
-			referenceServiceLife = new EpdReferenceServiceLife();
+			referenceServiceLife = new EpdServiceLife();
 		}
 		return referenceServiceLife;
 	}
 
-	public EpdReferenceServiceLife withEstimatedServiceLife() {
+	public EpdServiceLife withEstimatedServiceLife() {
 		if (estimatedServiceLife == null) {
-			estimatedServiceLife = new EpdReferenceServiceLife();
+			estimatedServiceLife = new EpdServiceLife();
 		}
 		return estimatedServiceLife;
 	}
