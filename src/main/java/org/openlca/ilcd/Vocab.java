@@ -7,6 +7,7 @@ public interface Vocab {
 	String COMMON = "http://lca.jrc.it/ILCD/Common";
 	String EPD_2013 = "http://www.iai.kit.edu/EPD/2013";
 	String EPD_2019 = "http://www.indata.network/EPD/2019";
+	String EPD_2024 = "http://www.indata.network/EPD/2024";
 	String MATML = "http://www.matml.org/";
 	String SBE_ILCD = "http://sbeilcd.se/EPD/2017";
 	String OLCA_EPD = "http://openlca.org/epd_ilcd";

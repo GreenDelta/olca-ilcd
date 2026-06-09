@@ -1,9 +1,9 @@
 # openLCA ILCD API
 
 This is a Java library for reading and writing data sets in the
-[ILCD data format](https://eplca.jrc.ec.europa.eu/LCDN/developerILCDDataFormat.xhtml).
-It was originally part of the [openLCA modules](https://github.com/GreenDelta/olca-modules)
-but was moved to a separate repository since version 2.0.0.
+[ILCD data format](https://eplca.jrc.ec.europa.eu/LCDN/developerILCDDataFormat.xhtml)
+with direct support for the [ILCD+EPD format](https://github.com/InDataWG/ILCD-EPD-Data-Format).
+
 
 ## Usage
 
@@ -13,7 +13,7 @@ Add this dependency to your project:
 <dependency>
   <groupId>org.openlca</groupId>
   <artifactId>olca-ilcd</artifactId>
-  <version>3.0.0</version>
+  <version>3.2.0</version>
 </dependency>
 ```
 
