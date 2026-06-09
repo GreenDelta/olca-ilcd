@@ -16,7 +16,6 @@ import org.openlca.ilcd.processes.epd.EpdScenario;
 import org.openlca.ilcd.processes.epd.EpdPcrCompliance;
 import org.openlca.ilcd.processes.epd.EpdScenarioData;
 import org.openlca.ilcd.processes.epd.EpdServiceLife;
-import org.openlca.ilcd.processes.epd.EpdSafetyMargins;
 import org.openlca.ilcd.processes.epd.EpdSvhc;
 import org.openlca.ilcd.processes.epd.EpdVariability;
 import org.openlca.ilcd.processes.epd.EpdSubType;

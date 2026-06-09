@@ -8,6 +8,7 @@ import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlAttribute;
 import jakarta.xml.bind.annotation.XmlEnum;
 import jakarta.xml.bind.annotation.XmlEnumValue;
+import jakarta.xml.bind.annotation.XmlType;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 public final class EpdProductVariability implements Copyable<EpdProductVariability> {
@@ -66,6 +67,7 @@ public final class EpdProductVariability implements Copyable<EpdProductVariabili
 	}
 
 	@XmlEnum
+	@XmlType(name = "productVariabilityValues")
 	public enum VariabilityType {
 
 		@XmlEnumValue("Single product")

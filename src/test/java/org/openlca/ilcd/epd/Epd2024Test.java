@@ -173,7 +173,7 @@ public class Epd2024Test {
 		assertNotNull(pc);
 		assertTrue(pc.isAllocation());
 		assertTrue(pc.isCutOffRules());
-		assertFalse(pc.isUpstreamDataDeviatingFromAllocationPrinciples());
+		assertFalse(pc.isUpstreamDataDeviating());
 	}
 
 	@Test

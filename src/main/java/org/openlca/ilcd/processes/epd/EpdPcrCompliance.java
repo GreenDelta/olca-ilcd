@@ -23,7 +23,7 @@ public final class EpdPcrCompliance implements Copyable<EpdPcrCompliance> {
 	private boolean cutOffRules;
 
 	@XmlAttribute(name = "upstreamDataDeviatingFromAllocationPrinciples", namespace = Vocab.EPD_2024)
-	private boolean upstreamDataDeviatingFromAllocationPrinciples;
+	private boolean upstreamDataDeviating;
 
 	@XmlElement(name = "comment", namespace = Vocab.EPD_2024)
 	private List<LangString> comments;
@@ -38,8 +38,8 @@ public final class EpdPcrCompliance implements Copyable<EpdPcrCompliance> {
 		return cutOffRules;
 	}
 
-	public boolean isUpstreamDataDeviatingFromAllocationPrinciples() {
-		return upstreamDataDeviatingFromAllocationPrinciples;
+	public boolean isUpstreamDataDeviating() {
+		return upstreamDataDeviating;
 	}
 
 	public List<LangString> getComments() {
@@ -60,9 +60,8 @@ public final class EpdPcrCompliance implements Copyable<EpdPcrCompliance> {
 		return this;
 	}
 
-	public EpdPcrCompliance withUpstreamDataDeviatingFromAllocationPrinciples(
-		boolean upstreamDataDeviatingFromAllocationPrinciples) {
-		this.upstreamDataDeviatingFromAllocationPrinciples = upstreamDataDeviatingFromAllocationPrinciples;
+	public EpdPcrCompliance withUpstreamDataDeviating(boolean b) {
+		this.upstreamDataDeviating = b;
 		return this;
 	}
 
@@ -85,7 +84,7 @@ public final class EpdPcrCompliance implements Copyable<EpdPcrCompliance> {
 		var copy = new EpdPcrCompliance();
 		copy.withAllocation(allocation);
 		copy.withCutOffRules(cutOffRules);
-		copy.withUpstreamDataDeviatingFromAllocationPrinciples(upstreamDataDeviatingFromAllocationPrinciples);
+		copy.withUpstreamDataDeviating(upstreamDataDeviating);
 		Val.copy(comments, copy::withComments);
 		return copy;
 	}
