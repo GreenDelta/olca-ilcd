@@ -33,6 +33,12 @@ public class EpdInfoExtension implements Copyable<EpdInfoExtension>, Extension {
 	@XmlElement(name = "productId", namespace = Vocab.EPD_2024)
 	private List<EpdProductId> productIds;
 
+	@XmlElement(name = "referenceServiceLife", namespace = Vocab.EPD_2024)
+	private EpdReferenceServiceLife referenceServiceLife;
+
+	@XmlElement(name = "estimatedServiceLife", namespace = Vocab.EPD_2024)
+	private EpdReferenceServiceLife estimatedServiceLife;
+
 	@XmlAnyElement(lax = true)
 	private List<Object> any;
 
@@ -56,6 +62,14 @@ public class EpdInfoExtension implements Copyable<EpdInfoExtension>, Extension {
 
 	public List<EpdProductId> getProductIds() {
 		return productIds != null ? productIds : List.of();
+	}
+
+	public EpdReferenceServiceLife getReferenceServiceLife() {
+		return referenceServiceLife;
+	}
+
+	public EpdReferenceServiceLife getEstimatedServiceLife() {
+		return estimatedServiceLife;
 	}
 
 	public List<Object> getAny() {
@@ -91,9 +105,33 @@ public class EpdInfoExtension implements Copyable<EpdInfoExtension>, Extension {
 		return this;
 	}
 
+	public EpdInfoExtension withReferenceServiceLife(EpdReferenceServiceLife referenceServiceLife) {
+		this.referenceServiceLife = referenceServiceLife;
+		return this;
+	}
+
+	public EpdInfoExtension withEstimatedServiceLife(EpdReferenceServiceLife estimatedServiceLife) {
+		this.estimatedServiceLife = estimatedServiceLife;
+		return this;
+	}
+
 	public EpdInfoExtension withAny(List<Object> any) {
 		this.any = any;
 		return this;
+	}
+
+	public EpdReferenceServiceLife withReferenceServiceLife() {
+		if (referenceServiceLife == null) {
+			referenceServiceLife = new EpdReferenceServiceLife();
+		}
+		return referenceServiceLife;
+	}
+
+	public EpdReferenceServiceLife withEstimatedServiceLife() {
+		if (estimatedServiceLife == null) {
+			estimatedServiceLife = new EpdReferenceServiceLife();
+		}
+		return estimatedServiceLife;
 	}
 
 	public EpdSafetyMargins withSafetyMargins() {
@@ -148,6 +186,8 @@ public class EpdInfoExtension implements Copyable<EpdInfoExtension>, Extension {
 		Val.copy(moduleEntries, copy::withModuleEntries);
 		Val.copy(contentDeclaration, copy::withContentDeclaration);
 		Val.copy(productIds, copy::withProductIds);
+		Val.copy(referenceServiceLife, copy::withReferenceServiceLife);
+		Val.copy(estimatedServiceLife, copy::withEstimatedServiceLife);
 		Val.copyAny(any, copy::withAny);
 		return copy;
 	}

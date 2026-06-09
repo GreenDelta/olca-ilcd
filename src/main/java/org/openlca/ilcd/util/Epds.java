@@ -6,6 +6,7 @@ import org.openlca.ilcd.processes.epd.EpdContentDeclaration;
 import org.openlca.ilcd.processes.epd.EpdInfoExtension;
 import org.openlca.ilcd.processes.epd.EpdModuleEntry;
 import org.openlca.ilcd.processes.epd.EpdProductId;
+import org.openlca.ilcd.processes.epd.EpdReferenceServiceLife;
 import org.openlca.ilcd.processes.epd.EpdSafetyMargins;
 import org.openlca.ilcd.processes.epd.EpdScenario;
 import org.openlca.ilcd.processes.epd.EpdSubType;
@@ -83,6 +84,28 @@ public final class Epds extends Processes {
 
 	public static List<EpdProductId> withProductIds(Process p) {
 		return withInfoExtension(p).withProductIds();
+	}
+
+	public static EpdReferenceServiceLife getReferenceServiceLife(Process p) {
+		var ext = getInfoExtension(p);
+		return ext != null
+			? ext.getReferenceServiceLife()
+			: null;
+	}
+
+	public static EpdReferenceServiceLife withReferenceServiceLife(Process p) {
+		return withInfoExtension(p).withReferenceServiceLife();
+	}
+
+	public static EpdReferenceServiceLife getEstimatedServiceLife(Process p) {
+		var ext = getInfoExtension(p);
+		return ext != null
+			? ext.getEstimatedServiceLife()
+			: null;
+	}
+
+	public static EpdReferenceServiceLife withEstimatedServiceLife(Process p) {
+		return withInfoExtension(p).withEstimatedServiceLife();
 	}
 
 	public static EpdSubType getSubType(Process p) {
