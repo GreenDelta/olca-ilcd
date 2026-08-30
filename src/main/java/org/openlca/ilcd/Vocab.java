@@ -8,6 +8,7 @@ public interface Vocab {
 	String EPD_2013 = "http://www.iai.kit.edu/EPD/2013";
 	String EPD_2019 = "http://www.indata.network/EPD/2019";
 	String EPD_2024 = "http://www.indata.network/EPD/2024";
+	String ENTITY_IDS_2024 = "http://www.indata.network/EntityIds/2024";
 	String MATML = "http://www.matml.org/";
 	String SBE_ILCD = "http://sbeilcd.se/EPD/2017";
 	String OLCA_EPD = "http://openlca.org/epd_ilcd";
@@ -23,6 +24,7 @@ public interface Vocab {
 			case EPD_2013 -> Optional.of("epd");
 			case EPD_2019 -> Optional.of("epd2");
 			case EPD_2024 -> Optional.of("epd24");
+			case ENTITY_IDS_2024 -> Optional.of("e");
 			case OLCA_EPD -> Optional.of("olca");
 			case SBE_ILCD -> Optional.of("sbe");
 			case XML -> Optional.of("xml");

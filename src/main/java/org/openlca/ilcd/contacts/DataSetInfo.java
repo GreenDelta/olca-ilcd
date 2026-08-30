@@ -9,7 +9,6 @@ import jakarta.xml.bind.annotation.XmlType;
 import org.openlca.ilcd.commons.Classification;
 import org.openlca.commons.Copyable;
 import org.openlca.ilcd.commons.LangString;
-import org.openlca.ilcd.commons.Other;
 import org.openlca.ilcd.commons.Ref;
 import org.openlca.ilcd.commons.annotations.Label;
 import org.openlca.ilcd.commons.annotations.ShortText;
@@ -38,7 +37,7 @@ import java.util.Map;
 		"description",
 		"belongsTo",
 		"logo",
-		"other"
+		"extension"
 	})
 public class DataSetInfo implements Copyable<DataSetInfo> {
 
@@ -82,8 +81,8 @@ public class DataSetInfo implements Copyable<DataSetInfo> {
 	@XmlElement(name = "referenceToLogo")
 	private Ref logo;
 
-	@XmlElement(namespace = "http://lca.jrc.it/ILCD/Common")
-	private Other other;
+	@XmlElement(name = "other", namespace = "http://lca.jrc.it/ILCD/Common")
+	private EpdContactExtension extension;
 
 	@XmlAnyAttribute
 	private Map<QName, String> otherAttributes;
@@ -142,8 +141,8 @@ public class DataSetInfo implements Copyable<DataSetInfo> {
 		return logo;
 	}
 
-	public Other getOther() {
-		return other;
+	public EpdContactExtension getEpdExtension() {
+		return extension;
 	}
 
 	public Map<QName, String> getOtherAttributes() {
@@ -219,8 +218,8 @@ public class DataSetInfo implements Copyable<DataSetInfo> {
 		return this;
 	}
 
-	public DataSetInfo withOther(Other other) {
-		this.other = other;
+	public DataSetInfo withEpdExtension(EpdContactExtension extension) {
+		this.extension = extension;
 		return this;
 	}
 
@@ -285,11 +284,11 @@ public class DataSetInfo implements Copyable<DataSetInfo> {
 		return logo;
 	}
 
-	public Other withOther() {
-		if (other == null) {
-			other = new Other();
+	public EpdContactExtension withEpdExtension() {
+		if (extension == null) {
+			extension = new EpdContactExtension();
 		}
-		return other;
+		return extension;
 	}
 
 	public Map<QName, String> withOtherAttributes() {
@@ -317,7 +316,7 @@ public class DataSetInfo implements Copyable<DataSetInfo> {
 		Val.copy(description, copy::withDescription);
 		Val.copy(belongsTo, copy::withBelongsTo);
 		Val.copy(logo, copy::withLogo);
-		Val.copy(other, copy::withOther);
+		Val.copy(extension, copy::withEpdExtension);
 		Val.copy(otherAttributes, copy::withOtherAttributes);
 		return copy;
 	}

@@ -8,6 +8,7 @@ import org.openlca.ilcd.contacts.AdminInfo;
 import org.openlca.ilcd.contacts.Contact;
 import org.openlca.ilcd.contacts.ContactInfo;
 import org.openlca.ilcd.contacts.DataSetInfo;
+import org.openlca.ilcd.contacts.EpdEntityId;
 
 import javax.xml.datatype.XMLGregorianCalendar;
 import java.util.Collections;
@@ -127,6 +128,18 @@ public final class Contacts {
 
 	public static Publication withPublication(Contact c) {
 		return c.withAdminInfo().withPublication();
+	}
+
+	public static List<EpdEntityId> getEpdEntityIds(Contact c) {
+		var info = getDataSetInfo(c);
+		var other = info != null ? info.getEpdExtension() : null;
+		return other != null
+			? other.getEntityIds()
+			: Collections.emptyList();
+	}
+
+	public static List<EpdEntityId> withEpdEntityIds(Contact c) {
+		return withDataSetInfo(c).withEpdExtension().withEntityIds();
 	}
 
 }
