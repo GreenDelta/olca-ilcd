@@ -47,9 +47,23 @@ public final class EpdVariability implements Copyable<EpdVariability> {
 		return this;
 	}
 
+	public EpdManufacturerVariability withManufacturerVariability() {
+		if (manufacturerVariability == null) {
+			manufacturerVariability = new EpdManufacturerVariability();
+		}
+		return manufacturerVariability;
+	}
+
 	public EpdVariability withProductVariability(EpdProductVariability v) {
 		this.productVariability = v;
 		return this;
+	}
+
+	public EpdProductVariability withProductVariability() {
+		if (productVariability == null) {
+			productVariability = new EpdProductVariability();
+		}
+		return productVariability;
 	}
 
 	public EpdVariability withDescriptions(List<LangString> descriptions) {

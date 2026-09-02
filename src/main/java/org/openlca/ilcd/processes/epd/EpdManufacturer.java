@@ -55,6 +55,13 @@ public final class EpdManufacturer implements Copyable<EpdManufacturer> {
 		return this;
 	}
 
+	public Ref withContact() {
+		if (contact == null) {
+			contact = new Ref();
+		}
+		return contact;
+	}
+
 	public EpdManufacturer withSites(List<EpdSite> sites) {
 		this.sites = sites;
 		return this;

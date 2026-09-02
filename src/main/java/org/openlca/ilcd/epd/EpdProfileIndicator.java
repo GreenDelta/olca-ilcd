@@ -81,9 +81,23 @@ public class EpdProfileIndicator implements Copyable<EpdProfileIndicator> {
 		return this;
 	}
 
+	public Ref withRef() {
+		if (ref == null) {
+			ref = new Ref();
+		}
+		return ref;
+	}
+
 	public EpdProfileIndicator withUnit(Ref unit) {
 		this.unit = unit;
 		return this;
+	}
+
+	public Ref withUnit() {
+		if (unit == null) {
+			unit = new Ref();
+		}
+		return unit;
 	}
 
 	@Override
