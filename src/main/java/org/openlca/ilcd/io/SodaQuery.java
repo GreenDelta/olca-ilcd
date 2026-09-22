@@ -1,11 +1,10 @@
 package org.openlca.ilcd.io;
 
 import java.util.Optional;
+import java.util.function.BiConsumer;
 
 import org.openlca.commons.Copyable;
 import org.openlca.ilcd.descriptors.DescriptorList;
-
-import jakarta.ws.rs.client.WebTarget;
 
 /**
  * A query for searching for datasets or iterating over the available datasets
@@ -82,39 +81,38 @@ public class SodaQuery implements Copyable<SodaQuery> {
 		return this;
 	}
 
-	WebTarget applyOn(WebTarget r) {
-		if (r == null)
-			return null;
-		var t = r.queryParam("pageSize", pageSize)
-			.queryParam("startIndex", startIndex);
+	void applyOn(BiConsumer<String, String> fn) {
+		if (fn == null)
+			return;
+		fn.accept("pageSize", Integer.toString(pageSize));
+		fn.accept("startIndex", Integer.toString(startIndex));
 		if (search != null) {
-			t = t.queryParam("search", search);
+			fn.accept("search", search.toString());
 		}
 		if (distributed != null) {
-			t = t.queryParam("distributed", distributed);
+			fn.accept("distributed", distributed.toString());
 		}
 		if (name != null) {
-			t = t.queryParam("name", name);
+			fn.accept("name", name);
 		}
 		if (description != null) {
-			t = t.queryParam("description", description);
+			fn.accept("description", description);
 		}
 		if (classId != null) {
-			t = t.queryParam("classId", classId);
+			fn.accept("classId", classId);
 		}
 		if (lang != null) {
-			t = t.queryParam("lang", lang);
+			fn.accept("lang", lang);
 		}
 		if (langFallback != null) {
-			t = t.queryParam("langFallback", langFallback);
+			fn.accept("langFallback", langFallback.toString());
 		}
 		if (allVersions != null) {
-			t = t.queryParam("allVersions", allVersions);
+			fn.accept("allVersions", allVersions.toString());
 		}
 		if (countOnly != null) {
-			t = t.queryParam("countOnly", countOnly);
+			fn.accept("countOnly", countOnly.toString());
 		}
-		return t;
 	}
 
 	/**

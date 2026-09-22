@@ -1,14 +1,13 @@
 package org.openlca.ilcd.flows.epd.matml;
 
+import org.openlca.commons.Copyable;
+import org.openlca.ilcd.Vocab;
+
 import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlAttribute;
 import jakarta.xml.bind.annotation.XmlElement;
-import jakarta.xml.bind.annotation.XmlElements;
 import jakarta.xml.bind.annotation.XmlType;
-import org.aopalliance.reflect.Code;
-import org.openlca.ilcd.Vocab;
-import org.openlca.commons.Copyable;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "Unit", propOrder = {"name"})

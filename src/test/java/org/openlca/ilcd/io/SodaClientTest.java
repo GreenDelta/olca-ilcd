@@ -1,0 +1,266 @@
+package org.openlca.ilcd.io;
+
+import static org.junit.Assert.*;
+
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.InetSocketAddress;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+import org.openlca.ilcd.SampleSource;
+import org.openlca.ilcd.descriptors.DescriptorList;
+import org.openlca.ilcd.sources.Source;
+import org.openlca.ilcd.util.Sources;
+
+import com.sun.net.httpserver.HttpExchange;
+import com.sun.net.httpserver.HttpServer;
+
+/**
+ * Tests the HTTP layer of the {@link SodaClient} against a local test server.
+ * These tests run without a soda4LCA instance.
+ */
+public class SodaClientTest {
+
+	private record Req(String method, String uri, String headers, byte[] body) {
+
+		String header(String name) {
+			for (var line : headers.split("\n")) {
+				var idx = line.indexOf(": ");
+				if (idx > 0 && line.substring(0, idx).equalsIgnoreCase(name)) {
+					return line.substring(idx + 2);
+				}
+			}
+			return null;
+		}
+	}
+
+	private HttpServer server;
+	private final List<Req> requests = new ArrayList<>();
+	private int status = 200;
+	private byte[] response = "ok".getBytes(StandardCharsets.UTF_8);
+	private String sessionCookie;
+
+	@Before
+	public void setUp() throws Exception {
+		server = HttpServer.create(new InetSocketAddress("localhost", 0), 0);
+		server.createContext("/", this::handle);
+		server.start();
+	}
+
+	@After
+	public void tearDown() {
+		server.stop(0);
+	}
+
+	private void handle(HttpExchange exchange) throws IOException {
+		var body = exchange.getRequestBody().readAllBytes();
+		var headers = new StringBuilder();
+		for (var entry : exchange.getRequestHeaders().entrySet()) {
+			headers.append(entry.getKey())
+				.append(": ")
+				.append(String.join(",", entry.getValue()))
+				.append('\n');
+		}
+		requests.add(new Req(
+			exchange.getRequestMethod(),
+			exchange.getRequestURI().toString(),
+			headers.toString(),
+			body));
+
+		if (sessionCookie != null
+			&& exchange.getRequestURI().getPath().contains("authenticate/login")) {
+			exchange.getResponseHeaders().add("Set-Cookie", sessionCookie);
+		}
+
+		if (exchange.getRequestMethod().equals("HEAD")) {
+			exchange.sendResponseHeaders(status, -1);
+			exchange.close();
+			return;
+		}
+		var out = exchange.getRequestURI().getPath().contains("authenticate/status")
+			? authInfo()
+			: response;
+		exchange.sendResponseHeaders(status, out.length);
+		try (var os = exchange.getResponseBody()) {
+			os.write(out);
+		}
+	}
+
+	private static byte[] authInfo() {
+		try (var in = SodaClientTest.class.getResourceAsStream(
+			"/org/openlca/ilcd/auth_info.xml")) {
+			return in.readAllBytes();
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	private SodaClient client() {
+		return SodaClient.of("http://localhost:" + server.getAddress().getPort())
+			.useDataStock("test-stock");
+	}
+
+	@Test
+	public void testLoginStoresAndSendsCookie() {
+		sessionCookie = "JSESSIONID=abc123; Path=/; HttpOnly";
+		try (var client = client()) {
+			client.login("admin", "default");
+			client.contains(Source.class, "some-id");
+		}
+		assertTrue(requests.size() >= 2);
+		var login = requests.get(0);
+		assertEquals("GET", login.method());
+		assertEquals("/authenticate/login?userName=admin&password=default", login.uri());
+		var contains = requests.get(1);
+		assertEquals("JSESSIONID=abc123", contains.header("Cookie"));
+	}
+
+	@Test
+	public void testBearerTokenIsSent() {
+		try (var client = client()) {
+			client.withAuthenticationToken("token-123")
+				.contains(Source.class, "some-id");
+		}
+		assertEquals("Bearer token-123", requests.get(0).header("Authorization"));
+	}
+
+	@Test
+	public void testMultipartUpload() throws Exception {
+		var file = Files.createTempFile("soda-client-test", ".txt").toFile();
+		Files.write(file.toPath(),
+			"hello file content".getBytes(StandardCharsets.UTF_8));
+
+		try (var client = client()) {
+			client.put(SampleSource.create(), new File[]{file});
+		}
+
+		var req = requests.get(0);
+		assertEquals("POST", req.method());
+		assertEquals("/sources/withBinaries", req.uri());
+		assertEquals("test-stock", req.header("Stock"));
+
+		var contentType = req.header("Content-Type");
+		assertTrue(contentType.startsWith("multipart/form-data;boundary="));
+		var boundary = contentType.substring(contentType.indexOf("boundary=") + 9);
+
+		var body = new String(req.body(), StandardCharsets.UTF_8);
+		assertTrue(body.startsWith("--" + boundary + "\r\n"
+			+ "Content-Type: text/plain\r\n"
+			+ "Content-Disposition: form-data; name=\"stock\"\r\n"
+			+ "\r\n"
+			+ "test-stock\r\n"));
+		assertTrue(body.contains("Content-Disposition: form-data; name=\"file\""));
+		assertTrue(body.contains("Content-Disposition: form-data; name=\""
+			+ file.getName() + "\""));
+		assertTrue(body.contains("hello file content"));
+		assertTrue(body.endsWith("--" + boundary + "--\r\n"));
+		assertEquals(req.body().length,
+			Integer.parseInt(req.header("Content-Length")));
+	}
+
+	@Test
+	public void testUploadDataSet() throws Exception {
+		var source = SampleSource.create();
+		try (var client = client()) {
+			client.put(source);
+		}
+		var req = requests.get(0);
+		assertEquals("POST", req.method());
+		assertEquals("/sources", req.uri());
+		assertEquals("application/xml", req.header("Content-Type"));
+		assertEquals("application/xml", req.header("Accept"));
+		assertEquals("test-stock", req.header("Stock"));
+
+		var uploaded = Xml.read(Source.class, req.body());
+		assertNotNull(uploaded);
+		assertEquals(Sources.getUUID(source), Sources.getUUID(uploaded));
+	}
+
+	@Test
+	public void testQueryParameterEncoding() throws Exception {
+		response = fixture("/org/openlca/ilcd/sapi_sample_process_list.xml");
+		try (var client = client()) {
+			client.search(Source.class, "a name with space & umlaut ä");
+		}
+		assertEquals(
+			"/datastocks/test-stock/sources"
+				+ "?pageSize=500&startIndex=0&search=true"
+				+ "&name=a+name+with+space+%26+umlaut+%C3%A4",
+			requests.get(0).uri());
+	}
+
+	@Test
+	public void testPathSegmentEncoding() throws Exception {
+		try (var client = client()) {
+			try (InputStream in = client.getExternalDocument(
+				"some-id", "my file ä.txt")) {
+				in.readAllBytes();
+			}
+		}
+		var req = requests.get(0);
+		assertEquals(
+			"/datastocks/test-stock/sources/some-id/my%20file%20%C3%A4.txt",
+			req.uri());
+		assertEquals("application/octet-stream", req.header("Accept"));
+	}
+
+	@Test
+	public void testContains() {
+		try (var client = client()) {
+			status = 200;
+			assertTrue(client.contains(Source.class, "some-id"));
+			status = 404;
+			assertFalse(client.contains(Source.class, "some-id"));
+		}
+		var first = requests.get(0);
+		assertEquals("HEAD", first.method());
+		assertEquals("/datastocks/test-stock/sources/some-id?format=xml", first.uri());
+	}
+
+	@Test
+	public void testCount() throws Exception {
+		response = fixture("/org/openlca/ilcd/sapi_sample_process_list.xml");
+		int expected = Xml.read(DescriptorList.class, response).getTotalSize();
+		try (var client = client()) {
+			assertEquals(expected, client.count(Source.class));
+		}
+		var req = requests.get(0);
+		assertEquals(
+			"/datastocks/test-stock/sources?pageSize=500&startIndex=0&countOnly=true",
+			req.uri());
+	}
+
+	@Test
+	public void testErrorStatusThrows() {
+		status = 404;
+		response = "not found".getBytes(StandardCharsets.UTF_8);
+		try (var client = client()) {
+			var e = assertThrows(RuntimeException.class,
+				() -> client.get(Source.class, "some-id"));
+			assertTrue(e.getMessage(), e.getMessage().contains("404"));
+		}
+	}
+
+	@Test
+	public void testFailedLoginThrows() {
+		status = 401;
+		response = "denied".getBytes(StandardCharsets.UTF_8);
+		try (var client = client()) {
+			assertThrows(RuntimeException.class, () -> client.login("admin", "wrong"));
+		}
+	}
+
+	private static byte[] fixture(String resource) throws Exception {
+		try (var in = SodaClientTest.class.getResourceAsStream(resource)) {
+			assertNotNull("missing fixture " + resource, in);
+			return in.readAllBytes();
+		}
+	}
+}
