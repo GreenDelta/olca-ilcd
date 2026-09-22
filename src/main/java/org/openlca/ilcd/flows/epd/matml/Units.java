@@ -1,16 +1,18 @@
 package org.openlca.ilcd.flows.epd.matml;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+import org.openlca.commons.Copyable;
+import org.openlca.ilcd.Vocab;
+import org.openlca.ilcd.util.Val;
+
 import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlAttribute;
 import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlType;
-import org.openlca.ilcd.Vocab;
-import org.openlca.commons.Copyable;
-import org.openlca.ilcd.util.Val;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "Units", propOrder = {"units"})
@@ -28,7 +30,7 @@ public class Units implements Copyable<Units> {
 	// region getters
 
 	public List<Unit> getUnits() {
-		return units != null ? units : List.of();
+		return units != null ? units : Collections.emptyList();
 	}
 
 	public String getName() {

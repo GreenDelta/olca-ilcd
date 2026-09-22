@@ -1,6 +1,7 @@
 package org.openlca.ilcd.contacts;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.openlca.commons.Copyable;
@@ -27,12 +28,12 @@ public class EpdContactExtension implements Copyable<EpdContactExtension>, Exten
 	// region getters
 
 	public List<EpdEntityId> getEntityIds() {
-		return entityIds != null ? entityIds : List.of();
+		return entityIds != null ? entityIds : Collections.emptyList();
 	}
 
 	@Override
 	public List<Object> getAny() {
-		return any != null ? any : List.of();
+		return any != null ? any : Collections.emptyList();
 	}
 
 	// endregion

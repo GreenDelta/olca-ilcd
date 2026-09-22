@@ -1,6 +1,7 @@
 package org.openlca.ilcd.processes.epd;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.openlca.commons.Copyable;
@@ -31,7 +32,7 @@ public final class EpdUseStageData implements Copyable<EpdUseStageData> {
 	}
 
 	public List<LangString> getSoilAndWaterImpacts() {
-		return soilAndWaterImpacts != null ? soilAndWaterImpacts : List.of();
+		return soilAndWaterImpacts != null ? soilAndWaterImpacts : Collections.emptyList();
 	}
 
 	// endregion

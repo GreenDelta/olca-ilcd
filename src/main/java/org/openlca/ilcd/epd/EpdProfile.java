@@ -6,8 +6,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
-import org.openlca.ilcd.Vocab;
 import org.openlca.commons.Copyable;
+import org.openlca.ilcd.Vocab;
 import org.openlca.ilcd.commons.Ref;
 import org.openlca.ilcd.util.Val;
 
@@ -69,7 +69,7 @@ public class EpdProfile implements Copyable<EpdProfile> {
 	}
 
 	public List<EpdProfileIndicator> getIndicators() {
-		return indicators;
+		return indicators != null ? indicators : Collections.emptyList();
 	}
 
 	public EpdProfile withId(String id) {

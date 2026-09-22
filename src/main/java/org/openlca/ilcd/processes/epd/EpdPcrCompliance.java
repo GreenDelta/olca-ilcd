@@ -1,6 +1,7 @@
 package org.openlca.ilcd.processes.epd;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.openlca.commons.Copyable;
@@ -43,7 +44,7 @@ public final class EpdPcrCompliance implements Copyable<EpdPcrCompliance> {
 	}
 
 	public List<LangString> getComments() {
-		return comments != null ? comments : List.of();
+		return comments != null ? comments : Collections.emptyList();
 	}
 
 	// endregion

@@ -1,10 +1,11 @@
 package org.openlca.ilcd.flows.epd;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
-import org.openlca.ilcd.Vocab;
 import org.openlca.commons.Copyable;
+import org.openlca.ilcd.Vocab;
 import org.openlca.ilcd.commons.Extension;
 import org.openlca.ilcd.commons.Ref;
 import org.openlca.ilcd.flows.epd.matml.MaterialDoc;
@@ -45,7 +46,7 @@ public class EpdInfoExtension implements Copyable<EpdInfoExtension>, Extension {
 	}
 
 	public List<Object> getAny() {
-		return any != null ? any : List.of();
+		return any != null ? any : Collections.emptyList();
 	}
 
 	// endregion

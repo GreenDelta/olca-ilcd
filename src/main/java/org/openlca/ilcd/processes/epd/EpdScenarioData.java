@@ -1,6 +1,7 @@
 package org.openlca.ilcd.processes.epd;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.openlca.commons.Copyable;
@@ -23,11 +24,11 @@ public final class EpdScenarioData implements Copyable<EpdScenarioData> {
 	// region getters
 
 	public List<EpdUseStageData> getUseStageData() {
-		return useStageData != null ? useStageData : List.of();
+		return useStageData != null ? useStageData : Collections.emptyList();
 	}
 
 	public List<EpdEolData> getEolData() {
-		return eolData != null ? eolData : List.of();
+		return eolData != null ? eolData : Collections.emptyList();
 	}
 
 	// endregion

@@ -1,14 +1,16 @@
 package org.openlca.ilcd.processes.epd;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+import org.openlca.commons.Copyable;
+import org.openlca.ilcd.Vocab;
+
 import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlElements;
-import org.openlca.ilcd.Vocab;
-import org.openlca.commons.Copyable;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 public class EpdContentDeclaration implements Copyable<EpdContentDeclaration> {
@@ -32,7 +34,7 @@ public class EpdContentDeclaration implements Copyable<EpdContentDeclaration> {
 	// region getters
 
 	public List<? extends EpdContentElement<?>> getElements() {
-		return elements != null ? elements : List.of();
+		return elements != null ? elements : Collections.emptyList();
 	}
 
 	// endregion

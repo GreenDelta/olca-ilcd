@@ -1,6 +1,7 @@
 package org.openlca.ilcd.processes.epd;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.openlca.commons.Copyable;
@@ -38,7 +39,7 @@ public final class EpdManufacturer implements Copyable<EpdManufacturer> {
 	}
 
 	public List<EpdSite> getSites() {
-		return sites != null ? sites : List.of();
+		return sites != null ? sites : Collections.emptyList();
 	}
 
 	// endregion

@@ -1,17 +1,19 @@
 package org.openlca.ilcd.flows.epd;
 
-import jakarta.xml.bind.annotation.XmlAccessType;
-import jakarta.xml.bind.annotation.XmlAccessorType;
-import jakarta.xml.bind.annotation.XmlAnyElement;
-import jakarta.xml.bind.annotation.XmlElement;
-import org.openlca.ilcd.Vocab;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 import org.openlca.commons.Copyable;
+import org.openlca.ilcd.Vocab;
 import org.openlca.ilcd.commons.Extension;
 import org.openlca.ilcd.commons.Ref;
 import org.openlca.ilcd.util.Val;
 
-import java.util.ArrayList;
-import java.util.List;
+import jakarta.xml.bind.annotation.XmlAccessType;
+import jakarta.xml.bind.annotation.XmlAccessorType;
+import jakarta.xml.bind.annotation.XmlAnyElement;
+import jakarta.xml.bind.annotation.XmlElement;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 public class EpdMethodExtension implements Copyable<EpdMethodExtension>, Extension {
@@ -43,7 +45,7 @@ public class EpdMethodExtension implements Copyable<EpdMethodExtension>, Extensi
 	}
 
 	public List<Object> getAny() {
-		return any != null ? any : List.of();
+		return any != null ? any : Collections.emptyList();
 	}
 
 	// endregion

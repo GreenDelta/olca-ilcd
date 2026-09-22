@@ -51,11 +51,14 @@ def parse_fields(text) -> list[tuple[str, str]]:
 
 
 def print_getter(field_type: str, field_name: str):
+    # use Collections.emptyList/Map and not List.of/Map.of: the returned
+    # empty collections must behave like the mutable ones (e.g. sorting an
+    # empty list must be a no-op and not throw an UnsupportedOperationException)
     r = field_name
     if field_type.startswith("List<"):
-        r = f"{field_name} != null ? {field_name} : List.of()"
+        r = f"{field_name} != null ? {field_name} : Collections.emptyList()"
     if field_type.startswith("Map<"):
-        r = f"{field_name} != null ? {field_name} : Map.of()"
+        r = f"{field_name} != null ? {field_name} : Collections.emptyMap()"
     print(
         f"""
   public {field_type} get{up(field_name)}() {{

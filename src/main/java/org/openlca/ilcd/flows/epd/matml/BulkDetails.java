@@ -1,15 +1,17 @@
 package org.openlca.ilcd.flows.epd.matml;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+import org.openlca.commons.Copyable;
+import org.openlca.ilcd.Vocab;
+import org.openlca.ilcd.util.Val;
+
 import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlType;
-import org.openlca.ilcd.Vocab;
-import org.openlca.commons.Copyable;
-import org.openlca.ilcd.util.Val;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "BulkDetails", propOrder = {"name", "properties"})
@@ -28,7 +30,7 @@ public class BulkDetails implements Copyable<BulkDetails> {
 	}
 
 	public List<PropertyData> getProperties() {
-		return properties != null ? properties : List.of();
+		return properties != null ? properties : Collections.emptyList();
 	}
 
 	// endregion

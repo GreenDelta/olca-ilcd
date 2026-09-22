@@ -1,13 +1,15 @@
 package org.openlca.ilcd.processes.epd;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+import org.openlca.ilcd.Vocab;
+
 import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlElements;
-import org.openlca.ilcd.Vocab;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 public class EpdContentComponent extends
@@ -29,7 +31,7 @@ public class EpdContentComponent extends
 	// region getters
 
 	public List<EpdInnerContentElement<?>> getElements() {
-		return elements != null ? elements : List.of();
+		return elements != null ? elements : Collections.emptyList();
 	}
 
 	// endregion

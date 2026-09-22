@@ -1,17 +1,19 @@
 package org.openlca.ilcd.processes.epd;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+import org.openlca.commons.Copyable;
+import org.openlca.ilcd.Vocab;
+import org.openlca.ilcd.commons.Extension;
+import org.openlca.ilcd.util.Val;
+
 import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlAnyElement;
 import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlElementWrapper;
-import org.openlca.ilcd.Vocab;
-import org.openlca.commons.Copyable;
-import org.openlca.ilcd.commons.Extension;
-import org.openlca.ilcd.util.Val;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 public class EpdInfoExtension implements Copyable<EpdInfoExtension>, Extension {
@@ -55,11 +57,11 @@ public class EpdInfoExtension implements Copyable<EpdInfoExtension>, Extension {
 	}
 
 	public List<EpdScenario> getScenarios() {
-		return scenarios != null ? scenarios : List.of();
+		return scenarios != null ? scenarios : Collections.emptyList();
 	}
 
 	public List<EpdModuleEntry> getModuleEntries() {
-		return moduleEntries != null ? moduleEntries : List.of();
+		return moduleEntries != null ? moduleEntries : Collections.emptyList();
 	}
 
 	public EpdContentDeclaration getContentDeclaration() {
@@ -67,7 +69,7 @@ public class EpdInfoExtension implements Copyable<EpdInfoExtension>, Extension {
 	}
 
 	public List<EpdProductId> getProductIds() {
-		return productIds != null ? productIds : List.of();
+		return productIds != null ? productIds : Collections.emptyList();
 	}
 
 	public EpdServiceLife getReferenceServiceLife() {
@@ -87,7 +89,7 @@ public class EpdInfoExtension implements Copyable<EpdInfoExtension>, Extension {
 	}
 
 	public List<Object> getAny() {
-		return any != null ? any : List.of();
+		return any != null ? any : Collections.emptyList();
 	}
 
 	// endregion

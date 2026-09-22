@@ -1,6 +1,7 @@
 package org.openlca.ilcd.processes.epd;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.openlca.commons.Copyable;
@@ -35,7 +36,7 @@ public final class EpdVariability implements Copyable<EpdVariability> {
 	}
 
 	public List<LangString> getDescriptions() {
-		return descriptions != null ? descriptions : List.of();
+		return descriptions != null ? descriptions : Collections.emptyList();
 	}
 
 	// endregion

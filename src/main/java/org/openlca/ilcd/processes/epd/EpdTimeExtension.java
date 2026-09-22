@@ -1,17 +1,20 @@
 package org.openlca.ilcd.processes.epd;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+import javax.xml.datatype.XMLGregorianCalendar;
+
+import org.openlca.commons.Copyable;
+import org.openlca.ilcd.Vocab;
+import org.openlca.ilcd.commons.Extension;
+import org.openlca.ilcd.util.Val;
+
 import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlAnyElement;
 import jakarta.xml.bind.annotation.XmlElement;
-import org.openlca.ilcd.Vocab;
-import org.openlca.commons.Copyable;
-import org.openlca.ilcd.commons.Extension;
-import org.openlca.ilcd.util.Val;
-
-import javax.xml.datatype.XMLGregorianCalendar;
-import java.util.ArrayList;
-import java.util.List;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 public class EpdTimeExtension implements Copyable<EpdTimeExtension>, Extension {
@@ -36,7 +39,7 @@ public class EpdTimeExtension implements Copyable<EpdTimeExtension>, Extension {
 	}
 
 	public List<Object> getAny() {
-		return any != null ? any : List.of();
+		return any != null ? any : Collections.emptyList();
 	}
 
 	// endregion

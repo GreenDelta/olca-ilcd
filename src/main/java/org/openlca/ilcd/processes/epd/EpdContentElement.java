@@ -1,15 +1,17 @@
 package org.openlca.ilcd.processes.epd;
 
-import jakarta.xml.bind.annotation.XmlAccessType;
-import jakarta.xml.bind.annotation.XmlAccessorType;
-import jakarta.xml.bind.annotation.XmlElement;
-import org.openlca.ilcd.Vocab;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 import org.openlca.commons.Copyable;
+import org.openlca.ilcd.Vocab;
 import org.openlca.ilcd.commons.LangString;
 import org.openlca.ilcd.util.Val;
 
-import java.util.ArrayList;
-import java.util.List;
+import jakarta.xml.bind.annotation.XmlAccessType;
+import jakarta.xml.bind.annotation.XmlAccessorType;
+import jakarta.xml.bind.annotation.XmlElement;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 public abstract class EpdContentElement<T extends EpdContentElement<T>>
@@ -30,7 +32,7 @@ public abstract class EpdContentElement<T extends EpdContentElement<T>>
 	// region getters
 
   public List<LangString> getName() {
-    return name != null ? name : List.of();
+    return name != null ? name : Collections.emptyList();
   }
 
   public EpdContentAmount getWeightPerc() {
@@ -42,7 +44,7 @@ public abstract class EpdContentElement<T extends EpdContentElement<T>>
   }
 
   public List<LangString> getComment() {
-    return comment != null ? comment : List.of();
+    return comment != null ? comment : Collections.emptyList();
   }
 
   // endregion

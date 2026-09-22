@@ -1,15 +1,17 @@
 package org.openlca.ilcd.processes.epd;
 
-import jakarta.xml.bind.annotation.XmlAccessType;
-import jakarta.xml.bind.annotation.XmlAccessorType;
-import jakarta.xml.bind.annotation.XmlElement;
-import org.openlca.ilcd.Vocab;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 import org.openlca.commons.Copyable;
+import org.openlca.ilcd.Vocab;
 import org.openlca.ilcd.commons.LangString;
 import org.openlca.ilcd.util.Val;
 
-import java.util.ArrayList;
-import java.util.List;
+import jakarta.xml.bind.annotation.XmlAccessType;
+import jakarta.xml.bind.annotation.XmlAccessorType;
+import jakarta.xml.bind.annotation.XmlElement;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 public class EpdSafetyMargins implements Copyable<EpdSafetyMargins> {
@@ -27,7 +29,7 @@ public class EpdSafetyMargins implements Copyable<EpdSafetyMargins> {
 	}
 
 	public List<LangString> getDescription() {
-		return description != null ? description : List.of();
+		return description != null ? description : Collections.emptyList();
 	}
 
 	// endregion

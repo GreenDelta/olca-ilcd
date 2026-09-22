@@ -1,6 +1,7 @@
 package org.openlca.ilcd.processes.epd;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.openlca.commons.Copyable;
@@ -39,19 +40,19 @@ public final class EpdServiceLife implements Copyable<EpdServiceLife> {
 	}
 
 	public List<EpdConditionFactor> getConditionFactors() {
-		return conditionFactors != null ? conditionFactors : List.of();
+		return conditionFactors != null ? conditionFactors : Collections.emptyList();
 	}
 
 	public List<Ref> getStandards() {
-		return standards != null ? standards : List.of();
+		return standards != null ? standards : Collections.emptyList();
 	}
 
 	public List<Ref> getDocumentations() {
-		return documentations != null ? documentations : List.of();
+		return documentations != null ? documentations : Collections.emptyList();
 	}
 
 	public List<LangString> getComments() {
-		return comments != null ? comments : List.of();
+		return comments != null ? comments : Collections.emptyList();
 	}
 
 	// endregion

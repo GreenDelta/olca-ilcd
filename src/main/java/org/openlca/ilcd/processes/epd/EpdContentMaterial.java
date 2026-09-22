@@ -1,6 +1,7 @@
 package org.openlca.ilcd.processes.epd;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.openlca.ilcd.Vocab;
@@ -20,7 +21,7 @@ public class EpdContentMaterial extends
 	// region getters
 
   public List<EpdContentSubstance> getSubstances() {
-    return substances != null ? substances : List.of();
+    return substances != null ? substances : Collections.emptyList();
   }
 
   // endregion
