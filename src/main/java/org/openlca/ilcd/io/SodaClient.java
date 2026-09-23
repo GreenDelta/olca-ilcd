@@ -14,7 +14,6 @@ import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 import org.openlca.commons.Res;
 import org.openlca.commons.Strings;
@@ -38,11 +37,11 @@ public class SodaClient implements DataStore {
 	private static final char[] HEX = "0123456789ABCDEF".toCharArray();
 
 	private final Logger log = LoggerFactory.getLogger(this.getClass());
+	private final CookieStore cookies = new CookieStore();
 	private final String url;
 	private final HttpClient client;
 	private String dataStockId;
 	private String authToken;
-	private final List<String> cookies = new CopyOnWriteArrayList<>();
 
 	private SodaClient(String url) {
 		this.url = trimTrailingSlash(url);
@@ -79,7 +78,7 @@ public class SodaClient implements DataStore {
 			.get();
 		var response = send(request, HttpResponse.BodyHandlers.ofString());
 		eval(response);
-		addCookies(response);
+		cookies.addAllOf(response);
 		return this;
 	}
 
@@ -188,11 +187,11 @@ public class SodaClient implements DataStore {
 				req = req.header("stock", dataStockId);
 			}
 			var response = send(
-				req.post(bytes, "application/xml"),
+				req.postXml(bytes),
 				HttpResponse.BodyHandlers.ofString());
 			eval(response);
 		} catch (Exception e) {
-			throw new RuntimeException("Failed to upload data set + " + ds, e);
+			throw new RuntimeException("Failed to upload data set " + ds, e);
 		}
 	}
 
@@ -234,6 +233,9 @@ public class SodaClient implements DataStore {
 		}
 	}
 
+	/// Opens the external document with the given name of the source with the
+	/// given ID. The returned stream must be closed by the caller, otherwise the
+	/// underlying HTTP connection is not released.
 	@Override
 	public InputStream getExternalDocument(String sourceId, String fileName) {
 		var request = new Req()
@@ -356,30 +358,6 @@ public class SodaClient implements DataStore {
 		client.close();
 	}
 
-	private void addCookies(HttpResponse<?> response) {
-		for (var value : response.headers().allValues("Set-Cookie")) {
-			var cookie = cookieOf(value);
-			if (cookie == null)
-				continue;
-			// a cookie with the same name replaces an existing one
-			var name = cookie.substring(0, cookie.indexOf('=') + 1);
-			cookies.removeIf(c -> c.startsWith(name));
-			cookies.add(cookie);
-		}
-	}
-
-	private static String cookieOf(String setCookieHeader) {
-		if (setCookieHeader == null)
-			return null;
-		var idx = setCookieHeader.indexOf(';');
-		var cookie = (idx < 0
-			? setCookieHeader
-			: setCookieHeader.substring(0, idx)).trim();
-		if (cookie.isEmpty() || !cookie.contains("="))
-			return null;
-		return cookie;
-	}
-
 	private <T> HttpResponse<T> send(
 		HttpRequest request, HttpResponse.BodyHandler<T> handler) {
 		try {
@@ -400,22 +378,37 @@ public class SodaClient implements DataStore {
 		return response.body();
 	}
 
-	private HttpResponse<InputStream> getStream(HttpRequest request) {
-		var response = send(request, HttpResponse.BodyHandlers.ofInputStream());
-		int status = response.statusCode();
+	/// Sends the given request and returns the response with a body stream when
+	/// the status is below {@code 400}. For an error response, the body is read
+	/// completely and the stream is closed so that the underlying connection can
+	/// be returned to the connection pool.
+	///
+	/// Note: for a successful response the caller is responsible for closing the
+	/// body stream. Otherwise, the connection stays in use and is not returned to
+	/// the pool.
+	private HttpResponse<InputStream> getStream(HttpRequest req) {
+		var resp = send(req, HttpResponse.BodyHandlers.ofInputStream());
+		int status = resp.statusCode();
 		if (status >= 400) {
-			var message = readText(response.body());
+			// closes the stream after reading it completely; reading
+			// the body completely is required so that the HttpClient can reuse
+			// the underlying connection
+			var message = "";
+			try (var stream = resp.body()) {
+				message = new String(stream.readAllBytes(), StandardCharsets.UTF_8);
+			} catch (Exception _) {
+			}
 			throw new RuntimeException(errorMessage(status, message));
 		}
-		return response;
+		return resp;
 	}
 
-	private void eval(HttpResponse<?> response) {
-		int status = response.statusCode();
+	private void eval(HttpResponse<?> resp) {
+		int status = resp.statusCode();
 		if (status < 400)
 			return;
 		String message = "";
-		var body = response.body();
+		var body = resp.body();
 		if (body instanceof byte[] bytes) {
 			message = new String(bytes, StandardCharsets.UTF_8);
 		} else if (body instanceof String text) {
@@ -436,13 +429,6 @@ public class SodaClient implements DataStore {
 		return message;
 	}
 
-	private static String readText(InputStream stream) {
-		try (stream) {
-			return new String(stream.readAllBytes(), StandardCharsets.UTF_8);
-		} catch (Exception e) {
-			return "";
-		}
-	}
 
 	private static String trimTrailingSlash(String url) {
 		var u = url == null ? "" : url.trim();
@@ -452,6 +438,12 @@ public class SodaClient implements DataStore {
 		return u;
 	}
 
+	/**
+	 * Encodes a single URL path segment as defined in RFC 3986. Note that
+	 * {@link URLEncoder} must not be used here as it implements the rules of
+	 * {@code application/x-www-form-urlencoded} (a space becomes a {@code +}, a
+	 * {@code ~} becomes {@code %7E}).
+	 */
 	private static String encodePathSegment(String segment) {
 		var bytes = segment.getBytes(StandardCharsets.UTF_8);
 		var encoded = new StringBuilder(bytes.length);
@@ -550,9 +542,9 @@ public class SodaClient implements DataStore {
 			return request("HEAD", HttpRequest.BodyPublishers.noBody(), null);
 		}
 
-		HttpRequest post(byte[] body, String contentType) {
+		HttpRequest postXml(byte[] body) {
 			return request(
-				"POST", HttpRequest.BodyPublishers.ofByteArray(body), contentType);
+				"POST", HttpRequest.BodyPublishers.ofByteArray(body), "application/xml");
 		}
 
 		HttpRequest post(HttpRequest.BodyPublisher body, String contentType) {
@@ -571,7 +563,7 @@ public class SodaClient implements DataStore {
 				}
 			}
 			if (!cookies.isEmpty()) {
-				builder.header("Cookie", String.join("; ", cookies));
+				builder.header("Cookie", cookies.value());
 			}
 			if (Strings.isNotBlank(authToken)) {
 				builder.header("Authorization", "Bearer " + authToken);

@@ -46,6 +46,7 @@ public class SodaClientTest {
 	private int status = 200;
 	private byte[] response = "ok".getBytes(StandardCharsets.UTF_8);
 	private String sessionCookie;
+	private final List<String> loginCookies = new ArrayList<>();
 
 	@Before
 	public void setUp() throws Exception {
@@ -74,9 +75,13 @@ public class SodaClientTest {
 			headers.toString(),
 			body));
 
-		if (sessionCookie != null
-			&& exchange.getRequestURI().getPath().contains("authenticate/login")) {
-			exchange.getResponseHeaders().add("Set-Cookie", sessionCookie);
+		if (exchange.getRequestURI().getPath().contains("authenticate/login")) {
+			if (sessionCookie != null) {
+				exchange.getResponseHeaders().add("Set-Cookie", sessionCookie);
+			}
+			for (var cookie : loginCookies) {
+				exchange.getResponseHeaders().add("Set-Cookie", cookie);
+			}
 		}
 
 		if (exchange.getRequestMethod().equals("HEAD")) {
@@ -120,6 +125,19 @@ public class SodaClientTest {
 		assertEquals("/authenticate/login?userName=admin&password=default", login.uri());
 		var contains = requests.get(1);
 		assertEquals("JSESSIONID=abc123", contains.header("Cookie"));
+	}
+
+	@Test
+	public void testCookieNameIsCaseInsensitive() {
+		// the login response sets two cookies that only differ in the case of
+		// their name; the second one must replace the first one
+		loginCookies.add("JSESSIONID=first");
+		loginCookies.add("jsessionid=second");
+		try (var client = client()) {
+			client.login("admin", "default");
+			client.contains(Source.class, "some-id");
+		}
+		assertEquals("jsessionid=second", requests.get(1).header("Cookie"));
 	}
 
 	@Test
@@ -246,6 +264,33 @@ public class SodaClientTest {
 				() -> client.get(Source.class, "some-id"));
 			assertTrue(e.getMessage(), e.getMessage().contains("404"));
 		}
+	}
+
+	@Test
+	public void testExternalDocumentErrorThrows() {
+		status = 404;
+		response = "missing document".getBytes(StandardCharsets.UTF_8);
+		try (var client = client()) {
+			var e = assertThrows(RuntimeException.class,
+				() -> client.getExternalDocument("some-id", "no_such_file.txt"));
+			assertTrue(e.getMessage(), e.getMessage().contains("404"));
+			assertTrue(e.getMessage(), e.getMessage().contains("missing document"));
+		}
+	}
+
+	@Test
+	public void testRepeatedErrorResponses() {
+		status = 500;
+		response = "boom".getBytes(StandardCharsets.UTF_8);
+		try (var client = client()) {
+			for (int i = 0; i < 20; i++) {
+				var id = "id-" + i;
+				var e = assertThrows(RuntimeException.class,
+					() -> client.get(Source.class, id));
+				assertTrue(e.getMessage(), e.getMessage().contains("500"));
+			}
+		}
+		assertEquals(20, requests.size());
 	}
 
 	@Test
