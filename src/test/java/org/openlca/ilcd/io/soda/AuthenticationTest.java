@@ -22,8 +22,8 @@ public class AuthenticationTest {
 		assertEquals("openlca", auth.getUser());
 		assertTrue(auth.getRoles().contains("ADMIN"));
 		assertTrue(auth.getRoles().contains("SUPER_ADMIN"));
-		assertTrue(auth.getDataStocks().get(0).isReadAllowed());
-		assertTrue(auth.getDataStocks().get(0).isExportAllowed());
+		assertTrue(auth.getDataStocks().getFirst().isReadAllowed());
+		assertTrue(auth.getDataStocks().getFirst().isExportAllowed());
 	}
 
 	@Test
