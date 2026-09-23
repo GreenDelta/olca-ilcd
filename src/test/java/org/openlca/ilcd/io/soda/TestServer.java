@@ -1,7 +1,7 @@
 package org.openlca.ilcd.io.soda;
 
 import java.net.HttpURLConnection;
-import java.net.URL;
+import java.net.URI;
 
 import org.openlca.ilcd.io.SodaClient;
 import org.openlca.ilcd.io.SodaConnection;
@@ -29,11 +29,12 @@ class TestServer {
 	static {
 		var log = LoggerFactory.getLogger(TestServer.class);
 		var url = ENDPOINT + "/authenticate/status";
+
 		try {
-			var con = (HttpURLConnection) new URL(url).openConnection();
+			var con = (HttpURLConnection) 	URI.create(url).toURL().openConnection();
 			con.setRequestMethod("HEAD");
-			int responseCode = con.getResponseCode();
-			if (responseCode == 200) {
+			int code = con.getResponseCode();
+			if (code == 200) {
 				log.info("can run tests against {}", ENDPOINT);
 				available = true;
 			} else {

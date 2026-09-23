@@ -52,8 +52,8 @@ public class SearchTest {
 		assertTrue(client.contains(ds.getClass(), id));
 
 		var page = client.search(ds.getClass(), name);
-		assertEquals(1, page.getDescriptors().size());
-		var d = page.getDescriptors().get(0);
+		assertEquals("Failed for: " + ds, 1, page.getDescriptors().size());
+		var d = page.getDescriptors().getFirst();
 		assertEquals(id, d.getUUID());
 	}
 }
