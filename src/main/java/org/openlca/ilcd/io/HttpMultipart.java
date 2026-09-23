@@ -7,17 +7,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-/**
- * Builds the body of a {@code multipart/form-data} request (RFC 7578) as it is
- * required by the {@code sources/withBinaries} end-point of a soda4LCA server.
- * <p>
- * The layout of the parts (order of the part headers, part content types, and
- * not adding a {@code filename} parameter) is identical to what the previous
- * Jersey based implementation sent. Note that all parts are built from
- * publishers with a known content length which means that the resulting
- * request has an exact {@code Content-Length} and is not sent in chunks.
- */
-final class Multipart {
+/// Builds the body of a `multipart/form-data` request (RFC 7578) as it is
+/// required by the `sources/withBinaries` end-point of a soda4LCA server.
+///
+/// The layout of the parts (order of the part headers, part content types, and
+/// not adding a `filename` parameter) is identical to what the previous Jersey
+/// based implementation sent. Note that all parts are built from publishers
+/// with a known content length which means that the resulting request has an
+/// exact `Content-Length` and is not sent in chunks.
+final class HttpMultipart {
 
 	private static final String CRLF = "\r\n";
 
@@ -37,7 +35,7 @@ final class Multipart {
 	/**
 	 * Adds a text field.
 	 */
-	Multipart addText(String name, String value) {
+	HttpMultipart addText(String name, String value) {
 		var bytes = value.getBytes(StandardCharsets.UTF_8);
 		return addPart(name, "text/plain", bytes, value);
 	}
@@ -45,12 +43,12 @@ final class Multipart {
 	/**
 	 * Adds a part with the given binary content.
 	 */
-	Multipart addPart(String name, String contentType, byte[] data) {
+	HttpMultipart addPart(String name, String contentType, byte[] data) {
 		return addPart(name, contentType, data,
 			new String(data, StandardCharsets.ISO_8859_1));
 	}
 
-	private Multipart addPart(
+	private HttpMultipart addPart(
 		String name, String contentType, byte[] data, String probe) {
 		parts.add(new Part(
 			name, contentType, HttpRequest.BodyPublishers.ofByteArray(data), probe));
@@ -60,7 +58,7 @@ final class Multipart {
 	/**
 	 * Adds a part with the content of the given file.
 	 */
-	Multipart addFile(String name, String contentType, File file) {
+	HttpMultipart addFile(String name, String contentType, File file) {
 		if (file == null || !file.isFile())
 			throw new IllegalArgumentException("not a file: " + file);
 		HttpRequest.BodyPublisher body;
@@ -100,13 +98,12 @@ final class Multipart {
 	}
 
 	private HttpRequest.BodyPublisher headOf(Part part) {
-		var head = new StringBuilder();
-		head.append("--").append(boundary).append(CRLF);
-		head.append("Content-Type: ").append(part.contentType()).append(CRLF);
-		head.append("Content-Disposition: form-data; name=\"")
-			.append(nameOf(part.name())).append('"').append(CRLF);
-		head.append(CRLF);
-		return HttpRequest.BodyPublishers.ofString(head.toString(), StandardCharsets.UTF_8);
+		String head = "--" + boundary + CRLF +
+			"Content-Type: " + part.contentType() + CRLF +
+			"Content-Disposition: form-data; name=\"" +
+			nameOf(part.name()) + '"' + CRLF +
+			CRLF;
+		return HttpRequest.BodyPublishers.ofString(head, StandardCharsets.UTF_8);
 	}
 
 	private boolean containsBoundary() {

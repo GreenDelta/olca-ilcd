@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URI;
-import java.net.URLEncoder;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
@@ -34,17 +33,16 @@ import org.slf4j.LoggerFactory;
  */
 public class SodaClient implements DataStore {
 
-	private static final char[] HEX = "0123456789ABCDEF".toCharArray();
 
 	private final Logger log = LoggerFactory.getLogger(this.getClass());
-	private final CookieStore cookies = new CookieStore();
+	private final HttpCookieStore cookies = new HttpCookieStore();
 	private final String url;
 	private final HttpClient client;
 	private String dataStockId;
 	private String authToken;
 
 	private SodaClient(String url) {
-		this.url = trimTrailingSlash(url);
+		this.url = Http.trimTrailingSlash(url);
 		this.client = HttpClient.newBuilder()
 			.version(HttpClient.Version.HTTP_1_1)
 			.followRedirects(HttpClient.Redirect.NORMAL)
@@ -199,7 +197,7 @@ public class SodaClient implements DataStore {
 	public void put(Source source, File[] files) {
 		log.info("Publish source with files {}", source);
 		try {
-			var multipart = new Multipart();
+			var multipart = new HttpMultipart();
 			if (Strings.isNotBlank(dataStockId)) {
 				log.trace("post to data stock {}", dataStockId);
 				multipart.addText("stock", dataStockId);
@@ -430,46 +428,7 @@ public class SodaClient implements DataStore {
 	}
 
 
-	private static String trimTrailingSlash(String url) {
-		var u = url == null ? "" : url.trim();
-		while (u.endsWith("/") && u.length() > 3 && u.charAt(u.length() - 2) != '/') {
-			u = u.substring(0, u.length() - 1);
-		}
-		return u;
-	}
 
-	/**
-	 * Encodes a single URL path segment as defined in RFC 3986. Note that
-	 * {@link URLEncoder} must not be used here as it implements the rules of
-	 * {@code application/x-www-form-urlencoded} (a space becomes a {@code +}, a
-	 * {@code ~} becomes {@code %7E}).
-	 */
-	private static String encodePathSegment(String segment) {
-		var bytes = segment.getBytes(StandardCharsets.UTF_8);
-		var encoded = new StringBuilder(bytes.length);
-		for (var b : bytes) {
-			int c = b & 0xff;
-			if (isUnreserved(c)) {
-				encoded.append((char) c);
-			} else {
-				encoded.append('%')
-					.append(HEX[(c >> 4) & 0xf])
-					.append(HEX[c & 0xf]);
-			}
-		}
-		return encoded.toString();
-	}
-
-	private static boolean isUnreserved(int c) {
-		return (c >= 'a' && c <= 'z')
-			|| (c >= 'A' && c <= 'Z')
-			|| (c >= '0' && c <= '9')
-			|| c == '-' || c == '.' || c == '_' || c == '~';
-	}
-
-	private static String encodeQuery(String value) {
-		return URLEncoder.encode(value == null ? "" : value, StandardCharsets.UTF_8);
-	}
 
 	/**
 	 * Builds the requests of this client.
@@ -577,16 +536,16 @@ public class SodaClient implements DataStore {
 		private URI uriOf() {
 			var uri = new StringBuilder(url);
 			for (var segment : segments) {
-				uri.append('/').append(encodePathSegment(segment));
+				uri.append('/').append(Http.encodePathSegment(segment));
 			}
 			if (!params.isEmpty()) {
 				var first = true;
 				for (var entry : params.entrySet()) {
 					uri.append(first ? '?' : '&');
 					first = false;
-					uri.append(encodeQuery(entry.getKey()))
+					uri.append(Http.encodeQuery(entry.getKey()))
 						.append('=')
-						.append(encodeQuery(entry.getValue()));
+						.append(Http.encodeQuery(entry.getValue()));
 				}
 			}
 			return URI.create(uri.toString());

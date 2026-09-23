@@ -14,7 +14,7 @@ import java.util.concurrent.atomic.AtomicReference;
 
 import org.junit.Test;
 
-public class MultipartTest {
+public class HttpMultipartTest {
 
 	private static final String CRLF = "\r\n";
 
@@ -23,7 +23,7 @@ public class MultipartTest {
 		var file = Files.createTempFile("multipart-test", ".txt").toFile();
 		Files.writeString(file.toPath(), "hello file content");
 
-		var payload = new Multipart()
+		var payload = new HttpMultipart()
 			.addText("stock", "test-stock")
 			.addPart("file", "multipart/form-data", "<source/>".getBytes(StandardCharsets.UTF_8))
 			.addFile("my file.txt", "multipart/form-data", file)
@@ -56,7 +56,7 @@ public class MultipartTest {
 		var file = Files.createTempFile("multipart-test", ".txt").toFile();
 		Files.writeString(file.toPath(), "hello file content");
 
-		var payload = new Multipart()
+		var payload = new HttpMultipart()
 			.addText("stock", "test-stock")
 			.addPart("file", "multipart/form-data", "<source/>".getBytes(StandardCharsets.UTF_8))
 			.addFile("my file.txt", "multipart/form-data", file)
@@ -73,12 +73,12 @@ public class MultipartTest {
 	public void testMissingFile() {
 		var missing = new java.io.File("no-such-file.txt");
 		assertThrows(IllegalArgumentException.class,
-			() -> new Multipart().addFile("f", "text/plain", missing));
+			() -> new HttpMultipart().addFile("f", "text/plain", missing));
 	}
 
 	@Test
 	public void testNameIsSanitized() throws Exception {
-		var payload = new Multipart()
+		var payload = new HttpMultipart()
 			.addPart("a\"b\r\nc", "text/plain", new byte[]{1})
 			.build();
 		var body = new String(read(payload.publisher()), StandardCharsets.ISO_8859_1);

@@ -6,7 +6,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 import org.openlca.commons.Strings;
 
-class CookieStore {
+class HttpCookieStore {
 
 	private final List<Cookie> cookies = new CopyOnWriteArrayList<>();
 
