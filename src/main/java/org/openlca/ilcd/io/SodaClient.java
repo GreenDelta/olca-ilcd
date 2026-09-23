@@ -28,14 +28,11 @@ import org.openlca.ilcd.util.DataSets;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-/**
- * A client interface of a Soda4LCA service end-point.
- */
+/// A client interface of a Soda4LCA service end-point.
 public class SodaClient implements DataStore {
 
-
 	private final Logger log = LoggerFactory.getLogger(this.getClass());
-	private final HttpCookieStore cookies = new HttpCookieStore();
+	private final HttpCookieList cookies = new HttpCookieList();
 	private final String url;
 	private final HttpClient client;
 	private String dataStockId;
@@ -62,11 +59,9 @@ public class SodaClient implements DataStore {
 		return client;
 	}
 
-	/**
-	 * Performs a session based login. A session cookie is stored and used for
-	 * all requests until logout. Note that this method throws an exception
-	 * when the login failed.
-	 */
+	/// Performs a session based login. A session cookie is stored and used for
+	/// all requests until logout. Note that this method throws an exception
+	/// when the login failed.
 	public SodaClient login(String user, String password) {
 		log.info("login user: {}", user);
 		var request = new Req()
@@ -80,9 +75,7 @@ public class SodaClient implements DataStore {
 		return this;
 	}
 
-	/**
-	 * Get an authentication token for the given user and password from the API.
-	 */
+	/// Get an authentication token for the given user and password from the API.
 	public Res<String> getAuthenticationToken(String user, String password) {
 		try {
 			var request = new Req()
@@ -279,9 +272,7 @@ public class SodaClient implements DataStore {
 		return response.statusCode() == 200;
 	}
 
-	/**
-	 * Includes also the version in the check.
-	 */
+	/// Includes also the version in the check.
 	public boolean contains(Ref ref) {
 		if (ref == null || ref.getType() == null || ref.getUUID() == null)
 			return false;
@@ -388,9 +379,9 @@ public class SodaClient implements DataStore {
 		var resp = send(req, HttpResponse.BodyHandlers.ofInputStream());
 		int status = resp.statusCode();
 		if (status >= 400) {
-			// closes the stream after reading it completely; reading
-			// the body completely is required so that the HttpClient can reuse
-			// the underlying connection
+			// read the error body completely and close the stream, so that the
+			// HttpClient can reuse the underlying connection; a failure while
+			// reading it is ignored and results in an empty message
 			var message = "";
 			try (var stream = resp.body()) {
 				message = new String(stream.readAllBytes(), StandardCharsets.UTF_8);
@@ -427,22 +418,15 @@ public class SodaClient implements DataStore {
 		return message;
 	}
 
-
-
-
-	/**
-	 * Builds the requests of this client.
-	 */
+	/// Builds the requests of this client.
 	private class Req {
 
 		private final List<String> segments = new ArrayList<>();
 		private final Map<String, String> params = new LinkedHashMap<>();
 		private final Map<String, String> headers = new LinkedHashMap<>();
 
-		/**
-		 * Adds one or more path segments to the request. A value that contains
-		 * {@code /} is split into multiple segments.
-		 */
+		/// Adds one or more path segments to the request. A value that contains
+		/// {@code /} is split into multiple segments.
 		Req p(String segment) {
 			if (segment == null)
 				return this;
@@ -458,9 +442,7 @@ public class SodaClient implements DataStore {
 			return p(Dir.get(type));
 		}
 
-		/**
-		 * Adds a query parameter to the request.
-		 */
+		/// Adds a query parameter to the request.
 		Req q(String param, String value) {
 			if (param != null && value != null) {
 				params.put(param, value);

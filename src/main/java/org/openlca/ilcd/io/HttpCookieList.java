@@ -6,7 +6,10 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 import org.openlca.commons.Strings;
 
-class HttpCookieStore {
+/// A minimal in-memory store for the cookies of a single soda4LCA session.
+/// Note that the attributes of a cookie (`Path`, `Domain`, `Secure`, `Expires`)
+/// are ignored and that cookie names are handled case-insensitively.
+class HttpCookieList {
 
 	private final List<Cookie> cookies = new CopyOnWriteArrayList<>();
 

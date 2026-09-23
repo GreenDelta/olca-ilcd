@@ -1,4 +1,4 @@
-package org.openlca.ilcd.io;
+package org.openlca.ilcd.io.soda;
 
 import static org.junit.Assert.*;
 
@@ -10,22 +10,23 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.openlca.ilcd.SampleSource;
 import org.openlca.ilcd.descriptors.DescriptorList;
+import org.openlca.ilcd.io.SodaClient;
+import org.openlca.ilcd.io.Xml;
 import org.openlca.ilcd.sources.Source;
 import org.openlca.ilcd.util.Sources;
 
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpServer;
 
-/**
- * Tests the HTTP layer of the {@link SodaClient} against a local test server.
- * These tests run without a soda4LCA instance.
- */
+/// Tests the HTTP layer of the {@link SodaClient} against a local test server.
+/// These tests run without a soda4LCA instance.
 public class SodaClientTest {
 
 	private record Req(String method, String uri, String headers, byte[] body) {
@@ -101,6 +102,7 @@ public class SodaClientTest {
 	private static byte[] authInfo() {
 		try (var in = SodaClientTest.class.getResourceAsStream(
 			"/org/openlca/ilcd/auth_info.xml")) {
+			assertNotNull(in);
 			return in.readAllBytes();
 		} catch (IOException e) {
 			throw new RuntimeException(e);
@@ -120,7 +122,7 @@ public class SodaClientTest {
 			client.contains(Source.class, "some-id");
 		}
 		assertTrue(requests.size() >= 2);
-		var login = requests.get(0);
+		var login = requests.getFirst();
 		assertEquals("GET", login.method());
 		assertEquals("/authenticate/login?userName=admin&password=default", login.uri());
 		var contains = requests.get(1);
@@ -146,25 +148,26 @@ public class SodaClientTest {
 			client.withAuthenticationToken("token-123")
 				.contains(Source.class, "some-id");
 		}
-		assertEquals("Bearer token-123", requests.get(0).header("Authorization"));
+		assertEquals("Bearer token-123",
+			requests.getFirst().header("Authorization"));
 	}
 
 	@Test
 	public void testMultipartUpload() throws Exception {
 		var file = Files.createTempFile("soda-client-test", ".txt").toFile();
-		Files.write(file.toPath(),
-			"hello file content".getBytes(StandardCharsets.UTF_8));
+		Files.writeString(file.toPath(), "hello file content");
 
 		try (var client = client()) {
 			client.put(SampleSource.create(), new File[]{file});
 		}
 
-		var req = requests.get(0);
+		var req = requests.getFirst();
 		assertEquals("POST", req.method());
 		assertEquals("/sources/withBinaries", req.uri());
 		assertEquals("test-stock", req.header("Stock"));
 
 		var contentType = req.header("Content-Type");
+		assertNotNull(contentType);
 		assertTrue(contentType.startsWith("multipart/form-data;boundary="));
 		var boundary = contentType.substring(contentType.indexOf("boundary=") + 9);
 
@@ -179,17 +182,18 @@ public class SodaClientTest {
 			+ file.getName() + "\""));
 		assertTrue(body.contains("hello file content"));
 		assertTrue(body.endsWith("--" + boundary + "--\r\n"));
+
 		assertEquals(req.body().length,
-			Integer.parseInt(req.header("Content-Length")));
+			Integer.parseInt(Objects.requireNonNull(req.header("Content-Length"))));
 	}
 
 	@Test
-	public void testUploadDataSet() throws Exception {
+	public void testUploadDataSet() {
 		var source = SampleSource.create();
 		try (var client = client()) {
 			client.put(source);
 		}
-		var req = requests.get(0);
+		var req = requests.getFirst();
 		assertEquals("POST", req.method());
 		assertEquals("/sources", req.uri());
 		assertEquals("application/xml", req.header("Content-Type"));
@@ -211,7 +215,7 @@ public class SodaClientTest {
 			"/datastocks/test-stock/sources"
 				+ "?pageSize=500&startIndex=0&search=true"
 				+ "&name=a+name+with+space+%26+umlaut+%C3%A4",
-			requests.get(0).uri());
+			requests.getFirst().uri());
 	}
 
 	@Test
@@ -222,7 +226,7 @@ public class SodaClientTest {
 				in.readAllBytes();
 			}
 		}
-		var req = requests.get(0);
+		var req = requests.getFirst();
 		assertEquals(
 			"/datastocks/test-stock/sources/some-id/my%20file%20%C3%A4.txt",
 			req.uri());
@@ -237,7 +241,7 @@ public class SodaClientTest {
 			status = 404;
 			assertFalse(client.contains(Source.class, "some-id"));
 		}
-		var first = requests.get(0);
+		var first = requests.getFirst();
 		assertEquals("HEAD", first.method());
 		assertEquals("/datastocks/test-stock/sources/some-id?format=xml", first.uri());
 	}
@@ -249,7 +253,7 @@ public class SodaClientTest {
 		try (var client = client()) {
 			assertEquals(expected, client.count(Source.class));
 		}
-		var req = requests.get(0);
+		var req = requests.getFirst();
 		assertEquals(
 			"/datastocks/test-stock/sources?pageSize=500&startIndex=0&countOnly=true",
 			req.uri());

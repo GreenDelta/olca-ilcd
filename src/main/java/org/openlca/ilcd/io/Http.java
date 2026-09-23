@@ -8,22 +8,25 @@ class Http {
 
 	private static final char[] HEX = "0123456789ABCDEF".toCharArray();
 
+	/// Removes the trailing slashes of the given URL. The slashes of the scheme
+	/// part are kept, so that `http://` is not shortened to `http:`.
 	static String trimTrailingSlash(String url) {
 		var u = url == null
 			? ""
 			: url.trim();
-		while (u.endsWith("/")) {
-			u = u.substring(0, u.length() - 1);
+		int scheme = u.indexOf("://");
+		int start = scheme < 0 ? 1 : scheme + 3;
+		int end = u.length();
+		while (end > start && u.charAt(end - 1) == '/') {
+			end--;
 		}
-		return u;
+		return u.substring(0, end);
 	}
 
-	/**
-	 * Encodes a single URL path segment as defined in RFC 3986. Note that
-	 * {@link URLEncoder} must not be used here as it implements the rules of
-	 * {@code application/x-www-form-urlencoded} (a space becomes a {@code +}, a
-	 * {@code ~} becomes {@code %7E}).
-	 */
+	/// Encodes a single URL path segment as defined in RFC 3986. Note that
+	/// {@link URLEncoder} must not be used here as it implements the rules of
+	/// {@code application/x-www-form-urlencoded} (a space becomes a {@code +}, a
+	/// {@code ~} becomes {@code %7E}).
 	static String encodePathSegment(String segment) {
 		var bytes = segment.getBytes(StandardCharsets.UTF_8);
 		var encoded = new StringBuilder(bytes.length);
