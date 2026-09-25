@@ -18,6 +18,7 @@ import org.junit.Test;
 import org.openlca.ilcd.SampleSource;
 import org.openlca.ilcd.descriptors.DescriptorList;
 import org.openlca.ilcd.io.SodaClient;
+import org.openlca.ilcd.io.SodaConnection;
 import org.openlca.ilcd.io.Xml;
 import org.openlca.ilcd.sources.Source;
 import org.openlca.ilcd.util.Sources;
@@ -123,8 +124,12 @@ public class SodaClientTest {
 		}
 		assertTrue(requests.size() >= 2);
 		var login = requests.getFirst();
-		assertEquals("GET", login.method());
-		assertEquals("/authenticate/login?userName=admin&password=default", login.uri());
+		assertEquals("POST", login.method());
+		assertEquals("/authenticate/login", login.uri());
+		assertEquals("application/x-www-form-urlencoded",
+			login.header("Content-Type"));
+		assertEquals("username=admin&password=default",
+			new String(login.body(), StandardCharsets.UTF_8));
 		var contains = requests.get(1);
 		assertEquals("JSESSIONID=abc123", contains.header("Cookie"));
 	}
@@ -149,6 +154,50 @@ public class SodaClientTest {
 				.contains(Source.class, "some-id");
 		}
 		assertEquals("Bearer token-123",
+			requests.getFirst().header("Authorization"));
+	}
+
+	@Test
+	public void testGetTokenPostsFormAndReturnsToken() {
+		response = "a.b.c".getBytes(StandardCharsets.UTF_8);
+		try (var client = client()) {
+			var res = client.getAuthenticationToken("admin", "default");
+			assertTrue(res.isOk());
+			assertEquals("a.b.c", res.value());
+		}
+		var req = requests.getFirst();
+		assertEquals("POST", req.method());
+		assertEquals("/authenticate/getToken", req.uri());
+		assertEquals("application/x-www-form-urlencoded",
+			req.header("Content-Type"));
+		assertEquals("username=admin&password=default",
+			new String(req.body(), StandardCharsets.UTF_8));
+	}
+
+	@Test
+	public void testGetTokenErrorReturnsResError() {
+		status = 401;
+		response = "permission denied".getBytes(StandardCharsets.UTF_8);
+		try (var client = client()) {
+			var res = client.getAuthenticationToken("admin", "wrong");
+			assertTrue(res.isError());
+			assertTrue(res.error(), res.error().contains("permission denied"));
+		}
+	}
+
+	@Test
+	public void testTokenFromConnectionIsUsedInsteadOfLogin() {
+		var con = new SodaConnection();
+		con.url = "http://localhost:" + server.getAddress().getPort();
+		con.user = "admin";
+		con.password = "default";
+		con.token = "token-from-connection";
+		try (var client = SodaClient.of(con)) {
+			client.contains(Source.class, "some-id");
+		}
+		// no login request, only the actual resource request
+		assertEquals(1, requests.size());
+		assertEquals("Bearer token-from-connection",
 			requests.getFirst().header("Authorization"));
 	}
 

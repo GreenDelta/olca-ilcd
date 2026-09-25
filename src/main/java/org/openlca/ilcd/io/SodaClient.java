@@ -50,54 +50,55 @@ public class SodaClient implements DataStore {
 		return new SodaClient(url);
 	}
 
+	/// Creates a client for the given connection. An authentication token is used
+	/// when it is set, otherwise a session based login with user and password.
 	public static SodaClient of(SodaConnection con) {
 		var client = SodaClient.of(con.url);
-		if (Strings.isNotBlank(con.user) && Strings.isNotBlank(con.password)) {
+		if (Strings.isNotBlank(con.token)) {
+			client.withAuthenticationToken(con.token);
+		} else if (Strings.isNotBlank(con.user) && Strings.isNotBlank(con.password)) {
 			client.login(con.user, con.password);
 		}
 		client.useDataStock(con.dataStockId);
 		return client;
 	}
 
-	/// Performs a session based login. A session cookie is stored and used for
-	/// all requests until logout. Note that this method throws an exception
-	/// when the login failed.
+	/// Performs a session based login; the session cookie is used until logout.
+	/// Throws an exception when the login failed.
 	public SodaClient login(String user, String password) {
 		log.info("login user: {}", user);
 		var request = new Req()
 			.p("authenticate/login")
-			.q("userName", user)
-			.q("password", password)
-			.get();
+			.postForm("username", user, "password", password);
 		var response = send(request, HttpResponse.BodyHandlers.ofString());
 		eval(response);
 		cookies.addAllOf(response);
 		return this;
 	}
 
-	/// Get an authentication token for the given user and password from the API.
+	/// Requests an authentication token for the given user and password.
 	public Res<String> getAuthenticationToken(String user, String password) {
 		try {
 			var request = new Req()
 				.p("authenticate/getToken")
-				.q("userName", user)
-				.q("password", password)
-				.get();
+				.postForm("username", user, "password", password);
 			var response = send(request, HttpResponse.BodyHandlers.ofString());
-			var token = response.body();
-			return response.statusCode() == 200
+			var token = response.body() == null ? "" : response.body().trim();
+			return response.statusCode() == 200 && !token.isEmpty()
 				? Res.ok(token)
-				: Res.error("failed to get token: " + token);
+				: Res.error(errorMessage(response.statusCode(), token));
 		} catch (Exception e) {
 			return Res.error("failed to get authentication token", e);
 		}
 	}
 
+	/// Uses the given token for all requests instead of a session based login.
 	public SodaClient withAuthenticationToken(String token) {
 		this.authToken = token;
 		return this;
 	}
 
+	/// Logs out an existing session. Tokens do not need a logout.
 	public void logout() {
 		if (cookies.isEmpty())
 			return;
@@ -121,6 +122,8 @@ public class SodaClient implements DataStore {
 		return this;
 	}
 
+	/// Reads the authentication status of the current session. Note that this is
+	/// not meaningful when a token is used instead of a session login.
 	public AuthInfo getAuthInfo() {
 		log.trace("get authentication status: /authenticate/status");
 		var body = getBytes(new Req().p("authenticate/status").get());
@@ -344,6 +347,7 @@ public class SodaClient implements DataStore {
 	@Override
 	public void close() {
 		logout();
+		authToken = null;
 		client.close();
 	}
 
@@ -486,6 +490,15 @@ public class SodaClient implements DataStore {
 		HttpRequest postXml(byte[] body) {
 			return request(
 				"POST", HttpRequest.BodyPublishers.ofByteArray(body), "application/xml");
+		}
+
+		/// Sets the body to the given form parameters.
+		HttpRequest postForm(String... params) {
+			return request(
+				"POST",
+				HttpRequest.BodyPublishers.ofString(
+					Http.formBody(params), StandardCharsets.UTF_8),
+				"application/x-www-form-urlencoded");
 		}
 
 		HttpRequest post(HttpRequest.BodyPublisher body, String contentType) {

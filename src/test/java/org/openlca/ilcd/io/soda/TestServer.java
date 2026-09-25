@@ -59,15 +59,29 @@ class TestServer {
 		return available;
 	}
 
-	/**
-	 * Creates a new client connection.
-	 */
+	/// Creates a client that uses a session based login.
 	public static SodaClient newClient() {
 		var con = new SodaConnection();
 		con.url = ENDPOINT;
 		con.user = USER;
 		con.password = PASSWORD;
-		var client = SodaClient.of(con);
+		return useTestStock(SodaClient.of(con));
+	}
+
+	/// Creates a client that uses the given authentication token.
+	public static SodaClient newTokenClient(String token) {
+		return useTestStock(
+			SodaClient.of(ENDPOINT).withAuthenticationToken(token));
+	}
+
+	/// Requests an authentication token for the admin user.
+	public static String newToken() {
+		try (var client = SodaClient.of(ENDPOINT)) {
+			return client.getAuthenticationToken(USER, PASSWORD).orElseThrow();
+		}
+	}
+
+	private static SodaClient useTestStock(SodaClient client) {
 		for (var stock : client.getDataStockList().getDataStocks()) {
 			if (stock.getShortName() == null || stock.getUUID() == null)
 				continue;

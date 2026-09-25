@@ -54,4 +54,18 @@ class Http {
 		return URLEncoder.encode(value == null ? "" : value, StandardCharsets.UTF_8);
 	}
 
+	/// Encodes key-value pairs as an `application/x-www-form-urlencoded` body.
+	static String formBody(String... params) {
+		var body = new StringBuilder();
+		for (int i = 0; i + 1 < params.length; i += 2) {
+			if (!body.isEmpty()) {
+				body.append('&');
+			}
+			body.append(encodeQuery(params[i]))
+				.append('=')
+				.append(encodeQuery(params[i + 1]));
+		}
+		return body.toString();
+	}
+
 }

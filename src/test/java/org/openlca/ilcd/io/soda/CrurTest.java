@@ -31,21 +31,26 @@ public class CrurTest {
 	public void testCrur() {
 		Assume.assumeTrue(TestServer.isAvailable());
 		try (var client = TestServer.newClient()) {
-			// it does not work for life cycle models (Model) with
-			// the current soda4LCA version
-			List.of(
-					new Contact(),
-					new Source(),
-					new UnitGroup(),
-					new FlowProperty(),
-					new Flow(),
-					new Process(),
-					new ImpactMethod())
-				.forEach(ds -> run(ds, client));
+			runWith(client);
 		}
 	}
 
-	private void run(IDataSet ds, SodaClient client) {
+	/// Runs the create-read-update-read flow for the supported data set types.
+	static void runWith(SodaClient client) {
+		// it does not work for life cycle models (Model) with
+		// the current soda4LCA version
+		List.of(
+				new Contact(),
+				new Source(),
+				new UnitGroup(),
+				new FlowProperty(),
+				new Flow(),
+				new Process(),
+				new ImpactMethod())
+			.forEach(ds -> run(ds, client));
+	}
+
+	private static void run(IDataSet ds, SodaClient client) {
 		var id = UUID.randomUUID().toString();
 		var name = "a " + ds.getClass().getSimpleName();
 		DataSets.withUUID(ds, id);

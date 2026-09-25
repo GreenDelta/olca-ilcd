@@ -19,6 +19,10 @@ public class SodaConnection {
 
 	public String password;
 
+	/// An authentication token; when set, it is used instead of a session based
+	/// login with user and password.
+	public String token;
+
 	public String dataStockId;
 
 	/**

@@ -34,4 +34,13 @@ public class HttpTest {
 		assertEquals("a+b", Http.encodeQuery("a b"));
 		assertEquals("%C3%A4", Http.encodeQuery("ä"));
 	}
+
+	@Test
+	public void testFormBody() {
+		assertEquals("", Http.formBody());
+		assertEquals("username=admin&password=default",
+			Http.formBody("username", "admin", "password", "default"));
+		assertEquals("username=a+b%26c&password=%C3%A4%3D",
+			Http.formBody("username", "a b&c", "password", "ä="));
+	}
 }
